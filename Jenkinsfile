@@ -7,6 +7,6 @@ ecs_service_type_1_standard {
     entrypoint_command = "Rscript main.R"
     quick_deploy = "true"
     container_port = "80"
-    health_check_path = "/"
+    health_check_path = "/__docs__/"
     dependencies = "ecr"
 }
