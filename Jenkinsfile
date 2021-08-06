@@ -9,4 +9,6 @@ ecs_service_type_1_standard {
     container_port = "80"
     health_check_path = "/__docs__/"
     dependencies = "ecr"
+    prd_cidr = "0.0.0.0/0"
+    dev_cidr = "0.0.0.0/0"
 }
