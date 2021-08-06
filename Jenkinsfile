@@ -1,7 +1,7 @@
 @Library(value='kids-first/aws-infra-jenkins-shared-libraries', changelog=false) _
 ecs_service_type_1_standard {
     projectName = "openpedcan-api"
-    internal_app = "true"
+    internal_app = "false"
     environments = "dev,prd"
     docker_image_type = "debian"
     entrypoint_command = "Rscript main.R"
