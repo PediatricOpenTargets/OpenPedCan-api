@@ -1,0 +1,39 @@
+---
+name: Lint Code Base
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    name: Lint Code Base
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Lint Code Base
+        uses: github/super-linter@v4
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  lintr:
+    runs-on: macOS-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: r-lib/actions/setup-r@master
+
+      - name: Install lintr
+        run: install.packages("lintr")
+        shell: Rscript {0}
+
+      - name: Lint
+
+        run: lintr::lint_dir(linters = lintr::with_defaults(assignment_linter = NULL, line_length_linter = NULL, spaces_left_parentheses_linter = NULL), pattern = '[.]R$|[.]Rmd')
+        shell: Rscript {0}
