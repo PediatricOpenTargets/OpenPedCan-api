@@ -7,7 +7,7 @@ ecs_service_type_1_standard {
     quick_deploy = "true"
     container_port = "80"
     health_check_path = "/__docs__/"
-    dependencies = "ecr"
+    dependencies = "ecr postgres_rds"
     prd_cidr = "0.0.0.0/0"
     qa_cidr = "0.0.0.0/0"
     dev_cidr = "0.0.0.0/0"
