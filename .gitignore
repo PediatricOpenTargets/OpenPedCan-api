@@ -1,1 +1,7 @@
 *.log
+
+# input data for shiny app
+OpenPedCan-exprs-shinyapp/data
+
+# output files from shiny app
+OpenPedCan-exprs-shinyapp/www
