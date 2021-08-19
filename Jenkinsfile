@@ -8,6 +8,7 @@ ecs_service_type_1_standard {
     container_port = "80"
     health_check_path = "/__docs__/"
     dependencies = "ecr postgres_rds"
+    ecs_service_type_1_version = "master"
     prd_cidr = "0.0.0.0/0"
     qa_cidr = "0.0.0.0/0"
     dev_cidr = "0.0.0.0/0"
