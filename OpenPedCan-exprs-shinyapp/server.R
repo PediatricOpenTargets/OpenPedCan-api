@@ -18,7 +18,7 @@ hist_file <- hist_file %>%
 # mapping files for ENSEMBL identifier, RMTL, EFO and MONDO codes
 ensg_hugo_rmtl_mapping <- read.delim('data/ensg-hugo-rmtl-mapping.tsv') %>%
   unique()
-efo_mondo_map <- read.delim('data/efo-mondo-map.tsv') %>%
+efo_mondo_map <- readr::read_tsv('data/efo-mondo-map.tsv') %>%
   unique()
 
 shinyServer(function(input, output, session){
