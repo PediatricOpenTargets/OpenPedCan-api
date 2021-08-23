@@ -46,7 +46,7 @@ dashboardPage(
                 box(background = "navy", width = 12,
                     column(2, pickerInput(inputId = "select_gene_1", label = "Gene", choices = NULL, multiple = F, options = list(`live-search` = T))),
                     column(2, pickerInput(inputId = "select_normal_cohort_1", label = "Normal Cohort", choices = c("GTEx"), selected = T)), 
-                    column(2, pickerInput(inputId = "select_tumor_cohort_1", label = "Tumor Cohort", choices = c("GMKF", "PBTA"), multiple = T, options = list(`actions-box` = T, 
+                    column(2, pickerInput(inputId = "select_tumor_cohort_1", label = "Tumor Cohort", choices = c("GMKF", "PBTA", "TARGET"), multiple = T, options = list(`actions-box` = T, 
                                                                                                                                                                `none-selected-text` = "Please make a selection!"))), 
                     column(2, pickerInput(inputId = "analysis_type_1", label = "Analysis Type", choices = NULL)),
                     column(2, pickerInput(inputId = "select_histology_1", label = "Histology", choices = NULL, multiple = F, options = list(`live-search` = T))),
@@ -64,7 +64,7 @@ dashboardPage(
               fluidRow(
                 box(background = "navy", width = 12,
                     column(2, pickerInput(inputId = "select_gene_2", label = "Gene", choices = NULL, multiple = F, options = list(`live-search` = T))),
-                    column(2, pickerInput(inputId = "select_tumor_cohort_2", label = "Tumor Cohort", choices = c("GMKF", "PBTA"), multiple = T, options = list(`actions-box` = T, 
+                    column(2, pickerInput(inputId = "select_tumor_cohort_2", label = "Tumor Cohort", choices = c("GMKF", "PBTA", "TARGET"), multiple = T, options = list(`actions-box` = T, 
                                                                                                                                                                `none-selected-text` = "Please make a selection!"))), 
                     column(2, pickerInput(inputId = "analysis_type_2", label = "Analysis Type", choices = c("Cancer-Group level" = "cancer_group_level",
                                                                                                             "Cohort-Cancer-Group level" = "cohort_cancer_group_level"), multiple = F)),
