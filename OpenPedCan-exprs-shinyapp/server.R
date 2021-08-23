@@ -12,6 +12,8 @@ source('R/tumor_vs_normal_plot.R')
 expr_mat <- readRDS('data/gene-expression-rsem-tpm-collapsed.rds')
 genes <- unique(rownames(expr_mat))
 hist_file <- read.delim('data/histologies.tsv', stringsAsFactors = F)
+hist_file <- hist_file %>%
+  filter(experimental_strategy == "RNA-Seq")
 
 # mapping files for ENSEMBL identifier, RMTL, EFO and MONDO codes
 ensg_hugo_rmtl_mapping <- read.delim('data/ensg-hugo-rmtl-mapping.tsv') %>%
