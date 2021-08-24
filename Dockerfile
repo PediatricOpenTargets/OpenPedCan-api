@@ -30,7 +30,8 @@ COPY / /home/OpenPedCan-api/
 RUN install2.r --error \
   tidyverse \
   plumber \
-  rprojroot
+  rprojroot \
+  jsonlite
 
 EXPOSE 80
 ENTRYPOINT ["Rscript", "--vanilla", "main.R"]
