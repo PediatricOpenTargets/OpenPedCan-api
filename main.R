@@ -1,4 +1,4 @@
 library(plumber)
 
-r <- plumb("plumber.R")
-r$run(port=80, host="0.0.0.0")
+pr("plumber.R") %>%
+  pr_run(port=80, host="0.0.0.0")
