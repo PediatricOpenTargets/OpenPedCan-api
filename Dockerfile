@@ -8,10 +8,8 @@ RUN apt-get update -qq && apt-get install -y --no-install-recommends \
   && R -e "install.packages('tidyverse')" \
   && R -e "install.packages('plumber')"
 
-# Copy docker build working directory to docker image /OpenPedCan-api/
-COPY / /OpenPedCan-api/
-
-WORKDIR /OpenPedCan-api/
+RUN mkdir /home/OpenPedCan-api
+WORKDIR /home/OpenPedCan-api
 
 # Clone https://github.com/PediatricOpenTargets/OpenPedCan-analysis and checkout
 # a specific commit
@@ -25,6 +23,10 @@ RUN git clone https://github.com/PediatricOpenTargets/OpenPedCan-analysis.git \
   && git checkout -q f9656a849e09edeebb3be5d4a4a6e5d83fd6ad43
 
 RUN cd OpenPedCan-analysis && bash download-data.sh
+
+# Copy docker build working directory contents to docker image
+# /home/OpenPedCan-api/
+COPY / /home/OpenPedCan-api/
 
 EXPOSE 80
 ENTRYPOINT ["Rscript", "--vanilla", "main.R"]
