@@ -1,5 +1,10 @@
-# plumber.R
-# R plumber API definitions.
+# plumber.R defines plumber API
+#
+# This file should be run with the directory that contains this file as working
+# directory. ../main.R calls plumber::pr("path/to/this/plumber.R"), which runs
+# this plumber.R file  with the directory that contains this file as working
+# directory.
+
 
 # Get %>% without loading the whole library
 `%>%` <- magrittr::`%>%`
@@ -7,7 +12,7 @@
 # Function definitions ---------------------------------------------------------
 
 # Read and process data --------------------------------------------------------
-data_dir <- file.path("OpenPedCan-analysis", "data")
+data_dir <- file.path("..", "OpenPedCan-analysis", "data")
 
 input_df_list <- list(
   histology_df = readr::read_tsv(
@@ -71,14 +76,15 @@ input_df_list$histology_df <- input_df_list$histology_df %>%
     Disease = cancer_group, GTEx_tissue_group = gtex_group,
     GTEx_tissue_subgroup = gtex_subgroup)
 # annotator only when working directory is OpenPedCan-analysis or its subdir
-setwd("OpenPedCan-analysis")
+setwd(file.path("..", "OpenPedCan-analysis"))
 source(file.path(
   "analyses", "long-format-table-utils", "annotator", "annotator-api.R"))
 input_df_list$histology_df <- annotate_long_format_table(
   input_df_list$histology_df,
   columns_to_add = c(
     "EFO", "MONDO", "GTEx_tissue_group_UBERON", "GTEx_tissue_subgroup_UBERON"))
-setwd("..")
+# change working directory back to src
+setwd(file.path("..", "src"))
 
 
 # Subset independent samples ---------------------------------------------------
