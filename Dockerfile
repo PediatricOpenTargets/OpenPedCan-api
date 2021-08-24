@@ -22,15 +22,15 @@ RUN git clone https://github.com/PediatricOpenTargets/OpenPedCan-analysis.git \
 
 RUN cd OpenPedCan-analysis && bash download-data.sh
 
-# Copy docker build working directory contents to docker image
-# /home/OpenPedCan-api/
-COPY / /home/OpenPedCan-api/
-
 RUN install2.r --error \
   tidyverse \
   plumber \
   rprojroot \
   jsonlite
+
+# Copy docker build working directory contents to docker image
+# /home/OpenPedCan-api/
+COPY / /home/OpenPedCan-api/
 
 EXPOSE 80
 ENTRYPOINT ["Rscript", "--vanilla", "main.R"]
