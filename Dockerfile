@@ -23,5 +23,7 @@ RUN git clone https://github.com/PediatricOpenTargets/OpenPedCan-analysis.git \
   && cd OpenPedCan-analysis \
   && git checkout -q f9656a849e09edeebb3be5d4a4a6e5d83fd6ad43
 
+RUN cd OpenPedCan-analysis && bash download-data.sh
+
 EXPOSE 80
-ENTRYPOINT ["Rscript", "main.R"]
+ENTRYPOINT ["Rscript", "--vanilla", "main.R"]
