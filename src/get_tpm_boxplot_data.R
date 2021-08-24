@@ -7,8 +7,11 @@
 # Call sequence:
 #
 # - docker run calls Rscript --vanilla main.R
-# - ../main.R calls plumber::pr("src/plumber.R")
-# - plumber.R calls source("get_tpm_boxplot_data.R")
+# - ../main.R calls source("get_tpm_boxplot_data.R", chdir = TRUE)
+#
+# Defined variables:
+#
+# - tpm_data_lists
 
 
 # Get %>% without loading the whole library
@@ -17,7 +20,12 @@
 # Function definitions ---------------------------------------------------------
 
 # Read and process data --------------------------------------------------------
-data_dir <- file.path("..", "OpenPedCan-analysis", "data")
+# OpenPedCan-analysis is created in Dockerfile with
+# git clone https://github.com/PediatricOpenTargets/OpenPedCan-analysis.git
+# cd OpenPedCan-analysis && bash download-data.sh
+
+opc_analysis_dir <- file.path("..", "OpenPedCan-analysis")
+data_dir <- file.path(opc_analysis_dir, "data")
 
 input_df_list <- list(
   histology_df = readr::read_tsv(
@@ -81,49 +89,89 @@ input_df_list$histology_df <- input_df_list$histology_df %>%
     Disease = cancer_group, GTEx_tissue_group = gtex_group,
     GTEx_tissue_subgroup = gtex_subgroup)
 # annotator only when working directory is OpenPedCan-analysis or its subdir
-setwd(file.path("..", "OpenPedCan-analysis"))
+prev_wd <- setwd(opc_analysis_dir)
 source(file.path(
   "analyses", "long-format-table-utils", "annotator", "annotator-api.R"))
 input_df_list$histology_df <- annotate_long_format_table(
   input_df_list$histology_df,
   columns_to_add = c(
     "EFO", "MONDO", "GTEx_tissue_group_UBERON", "GTEx_tissue_subgroup_UBERON"))
-# change working directory back to src
-setwd(file.path("..", "src"))
+# change working directory back to previous wd
+setwd(prev_wd)
 
 
 # Subset independent samples ---------------------------------------------------
+# Initialize tpm_data_lists
 tpm_data_lists <- list(
-  all_cohorts = list(
+  # primary tumor all-cohorts independent samples
+  pt_all_cohorts = list(
     tpm_df = input_df_list$tpm_df,
-    independent_samples = input_df_list$all_cohorts_indep_samples,
+    sample_subset_df = input_df_list$all_cohorts_indep_samples,
     histology_df = input_df_list$histology_df
   ),
-  each_cohort = list(
+  # primary tumor each-cohort independent samples
+  pt_each_cohort = list(
     tpm_df = input_df_list$tpm_df,
-    independent_samples = input_df_list$each_cohort_indep_samples,
+    sample_subset_df = input_df_list$each_cohort_indep_samples,
+    histology_df = input_df_list$histology_df
+  ),
+  # gtex all samples. sample_subset_df entry is a tibble of all gtex samples.
+  gtex = list(
+    tpm_df = input_df_list$tpm_df,
+    sample_subset_df = dplyr::select(
+      dplyr::filter(input_df_list$histology_df, cohort == "GTEx"),
+      Kids_First_Participant_ID, Kids_First_Biospecimen_ID),
     histology_df = input_df_list$histology_df
   )
 )
 
-# TPM subset data lists
-tpm_ss_data_lists <- lapply(tpm_data_lists, function(xl) {
+# Subset tpm_data_lists
+tpm_data_lists <- lapply(tpm_data_lists, function(xl) {
   tpm_sids <- colnames(xl$tpm_df)
   subset_sids <- tpm_sids[
-    tpm_sids %in% xl$independent_samples$Kids_First_Biospecimen_ID]
+    tpm_sids %in% xl$sample_subset_df$Kids_First_Biospecimen_ID]
+
   subset_tpm_df <- xl$tpm_df[, subset_sids]
   stopifnot(all(subset_sids %in% xl$histology_df$Kids_First_Biospecimen_ID))
 
-  subset_indep_samples <- xl$independent_samples %>%
+  overlap_sample_subset_df <- xl$sample_subset_df %>%
     dplyr::filter(Kids_First_Biospecimen_ID %in% subset_sids)
 
   subset_histology_df <- xl$histology_df %>%
     dplyr::filter(Kids_First_Biospecimen_ID %in% subset_sids)
 
-  # TODO: subset GTEx TPM list
+  stopifnot(identical(
+    sort(colnames(subset_tpm_df)),
+    sort(subset_sids)))
+  stopifnot(identical(
+    sort(colnames(subset_tpm_df)),
+    sort(overlap_sample_subset_df$Kids_First_Biospecimen_ID)))
+  stopifnot(identical(
+    sort(colnames(subset_tpm_df)),
+    sort(subset_histology_df$Kids_First_Biospecimen_ID)))
   subset_data_list <- list(
     tpm_df = subset_tpm_df,
-    independent_samples = subset_indep_samples,
+    sample_subset_df = overlap_sample_subset_df,
     histology_df = subset_histology_df
   )
+  return(subset_data_list)
 })
+
+cat("---------------------------------\n",
+    as.character(Sys.time()), "\n",
+    "Primary tumor all-cohorts independent n samples: ",
+    ncol(tpm_data_lists$pt_all_cohorts$tpm_df), "\n",
+    "Primary tumor each-cohort independent n samples: ",
+    ncol(tpm_data_lists$pt_each_cohort$tpm_df), "\n",
+    "GTEx all n samples: ", ncol(tpm_data_lists$gtex$tpm_df),
+    "\n---------------------------------\n")
+
+
+
+# Convert wide dfs to a single long df -----------------------------------------
+
+
+# Remove variables that are not used by the interface defined by this file -----
+rm(opc_analysis_dir, data_dir, input_df_list, prev_wd,
+   annotate_long_format_table, `%>%`)
+stopifnot(identical(ls(), c("tpm_data_lists")))
