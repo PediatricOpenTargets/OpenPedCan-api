@@ -18,6 +18,14 @@ function(req){
   plumber::forward()
 }
 
+#* Get single-cancer GTEx plot and table
+#* @serializer json
+#* @get /single-cancer-gtex
+function() {
+  input_df_list$histology_df[1:3, 1:3]
+}
+
+
 #* Echo back the input
 #* @param msg The message to echo
 #* @get /echo
