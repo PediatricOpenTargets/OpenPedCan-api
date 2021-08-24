@@ -1,6 +1,22 @@
 # plumber.R
-# Placeholder until the actual code is written.
-# Source https://github.com/rstudio/plumber/
+# Plumber API definitions ------------------------------------------------------
+
+
+# logger adapted from
+# https://www.rplumber.io/articles/routing-and-input.html#forward-to-another-handler
+
+#* Log some information about the incoming request
+#* @filter logger
+function(req){
+  cat(as.character(Sys.time()), "-\n",
+    req$REQUEST_METHOD, req$PATH_INFO, "-\n",
+    "body ", req$body, "-\n",
+    "QUERY_STRING ", req$QUERY_STRING, "-\n",
+    req$HTTP_USER_AGENT, "@", req$REMOTE_ADDR, "\n")
+  str(req)
+  cat("--------------------------")
+  plumber::forward()
+}
 
 #* Echo back the input
 #* @param msg The message to echo
