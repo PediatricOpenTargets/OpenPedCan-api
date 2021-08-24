@@ -8,7 +8,6 @@
 # - docker run calls Rscript --vanilla main.R
 # - ../main.R calls plumber::pr("src/plumber.R")
 
-source("get_tpm_boxplot_data.R")
 
 # Plumber API definitions ------------------------------------------------------
 
@@ -20,12 +19,11 @@ source("get_tpm_boxplot_data.R")
 #* @filter logger
 function(req){
   cat(as.character(Sys.time()), "-\n",
-    req$REQUEST_METHOD, req$PATH_INFO, "-\n",
-    "body ", req$body, "-\n",
-    "QUERY_STRING ", req$QUERY_STRING, "-\n",
-    req$HTTP_USER_AGENT, "@", req$REMOTE_ADDR, "\n")
-  str(req)
-  cat("--------------------------")
+     req$REQUEST_METHOD, req$PATH_INFO, "-\n",
+     "body ", req$body, "-\n",
+     "QUERY_STRING ", req$QUERY_STRING, "-\n",
+     req$HTTP_USER_AGENT, "@", req$REMOTE_ADDR,
+     "\n--------------------------\n")
   plumber::forward()
 }
 
@@ -33,7 +31,9 @@ function(req){
 #* @serializer json
 #* @get /single-cancer-gtex
 function() {
-  input_df_list$histology_df[1:3, 1:3]
+  res <- list(
+    tpm_data_lists$gtex$histology_df[1:3, ])
+  return(res)
 }
 
 
