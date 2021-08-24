@@ -20,10 +20,10 @@ WORKDIR /home/OpenPedCan-api
 # Adapted from https://stackoverflow.com/a/34003075/4638182 and
 # https://ryanfb.github.io/etc/2015/07/29/git_strategies_for_docker.html
 #
-# f9656a849e09edeebb3be5d4a4a6e5d83fd6ad43 points to v7
+# 4d32e16efd489e93bf91981db219e618af6df902 points to v8
 RUN git clone https://github.com/PediatricOpenTargets/OpenPedCan-analysis.git \
   && cd OpenPedCan-analysis \
-  && git checkout -q f9656a849e09edeebb3be5d4a4a6e5d83fd6ad43
+  && git checkout -q 4d32e16efd489e93bf91981db219e618af6df902
 
 RUN cd OpenPedCan-analysis && bash download-data.sh
 
