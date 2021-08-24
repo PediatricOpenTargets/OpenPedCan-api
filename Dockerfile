@@ -4,6 +4,12 @@ RUN apt-get update -qq && apt-get install -y --no-install-recommends \
   libcurl4-gnutls-dev=7.68.0-1ubuntu2.6 \
   && rm -rf /var/lib/apt/lists/* \
   && R -e "install.packages('plumber')"
-COPY / /
+
+# Copy docker build working directory to docker image /OpenPedCan-api/
+COPY / /OpenPedCan-api/
+
+WORKDIR /OpenPedCan-api/
+
+# Clone https://github.com/PediatricOpenTargets/OpenPedCan-analysis and checkout
 EXPOSE 80
 ENTRYPOINT ["Rscript", "main.R"]
