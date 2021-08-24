@@ -5,6 +5,7 @@ RUN apt-get update -qq && apt-get install -y --no-install-recommends \
   git \
   curl \
   && rm -rf /var/lib/apt/lists/* \
+  && R -e "install.packages('tidyverse')" \
   && R -e "install.packages('plumber')"
 
 # Copy docker build working directory to docker image /OpenPedCan-api/
