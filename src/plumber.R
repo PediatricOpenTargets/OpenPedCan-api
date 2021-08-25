@@ -56,6 +56,17 @@ function(ensemblId, efoId) {
     ggplot2::ggtitle(paste(ensemblId, efoId))
   print(res_plot)
 }
+
+#* @apiTitle Get a single-gene all-diseases TPM table
+#*
+#* @param ensemblId:str a single character value of gene ENSG ID.
+#* @serializer json
+#* @get /tpm/gene-all-cancer/json
+function(ensemblId) {
+  res_tbl <- list(ensemblId = ensemblId)
+  return(res_tbl)
+}
+
 #* Echo back the input
 #* @param msg The message to echo
 #* @get /echo
