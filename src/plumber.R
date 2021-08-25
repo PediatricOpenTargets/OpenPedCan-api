@@ -31,15 +31,17 @@ function(req, res) {
   plumber::forward()
 }
 
-#* Get single-cancer GTEx plot and table
+#* @apiTitle Get a single-gene single-disease all-GTEx-tissue-subgroups TPM
+#  table
+#*
+#* @param ensemblId:str a single character value of gene ENSG ID.
+#* @param efoId:str a single character value of EFO ID.
 #* @serializer json
-#* @get /single-cancer-gtex
-function() {
-  res <- list(
-    tpm_data_lists$gtex$histology_df[1:3, ])
-  return(res)
+#* @get /tpm/gene-disease-gtex/json
+function(ensemblId, efoId) {
+  res_tbl <- list(ensemblId = ensemblId, efoId = efoId)
+  return(res_tbl)
 }
-
 
 #* Echo back the input
 #* @param msg The message to echo
