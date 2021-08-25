@@ -7,6 +7,24 @@
 #
 # - docker run calls Rscript --vanilla main.R
 
+# DEBUG is a single boolean value.
+#
+# - TRUE: extra assertions will in API endpoints be executed, so code will fail
+#   at an earlier point.
+# - FALSE (default): extra assertions will not be executed.
+DEBUG <- Sys.getenv("DEBUG")
+if (identical(DEBUG, "")) {
+  # DEBUG env var is not set. Set to FALSE by default.
+  DEBUG <- FALSE
+} else if (identical(DEBUG, "0")) {
+  DEBUG <- FALSE
+} else if (identical(DEBUG, "1")) {
+  DEBUG <- TRUE
+} else {
+  stop(paste("Unknown DEBUG environtment variable", DEBUG))
+}
+print(DEBUG)
+
 # Notes on R environments:
 #
 # - Rscript runs this file in R_GlobalEnv
