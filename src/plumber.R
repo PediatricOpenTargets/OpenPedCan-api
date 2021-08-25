@@ -17,14 +17,16 @@
 
 #* Log some information about the incoming request
 #* @filter logger
-function(req) {
+function(req, res) {
   cat(as.character(Sys.time()), "-\n",
      req$REQUEST_METHOD, req$PATH_INFO, "-\n",
      "body ", req$body, "-\n",
      "QUERY_STRING ", req$QUERY_STRING, "-\n",
      req$HTTP_USER_AGENT, "@", req$REMOTE_ADDR,
-     "\nreq$argsQuery:\n")
-  print(req$argsQuery)
+     "\nreq:\n")
+  print(req)
+  cat("res:\n")
+  print(res)
   cat("--------------------------\n")
   plumber::forward()
 }
