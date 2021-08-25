@@ -123,6 +123,18 @@ stopifnot(identical(
   ),
   as.integer(1))
 )
+# Assert one GTEx_tissue_subgroup only maps to one GTEx_tissue_subgroup_UBERON
+# ID
+stopifnot(identical(
+  unique(
+    dplyr::summarise(
+      dplyr::group_by(input_df_list$histology_df, GTEx_tissue_subgroup),
+      n = length(unique(GTEx_tissue_subgroup_UBERON))
+    )$n
+  ),
+  as.integer(1))
+)
+
 
 # Subset independent samples ---------------------------------------------------
 # Initialize tpm_data_lists
