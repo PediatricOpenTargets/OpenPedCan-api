@@ -23,7 +23,9 @@ function(req) {
      "body ", req$body, "-\n",
      "QUERY_STRING ", req$QUERY_STRING, "-\n",
      req$HTTP_USER_AGENT, "@", req$REMOTE_ADDR,
-     "\n--------------------------\n")
+     "\nreq$argsQuery:\n")
+  print(req$argsQuery)
+  cat("--------------------------\n")
   plumber::forward()
 }
 
