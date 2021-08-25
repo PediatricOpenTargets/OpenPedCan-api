@@ -28,6 +28,20 @@ RUN install2.r --error \
   rprojroot \
   jsonlite
 
+# Install R X11 runtime dependencies
+#
+# Adapted from
+# https://github.com/rocker-org/rocker-versioned/blob/dff37a27698cfe8cda894845fa194ecb5f668d84/X11/Dockerfile
+RUN apt-get update -qq && apt-get install -y --no-install-recommends \
+    libx11-6 \
+    libxss1 \
+    libxt6 \
+    libxext6 \
+    libsm6 \
+    libice6 \
+    xdg-utils \
+  && rm -rf /var/lib/apt/lists/*
+
 # Copy docker build working directory contents to docker image
 # /home/OpenPedCan-api/
 COPY / /home/OpenPedCan-api/
