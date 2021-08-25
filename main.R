@@ -23,7 +23,11 @@ if (identical(DEBUG, "")) {
 } else {
   stop(paste("Unknown DEBUG environtment variable", DEBUG))
 }
-print(DEBUG)
+
+cat("---------------------------------\n",
+    as.character(Sys.time()), "\n",
+    "DEBUG = ", DEBUG,
+    "\n---------------------------------\n")
 
 # Notes on R environments:
 #
