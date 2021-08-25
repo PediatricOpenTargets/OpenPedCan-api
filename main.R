@@ -17,6 +17,8 @@
 #   arrives, but variables in R_GlobalEnv and X can be accessed by plumber
 #   endpoints. Y inherits X (?).
 
-source("src/get_tpm_boxplot_data.R", chdir = TRUE)
+source("src/tpm_data_lists.R", chdir = TRUE)
+source("src/get_single_cancer_tpm_boxplot_data.R")
+
 # Adapted from https://www.rplumber.io/articles/quickstart.html
 plumber::pr_run(plumber::pr("src/plumber.R"), port=80, host="0.0.0.0")

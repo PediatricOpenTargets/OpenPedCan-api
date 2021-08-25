@@ -1,5 +1,5 @@
-# get_tpm_boxplot_data.R defines a function get_tpm_boxplot_data to return a
-# tibble for plotting a TPM boxplot.
+# tpm_data_lists.R defines a list variable, tpm_data_lists, that is used by
+# other functions or procedures.
 #
 # This file should be run with the directory that contains this file as working
 # directory.
@@ -7,7 +7,7 @@
 # Call sequence:
 #
 # - docker run calls Rscript --vanilla main.R
-# - ../main.R calls source("get_tpm_boxplot_data.R", chdir = TRUE)
+# - ../main.R calls source("src/tpm_data_lists.R", chdir = TRUE)
 #
 # Defined variables:
 #
@@ -16,8 +16,6 @@
 
 # Get %>% without loading the whole library
 `%>%` <- magrittr::`%>%`
-
-# Function definitions ---------------------------------------------------------
 
 # Read and process data --------------------------------------------------------
 # OpenPedCan-analysis is created in Dockerfile with
@@ -149,29 +147,43 @@ tpm_data_lists <- lapply(tpm_data_lists, function(xl) {
   stopifnot(identical(
     sort(colnames(subset_tpm_df)),
     sort(subset_histology_df$Kids_First_Biospecimen_ID)))
+
+  # Convert subset_tpm_df to tibble, with rownames added as a new column named
+  # Gene_symbol
+  subset_tpm_tbl <- tibble::as_tibble(subset_tpm_df, rownames = "Gene_symbol")
+  stopifnot(identical(subset_tpm_tbl$Gene_symbol, rownames(subset_tpm_df)))
+  stopifnot(identical(
+    colnames(subset_tpm_tbl), c("Gene_symbol", colnames(subset_tpm_df))))
+  # Add ENSG IDs and RMTL
+  subset_tpm_tbl <- dplyr::left_join(
+    subset_tpm_tbl,
+    input_df_list$ensg_symbol_rmtl_df,
+    by = "Gene_symbol")
+
+  stopifnot(identical(
+    sum(is.na(dplyr::select(subset_tpm_tbl, -RMTL))), as.integer(0)))
   subset_data_list <- list(
-    tpm_df = subset_tpm_df,
+    tpm_df = subset_tpm_tbl,
     sample_subset_df = overlap_sample_subset_df,
     histology_df = subset_histology_df
   )
   return(subset_data_list)
 })
 
+# Converting tpm_data_lists to a single long plotting table takes > 30 GB RAM,
+# so plotting long table is created for each plot.
+
 cat("---------------------------------\n",
     as.character(Sys.time()), "\n",
     "Primary tumor all-cohorts independent n samples: ",
-    ncol(tpm_data_lists$pt_all_cohorts$tpm_df), "\n",
+    nrow(tpm_data_lists$pt_all_cohorts$sample_subset_df), "\n",
     "Primary tumor each-cohort independent n samples: ",
-    ncol(tpm_data_lists$pt_each_cohort$tpm_df), "\n",
-    "GTEx all n samples: ", ncol(tpm_data_lists$gtex$tpm_df),
+    nrow(tpm_data_lists$pt_each_cohort$sample_subset_df), "\n",
+    "GTEx all n samples: ", nrow(tpm_data_lists$gtex$sample_subset_df),
     "\n---------------------------------\n")
-
-
-
-# Convert wide dfs to a single long df -----------------------------------------
-
 
 # Remove variables that are not used by the interface defined by this file -----
 rm(opc_analysis_dir, data_dir, input_df_list, prev_wd,
    annotate_long_format_table, `%>%`)
+invisible(gc(reset = TRUE))
 stopifnot(identical(ls(), c("tpm_data_lists")))
