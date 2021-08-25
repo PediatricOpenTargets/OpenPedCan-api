@@ -103,6 +103,16 @@ input_df_list$histology_df <- annotate_long_format_table(
 # change working directory back to previous wd
 setwd(prev_wd)
 
+# Assert one Disease only maps to one EFO ID
+stopifnot(identical(
+  unique(
+    dplyr::summarise(
+      dplyr::group_by(input_df_list$histology_df, Disease),
+      n = length(unique(EFO))
+    )$n
+  ),
+  as.integer(1)
+))
 
 # Subset independent samples ---------------------------------------------------
 # Initialize tpm_data_lists
