@@ -43,6 +43,19 @@ function(ensemblId, efoId) {
   return(res_tbl)
 }
 
+#* @apiTitle Get a single-gene single-disease all-GTEx-tissue-subgroups TPM
+#  boxplot
+#*
+#* @param ensemblId:str a single character value of gene ENSG ID.
+#* @param efoId:str a single character value of EFO ID.
+#* @serializer png
+#* @get /tpm/gene-disease-gtex/plot
+function(ensemblId, efoId) {
+  res_plot <- ggplot2::ggplot(mtcars, ggplot2::aes(mpg, wt)) +
+    ggplot2::geom_point() +
+    ggplot2::ggtitle(paste(ensemblId, efoId))
+  print(res_plot)
+}
 #* Echo back the input
 #* @param msg The message to echo
 #* @get /echo
