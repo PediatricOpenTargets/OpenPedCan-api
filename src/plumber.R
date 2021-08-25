@@ -67,6 +67,18 @@ function(ensemblId) {
   return(res_tbl)
 }
 
+#* @apiTitle Get a single-gene all-diseases TPM boxplot
+#*
+#* @param ensemblId:str a single character value of gene ENSG ID.
+#* @serializer png
+#* @get /tpm/gene-all-cancer/plot
+function(ensemblId) {
+  res_plot <- ggplot2::ggplot(mtcars, ggplot2::aes(mpg, wt)) +
+    ggplot2::geom_point() +
+    ggplot2::ggtitle(ensemblId)
+  print(res_plot)
+}
+
 #* Echo back the input
 #* @param msg The message to echo
 #* @get /echo
