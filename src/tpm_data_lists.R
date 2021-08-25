@@ -79,6 +79,12 @@ stopifnot(!is.null(input_df_list$ensg_symbol_rmtl_df$Gene_symbol))
 stopifnot(identical(
   sum(is.na(input_df_list$ensg_symbol_rmtl_df$Gene_symbol)),
   as.integer(0)))
+stopifnot(identical(
+  nrow(input_df_list$ensg_symbol_rmtl_df),
+  nrow(dplyr::distinct(
+    dplyr::select(
+      input_df_list$ensg_symbol_rmtl_df,
+      Gene_Ensembl_ID, Gene_symbol)))))
 
 # Annotate histology df --------------------------------------------------------
 # Rename columns to annotator columns
