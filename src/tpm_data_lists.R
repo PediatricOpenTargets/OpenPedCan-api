@@ -113,6 +113,16 @@ stopifnot(identical(
   ),
   as.integer(1)
 ))
+# Assert one Disease only maps to one MONDO ID
+stopifnot(identical(
+  unique(
+    dplyr::summarise(
+      dplyr::group_by(input_df_list$histology_df, Disease),
+      n = length(unique(MONDO))
+    )$n
+  ),
+  as.integer(1))
+)
 
 # Subset independent samples ---------------------------------------------------
 # Initialize tpm_data_lists
