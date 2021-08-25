@@ -1,20 +1,21 @@
-# get_single_cancer_tpm_boxplot_data.R defines a function
-# get_single_cancer_tpm_boxplot_data to return a tibble for plotting a
+# get_single_cancer_tpm_boxplot_tbl.R defines a function
+# get_single_cancer_tpm_boxplot_tbl to return a tibble for plotting a
 # single-cancer all-gtex-subgroup TPM boxplot.
 #
 # Call sequence:
 #
 # - docker run calls Rscript --vanilla main.R
-# - ../main.R calls source("src/get_single_cancer_tpm_boxplot_data.R")
+# - ../main.R calls source("src/get_single_cancer_tpm_boxplot_tbl.R")
 #
 # Defined variables:
 #
-# - get_single_cancer_tpm_boxplot_data
+# - get_single_cancer_tpm_boxplot_tbl
 
 
-# Get a single-cancer all-gtex-subgroups TPM boxplot data.
+# Get a single-cancer all-gtex-subgroups TPM boxplot tibble.
 #
 # Args:
+# - tpm_data_lists: tpm_data_lists defined in src/tpm_data_lists.R.
 # - ensg_id: a single character value of gene ENSG ID.
 # - gene_symbol: a single character value of gene symbol.
 # - efo_id: a single character value of EFO ID.
@@ -43,13 +44,15 @@
 # - Identify the gene symbol that match PedOT.
 # - Select a gene symbol, but the selected one may not match PedOT.
 # - Completely drop gene_symbol, as it is also shown on PedOT.
-get_single_cancer_tpm_boxplot_data <- function(ensg_id, gene_symbol, efo_id) {
+get_single_cancer_tpm_boxplot_tbl <- function(tpm_data_lists, ensg_id,
+                                              gene_symbol, efo_id) {
   stopifnot(is.character(ensg_id))
   stopifnot(is.character(gene_symbol))
   stopifnot(is.character(efo_id))
   stopifnot(identical(length(ensg_id), as.integer(1)))
   stopifnot(identical(length(gene_symbol), as.integer(1)))
   stopifnot(identical(length(efo_id), as.integer(1)))
+
 
   # Each row is Gene_symbol, Kids_First_Biospecimen_ID (prev colname), tpm
   long_tpm_tbl <- tidyr::pivot_longer(

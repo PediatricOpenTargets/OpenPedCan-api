@@ -186,4 +186,3 @@ cat("---------------------------------\n",
 rm(opc_analysis_dir, data_dir, input_df_list, prev_wd,
    annotate_long_format_table, `%>%`)
 invisible(gc(reset = TRUE))
-stopifnot(identical(ls(), c("tpm_data_lists")))

@@ -17,7 +17,7 @@
 
 #* Log some information about the incoming request
 #* @filter logger
-function(req){
+function(req) {
   cat(as.character(Sys.time()), "-\n",
      req$REQUEST_METHOD, req$PATH_INFO, "-\n",
      "body ", req$body, "-\n",
