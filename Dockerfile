@@ -5,7 +5,7 @@ RUN apt-get update -qq && apt-get install -y --no-install-recommends \
   libcurl4-gnutls-dev=7.68.0-1ubuntu2.6 \
   git \
   curl \
-  && rm -rf /var/lib/apt/lists/* 
+  && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /home/OpenPedCan-api
 
