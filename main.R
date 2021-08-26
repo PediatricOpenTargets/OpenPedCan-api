@@ -59,6 +59,7 @@ source("src/ggplot2_publication_theme.R")
 source("src/get_gene_tpm_boxplot_tbl.R")
 source("src/get_gene_tpm_boxplot.R")
 source("src/add_gene_tpm_box_group.R")
+source("src/get_gene_tpm_boxplot_summary_tbl.R")
 
 # Adapted from https://www.rplumber.io/articles/quickstart.html
 plumber::pr_run(plumber::pr("src/plumber.R"), port = 80, host = "0.0.0.0")
