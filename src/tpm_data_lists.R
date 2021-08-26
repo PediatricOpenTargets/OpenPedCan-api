@@ -48,8 +48,8 @@ purrr::walk(
   function(x) {
     stopifnot(!is.null(x$Kids_First_Participant_ID))
     stopifnot(!is.null(x$Kids_First_Biospecimen_ID))
-    stopifnot(identical(sum(is.na(x$Kids_First_Participant_ID)), as.integer(0)))
-    stopifnot(identical(sum(is.na(x$Kids_First_Biospecimen_ID)), as.integer(0)))
+    stopifnot(identical(sum(is.na(x$Kids_First_Participant_ID)), 0L))
+    stopifnot(identical(sum(is.na(x$Kids_First_Biospecimen_ID)), 0L))
   }
 )
 
@@ -58,12 +58,12 @@ stopifnot(identical(
   length(unique(colnames(input_df_list$tpm_df)))))
 
 stopifnot(identical(
-  sum(is.na(input_df_list$histology_df$cohort)), as.integer(0)))
+  sum(is.na(input_df_list$histology_df$cohort)), 0L))
 
 stopifnot(!is.null(colnames(input_df_list$tpm_df)))
 stopifnot(!is.null(rownames(input_df_list$tpm_df)))
-stopifnot(identical(sum(is.na(colnames(input_df_list$tpm_df))), as.integer(0)))
-stopifnot(identical(sum(is.na(rownames(input_df_list$tpm_df))), as.integer(0)))
+stopifnot(identical(sum(is.na(colnames(input_df_list$tpm_df))), 0L))
+stopifnot(identical(sum(is.na(rownames(input_df_list$tpm_df))), 0L))
 
 stopifnot(identical(
   is.na(input_df_list$ensg_symbol_rmtl_df$rmtl),
@@ -81,11 +81,11 @@ input_df_list$ensg_symbol_rmtl_df <- input_df_list$ensg_symbol_rmtl_df %>%
 stopifnot(!is.null(input_df_list$ensg_symbol_rmtl_df$Gene_Ensembl_ID))
 stopifnot(identical(
   sum(is.na(input_df_list$ensg_symbol_rmtl_df$Gene_Ensembl_ID)),
-  as.integer(0)))
+  0L))
 stopifnot(!is.null(input_df_list$ensg_symbol_rmtl_df$Gene_symbol))
 stopifnot(identical(
   sum(is.na(input_df_list$ensg_symbol_rmtl_df$Gene_symbol)),
-  as.integer(0)))
+  0L))
 stopifnot(identical(
   nrow(input_df_list$ensg_symbol_rmtl_df),
   nrow(dplyr::distinct(
@@ -119,7 +119,7 @@ stopifnot(identical(
       n = length(unique(EFO))
     )$n
   ),
-  as.integer(1)
+  1L
 ))
 # Assert one Disease only maps to one MONDO ID
 stopifnot(identical(
@@ -129,7 +129,7 @@ stopifnot(identical(
       n = length(unique(MONDO))
     )$n
   ),
-  as.integer(1))
+  1L)
 )
 # Assert one GTEx_tissue_subgroup only maps to one GTEx_tissue_subgroup_UBERON
 # ID
@@ -140,7 +140,7 @@ stopifnot(identical(
       n = length(unique(GTEx_tissue_subgroup_UBERON))
     )$n
   ),
-  as.integer(1))
+  1L)
 )
 
 
@@ -190,8 +190,8 @@ tpm_data_lists <- lapply(tpm_data_lists, function(xl) {
     dplyr::intersect
   )
   stopifnot(is.character(overlap_sids))
-  stopifnot(identical(sum(is.na(overlap_sids)), as.integer(0)))
-  stopifnot(!identical(length(overlap_sids), as.integer(0)))
+  stopifnot(identical(sum(is.na(overlap_sids)), 0L))
+  stopifnot(!identical(length(overlap_sids), 0L))
 
   overlap_tpm_df <- xl$tpm_df[, overlap_sids]
 
@@ -227,7 +227,7 @@ tpm_data_lists <- lapply(tpm_data_lists, function(xl) {
     by = "Gene_symbol")
 
   stopifnot(identical(
-    sum(is.na(dplyr::select(overlap_tpm_tbl, -RMTL))), as.integer(0)))
+    sum(is.na(dplyr::select(overlap_tpm_tbl, -RMTL))), 0L))
 
   overlap_data_list <- list(
     tpm_df = overlap_tpm_tbl,
