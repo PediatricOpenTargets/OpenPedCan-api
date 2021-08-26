@@ -29,7 +29,7 @@ get_gene_tpm_boxplot_summary_tbl <- function(gene_tpm_boxplot_tbl) {
     dplyr::group_by(gene_tpm_boxplot_tbl, x_labels),
     Gene_Ensembl_ID = unique(Gene_Ensembl_ID),
     Gene_symbol = unique(Gene_symbol),
-    RMTL = unique(RMTL),
+    PMTL = unique(RMTL),
     cohort = unique(cohort),
     Disease = unique(Disease),
     GTEx_tissue_subgroup = unique(GTEx_tissue_subgroup),
@@ -42,7 +42,7 @@ get_gene_tpm_boxplot_summary_tbl <- function(gene_tpm_boxplot_tbl) {
     TPM_25th_percentile = round(quantile(TPM, 0.25), digits = 2),
     TPM_median = round(median(TPM), digits = 2),
     TPM_75th_percentile = round(quantile(TPM, 0.75), digits = 2),
-    TPM_max = round(max(TPM), digits = 2),
+    TPM_max = round(max(TPM), digits = 2)
   )
 
   return(gene_tpm_boxplot_summary_tbl)
