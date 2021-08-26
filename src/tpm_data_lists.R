@@ -53,6 +53,13 @@ purrr::walk(
   }
 )
 
+stopifnot(identical(
+  ncol(input_df_list$tpm_df),
+  length(unique(colnames(input_df_list$tpm_df)))))
+
+stopifnot(identical(
+  sum(is.na(input_df_list$histology_df$cohort)), as.integer(0)))
+
 stopifnot(!is.null(colnames(input_df_list$tpm_df)))
 stopifnot(!is.null(rownames(input_df_list$tpm_df)))
 stopifnot(identical(sum(is.na(colnames(input_df_list$tpm_df))), as.integer(0)))
@@ -99,7 +106,8 @@ source(file.path(
 input_df_list$histology_df <- annotate_long_format_table(
   input_df_list$histology_df,
   columns_to_add = c(
-    "EFO", "MONDO", "GTEx_tissue_group_UBERON", "GTEx_tissue_subgroup_UBERON"))
+    "EFO", "MONDO", "GTEx_tissue_group_UBERON", "GTEx_tissue_subgroup_UBERON"),
+  replace_na_with_empty_string = FALSE)
 # change working directory back to previous wd
 setwd(prev_wd)
 
@@ -138,18 +146,28 @@ stopifnot(identical(
 
 # Subset independent samples ---------------------------------------------------
 # Initialize tpm_data_lists
+#
+# - Remove primary tumor samples that have Disease as NA.
+# - Remove GTEx samples that have GTEx_tissue_subgroup as NA.
+#
+# These two columns are used for boxplot x labels.
+#
+# - Remove primary tumor samples that have EFO as NA. EFO is used to subset
+#   samples in API.
 tpm_data_lists <- list(
   # primary tumor all-cohorts independent samples
   pt_all_cohorts = list(
     tpm_df = input_df_list$tpm_df,
     sample_subset_df = input_df_list$all_cohorts_indep_samples,
-    histology_df = input_df_list$histology_df
+    histology_df = dplyr::filter(
+      input_df_list$histology_df, !is.na(Disease), !is.na(EFO))
   ),
   # primary tumor each-cohort independent samples
   pt_each_cohort = list(
     tpm_df = input_df_list$tpm_df,
     sample_subset_df = input_df_list$each_cohort_indep_samples,
-    histology_df = input_df_list$histology_df
+    histology_df = dplyr::filter(
+      input_df_list$histology_df, !is.na(Disease), !is.na(EFO))
   ),
   # gtex all samples. sample_subset_df entry is a tibble of all gtex samples.
   gtex = list(
@@ -157,55 +175,66 @@ tpm_data_lists <- list(
     sample_subset_df = dplyr::select(
       dplyr::filter(input_df_list$histology_df, cohort == "GTEx"),
       Kids_First_Participant_ID, Kids_First_Biospecimen_ID),
-    histology_df = input_df_list$histology_df
+    histology_df = dplyr::filter(
+      input_df_list$histology_df, !is.na(GTEx_tissue_subgroup))
   )
 )
 
 # Subset tpm_data_lists
 tpm_data_lists <- lapply(tpm_data_lists, function(xl) {
-  tpm_sids <- colnames(xl$tpm_df)
-  subset_sids <- tpm_sids[
-    tpm_sids %in% xl$sample_subset_df$Kids_First_Biospecimen_ID]
+  overlap_sids <- purrr::reduce(
+    list(
+      tpm_sids = colnames(xl$tpm_df),
+      subset_sids = xl$sample_subset_df$Kids_First_Biospecimen_ID,
+      histology_sids = xl$histology_df$Kids_First_Biospecimen_ID),
+    dplyr::intersect
+  )
+  stopifnot(is.character(overlap_sids))
+  stopifnot(identical(sum(is.na(overlap_sids)), as.integer(0)))
+  stopifnot(!identical(length(overlap_sids), as.integer(0)))
 
-  subset_tpm_df <- xl$tpm_df[, subset_sids]
-  stopifnot(all(subset_sids %in% xl$histology_df$Kids_First_Biospecimen_ID))
+  overlap_tpm_df <- xl$tpm_df[, overlap_sids]
 
   overlap_sample_subset_df <- xl$sample_subset_df %>%
-    dplyr::filter(Kids_First_Biospecimen_ID %in% subset_sids)
+    dplyr::filter(Kids_First_Biospecimen_ID %in% overlap_sids)
 
-  subset_histology_df <- xl$histology_df %>%
-    dplyr::filter(Kids_First_Biospecimen_ID %in% subset_sids)
+  overlap_histology_df <- xl$histology_df %>%
+    dplyr::filter(Kids_First_Biospecimen_ID %in% overlap_sids) %>%
+    dplyr::select(
+      Kids_First_Biospecimen_ID, cohort, EFO, MONDO, Disease,
+      GTEx_tissue_subgroup_UBERON, GTEx_tissue_subgroup)
 
   stopifnot(identical(
-    sort(colnames(subset_tpm_df)),
-    sort(subset_sids)))
+    sort(colnames(overlap_tpm_df)),
+    sort(overlap_sids)))
   stopifnot(identical(
-    sort(colnames(subset_tpm_df)),
+    sort(colnames(overlap_tpm_df)),
     sort(overlap_sample_subset_df$Kids_First_Biospecimen_ID)))
   stopifnot(identical(
-    sort(colnames(subset_tpm_df)),
-    sort(subset_histology_df$Kids_First_Biospecimen_ID)))
+    sort(colnames(overlap_tpm_df)),
+    sort(overlap_histology_df$Kids_First_Biospecimen_ID)))
 
-  # Convert subset_tpm_df to tibble, with rownames added as a new column named
+  # Convert overlap_tpm_df to tibble, with rownames added as a new column named
   # Gene_symbol
-  subset_tpm_tbl <- tibble::as_tibble(subset_tpm_df, rownames = "Gene_symbol")
-  stopifnot(identical(subset_tpm_tbl$Gene_symbol, rownames(subset_tpm_df)))
+  overlap_tpm_tbl <- tibble::as_tibble(overlap_tpm_df, rownames = "Gene_symbol")
+  stopifnot(identical(overlap_tpm_tbl$Gene_symbol, rownames(xl$tpm_df)))
   stopifnot(identical(
-    colnames(subset_tpm_tbl), c("Gene_symbol", colnames(subset_tpm_df))))
+    colnames(overlap_tpm_tbl), c("Gene_symbol", colnames(overlap_tpm_df))))
   # Add ENSG IDs and RMTL
-  subset_tpm_tbl <- dplyr::left_join(
-    subset_tpm_tbl,
+  overlap_tpm_tbl <- dplyr::left_join(
+    overlap_tpm_tbl,
     input_df_list$ensg_symbol_rmtl_df,
     by = "Gene_symbol")
 
   stopifnot(identical(
-    sum(is.na(dplyr::select(subset_tpm_tbl, -RMTL))), as.integer(0)))
-  subset_data_list <- list(
-    tpm_df = subset_tpm_tbl,
+    sum(is.na(dplyr::select(overlap_tpm_tbl, -RMTL))), as.integer(0)))
+
+  overlap_data_list <- list(
+    tpm_df = overlap_tpm_tbl,
     sample_subset_df = overlap_sample_subset_df,
-    histology_df = subset_histology_df
+    histology_df = overlap_histology_df
   )
-  return(subset_data_list)
+  return(overlap_data_list)
 })
 
 # Converting tpm_data_lists to a single long plotting table takes > 30 GB RAM,

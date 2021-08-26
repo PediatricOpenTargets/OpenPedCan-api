@@ -7,7 +7,9 @@
 #
 # - docker run calls Rscript --vanilla main.R
 
-# DEBUG is a single boolean value.
+# DEBUG is a single boolean value. Even though if (DEBUG) is evaluated at
+# runtime, having DEBUG variable has more benefits than removing all extra
+# assertions.
 #
 # - TRUE: extra assertions will in API endpoints be executed, so code will fail
 #   at an earlier point.
