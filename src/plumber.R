@@ -39,7 +39,8 @@ function(req, res) {
 #* @serializer json
 #* @get /tpm/gene-disease-gtex/json
 function(ensemblId, efoId) {
-  res_tbl <- list(ensemblId = ensemblId, efoId = efoId)
+  res_tbl <- get_gene_tpm_tbl(
+    tpm_data_lists = tpm_data_lists, ensg_id = ensemblId, efo_id = efoId)
   return(res_tbl)
 }
 

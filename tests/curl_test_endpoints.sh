@@ -17,11 +17,11 @@ fi
 printf "%0.s\n" {1..50}
 
 set -x
-curl -s -v "http://localhost:${API_PORT}/tpm/gene-disease-gtex/json?ensemblId=ENSG00000213420&efoId=EFO_0000174" > tests/results/test-gene-disease-gtex.json
+curl -s -v "http://localhost:${API_PORT}/tpm/gene-disease-gtex/json?ensemblId=ENSG00000213420&efoId=EFO_0000621" > tests/results/test-gene-disease-gtex.json
 
 printf "%0.s\n" {1..6}
 
-curl -s -v "http://localhost:${API_PORT}/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=EFO_0000174" > tests/plots/test-gene-disease-gtex.png
+curl -s -v "http://localhost:${API_PORT}/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=EFO_0000621" > tests/plots/test-gene-disease-gtex.png
 
 printf "%0.s\n" {1..6}
 
