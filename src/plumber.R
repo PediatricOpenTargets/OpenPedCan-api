@@ -39,9 +39,16 @@ function(req, res) {
 #* @serializer json
 #* @get /tpm/gene-disease-gtex/json
 function(ensemblId, efoId) {
-  res_tbl <- get_gene_tpm_tbl(
+  gene_tpm_tbl <- get_gene_tpm_tbl(
     tpm_data_lists = tpm_data_lists, ensg_id = ensemblId, efo_id = efoId)
-  return(res_tbl)
+
+  gene_tpm_tbl <- dplyr::mutate(
+    gene_tpm_tbl,
+    box_group = dplyr::if_else(
+      is.na(Disease), true = GTEx_tissue_subgroup, false = Disease))
+
+  gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(gene_tpm_tbl)
+  return(gene_tpm_boxplot_tbl)
 }
 
 #* @apiTitle Get a single-gene single-disease all-GTEx-tissue-subgroups TPM
