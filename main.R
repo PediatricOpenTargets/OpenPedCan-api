@@ -54,7 +54,7 @@ cat("---------------------------------\n",
 # - Use ls() to check what variables are defined by previous scripts, make sure
 #   previously defined variables are not overwritten by the new script.
 source("src/tpm_data_lists.R", chdir = TRUE)
-source("src/get_gene_disease_gtex_tbl.R")
+source("src/get_gene_tpm_tbl.R")
 
 # Adapted from https://www.rplumber.io/articles/quickstart.html
 plumber::pr_run(plumber::pr("src/plumber.R"), port=80, host="0.0.0.0")

@@ -1,18 +1,19 @@
-# get_gene_disease_gtex_tbl.R defines a function
-# get_gene_disease_gtex_tbl to return a tibble for plotting a
-# single-cancer all-gtex-subgroup TPM boxplot.
+# get_gene_tpm_tbl.R defines a function get_gene_tpm_tbl to return a TPM tibble
+# of a single-gene, one or more diseasees, and zero or more GTEx tissue
+# subgroups
 #
 # Call sequence:
 #
 # - docker run calls Rscript --vanilla main.R
-# - ../main.R calls source("src/get_gene_disease_gtex_tbl.R")
+# - ../main.R calls source("src/get_gene_tpm_tbl.R")
 #
 # Defined variables:
 #
-# - get_gene_disease_gtex_tbl
+# - get_gene_tpm_tbl
 
 
-# Get a single-gene single-disease all-gtex-subgroups TPM tibble.
+# Get a TPM tibble of a single-gene, one or more diseasees, and zero or more
+# GTEx tissue(s).
 #
 # Args:
 # - tpm_data_lists: tpm_data_lists defined in src/tpm_data_lists.R.
@@ -48,8 +49,8 @@
 #   may not match PedOT.
 # - Identify the gene symbol that match PedOT.
 # - Completely drop gene_symbol, as it is also shown on PedOT.
-get_gene_disease_gtex_tbl <- function(tpm_data_lists, ensg_id, efo_id,
-                                      gene_symbol = NULL) {
+get_gene_tpm_tbl <- function(tpm_data_lists, ensg_id, efo_id,
+                             gene_symbol = NULL) {
   stopifnot(is.character(ensg_id))
   stopifnot(is.character(efo_id))
   stopifnot(identical(length(ensg_id), 1L))
