@@ -52,7 +52,7 @@ get_gene_tpm_boxplot_tbl <- function(gene_tpm_tbl) {
     dplyr::distinct(
       dplyr::select(gene_tpm_boxplot_tbl, sample_type, box_group, x_labels)),
     sample_type, box_group)$x_labels
-  
+
   gene_tpm_boxplot_tbl$x_labels <- factor(
     gene_tpm_boxplot_tbl$x_labels, levels = xlabel_factor)
 
