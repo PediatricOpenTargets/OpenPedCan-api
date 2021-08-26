@@ -47,8 +47,10 @@ function(ensemblId, efoId) {
 
   gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(gene_tpm_tbl)
 
-  gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(gene_tpm_tbl)
-  return(gene_tpm_boxplot_tbl)
+  gene_tpm_boxplot_summary_tbl <- get_gene_tpm_boxplot_summary_tbl(
+    gene_tpm_boxplot_tbl)
+
+  return(gene_tpm_boxplot_summary_tbl)
 }
 
 #* @apiTitle Get a single-gene single-disease all-GTEx-tissue-subgroups TPM
