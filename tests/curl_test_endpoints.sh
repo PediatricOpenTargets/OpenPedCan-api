@@ -20,19 +20,27 @@ if [[ -z "${API_PORT+x}" ]]; then
 fi
 
 # Adapted from https://stackoverflow.com/a/17030976/4638182
-printf "%0.s\n" {1..50}
+printf "%0.s\n" {1..20}
 
-set -x
-curl -s -v "http://localhost:${API_PORT}/tpm/gene-disease-gtex/json?ensemblId=ENSG00000213420&efoId=EFO_0000621" > results/test-gene-disease-gtex.json
+base_url="http://localhost:${API_PORT}"
 
-printf "%0.s\n" {1..6}
+for ensg_id in "ENSG00000213420" "ENSG00000157764"; do
+  for efo_id in "EFO_0000621" "EFO_0005543"; do
+    query_url="${base_url}/tpm/gene-disease-gtex/json?ensemblId=${ensg_id}&efoId=${efo_id}"
+    output_fn="results/test-tpm-gene-disease-gtex-${ensg_id}-${efo_id}.json"
+    curl -s -w "GET ${query_url}\nhttp_code: %{http_code}\ncontent_type: %{content_type}\ntime_total: %{time_total} seconds\n\n\n" -o "${output_fn}" "${query_url}"
+    jq '.[0:3]' "${output_fn}"
 
-curl -s -v "http://localhost:${API_PORT}/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=EFO_0000621" > plots/test-gene-disease-gtex.png
+    query_url="${base_url}/tpm/gene-disease-gtex/plot?ensemblId=${ensg_id}&efoId=${efo_id}"
+    output_fn="plots/test-tpm-gene-disease-gtex-${ensg_id}-${efo_id}.png"
+    curl -s -w "GET ${query_url}\nhttp_code: %{http_code}\ncontent_type: %{content_type}\ntime_total: %{time_total} seconds\n\n\n" -o "${output_fn}" "${query_url}"
+  done
+  query_url="${base_url}/tpm/gene-all-cancer/json?ensemblId=${ensg_id}"
+  output_fn="results/test-tpm-gene-all-cancer-${ensg_id}.json"
+  curl -s -w "GET ${query_url}\nhttp_code: %{http_code}\ncontent_type: %{content_type}\ntime_total: %{time_total} seconds\n\n\n" -o "${output_fn}" "${query_url}"
+  jq '.' "${output_fn}"
 
-printf "%0.s\n" {1..6}
-
-curl -s -v "http://localhost:${API_PORT}/tpm/gene-all-cancer/json?ensemblId=ENSG00000213420" > results/test-gene-all-cancer.json
-
-printf "%0.s\n" {1..6}
-
-curl -s -v "http://localhost:${API_PORT}/tpm/gene-all-cancer/plot?ensemblId=ENSG00000213420" > plots/test-gene-all-cancer.png
+  query_url="${base_url}/tpm/gene-all-cancer/plot?ensemblId=${ensg_id}"
+  output_fn="plots/test-tpm-gene-all-cancer-${ensg_id}.png"
+  curl -s -w "GET ${query_url}\nhttp_code: %{http_code}\ncontent_type: %{content_type}\ntime_total: %{time_total} seconds\n\n\n" -o "${output_fn}" "${query_url}"
+done
