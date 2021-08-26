@@ -218,13 +218,16 @@ tpm_data_lists <- lapply(tpm_data_lists, function(xl) {
   # Gene_symbol
   overlap_tpm_tbl <- tibble::as_tibble(overlap_tpm_df, rownames = "Gene_symbol")
   stopifnot(identical(overlap_tpm_tbl$Gene_symbol, rownames(xl$tpm_df)))
-  stopifnot(identical(
-    colnames(overlap_tpm_tbl), c("Gene_symbol", colnames(overlap_tpm_df))))
   # Add ENSG IDs and RMTL
   overlap_tpm_tbl <- dplyr::left_join(
     overlap_tpm_tbl,
     input_df_list$ensg_symbol_rmtl_df,
     by = "Gene_symbol")
+
+  stopifnot(identical(
+    sort(colnames(overlap_tpm_tbl)),
+    sort(c("Gene_symbol", "Gene_Ensembl_ID", "RMTL", colnames(overlap_tpm_df)))
+  ))
 
   stopifnot(identical(
     sum(is.na(dplyr::select(overlap_tpm_tbl, -RMTL))), 0L))
