@@ -10,14 +10,14 @@
 #
 # - get_gene_tpm_boxplot
 
+
+
 # Get a ggplot boxplot of a single-gene, one or more diseasees, and zero or more
 # GTEx tissue(s).
 #
 # Args:
 # - gene_tpm_boxplot_tbl: a tibble of a single-gene, one or more diseasees, and
-#   zero or more GTEx tissue(s), returned by get_gene_tpm_boxplot_tbl. This
-#   tibble must have a column named box_group. The box_group column is used to
-#   agglomerate rows into boxes.
+#   zero or more GTEx tissue(s), returned by get_gene_tpm_boxplot_tbl.
 #
 # Returns a ggplot boxplot of a single-gene, one or more diseasees, and zero or
 # more GTEx tissue(s).
