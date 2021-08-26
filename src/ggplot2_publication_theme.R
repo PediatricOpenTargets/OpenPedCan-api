@@ -33,7 +33,7 @@ ggplot2_publication_theme <- function(base_size = 12,
       axis.ticks = ggplot2::element_line(),
       panel.grid.major = ggplot2::element_line(colour = "#f0f0f0"),
       panel.grid.minor = ggplot2::element_blank(),
-      plot.margin = unit(c(10, 5, 5, 5), "mm"),
+      plot.margin = grid::unit(c(10, 5, 5, 5), "mm"),
       strip.background = ggplot2::element_rect(
         colour = "#f0f0f0", fill = "#f0f0f0"),
       strip.text = ggplot2::element_text(face = "bold"))
