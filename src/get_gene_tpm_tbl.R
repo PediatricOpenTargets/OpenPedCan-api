@@ -119,15 +119,17 @@ get_gene_tpm_tbl <- function(tpm_data_lists, ensg_id, efo_id,
       names_to = "Kids_First_Biospecimen_ID", values_to = "TPM")
 
     if (DEBUG) {
-      stopifnot(identical(sum(is.na(ensg_long_tpm_tbl)), 0L))
+      stopifnot(identical(
+        sum(is.na(dplyr::select(ensg_long_tpm_tbl, -RMTL))), 0L))
       stopifnot(identical(
         sort(unique(ensg_long_tpm_tbl$Gene_symbol)),
-        sort(unique(xl$tpm_df$Gene_symbol))))
+        sort(unique(ensg_tpm_df$Gene_symbol))))
       stopifnot(identical(
         sort(unique(
           c("Gene_Ensembl_ID", "Gene_symbol", "RMTL",
             ensg_long_tpm_tbl$Kids_First_Biospecimen_ID))),
-        sort(unique(colnames(xl$tpm_df)))))
+        sort(unique(colnames(ensg_tpm_df)))
+      ))
     }
 
     ensg_long_tpm_tbl <- dplyr::left_join(
@@ -142,18 +144,22 @@ get_gene_tpm_tbl <- function(tpm_data_lists, ensg_id, efo_id,
         nrow(ensg_long_tpm_tbl),
         length(unique(ensg_long_tpm_tbl$Kids_First_Biospecimen_ID))))
 
-      stopifnot(identical(sum(!is.na(ensg_long_tpm_tbl$cohort)), 0L))
+      stopifnot(identical(sum(is.na(ensg_long_tpm_tbl$cohort)), 0L))
       stopifnot(!all_cohorts_str_id %in% ensg_long_tpm_tbl$cohort)
-      if (!identical(xname, "gtex")) {
+      if (identical(xname, "gtex")) {
         stopifnot(identical(
           sum(is.na(ensg_long_tpm_tbl$GTEx_tissue_subgroup)), 0L))
+
         stopifnot(identical(sum(!is.na(ensg_long_tpm_tbl$EFO)), 0L))
+
         stopifnot(identical(sum(!is.na(ensg_long_tpm_tbl$Disease)), 0L))
       } else {
         stopifnot(identical(unique(ensg_long_tpm_tbl$EFO), efo_id))
+        stopifnot(identical(sum(is.na(ensg_long_tpm_tbl$EFO)), 0L))
+
         stopifnot(identical(
           sum(!is.na(ensg_long_tpm_tbl$GTEx_tissue_subgroup)), 0L))
-        stopifnot(identical(sum(is.na(ensg_long_tpm_tbl$EFO)), 0L))
+
         stopifnot(identical(sum(is.na(ensg_long_tpm_tbl$Disease)), 0L))
       }
     }
@@ -173,7 +179,7 @@ get_gene_tpm_tbl <- function(tpm_data_lists, ensg_id, efo_id,
   }
 
   res_long_tpm_tbl <- dplyr::bind_rows(
-    long_tpm_tbl_list$gtex, long_tpm_tbl_list$pt_each_cohort)
+    long_tpm_tbl_list$pt_each_cohort, long_tpm_tbl_list$gtex)
   # Handle all-cohorts/combined-cohorts/all_cohorts.
   #
   # For any Disease that has two or more cohorts, append all_cohorts rows.
@@ -185,26 +191,31 @@ get_gene_tpm_tbl <- function(tpm_data_lists, ensg_id, efo_id,
       n_uniq_cohorts = length(unique(cohort))),
     n_uniq_cohorts > 1)
 
-  pt_aci_disease_n_uniq_cohorts_g1_long_tpm_tbl <- purrr::map_dfr(
-    pt_aci_disease_n_uniq_cohorts_g1_tbl$Disease,
-    function(x) {
-      x_long_tbl <- dplyr::filter(
-        long_tpm_tbl_list$pt_all_cohorts, Disease == x)
-      if (DEBUG) {
-        stopifnot(nrow(x_long_tbl) > 0)
-      }
-      x_long_tbl$cohort <- all_cohorts_str_id
-      return(x_long_tbl)
-    }
-  )
-  if (DEBUG) {
-    stopifnot(identical(
-      colnames(pt_aci_disease_n_uniq_cohorts_g1_long_tpm_tbl),
-      colnames(res_long_tpm_tbl)))
-  }
+  if (nrow(pt_aci_disease_n_uniq_cohorts_g1_tbl) > 0) {
+    pt_aci_disease_n_uniq_cohorts_g1_long_tpm_tbl <- purrr::map_dfr(
+      pt_aci_disease_n_uniq_cohorts_g1_tbl$Disease,
+      function(x) {
+        x_long_tbl <- dplyr::filter(
+          long_tpm_tbl_list$pt_all_cohorts, Disease == x)
 
-  res_long_tpm_tbl <- dplyr::bind_rows(
-    pt_aci_disease_n_uniq_cohorts_g1_long_tpm_tbl, res_long_tpm_tbl)
+        if (DEBUG) {
+          stopifnot(nrow(x_long_tbl) > 0)
+        }
+
+        x_long_tbl$cohort <- all_cohorts_str_id
+        return(x_long_tbl)
+      }
+    )
+
+    if (DEBUG) {
+      stopifnot(identical(
+        colnames(pt_aci_disease_n_uniq_cohorts_g1_long_tpm_tbl),
+        colnames(res_long_tpm_tbl)))
+    }
+
+    res_long_tpm_tbl <- dplyr::bind_rows(
+      pt_aci_disease_n_uniq_cohorts_g1_long_tpm_tbl, res_long_tpm_tbl)
+  }
 
   return(res_long_tpm_tbl)
 }
