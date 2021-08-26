@@ -22,12 +22,6 @@ RUN git clone https://github.com/PediatricOpenTargets/OpenPedCan-analysis.git \
 
 RUN cd OpenPedCan-analysis && bash download-data.sh
 
-RUN install2.r --error \
-  tidyverse \
-  plumber \
-  rprojroot \
-  jsonlite
-
 # Install R X11 runtime dependencies
 #
 # Adapted from
@@ -41,6 +35,13 @@ RUN apt-get update -qq && apt-get install -y --no-install-recommends \
     libice6 \
     xdg-utils \
   && rm -rf /var/lib/apt/lists/*
+
+RUN install2.r --error \
+  tidyverse \
+  plumber \
+  rprojroot \
+  jsonlite \
+  ggthemes
 
 # Copy docker build working directory contents to docker image
 # /home/OpenPedCan-api/
