@@ -252,6 +252,31 @@ cat("---------------------------------\n",
     "GTEx all n samples: ", nrow(tpm_data_lists$gtex$sample_subset_df),
     "\n---------------------------------\n")
 
+# Assert tpm_data_lists is valid -----------------------------------------------
+purrr::iwalk(tpm_data_lists, function(xl, xname) {
+  stopifnot(identical(
+    ncol(xl$tpm_df),
+    length(unique(colnames(xl$tpm_df)))
+  ))
+
+  stopifnot(identical(sum(is.na(xl$histology_df$cohort)), 0L))
+  stopifnot(!"all_cohorts" %in% xl$histology_df$cohort)
+
+  if (identical(xname, "gtex")) {
+    stopifnot(identical(
+      sum(is.na(xl$histology_df$GTEx_tissue_subgroup)), 0L))
+
+    stopifnot(identical(sum(!is.na(xl$histology_df$EFO)), 0L))
+    stopifnot(identical(sum(!is.na(xl$histology_df$Disease)), 0L))
+  } else {
+    stopifnot(identical(sum(is.na(xl$histology_df$EFO)), 0L))
+    stopifnot(identical(sum(is.na(xl$histology_df$Disease)), 0L))
+
+    stopifnot(identical(
+      sum(!is.na(xl$histology_df$GTEx_tissue_subgroup)), 0L))
+  }
+})
+
 # Remove variables that are not used by the interface defined by this file -----
 rm(opc_analysis_dir, data_dir, input_df_list, prev_wd,
    annotate_long_format_table, `%>%`)
