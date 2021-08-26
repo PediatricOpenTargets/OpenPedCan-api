@@ -63,7 +63,7 @@ get_gene_tpm_boxplot <- function(gene_tpm_boxplot_tbl) {
   gene_tpm_boxplot <- ggplot2::ggplot(gene_tpm_boxplot_tbl,
                                       ggplot2::aes(x = x_labels, y = TPM,
                                                    fill = sample_type)) +
-    ggplot2::stat_boxplot(geom ="errorbar", width = 0.2) +
+    ggplot2::stat_boxplot(geom = "errorbar", width = 0.2) +
     ggplot2::geom_boxplot(lwd = 0.5, fatten = 0.7, outlier.shape = 1,
                           width = 0.5, outlier.size = 1) +
     ggplot2::ylab("TPM") +
