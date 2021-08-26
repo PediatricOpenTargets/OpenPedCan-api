@@ -51,6 +51,12 @@
 # - Completely drop gene_symbol, as it is also shown on PedOT.
 get_gene_tpm_tbl <- function(tpm_data_lists, ensg_id, efo_id,
                              gene_symbol = NULL) {
+  # - rlang::.data "retrieves data-variables from the data frame".
+  # - rlang::.env "retrieves env-variables from the environment".
+  # - Ref: https://rlang.r-lib.org/reference/tidyeval-data.html
+  .data <- rlang::.data
+  .env <- rlang::.env
+
   stopifnot(is.character(ensg_id))
   stopifnot(is.character(efo_id))
   stopifnot(identical(length(ensg_id), 1L))
@@ -62,7 +68,8 @@ get_gene_tpm_tbl <- function(tpm_data_lists, ensg_id, efo_id,
 
   long_tpm_tbl_list <- purrr::imap(tpm_data_lists, function(xl, xname) {
     # tpm_df cols: Gene_Ensembl_ID, Gene_symbol, RMTL, Sample1, Sample2, ...
-    ensg_tpm_df <- dplyr::filter(xl$tpm_df, Gene_Ensembl_ID == ensg_id)
+    ensg_tpm_df <- dplyr::filter(
+      xl$tpm_df, .data$Gene_Ensembl_ID == .env$ensg_id)
 
     if (identical(nrow(ensg_tpm_df), 0L)) {
       # ensg id is not in tpm df
@@ -76,7 +83,8 @@ get_gene_tpm_tbl <- function(tpm_data_lists, ensg_id, efo_id,
         stopifnot(identical(length(gene_symbol), 1L))
         stopifnot(!is.na(gene_symbol))
 
-        ensg_tpm_df <- dplyr::filter(ensg_tpm_df, Gene_symbol == gene_symbol)
+        ensg_tpm_df <- dplyr::filter(
+          ensg_tpm_df, .data$Gene_symbol == .env$gene_symbol)
 
         if (identical(nrow(ensg_tpm_df), 0L)) {
           stop(paste(ensg_id, gene_symbol, "is not available."))
@@ -90,7 +98,9 @@ get_gene_tpm_tbl <- function(tpm_data_lists, ensg_id, efo_id,
       # - !is.null(gene_symbol): (ensg, symbol) tuple is duplicated in tpm_df
       #
       # Either way, the selection method works.
-      ensg_tpm_df <- dplyr::slice(dplyr::arrange(ensg_tpm_df, Gene_symbol), 1L)
+      ensg_tpm_df <- dplyr::slice(
+        dplyr::arrange(ensg_tpm_df, .data$Gene_symbol),
+        1L)
     }
 
     if (DEBUG) {
@@ -183,7 +193,7 @@ get_gene_tpm_tbl <- function(tpm_data_lists, ensg_id, efo_id,
   # Handle all-cohorts/combined-cohorts/all_cohorts.
   #
   # For any Disease that has two or more cohorts, append all_cohorts rows.
-  # 
+  #
   # Primary tumor all-cohorts independent (disease, n unique cohort > 1) table.
   pt_aci_disease_n_uniq_cohorts_g1_tbl <- dplyr::filter(
     dplyr::summarise(
