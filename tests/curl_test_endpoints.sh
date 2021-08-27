@@ -23,24 +23,25 @@ fi
 printf "%0.s\n" {1..20}
 
 base_url="http://localhost:${API_PORT}"
+http_request_method="GET"
 
 for ensg_id in "ENSG00000213420" "ENSG00000157764"; do
   for efo_id in "EFO_0000621" "EFO_0005543"; do
     query_url="${base_url}/tpm/gene-disease-gtex/json?ensemblId=${ensg_id}&efoId=${efo_id}"
     output_fn="results/test-tpm-gene-disease-gtex-${ensg_id}-${efo_id}.json"
-    curl -s -w "GET ${query_url}\nhttp_code: %{http_code}\ncontent_type: %{content_type}\ntime_total: %{time_total} seconds\n\n\n" -o "${output_fn}" "${query_url}"
+    curl -X "${http_request_method}" -s -w "${http_request_method} ${query_url}\nhttp_code: %{http_code}\ncontent_type: %{content_type}\ntime_total: %{time_total} seconds\n\n\n" -o "${output_fn}" "${query_url}"
     jq '.[0:3]' "${output_fn}"
 
     query_url="${base_url}/tpm/gene-disease-gtex/plot?ensemblId=${ensg_id}&efoId=${efo_id}"
     output_fn="plots/test-tpm-gene-disease-gtex-${ensg_id}-${efo_id}.png"
-    curl -s -w "GET ${query_url}\nhttp_code: %{http_code}\ncontent_type: %{content_type}\ntime_total: %{time_total} seconds\n\n\n" -o "${output_fn}" "${query_url}"
+    curl -X "${http_request_method}" -s -w "${http_request_method} ${query_url}\nhttp_code: %{http_code}\ncontent_type: %{content_type}\ntime_total: %{time_total} seconds\n\n\n" -o "${output_fn}" "${query_url}"
   done
   query_url="${base_url}/tpm/gene-all-cancer/json?ensemblId=${ensg_id}"
   output_fn="results/test-tpm-gene-all-cancer-${ensg_id}.json"
-  curl -s -w "GET ${query_url}\nhttp_code: %{http_code}\ncontent_type: %{content_type}\ntime_total: %{time_total} seconds\n\n\n" -o "${output_fn}" "${query_url}"
+  curl -X "${http_request_method}" -s -w "${http_request_method} ${query_url}\nhttp_code: %{http_code}\ncontent_type: %{content_type}\ntime_total: %{time_total} seconds\n\n\n" -o "${output_fn}" "${query_url}"
   jq '.' "${output_fn}"
 
   query_url="${base_url}/tpm/gene-all-cancer/plot?ensemblId=${ensg_id}"
   output_fn="plots/test-tpm-gene-all-cancer-${ensg_id}.png"
-  curl -s -w "GET ${query_url}\nhttp_code: %{http_code}\ncontent_type: %{content_type}\ntime_total: %{time_total} seconds\n\n\n" -o "${output_fn}" "${query_url}"
+  curl -X "${http_request_method}" -s -w "${http_request_method} ${query_url}\nhttp_code: %{http_code}\ncontent_type: %{content_type}\ntime_total: %{time_total} seconds\n\n\n" -o "${output_fn}" "${query_url}"
 done
