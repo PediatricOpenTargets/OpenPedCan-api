@@ -25,7 +25,7 @@ printf "%0.s\n" {1..20}
 base_url="http://localhost:${API_PORT}"
 http_request_method="GET"
 
-for ensg_id in "ENSG00000213420" "ENSG00000157764"; do
+for ensg_id in "ENSG00000213420" "ENSG00000157764" "ENSG00000273032"; do
   for efo_id in "EFO_0000621" "EFO_0005543"; do
     query_url="${base_url}/tpm/gene-disease-gtex/json?ensemblId=${ensg_id}&efoId=${efo_id}"
     output_dir="http_response_output_files/json"
