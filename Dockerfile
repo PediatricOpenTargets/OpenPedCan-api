@@ -50,9 +50,14 @@ RUN install2.r --error \
   jsonlite \
   ggthemes
 
-# Copy docker build working directory contents to docker image
-# /home/OpenPedCan-api/
-COPY / /home/OpenPedCan-api/
+# Copy API server files to docker image /home/OpenPedCan-api/
+COPY ./main.R .
+COPY ./src/ ./src/
+
+RUN echo "Docker container working dir: ${PWD}" \
+  && echo "Docker container working dir ls: " \
+  && ls -lh \
+  && echo "-----------------------------------"
 
 EXPOSE 80
 ENTRYPOINT ["Rscript", "--vanilla", "main.R"]
