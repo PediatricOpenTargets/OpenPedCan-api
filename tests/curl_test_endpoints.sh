@@ -46,6 +46,8 @@ for ensg_id in "ENSG00000213420" "ENSG00000157764"; do
   output_dir="http_response_output_files/json"
   output_fn="test-tpm-gene-all-cancer-${ensg_id}.json"
   curl -X "${http_request_method}" -s -w "${http_request_method} ${query_url}\nhttp_code: %{http_code}\ncontent_type: %{content_type}\ntime_total: %{time_total} seconds\n\n\n" -o "${output_dir}/${output_fn}" "${query_url}"
+  # convert json to tsv
+  Rscript --vanilla -e "readr::write_tsv(jsonlite::fromJSON('${output_dir}/${output_fn}'), 'results/${output_fn%.json}.tsv')"
 
 
   query_url="${base_url}/tpm/gene-all-cancer/plot?ensemblId=${ensg_id}"

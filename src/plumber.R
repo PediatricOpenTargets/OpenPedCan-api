@@ -96,7 +96,7 @@ function(ensemblId, efoId) {
 #* @serializer json
 #* @get /tpm/gene-all-cancer/json
 function(ensemblId) {
-  res_tbl <- list(ensemblId = ensemblId)
+  res_tbl <- tibble::tibble(ensemblId = ensemblId)
   return(res_tbl)
 }
 
