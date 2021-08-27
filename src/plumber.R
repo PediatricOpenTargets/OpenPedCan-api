@@ -8,14 +8,30 @@
 # - docker run calls Rscript --vanilla main.R
 # - ../main.R calls plumber::pr("src/plumber.R")
 
+# API documentation annotations
+
+#* @apiTitle OpenPedCan public API
+
+#* @apiDescription OpenPedCan (Open Pediatric Cancers) project public API
+#*   transfers
+#*   <a href="https://github.com/PediatricOpenTargets/OpenPedCan-analysis">OpenPedCan-analysis</a>
+#*   results and plots via HTTP. This API is under alpha phase development at
+#*   <a href="https://github.com/PediatricOpenTargets/OpenPedCan-api">OpenPedCan-api</a>.
+#*   The OpenPedCan project is a sub-project of
+#*   <a href="https://github.com/PediatricOpenTargets">Pediatric Open Targets project</a>.
+
+
+#* @apiVersion 0.1
+
+#* @apiContact list(name = "API Support", url =
+#*   "https://github.com/PediatricOpenTargets/OpenPedCan-api/issues")
+
 
 
 # Plumber API definitions ------------------------------------------------------
 
-
-# logger adapted from
-# https://www.rplumber.io/articles/routing-and-input.html#forward-to-another-handler
-
+#* Logger adapted from https://www.rplumber.io/articles/routing-and-input.html#forward-to-another-handler
+#*
 #* Log some information about the incoming request
 #* @filter logger
 function(req, res) {
@@ -32,9 +48,9 @@ function(req, res) {
   plumber::forward()
 }
 
-#* @apiTitle Get a single-gene single-disease all-GTEx-tissue-subgroups TPM
-#  table
+#* Get a single-gene single-disease all-GTEx-tissue-subgroups TPM summary table
 #*
+#* @tag "Bulk tissue gene expression"
 #* @param ensemblId:str a single character value of gene ENSG ID.
 #* @param efoId:str a single character value of EFO ID.
 #* @serializer json
@@ -53,9 +69,9 @@ function(ensemblId, efoId) {
   return(gene_tpm_boxplot_summary_tbl)
 }
 
-#* @apiTitle Get a single-gene single-disease all-GTEx-tissue-subgroups TPM
-#  boxplot
+#* Get a single-gene single-disease all-GTEx-tissue-subgroups TPM boxplot
 #*
+#* @tag "Bulk tissue gene expression"
 #* @param ensemblId:str a single character value of gene ENSG ID.
 #* @param efoId:str a single character value of EFO ID.
 #* @serializer png list(res = 300, width = 3900, height = 2700)
@@ -73,8 +89,9 @@ function(ensemblId, efoId) {
   print(res_plot)
 }
 
-#* @apiTitle Get a single-gene all-diseases TPM table
+#* [Not implemented] Get a single-gene all-diseases TPM summary table
 #*
+#* @tag "Bulk tissue gene expression"
 #* @param ensemblId:str a single character value of gene ENSG ID.
 #* @serializer json
 #* @get /tpm/gene-all-cancer/json
@@ -83,8 +100,9 @@ function(ensemblId) {
   return(res_tbl)
 }
 
-#* @apiTitle Get a single-gene all-diseases TPM boxplot
+#* [Not implemented] Get a single-gene all-diseases TPM boxplot
 #*
+#* @tag "Bulk tissue gene expression"
 #* @param ensemblId:str a single character value of gene ENSG ID.
 #* @serializer png list(res = 300, width = 3900, height = 2700)
 #* @get /tpm/gene-all-cancer/plot
