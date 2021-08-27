@@ -91,9 +91,38 @@ The `tests` directory should contain all tools and code for testing the API serv
 
 ## API Development roadmap
 
+Implementation action items:
+
 - [ ] Implement endpoint `GET /tpm/gene-all-cancer/json`.
 - [ ] Implement endpoint `GET /tpm/gene-all-cancer/plot`.
 - [ ] Build data model in another R process. Load the data model in the API server R process. This may reduce RAM usage.
-- [ ] Build data model into a Postgres database. Implement refactor R funtions to interact with the Postgres database. This will reduce RAM usage. This may reduce run time.
+- [ ] Build data model into a Postgres database. Implement/refactor R funtions to interact with the Postgres database. This will reduce RAM usage. This may reduce run time.
 - [ ] Add unit tests to R functions.
 - [ ] Send more informative response HTTP status code. Currently, all failures use status code 500.
+
+Design action items:
+
+- [ ] Resolve gene ENSG ID to symbol mapping inconsistencies between [OpenPedCan-analysis](https://github.com/PediatricOpenTargets) and [Pediatric Open Targets (PedOT) QA site](https://ppdc-otp-stage.bento-tools.org). One gene ENSG ID may map to different symbols in OpenPedCan-analysis and PedOT.
+  - [ ] Get a list of all inconsistent mapping cases.
+    - Currently, only one inconsistent mapping case is known, in which one ENSG ID could map to multiple symbols in OpenPedCan-analysis and only one symbol in PedOT. Following is an example of one ENSG ID mapping to multiple symbols in OpenPedCan-analysis:
+      - In OpenPedCan-analysis, `ENSG00000273032` maps to `DGCR5` and `DGCR9`, and they have different TPM values.
+  
+        ```text
+        r$> summary(as.numeric(input_df_list$tpm_df['DGCR5',]))                                                       
+             Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+          0.00000   0.03414   0.17000   3.41687   1.29000 146.20000 
+        
+        r$> summary(as.numeric(input_df_list$tpm_df['DGCR9',]))                                                       
+            Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+          0.0000   0.1556   0.4467   3.3563   1.2670 189.6000 
+        ```
+  
+      - In PedOT, `ENSG00000273032` only maps to `DGCR5`, <https://ppdc-otp-stage.bento-tools.org/target/ENSG00000273032/associations>. There is no `DGCR9`, <https://ppdc-otp-stage.bento-tools.org/search?q=DGCR9&page=1>.
+    - One ENSG ID could also only map to only one symbol in OpenPedCan-analysis that is different from the mapped one on PedOT.
+  - [ ] Resolve all inconsistent mapping cases.
+    - Currently, if one ENSG ID mapps to multiple symbols in OpenPedCan-analysis, elect the first of sorted gene symbols, but the selected one may not match PedOT.
+    - Multiple symbols should probably not be returned for only one ENSG ID, in order to have one box in the boxplot only contains TPM values of one ENSG ID and one symbol.
+    - Potential alternative solutions:
+      - Completely drop gene symbol in plots and results, as it is also shown on PedOT.
+      - Add `geneSymbol` to API endpoint parameters. Concerns: 1) PedOT may not be able to pass `geneSymbol` to the API query; 2) `geneSymbol` may not be URL friendly.
+      - Use PedOT gene mappings in OpenPedCan-analysis, as a long term goal. This will involve updating many OpenPedCan-analysis pipelines and analysis modules.
