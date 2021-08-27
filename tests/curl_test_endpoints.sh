@@ -31,20 +31,22 @@ for ensg_id in "ENSG00000213420" "ENSG00000157764"; do
     output_dir="http_response_output_files/json"
     output_fn="test-tpm-gene-disease-gtex-${ensg_id}-${efo_id}.json"
     curl -X "${http_request_method}" -s -w "${http_request_method} ${query_url}\nhttp_code: %{http_code}\ncontent_type: %{content_type}\ntime_total: %{time_total} seconds\n\n\n" -o "${output_dir}/${output_fn}" "${query_url}"
-    jq '.[0:3]' "${output_dir}/${output_fn}"
     # convert json to tsv
     Rscript --vanilla -e "readr::write_tsv(jsonlite::fromJSON('${output_dir}/${output_fn}'), 'results/${output_fn%.json}.tsv')"
+
 
     query_url="${base_url}/tpm/gene-disease-gtex/plot?ensemblId=${ensg_id}&efoId=${efo_id}"
     output_dir="http_response_output_files/png"
     output_fn="test-tpm-gene-disease-gtex-${ensg_id}-${efo_id}.png"
     curl -X "${http_request_method}" -s -w "${http_request_method} ${query_url}\nhttp_code: %{http_code}\ncontent_type: %{content_type}\ntime_total: %{time_total} seconds\n\n\n" -o "${output_dir}/${output_fn}" "${query_url}"
   done
+
+
   query_url="${base_url}/tpm/gene-all-cancer/json?ensemblId=${ensg_id}"
   output_dir="http_response_output_files/json"
   output_fn="test-tpm-gene-all-cancer-${ensg_id}.json"
   curl -X "${http_request_method}" -s -w "${http_request_method} ${query_url}\nhttp_code: %{http_code}\ncontent_type: %{content_type}\ntime_total: %{time_total} seconds\n\n\n" -o "${output_dir}/${output_fn}" "${query_url}"
-  jq '.' "${output_dir}/${output_fn}"
+
 
   query_url="${base_url}/tpm/gene-all-cancer/plot?ensemblId=${ensg_id}"
   output_dir="http_response_output_files/png"
