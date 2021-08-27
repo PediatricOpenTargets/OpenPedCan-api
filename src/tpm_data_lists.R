@@ -232,11 +232,26 @@ tpm_data_lists <- lapply(tpm_data_lists, function(xl) {
   stopifnot(identical(
     sum(is.na(dplyr::select(overlap_tpm_tbl, -RMTL))), 0L))
 
+  # If one ENSG ID mapps to multiple symbols, select the first of sorted gene
+  # symbols.
+  #
+  # dplyr::distinct documentations.
+  #
+  # - "...: <‘data-masking’> Optional variables to use when determining
+  #   uniqueness. If there are multiple rows for a given combination of inputs,
+  #   only the first row will be preserved. If omitted, will use all variables."
+  # - ".keep_all: If ‘TRUE’, keep all variables in ‘.data’. If a combination of
+  #   ‘...’ is not distinct, this keeps the first row of values."
+  overlap_tpm_tbl <- overlap_tpm_tbl %>%
+    dplyr::arrange(.data$Gene_symbol) %>%
+    dplyr::distinct(.data$Gene_Ensembl_ID, .keep_all = TRUE)
+
   overlap_data_list <- list(
     tpm_df = overlap_tpm_tbl,
     sample_subset_df = overlap_sample_subset_df,
     histology_df = overlap_histology_df
   )
+
   return(overlap_data_list)
 })
 
