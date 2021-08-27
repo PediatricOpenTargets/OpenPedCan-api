@@ -248,7 +248,6 @@ tpm_data_lists <- lapply(tpm_data_lists, function(xl) {
 
   overlap_data_list <- list(
     tpm_df = overlap_tpm_tbl,
-    sample_subset_df = overlap_sample_subset_df,
     histology_df = overlap_histology_df
   )
 
