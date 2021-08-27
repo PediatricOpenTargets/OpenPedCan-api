@@ -51,12 +51,6 @@
 # - Completely drop gene_symbol, as it is also shown on PedOT.
 get_gene_tpm_tbl <- function(tpm_data_lists, ensg_id, efo_id,
                              gene_symbol = NULL) {
-  # - rlang::.data "retrieves data-variables from the data frame".
-  # - rlang::.env "retrieves env-variables from the environment".
-  # - Ref: https://rlang.r-lib.org/reference/tidyeval-data.html
-  .data <- rlang::.data
-  .env <- rlang::.env
-
   stopifnot(is.character(ensg_id))
   stopifnot(is.character(efo_id))
   stopifnot(identical(length(ensg_id), 1L))
@@ -67,6 +61,15 @@ get_gene_tpm_tbl <- function(tpm_data_lists, ensg_id, efo_id,
   all_cohorts_str_id <- "all_cohorts"
 
   long_tpm_tbl_list <- purrr::imap(tpm_data_lists, function(xl, xname) {
+    # .data and .env are from rlang package, but they do not need to be imported
+    # to work. "The .data pronoun is automatically created for you by
+    # data-masking functions using the tidy eval framework." This should also
+    # apply to .env.
+    #
+    # - .data "retrieves data-variables from the data frame".
+    # - .env "retrieves env-variables from the environment".
+    # - Ref: https://rlang.r-lib.org/reference/tidyeval-data.html
+    #
     # tpm_df cols: Gene_Ensembl_ID, Gene_symbol, RMTL, Sample1, Sample2, ...
     ensg_tpm_df <- dplyr::filter(
       xl$tpm_df, .data$Gene_Ensembl_ID == .env$ensg_id)
