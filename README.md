@@ -120,7 +120,7 @@ Design action items:
       - In PedOT, `ENSG00000273032` only maps to `DGCR5`, <https://ppdc-otp-stage.bento-tools.org/target/ENSG00000273032/associations>. There is no `DGCR9`, <https://ppdc-otp-stage.bento-tools.org/search?q=DGCR9&page=1>.
     - One ENSG ID could also only map to only one symbol in OpenPedCan-analysis that is different from the mapped one on PedOT.
   - [ ] Resolve all inconsistent mapping cases.
-    - Currently, if one ENSG ID mapps to multiple symbols in OpenPedCan-analysis, elect the first of sorted gene symbols, but the selected one may not match PedOT.
+    - Currently, if one ENSG ID mapps to multiple symbols in OpenPedCan-analysis, select the first of sorted gene symbols, but the selected one may not match PedOT.
     - Multiple symbols should probably not be returned for only one ENSG ID, in order to have one box in the boxplot only contains TPM values of one ENSG ID and one symbol.
     - Potential alternative solutions:
       - Completely drop gene symbol in plots and results, as it is also shown on PedOT.
