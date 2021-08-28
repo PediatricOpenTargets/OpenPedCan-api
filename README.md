@@ -182,7 +182,7 @@ Discussions in PedOT meetings, Slack work space, GitHub issues, etc specify the 
 
 ### HTTP server layer
 
-`main.R` runs the `OpenPedCan-api` HTTP server. The HTTP server is implemented using [libuv](http://docs.libuv.org/en/stable/design.html) and [http-parser](https://github.com/nodejs/http-parser) by [R package plumber](https://github.com/rstudio/plumber).
+`main.R` runs the `OpenPedCan-api` HTTP server. The HTTP server is implemented using [libuv](http://docs.libuv.org/en/stable/design.html) and [http-parser](https://github.com/nodejs/http-parser) and called by [R package plumber](https://github.com/rstudio/plumber).
 
 The API HTTP server handles every HTTP request [sequentially](https://www.rplumber.io/articles/execution-model.html#performance-request-processing) with the following steps:
 
