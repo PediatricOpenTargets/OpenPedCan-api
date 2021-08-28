@@ -59,3 +59,5 @@ cd db
 echo "Check data model sha256sum..."
 
 sha256sum -c sha256sum.txt
+
+echo "Done running $0"
