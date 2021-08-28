@@ -43,7 +43,7 @@ cd ..
 
 echo "Build data model using docker..."
 
-docker build -f db/build_db.Dockerfile -t open-ped-can-api-build-db .
+docker build --no-cache -f db/build_db.Dockerfile -t open-ped-can-api-build-db .
 
 # Copy db files from image to host.
 #
