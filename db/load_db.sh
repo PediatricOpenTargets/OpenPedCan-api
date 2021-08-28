@@ -16,12 +16,10 @@ cd "$(dirname "$0")" || exit
 #   locally, report an error.
 DB_LOCATION=${DB_LOCATION:-aws_s3}
 
-echo "Load database from ${DB_LOCATION}"
+printf "\n\nLoad database from ${DB_LOCATION}...\n"
 
 if [[ "${DB_LOCATION}" == "local" ]]; then
-  if [[ -f "sha256sum.txt" ]]; then
-    sha256sum -c --strict sha256sum.txt
-  else
+  if [[ ! -f "sha256sum.txt" ]]; then
     echo "./db/sha256sum.txt does not exist." 1>&2
     exit 1
   fi
@@ -37,5 +35,20 @@ API_DB_BASE_URL="https://s3.amazonaws.com/kf-openaccess-us-east-1-prd-pbta/open-
 if [[ "${DB_LOCATION}" == "aws_s3" ]]; then \
   curl "${API_DB_BASE_URL}/sha256sum.txt" -o sha256sum.txt
   curl "${API_DB_BASE_URL}/tpm_data_lists.rds" -o tpm_data_lists.rds
-  sha256sum -c --strict sha256sum.txt
 fi
+
+printf "\n\nCheck database sha256sum...\n"
+
+# Try different sha sum commands.
+#
+# Adapted from https://stackoverflow.com/a/26759734/4638182
+if [[ -x $(command -v sha256sum) ]]; then
+  sha256sum -c sha256sum.txt
+elif [[ -x $(command -v shasum) ]]; then
+  shasum -a 256 --strict -c sha256sum.txt
+else
+  echo "sha256sum or shasum command not found. Please install either one and rerun." 1>&2
+  exit 1
+fi
+
+printf "\n\nDone running $0\n"
