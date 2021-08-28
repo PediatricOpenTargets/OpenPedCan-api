@@ -19,8 +19,8 @@
     - [Analysis logic layer](#analysis-logic-layer)
     - [API layer](#api-layer)
     - [HTTP server layer](#http-server-layer)
-  - [Testing layer](#testing-layer)
-  - [Deployment layer](#deployment-layer)
+    - [Testing layer](#testing-layer)
+    - [Deployment layer](#deployment-layer)
   - [API Development road map](#api-development-road-map)
 
 ## API endpoint specifications
@@ -59,7 +59,8 @@ Test run `OpenPedCan-api` server with the following steps:
 Note that this test run procedure has only been tested on linux operating system, with the following environment.
 
 ```text
-Working directory is the git repository root directory, i.e. the directory that contains the .git directory of the repository.
+Working directory is the git repository root directory, i.e. the directory
+that contains the .git directory of the repository.
 
 ubuntu 18
 docker 19.03
@@ -191,11 +192,11 @@ The API HTTP server handles every HTTP request [sequentially](https://www.rplumb
 - Convert the return value of the endpoint R function to defined response content type, e.g. JSON and PNG.
 - Send HTTP response to the request address.
 
-## Testing layer
+### Testing layer
 
 The `tests` directory contain all tools and code for testing the API server. `tests/http_response_output_files` contains the API server response plots and tables. `tests/results` contains results generated during test run.
 
-## Deployment layer
+### Deployment layer
 
 Jenkinsfile and Dockerfile specify the procedures to deploy the `OpenPedCan-api` server.
 
