@@ -17,6 +17,9 @@ WORKDIR /home/OpenPedCan-api/src
 # This creates /home/OpenPedCan-api/db/tpm_data_lists.rds
 RUN Rscript --vanilla tpm_data_lists.R
 
-WORKDIR /home/OpenPedCan-api
+WORKDIR /home/OpenPedCan-api/db/
 
-RUN sha256sum db/tpm_data_lists.rds
+# Checksum used for checking download during deployment
+RUN sha256sum tpm_data_lists.rds > sha256sum.txt
+
+WORKDIR /home/OpenPedCan-api/

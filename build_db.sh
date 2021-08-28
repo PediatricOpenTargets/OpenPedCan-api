@@ -41,5 +41,10 @@ docker build -f db/build_db.Dockerfile -t open-ped-can-api-build-db .
 #
 # Adapted from https://stackoverflow.com/a/31316636/4638182
 docker_container_id=$(docker create open-ped-can-api-build-db)
-docker cp "${docker_container_id}:/home/OpenPedCan-api/db/tpm_data_lists.rds" ./db
+docker cp "${docker_container_id}:/home/OpenPedCan-api/db/tpm_data_lists.rds" ./db/
+docker cp "${docker_container_id}:/home/OpenPedCan-api/db/sha256sum.txt" ./db/
 docker rm -v "${docker_container_id}"
+
+# check sha256sum
+cd db
+sha256sum -c sha256sum.txt
