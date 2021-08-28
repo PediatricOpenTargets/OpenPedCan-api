@@ -49,7 +49,9 @@ ARG DB_LOCATION="aws_s3"
 
 # Use CACHE_DATE to prevent the following RUN commands from using cache. Pass
 # new CACHE_DATE docker build --build-arg CACHE_DATE=$(date +%s) .
-ARG CACHE_DATE=not_a_date
+#
+# Adapted from https://stackoverflow.com/a/38261124/4638182
+ARG CACHE_DATE="not_a_date"
 
 RUN ./load_db.sh
 
