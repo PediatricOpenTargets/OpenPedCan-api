@@ -53,7 +53,17 @@ cat("---------------------------------\n",
 #   can be tracked straightforwardly.
 # - Use ls() to check what variables are defined by previous scripts, make sure
 #   previously defined variables are not overwritten by the new script.
-source("src/tpm_data_lists.R", chdir = TRUE)
+tpm_data_lists <- readRDS("db/tpm_data_lists.rds")
+
+cat("---------------------------------\n",
+    as.character(Sys.time()), "\n",
+    "Primary tumor all-cohorts independent n samples: ",
+    nrow(tpm_data_lists$pt_all_cohorts$histology_df), "\n",
+    "Primary tumor each-cohort independent n samples: ",
+    nrow(tpm_data_lists$pt_each_cohort$histology_df), "\n",
+    "GTEx all n samples: ", nrow(tpm_data_lists$gtex$histology_df),
+    "\n---------------------------------\n")
+
 source("src/get_gene_tpm_tbl.R")
 source("src/ggplot2_publication_theme.R")
 source("src/get_gene_tpm_boxplot_tbl.R")

@@ -1,0 +1,7 @@
+# Config for docker build to only transfer required files to docker daemon
+OpenPedCan-analysis
+.git
+tests
+# ! excludes patterns
+!OpenPedCan-analysis/data
+!OpenPedCan-analysis/analyses/long-format-table-utils

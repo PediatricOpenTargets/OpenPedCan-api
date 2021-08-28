@@ -14,16 +14,26 @@
 # - tpm_data_lists
 
 
+
 # Get %>% without loading the whole library
 `%>%` <- magrittr::`%>%`
 
-# Read and process data --------------------------------------------------------
-# OpenPedCan-analysis is created in Dockerfile with
-# git clone https://github.com/PediatricOpenTargets/OpenPedCan-analysis.git
-# cd OpenPedCan-analysis && bash download-data.sh
 
+
+# Define input and output directory --------------------------------------------
+# Input dirs
 opc_analysis_dir <- file.path("..", "OpenPedCan-analysis")
 data_dir <- file.path(opc_analysis_dir, "data")
+
+# Output dir
+output_dir <- file.path("..", "db")
+if (!dir.exists(output_dir)) {
+  dir.create(output_dir)
+}
+
+
+
+# Read and process data --------------------------------------------------------
 
 input_df_list <- list(
   histology_df = readr::read_tsv(
@@ -260,10 +270,10 @@ tpm_data_lists <- lapply(tpm_data_lists, function(xl) {
 cat("---------------------------------\n",
     as.character(Sys.time()), "\n",
     "Primary tumor all-cohorts independent n samples: ",
-    nrow(tpm_data_lists$pt_all_cohorts$sample_subset_df), "\n",
+    nrow(tpm_data_lists$pt_all_cohorts$histology_df), "\n",
     "Primary tumor each-cohort independent n samples: ",
-    nrow(tpm_data_lists$pt_each_cohort$sample_subset_df), "\n",
-    "GTEx all n samples: ", nrow(tpm_data_lists$gtex$sample_subset_df),
+    nrow(tpm_data_lists$pt_each_cohort$histology_df), "\n",
+    "GTEx all n samples: ", nrow(tpm_data_lists$gtex$histology_df),
     "\n---------------------------------\n")
 
 # Assert tpm_data_lists is valid -----------------------------------------------
@@ -291,7 +301,7 @@ purrr::iwalk(tpm_data_lists, function(xl, xname) {
   }
 })
 
-# Remove variables that are not used by the interface defined by this file -----
-rm(opc_analysis_dir, data_dir, input_df_list, prev_wd,
-   annotate_long_format_table, `%>%`)
-invisible(gc(reset = TRUE))
+
+
+# Output -----------------------------------------------------------------------
+saveRDS(tpm_data_lists, file.path(output_dir, "tpm_data_lists.rds"))
