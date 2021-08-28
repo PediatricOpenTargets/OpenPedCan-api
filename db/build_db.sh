@@ -9,6 +9,8 @@ set -o pipefail
 # Adapted from https://stackoverflow.com/a/3355423/4638182
 cd "$(dirname "$0")" || exit
 
+cd ..
+
 # The commit ID to checkout to build data model.
 #
 # 61e23154a34e1d8b3fc1c50a67dd8f79c2067776 points to v8 release with updated
@@ -27,6 +29,7 @@ git submodule update --init --recursive
 
 # Download data
 cd OpenPedCan-analysis
+
 git checkout -q "${OPEN_PED_CAN_ANALYSIS_COMMIT}"
 ./download-data.sh
 git switch -q -
@@ -35,6 +38,8 @@ git switch -q -
 #
 # NOTE: if more files in OpenPedCan-analysis are used, exclude them in the
 # .dockerignore file.
+cd ..
+
 docker build -f db/build_db.Dockerfile -t open-ped-can-api-build-db .
 
 # Copy db files from image to host.
@@ -47,4 +52,5 @@ docker rm -v "${docker_container_id}"
 
 # check sha256sum
 cd db
+
 sha256sum -c sha256sum.txt
