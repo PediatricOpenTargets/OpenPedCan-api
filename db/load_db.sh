@@ -36,6 +36,6 @@ API_DB_BASE_URL="https://s3.amazonaws.com/kf-openaccess-us-east-1-prd-pbta/open-
 
 if [[ "${DB_LOCATION}" == "aws_s3" ]]; then \
   curl "${API_DB_BASE_URL}/sha256sum.txt" -o sha256sum.txt
-  curl "${API_DB_BASE_URL}/sha256sum.txt" -o sha256sum.txt
+  curl "${API_DB_BASE_URL}/tpm_data_lists.rds" -o tpm_data_lists.rds
   sha256sum -c --strict sha256sum.txt
 fi
