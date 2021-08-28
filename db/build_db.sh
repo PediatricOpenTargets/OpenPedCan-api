@@ -60,7 +60,7 @@ printf "\n\nCheck data model sha256sum..."
 
 # Try different sha sum commands.
 #
-# Adapted from https://stackoverflow.com/a/677212/4638182
+# Adapted from https://stackoverflow.com/a/26759734/4638182
 if [[ -x $(command -v sha256sum) ]]; then
   sha256sum -c sha256sum.txt
 elif [[ -x $(command -v shasum) ]]; then
