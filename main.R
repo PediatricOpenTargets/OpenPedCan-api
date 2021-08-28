@@ -61,7 +61,8 @@ cat("---------------------------------\n",
     nrow(tpm_data_lists$pt_all_cohorts$histology_df), "\n",
     "Primary tumor each-cohort independent n samples: ",
     nrow(tpm_data_lists$pt_each_cohort$histology_df), "\n",
-    "GTEx all n samples: ", nrow(tpm_data_lists$gtex$histology_df),
+    "GTEx all n samples: ", nrow(tpm_data_lists$gtex$histology_df), "\n",
+    "Number of genes: ", nrow(tpm_data_lists$pt_all_cohorts$tpm_df),
     "\n---------------------------------\n")
 
 source("src/get_gene_tpm_tbl.R")

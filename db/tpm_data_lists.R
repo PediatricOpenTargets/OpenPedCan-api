@@ -263,6 +263,60 @@ tpm_data_lists <- lapply(tpm_data_lists, function(xl) {
   return(overlap_data_list)
 })
 
+# TODO: remove down-sampling procedure to include all ENSG IDs, when the hosting
+# env has 8GB memory. Currently, only n_down_sample_ensg_ids ENSG IDs are
+# randomly kept to reduce memory usage, including "ENSG00000213420",
+# "ENSG00000157764", "ENSG00000273032" for backward compatibility.
+#
+# Down-sample ENSG IDs to temporarily reduce memory usage.
+set.seed(17)
+n_down_sample_ensg_ids <- 1500L
+# arbitrarily selected ENSG IDs
+arbt_selected_ensg_ids <- c("ENSG00000213420", "ENSG00000157764",
+                            "ENSG00000273032")
+
+rand_selected_ensg_ids <- dplyr::sample_n(
+  dplyr::filter(
+    dplyr::select(tpm_data_lists$pt_all_cohorts$tpm_df, Gene_Ensembl_ID),
+    !(.data$Gene_Ensembl_ID %in% .env$arbt_selected_ensg_ids)),
+  size = n_down_sample_ensg_ids - length(arbt_selected_ensg_ids),
+  replace = FALSE)$Gene_Ensembl_ID
+
+selected_ensg_ids <- c(arbt_selected_ensg_ids, rand_selected_ensg_ids)
+
+stopifnot(identical(length(selected_ensg_ids), n_down_sample_ensg_ids))
+stopifnot(identical(
+  length(selected_ensg_ids), length(unique(selected_ensg_ids))
+))
+stopifnot(all(!is.na(selected_ensg_ids)))
+
+tpm_data_lists <- lapply(tpm_data_lists, function(xl) {
+  down_sample_tpm_df <- dplyr::filter(
+    xl$tpm_df, .data$Gene_Ensembl_ID %in% selected_ensg_ids)
+
+  stopifnot(identical(
+    sort(down_sample_tpm_df$Gene_Ensembl_ID), sort(selected_ensg_ids)))
+
+  down_sample_tpm_data_list <- list(
+    tpm_df = down_sample_tpm_df,
+    histology_df = xl$histology_df
+  )
+
+  return(down_sample_tpm_data_list)
+})
+
+stopifnot(identical(
+  sort(tpm_data_lists$gtex$tpm_df$Gene_Ensembl_ID),
+  sort(tpm_data_lists$pt_all_cohorts$tpm_df$Gene_Ensembl_ID)
+))
+
+stopifnot(identical(
+  sort(tpm_data_lists$gtex$tpm_df$Gene_Ensembl_ID),
+  sort(tpm_data_lists$pt_each_cohort$tpm_df$Gene_Ensembl_ID)
+))
+
+
+
 # Converting tpm_data_lists to a single long plotting table takes > 30 GB RAM,
 # so plotting long table is created for each plot.
 
@@ -272,7 +326,8 @@ cat("---------------------------------\n",
     nrow(tpm_data_lists$pt_all_cohorts$histology_df), "\n",
     "Primary tumor each-cohort independent n samples: ",
     nrow(tpm_data_lists$pt_each_cohort$histology_df), "\n",
-    "GTEx all n samples: ", nrow(tpm_data_lists$gtex$histology_df),
+    "GTEx all n samples: ", nrow(tpm_data_lists$gtex$histology_df), "\n",
+    "Number of genes: ", nrow(tpm_data_lists$pt_all_cohorts$tpm_df),
     "\n---------------------------------\n")
 
 # Assert tpm_data_lists is valid -----------------------------------------------
