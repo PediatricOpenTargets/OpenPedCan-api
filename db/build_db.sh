@@ -41,7 +41,7 @@ git switch -q -
 # .dockerignore file.
 cd ..
 
-echo "Build data model using docker..."
+printf "\n\nBuild data model using docker..."
 
 docker build --no-cache -f db/build_db.Dockerfile -t open-ped-can-api-build-db .
 
@@ -56,8 +56,18 @@ docker rm -v "${docker_container_id}"
 # check sha256sum
 cd db
 
-echo "Check data model sha256sum..."
+printf "\n\nCheck data model sha256sum..."
 
-sha256sum -c sha256sum.txt
+# Try different sha sum commands.
+#
+# Adapted from https://stackoverflow.com/a/677212/4638182
+if [[ -x $(command -v sha256sum) ]]; then
+  sha256sum -c sha256sum.txt
+elif [[ -x $(command -v shasum) ]]; then
+  shasum -a 256 --strict -c sha256sum.txt
+else
+  echo "sha256sum or shasum command not found. Please install either one and rerun." 1>&2
+  exit 1
+fi
 
-echo "Done running $0"
+printf "\n\nDone running $0"
