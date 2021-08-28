@@ -52,8 +52,8 @@ Test run `OpenPedCan-api` server with the following steps:
 - `git clone` `OpenPedCan-api` repository. Checkout a branch/commit that needs to be tested.
 - Run static R code analysis using R package `lintr`.
 - (Optional) Build data model files locally. This step takes > 25GB memory. This step is optional, because pre-built `OpenPedCan-api` data model files are publicly available via HTTP.
-- Build `OpenPedCan-api` docker image. The docker image can either use local pre-built or remote pre-built data model files.
-- Run `OpenPedCan-api` docker image. The `docker run` started docker container runs `OpenPedCan-api` server.
+- Build `OpenPedCan-api` docker image. The docker image can either use local pre-built or remote pre-built data model files. This step takes < 8GB memory.
+- Run `OpenPedCan-api` docker image. The `docker run` started docker container runs `OpenPedCan-api` server. This step takes < 8GB memory.
 - Test `OpenPedCan-api` server using `curl`.
 
 Note that this test run procedure has only been tested on linux operating system, with the following environment.
