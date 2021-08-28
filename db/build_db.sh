@@ -11,6 +11,7 @@ cd "$(dirname "$0")" || exit
 
 cd ..
 
+echo "Download OpenPedCan-analysis data release..."
 # The commit ID to checkout to build data model.
 #
 # 61e23154a34e1d8b3fc1c50a67dd8f79c2067776 points to v8 release with updated
@@ -40,6 +41,8 @@ git switch -q -
 # .dockerignore file.
 cd ..
 
+echo "Build data model using docker..."
+
 docker build -f db/build_db.Dockerfile -t open-ped-can-api-build-db .
 
 # Copy db files from image to host.
@@ -52,5 +55,7 @@ docker rm -v "${docker_container_id}"
 
 # check sha256sum
 cd db
+
+echo "Check data model sha256sum..."
 
 sha256sum -c sha256sum.txt
