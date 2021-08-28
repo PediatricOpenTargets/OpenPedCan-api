@@ -41,7 +41,7 @@ git switch -q -
 # .dockerignore file.
 cd ..
 
-printf "\n\nBuild data model using docker..."
+printf "\n\nBuild data model using docker...\n"
 
 docker build --no-cache -f db/build_db.Dockerfile -t open-ped-can-api-build-db .
 
@@ -56,7 +56,7 @@ docker rm -v "${docker_container_id}"
 # check sha256sum
 cd db
 
-printf "\n\nCheck data model sha256sum..."
+printf "\n\nCheck data model sha256sum...\n"
 
 # Try different sha sum commands.
 #
@@ -70,4 +70,4 @@ else
   exit 1
 fi
 
-printf "\n\nDone running $0"
+printf "\n\nDone running $0\n"
