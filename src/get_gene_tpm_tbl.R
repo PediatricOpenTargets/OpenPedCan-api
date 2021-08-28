@@ -16,7 +16,8 @@
 # GTEx tissue(s).
 #
 # Args:
-# - tpm_data_lists: tpm_data_lists defined in src/tpm_data_lists.R.
+# - tpm_data_lists: tpm_data_lists loaded from the tpm_data_lists.rds output of
+#   db/tpm_data_lists.R.
 # - ensg_id: a single character value of gene ENSG ID.
 # - efo_id: a single character value of EFO ID.
 # - gene_symbol: an optional single character value of gene symbol.

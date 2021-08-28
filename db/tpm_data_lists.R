@@ -1,13 +1,12 @@
-# tpm_data_lists.R defines a list variable, tpm_data_lists, that is used by
-# other functions or procedures.
+# tpm_data_lists.R outputs a variable, tpm_data_lists, into tpm_data_lists.rds
+# that is used by other functions or procedures.
 #
 # This file should be run with the directory that contains this file as working
 # directory.
 #
 # Call sequence:
 #
-# - docker run calls Rscript --vanilla main.R
-# - ../main.R calls source("src/tpm_data_lists.R", chdir = TRUE)
+# - docker run db/build_db.Dockerfile calls Rscript --vanilla tpm_data_lists.R
 #
 # Defined variables:
 #
