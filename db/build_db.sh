@@ -70,4 +70,4 @@ else
   exit 1
 fi
 
-printf "\n\nDone running $0\n"
+printf '\n\nDone running %s.\n' "$0"

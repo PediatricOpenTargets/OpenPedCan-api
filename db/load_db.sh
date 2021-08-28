@@ -16,7 +16,7 @@ cd "$(dirname "$0")" || exit
 #   locally, report an error.
 DB_LOCATION=${DB_LOCATION:-aws_s3}
 
-printf "\n\nLoad database from ${DB_LOCATION}...\n"
+printf '\n\nLoad database from %s...\n' "$DB_LOCATION"
 
 if [[ "${DB_LOCATION}" == "local" ]]; then
   if [[ ! -f "sha256sum.txt" ]]; then
@@ -51,4 +51,4 @@ else
   exit 1
 fi
 
-printf "\n\nDone running $0\n"
+printf '\n\nDone running %s.\n' "$0"
