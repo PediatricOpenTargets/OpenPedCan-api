@@ -270,7 +270,7 @@ tpm_data_lists <- lapply(tpm_data_lists, function(xl) {
 #
 # Down-sample ENSG IDs to temporarily reduce memory usage.
 set.seed(17)
-n_down_sample_ensg_ids <- 1500L
+n_down_sample_ensg_ids <- 100L
 # arbitrarily selected ENSG IDs
 arbt_selected_ensg_ids <- c("ENSG00000213420", "ENSG00000157764",
                             "ENSG00000273032")
