@@ -206,6 +206,7 @@ Implementation action items:
 
 - Implement endpoint `GET /tpm/gene-all-cancer/json`.
 - Implement endpoint `GET /tpm/gene-all-cancer/plot`.
+- Remove gene down-sampling procedure in `db/tpm_data_lists.R`, in order to include all genes.
 - Build data model in another R process. Load the data model in the API server R process. This may reduce RAM usage.
 - Build data model into a Postgres database. Implement/refactor R functions to interact with the Postgres database. This will reduce RAM usage. This may reduce run time.
 - Add unit tests to R functions.
