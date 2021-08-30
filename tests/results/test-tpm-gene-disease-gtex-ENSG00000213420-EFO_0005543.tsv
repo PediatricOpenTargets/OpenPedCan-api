@@ -1,56 +1,56 @@
 x_labels	Gene_Ensembl_ID	Gene_symbol	PMTL	cohort	Disease	EFO	MONDO	TPM_mean	TPM_sd	TPM_min	TPM_25th_percentile	TPM_median	TPM_75th_percentile	TPM_max	GTEx_tissue_subgroup	GTEx_tissue_subgroup_UBERON
-PBTA High-grade glioma/astrocytoma (N = 51)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	High-grade glioma/astrocytoma	EFO_0005543	MONDO_0100342	11.23	14	0.15	2.74	5.66	14.88	59.91	NA	NA
-PBTA Low-grade glioma/astrocytoma (N = 237)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Low-grade glioma/astrocytoma	EFO_0005543	MONDO_0016685	2.88	2.14	0.17	1.27	2.48	4.11	12.52	NA	NA
-GTEx Adipose - Subcutaneous (N = 663)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.76	0.82	0.3	1.17	1.66	2.18	5.47	Adipose - Subcutaneous	UBERON_0002190
-GTEx Adipose - Visceral (Omentum) (N = 541)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.2	0.65	0.14	0.71	1.04	1.54	4.09	Adipose - Visceral (Omentum)	UBERON_0010414
-GTEx Adrenal Gland (N = 258)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	0.72	0.36	0.18	0.51	0.63	0.86	3.25	Adrenal Gland	UBERON_0002369
-GTEx Artery - Aorta (N = 432)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.45	0.74	0.35	0.98	1.3	1.69	5.66	Artery - Aorta	UBERON_0001496
-GTEx Artery - Coronary (N = 240)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.37	0.95	0.17	0.84	1.14	1.63	10.15	Artery - Coronary	UBERON_0001621
-GTEx Artery - Tibial (N = 663)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	0.75	0.59	0	0.39	0.61	0.93	6.25	Artery - Tibial	UBERON_0007610
-GTEx Bladder (N = 21)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.98	1.25	0.73	1.16	1.85	2.11	5.98	Bladder	UBERON_0001255
-GTEx Blood (N = 755)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.04	1.81	0	0.45	0.8	1.26	45.04	Blood	UBERON_0013756
-GTEx Brain - Amygdala (N = 152)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	2.29	0.86	0.21	1.66	2.22	2.84	5.07	Brain - Amygdala	UBERON_0001876
-GTEx Brain - Anterior cingulate cortex (BA24) (N = 176)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.86	0.65	0.28	1.42	1.78	2.16	4.74	Brain - Anterior cingulate cortex (BA24)	UBERON_0009835
-GTEx Brain - Caudate (basal ganglia) (N = 246)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.35	0.5	0.28	0.98	1.35	1.64	3.44	Brain - Caudate (basal ganglia)	UBERON_0001873
-GTEx Brain - Cerebellum (N = 456)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	3.2	1.91	0.54	2.01	2.78	3.67	15.63	Brain - Cerebellum	UBERON_0002037
-GTEx Brain - Cortex (N = 255)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.63	0.57	0.45	1.23	1.53	1.95	4.32	Brain - Cortex	UBERON_0001870
-GTEx Brain - Frontal Cortex (BA9) (N = 209)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.61	0.59	0.42	1.24	1.56	1.84	5.38	Brain - Frontal Cortex (BA9)	UBERON_0009834
-GTEx Brain - Hippocampus (N = 197)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	2.21	1	0.19	1.47	2.09	2.68	5.95	Brain - Hippocampus	UBERON_0001954
-GTEx Brain - Hypothalamus (N = 202)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.58	0.83	0.19	1	1.45	2	6.24	Brain - Hypothalamus	UBERON_0001898
-GTEx Brain - Nucleus accumbens (basal ganglia) (N = 246)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.36	0.69	0.1	0.91	1.28	1.64	6.23	Brain - Nucleus accumbens (basal ganglia)	UBERON_0001882
-GTEx Brain - Putamen (basal ganglia) (N = 205)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.32	0.58	0.26	0.92	1.24	1.6	3.86	Brain - Putamen (basal ganglia)	UBERON_0001874
-GTEx Brain - Spinal cord (cervical c-1) (N = 159)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	3.34	1.52	0.51	2.19	3.2	4.41	6.84	Brain - Spinal cord (cervical c-1)	UBERON_0006469
-GTEx Brain - Substantia nigra (N = 139)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.74	0.96	0.4	1.06	1.59	2.32	6.38	Brain - Substantia nigra	UBERON_0002038
-GTEx Breast - Mammary Tissue (N = 459)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	2.27	1.62	0.26	1.17	1.88	2.93	15.34	Breast - Mammary Tissue	UBERON_0008367
-GTEx Cells - Cultured fibroblasts (N = 504)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.3	0.6	0.33	0.94	1.21	1.49	8.06	Cells - Cultured fibroblasts	NA
-GTEx Cells - EBV-transformed lymphocytes (N = 174)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	2.61	1.56	0.43	1.58	2.33	3.11	11.26	Cells - EBV-transformed lymphocytes	NA
-GTEx Cervix - Ectocervix (N = 9)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	4.63	2.91	2.15	2.94	3.68	4.47	11.61	Cervix - Ectocervix	UBERON_0012249
-GTEx Cervix - Endocervix (N = 10)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	5.14	4.09	2.33	2.93	3.64	4.68	15.63	Cervix - Endocervix	UBERON_0000458
-GTEx Colon - Sigmoid (N = 373)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.67	0.83	0.29	1.06	1.55	2.1	5.22	Colon - Sigmoid	UBERON_0001159
-GTEx Colon - Transverse (N = 406)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	2.02	0.87	0.34	1.4	1.92	2.48	8.43	Colon - Transverse	UBERON_0001157
-GTEx Esophagus - Gastroesophageal Junction (N = 375)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.13	0.61	0.1	0.68	0.99	1.47	4.08	Esophagus - Gastroesophageal Junction	UBERON_0004550
-GTEx Esophagus - Mucosa (N = 555)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.16	0.59	0.13	0.74	1.04	1.42	4.14	Esophagus - Mucosa	UBERON_0006920
-GTEx Esophagus - Muscularis (N = 515)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.19	0.65	0.16	0.75	1.05	1.55	5.36	Esophagus - Muscularis	UBERON_0004648
-GTEx Fallopian Tube (N = 9)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	3.32	1.75	0.91	2.7	2.8	4	6.78	Fallopian Tube	UBERON_0003889
-GTEx Heart - Atrial Appendage (N = 429)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	0.63	0.36	0.1	0.38	0.56	0.77	2.66	Heart - Atrial Appendage	UBERON_0006631
-GTEx Heart - Left Ventricle (N = 432)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	0.44	0.42	0.04	0.25	0.34	0.5	6.14	Heart - Left Ventricle	UBERON_0006566
-GTEx Kidney - Cortex (N = 85)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	0.66	0.75	0.1	0.27	0.48	0.72	4.74	Kidney - Cortex	UBERON_0001225
-GTEx Kidney - Medulla (N = 4)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	0.97	0.47	0.48	0.72	0.92	1.17	1.59	Kidney - Medulla	UBERON_0001293
-GTEx Liver (N = 226)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	0.17	0.2	0	0.07	0.12	0.2	2.17	Liver	UBERON_0001114
-GTEx Lung (N = 578)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.52	1.01	0.17	0.88	1.31	1.94	13.43	Lung	UBERON_0008952
-GTEx Minor Salivary Gland (N = 162)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	2.06	1.2	0.5	1.24	1.84	2.49	8.52	Minor Salivary Gland	UBERON_0006330
-GTEx Muscle - Skeletal (N = 803)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	0.45	0.4	0.02	0.22	0.34	0.54	4.2	Muscle - Skeletal	UBERON_0011907
-GTEx Nerve - Tibial (N = 619)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	3	1.11	0.62	2.19	2.89	3.62	9.17	Nerve - Tibial	UBERON_0001323
-GTEx Ovary (N = 180)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	5.42	3.52	1.26	3.25	4.51	6.42	21.19	Ovary	UBERON_0000992
-GTEx Pancreas (N = 328)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	0.33	0.32	0.01	0.17	0.26	0.39	3.81	Pancreas	UBERON_0001150
-GTEx Pituitary (N = 283)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	2.24	1.12	0.39	1.51	2.04	2.72	8.7	Pituitary	UBERON_0000007
-GTEx Prostate (N = 245)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	2.24	1.05	0.5	1.47	2.08	2.7	5.88	Prostate	UBERON_0002367
-GTEx Skin - Not Sun Exposed (Suprapubic) (N = 604)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	13.99	6.07	1.61	9.51	13.12	17.57	38.26	Skin - Not Sun Exposed (Suprapubic)	UBERON_0036149
-GTEx Skin - Sun Exposed (Lower leg) (N = 701)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	10.98	4.54	1.27	7.77	10.5	13.68	27.79	Skin - Sun Exposed (Lower leg)	UBERON_0004264
-GTEx Small Intestine - Terminal Ileum (N = 187)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	2.74	2	0.47	1.2	2.13	3.67	12.23	Small Intestine - Terminal Ileum	UBERON_0001211
-GTEx Spleen (N = 241)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	3.1	1.43	0.55	2.2	2.8	3.75	12.37	Spleen	UBERON_0002106
-GTEx Stomach (N = 359)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	0.76	0.46	0.09	0.47	0.65	0.9	4.03	Stomach	UBERON_0000945
-GTEx Testis (N = 361)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	32.59	10.03	4.54	25.34	32.61	39.41	75.12	Testis	UBERON_0000473
-GTEx Thyroid (N = 653)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.07	0.6	0.04	0.67	0.95	1.31	5.28	Thyroid	UBERON_0002046
-GTEx Uterus (N = 142)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	6.07	4.41	1.15	3.49	4.65	6.87	25.44	Uterus	UBERON_0000995
-GTEx Vagina (N = 156)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	3.16	1.37	0.94	2.13	2.98	3.79	8.56	Vagina	UBERON_0000996
+High-grade glioma/astrocytoma (cohort = PBTA, N = 51)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	High-grade glioma/astrocytoma	EFO_0005543	MONDO_0100342	11.23	14	0.15	2.74	5.66	14.88	59.91	NA	NA
+Low-grade glioma/astrocytoma (cohort = PBTA, N = 237)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Low-grade glioma/astrocytoma	EFO_0005543	MONDO_0016685	2.88	2.14	0.17	1.27	2.48	4.11	12.52	NA	NA
+Adipose - Subcutaneous (cohort = GTEx, N = 663)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.76	0.82	0.3	1.17	1.66	2.18	5.47	Adipose - Subcutaneous	UBERON_0002190
+Adipose - Visceral (Omentum) (cohort = GTEx, N = 541)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.2	0.65	0.14	0.71	1.04	1.54	4.09	Adipose - Visceral (Omentum)	UBERON_0010414
+Adrenal Gland (cohort = GTEx, N = 258)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	0.72	0.36	0.18	0.51	0.63	0.86	3.25	Adrenal Gland	UBERON_0002369
+Artery - Aorta (cohort = GTEx, N = 432)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.45	0.74	0.35	0.98	1.3	1.69	5.66	Artery - Aorta	UBERON_0001496
+Artery - Coronary (cohort = GTEx, N = 240)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.37	0.95	0.17	0.84	1.14	1.63	10.15	Artery - Coronary	UBERON_0001621
+Artery - Tibial (cohort = GTEx, N = 663)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	0.75	0.59	0	0.39	0.61	0.93	6.25	Artery - Tibial	UBERON_0007610
+Bladder (cohort = GTEx, N = 21)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.98	1.25	0.73	1.16	1.85	2.11	5.98	Bladder	UBERON_0001255
+Blood (cohort = GTEx, N = 755)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.04	1.81	0	0.45	0.8	1.26	45.04	Blood	UBERON_0013756
+Brain - Amygdala (cohort = GTEx, N = 152)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	2.29	0.86	0.21	1.66	2.22	2.84	5.07	Brain - Amygdala	UBERON_0001876
+Brain - Anterior cingulate cortex (BA24) (cohort = GTEx, N = 176)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.86	0.65	0.28	1.42	1.78	2.16	4.74	Brain - Anterior cingulate cortex (BA24)	UBERON_0009835
+Brain - Caudate (basal ganglia) (cohort = GTEx, N = 246)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.35	0.5	0.28	0.98	1.35	1.64	3.44	Brain - Caudate (basal ganglia)	UBERON_0001873
+Brain - Cerebellum (cohort = GTEx, N = 456)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	3.2	1.91	0.54	2.01	2.78	3.67	15.63	Brain - Cerebellum	UBERON_0002037
+Brain - Cortex (cohort = GTEx, N = 255)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.63	0.57	0.45	1.23	1.53	1.95	4.32	Brain - Cortex	UBERON_0001870
+Brain - Frontal Cortex (BA9) (cohort = GTEx, N = 209)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.61	0.59	0.42	1.24	1.56	1.84	5.38	Brain - Frontal Cortex (BA9)	UBERON_0009834
+Brain - Hippocampus (cohort = GTEx, N = 197)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	2.21	1	0.19	1.47	2.09	2.68	5.95	Brain - Hippocampus	UBERON_0001954
+Brain - Hypothalamus (cohort = GTEx, N = 202)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.58	0.83	0.19	1	1.45	2	6.24	Brain - Hypothalamus	UBERON_0001898
+Brain - Nucleus accumbens (basal ganglia) (cohort = GTEx, N = 246)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.36	0.69	0.1	0.91	1.28	1.64	6.23	Brain - Nucleus accumbens (basal ganglia)	UBERON_0001882
+Brain - Putamen (basal ganglia) (cohort = GTEx, N = 205)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.32	0.58	0.26	0.92	1.24	1.6	3.86	Brain - Putamen (basal ganglia)	UBERON_0001874
+Brain - Spinal cord (cervical c-1) (cohort = GTEx, N = 159)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	3.34	1.52	0.51	2.19	3.2	4.41	6.84	Brain - Spinal cord (cervical c-1)	UBERON_0006469
+Brain - Substantia nigra (cohort = GTEx, N = 139)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.74	0.96	0.4	1.06	1.59	2.32	6.38	Brain - Substantia nigra	UBERON_0002038
+Breast - Mammary Tissue (cohort = GTEx, N = 459)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	2.27	1.62	0.26	1.17	1.88	2.93	15.34	Breast - Mammary Tissue	UBERON_0008367
+Cells - Cultured fibroblasts (cohort = GTEx, N = 504)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.3	0.6	0.33	0.94	1.21	1.49	8.06	Cells - Cultured fibroblasts	NA
+Cells - EBV-transformed lymphocytes (cohort = GTEx, N = 174)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	2.61	1.56	0.43	1.58	2.33	3.11	11.26	Cells - EBV-transformed lymphocytes	NA
+Cervix - Ectocervix (cohort = GTEx, N = 9)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	4.63	2.91	2.15	2.94	3.68	4.47	11.61	Cervix - Ectocervix	UBERON_0012249
+Cervix - Endocervix (cohort = GTEx, N = 10)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	5.14	4.09	2.33	2.93	3.64	4.68	15.63	Cervix - Endocervix	UBERON_0000458
+Colon - Sigmoid (cohort = GTEx, N = 373)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.67	0.83	0.29	1.06	1.55	2.1	5.22	Colon - Sigmoid	UBERON_0001159
+Colon - Transverse (cohort = GTEx, N = 406)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	2.02	0.87	0.34	1.4	1.92	2.48	8.43	Colon - Transverse	UBERON_0001157
+Esophagus - Gastroesophageal Junction (cohort = GTEx, N = 375)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.13	0.61	0.1	0.68	0.99	1.47	4.08	Esophagus - Gastroesophageal Junction	UBERON_0004550
+Esophagus - Mucosa (cohort = GTEx, N = 555)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.16	0.59	0.13	0.74	1.04	1.42	4.14	Esophagus - Mucosa	UBERON_0006920
+Esophagus - Muscularis (cohort = GTEx, N = 515)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.19	0.65	0.16	0.75	1.05	1.55	5.36	Esophagus - Muscularis	UBERON_0004648
+Fallopian Tube (cohort = GTEx, N = 9)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	3.32	1.75	0.91	2.7	2.8	4	6.78	Fallopian Tube	UBERON_0003889
+Heart - Atrial Appendage (cohort = GTEx, N = 429)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	0.63	0.36	0.1	0.38	0.56	0.77	2.66	Heart - Atrial Appendage	UBERON_0006631
+Heart - Left Ventricle (cohort = GTEx, N = 432)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	0.44	0.42	0.04	0.25	0.34	0.5	6.14	Heart - Left Ventricle	UBERON_0006566
+Kidney - Cortex (cohort = GTEx, N = 85)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	0.66	0.75	0.1	0.27	0.48	0.72	4.74	Kidney - Cortex	UBERON_0001225
+Kidney - Medulla (cohort = GTEx, N = 4)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	0.97	0.47	0.48	0.72	0.92	1.17	1.59	Kidney - Medulla	UBERON_0001293
+Liver (cohort = GTEx, N = 226)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	0.17	0.2	0	0.07	0.12	0.2	2.17	Liver	UBERON_0001114
+Lung (cohort = GTEx, N = 578)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.52	1.01	0.17	0.88	1.31	1.94	13.43	Lung	UBERON_0008952
+Minor Salivary Gland (cohort = GTEx, N = 162)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	2.06	1.2	0.5	1.24	1.84	2.49	8.52	Minor Salivary Gland	UBERON_0006330
+Muscle - Skeletal (cohort = GTEx, N = 803)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	0.45	0.4	0.02	0.22	0.34	0.54	4.2	Muscle - Skeletal	UBERON_0011907
+Nerve - Tibial (cohort = GTEx, N = 619)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	3	1.11	0.62	2.19	2.89	3.62	9.17	Nerve - Tibial	UBERON_0001323
+Ovary (cohort = GTEx, N = 180)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	5.42	3.52	1.26	3.25	4.51	6.42	21.19	Ovary	UBERON_0000992
+Pancreas (cohort = GTEx, N = 328)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	0.33	0.32	0.01	0.17	0.26	0.39	3.81	Pancreas	UBERON_0001150
+Pituitary (cohort = GTEx, N = 283)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	2.24	1.12	0.39	1.51	2.04	2.72	8.7	Pituitary	UBERON_0000007
+Prostate (cohort = GTEx, N = 245)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	2.24	1.05	0.5	1.47	2.08	2.7	5.88	Prostate	UBERON_0002367
+Skin - Not Sun Exposed (Suprapubic) (cohort = GTEx, N = 604)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	13.99	6.07	1.61	9.51	13.12	17.57	38.26	Skin - Not Sun Exposed (Suprapubic)	UBERON_0036149
+Skin - Sun Exposed (Lower leg) (cohort = GTEx, N = 701)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	10.98	4.54	1.27	7.77	10.5	13.68	27.79	Skin - Sun Exposed (Lower leg)	UBERON_0004264
+Small Intestine - Terminal Ileum (cohort = GTEx, N = 187)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	2.74	2	0.47	1.2	2.13	3.67	12.23	Small Intestine - Terminal Ileum	UBERON_0001211
+Spleen (cohort = GTEx, N = 241)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	3.1	1.43	0.55	2.2	2.8	3.75	12.37	Spleen	UBERON_0002106
+Stomach (cohort = GTEx, N = 359)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	0.76	0.46	0.09	0.47	0.65	0.9	4.03	Stomach	UBERON_0000945
+Testis (cohort = GTEx, N = 361)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	32.59	10.03	4.54	25.34	32.61	39.41	75.12	Testis	UBERON_0000473
+Thyroid (cohort = GTEx, N = 653)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	1.07	0.6	0.04	0.67	0.95	1.31	5.28	Thyroid	UBERON_0002046
+Uterus (cohort = GTEx, N = 142)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	6.07	4.41	1.15	3.49	4.65	6.87	25.44	Uterus	UBERON_0000995
+Vagina (cohort = GTEx, N = 156)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx	NA	NA	NA	3.16	1.37	0.94	2.13	2.98	3.79	8.56	Vagina	UBERON_0000996

@@ -39,7 +39,7 @@ get_gene_tpm_boxplot_tbl <- function(gene_tpm_tbl) {
   gene_tpm_boxplot_tbl <- dplyr::mutate(
     gene_tpm_boxplot_tbl,
     x_labels = paste0(
-      cohort, " ", box_group, " (N = ", cohort_box_group_n, ")"))
+      box_group, " (cohort = ", cohort, ", N = ", cohort_box_group_n, ")"))
 
   # If is.na(EFO), sample_type is normal. If !is.na(EFO), sample_type is
   # disease.
