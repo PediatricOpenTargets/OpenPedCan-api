@@ -36,9 +36,9 @@ get_gene_tpm_boxplot <- function(gene_tpm_boxplot_tbl) {
   stopifnot(is.factor(uniq_x_label_vec))
   stopifnot(all(!is.na(uniq_x_label_vec)))
 
-  sample_type_vec <- unique(gene_tpm_boxplot_tbl$sample_type)
-  stopifnot(is.character(sample_type_vec))
-  stopifnot(all(sample_type_vec %in% c("disease", "normal")))
+  uniq_sample_type_vec <- unique(gene_tpm_boxplot_tbl$sample_type)
+  stopifnot(is.character(uniq_sample_type_vec))
+  stopifnot(all(uniq_sample_type_vec %in% c("disease", "normal")))
 
   efo_id_vec <- purrr::discard(unique(gene_tpm_boxplot_tbl$EFO), is.na)
   stopifnot(is.character(efo_id_vec))
@@ -60,6 +60,18 @@ get_gene_tpm_boxplot <- function(gene_tpm_boxplot_tbl) {
       sep = "\n")
   }
 
+  if (identical(length(uniq_sample_type_vec), 1L)) {
+    # Only one sample type.
+    #
+    # Use grey for either one.
+    box_fill_colors = c("disease" = "grey80", "normal" = "grey80")
+  } else {
+    # More than one saple types.
+    #
+    # Use red for diease and grey for normal.
+    box_fill_colors = c("disease" = "red3", "normal" = "grey80")
+  }
+
   gene_tpm_boxplot <- ggplot2::ggplot(gene_tpm_boxplot_tbl,
                                       ggplot2::aes(x = x_labels, y = TPM,
                                                    fill = sample_type)) +
@@ -73,8 +85,7 @@ get_gene_tpm_boxplot <- function(gene_tpm_boxplot_tbl) {
                                                        vjust = 0.5,
                                                        hjust = 1)) +
     ggplot2::ggtitle(title) +
-    ggplot2::scale_fill_manual(values = c("disease" = "red3",
-                                          "normal" = "grey80")) +
+    ggplot2::scale_fill_manual(values = box_fill_colors) +
     ggplot2::guides(fill = "none")
 
   return(gene_tpm_boxplot)

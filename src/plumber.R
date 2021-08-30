@@ -91,27 +91,41 @@ function(ensemblId, efoId) {
   print(res_plot)
 }
 
-#* [Not implemented] Get a single-gene all-diseases TPM summary table
+#* Get a single-gene all-diseases TPM summary table
 #*
 #* @tag "Bulk tissue gene expression"
 #* @param ensemblId:str a single character value of gene ENSG ID.
 #* @serializer json
 #* @get /tpm/gene-all-cancer/json
 function(ensemblId) {
-  res_tbl <- tibble::tibble(ensemblId = ensemblId)
-  return(res_tbl)
+  gene_tpm_tbl <- get_gene_tpm_tbl(
+    tpm_data_lists = tpm_data_lists, ensg_id = ensemblId)
+
+  gene_tpm_tbl <- add_gene_tpm_box_group(gene_tpm_tbl)
+
+  gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(gene_tpm_tbl)
+
+  gene_tpm_boxplot_summary_tbl <- get_gene_tpm_boxplot_summary_tbl(
+    gene_tpm_boxplot_tbl)
+
+  return(gene_tpm_boxplot_summary_tbl)
 }
 
-#* [Not implemented] Get a single-gene all-diseases TPM boxplot
+#* Get a single-gene all-diseases TPM boxplot
 #*
 #* @tag "Bulk tissue gene expression"
 #* @param ensemblId:str a single character value of gene ENSG ID.
 #* @serializer png list(res = 300, width = 3900, height = 2700)
 #* @get /tpm/gene-all-cancer/plot
 function(ensemblId) {
-  res_plot <- ggplot2::ggplot(mtcars, ggplot2::aes(mpg, wt)) +
-    ggplot2::geom_point() +
-    ggplot2::ggtitle(ensemblId)
+  gene_tpm_tbl <- get_gene_tpm_tbl(
+    tpm_data_lists = tpm_data_lists, ensg_id = ensemblId)
+
+  gene_tpm_tbl <- add_gene_tpm_box_group(gene_tpm_tbl)
+
+  gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(gene_tpm_tbl)
+
+  res_plot <- get_gene_tpm_boxplot(gene_tpm_boxplot_tbl)
 
   print(res_plot)
 }
@@ -119,7 +133,7 @@ function(ensemblId) {
 
 
 # Testing endpoints ------------------------------------------------------------
-# Placeholder until the actual code is written.
+# Placeholder for simple testing
 # Source https://github.com/rstudio/plumber/
 
 
