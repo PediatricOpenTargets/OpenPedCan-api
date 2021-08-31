@@ -241,68 +241,12 @@ tpm_data_lists <- lapply(tpm_data_lists, function(xl) {
   stopifnot(identical(
     sum(is.na(dplyr::select(overlap_tpm_tbl, -RMTL))), 0L))
 
-  # If one ENSG ID mapps to multiple symbols, select the first of sorted gene
-  # symbols.
-  #
-  # dplyr::distinct documentations.
-  #
-  # - "...: <‘data-masking’> Optional variables to use when determining
-  #   uniqueness. If there are multiple rows for a given combination of inputs,
-  #   only the first row will be preserved. If omitted, will use all variables."
-  # - ".keep_all: If ‘TRUE’, keep all variables in ‘.data’. If a combination of
-  #   ‘...’ is not distinct, this keeps the first row of values."
-  overlap_tpm_tbl <- overlap_tpm_tbl %>%
-    dplyr::arrange(.data$Gene_symbol) %>%
-    dplyr::distinct(.data$Gene_Ensembl_ID, .keep_all = TRUE)
-
   overlap_data_list <- list(
     tpm_df = overlap_tpm_tbl,
     histology_df = overlap_histology_df
   )
 
   return(overlap_data_list)
-})
-
-# TODO: remove down-sampling procedure to include all ENSG IDs, when the hosting
-# env has 8GB memory. Currently, only n_down_sample_ensg_ids ENSG IDs are
-# randomly kept to reduce memory usage, including "ENSG00000213420",
-# "ENSG00000157764", "ENSG00000273032" for backward compatibility.
-#
-# Down-sample ENSG IDs to temporarily reduce memory usage.
-set.seed(17)
-n_down_sample_ensg_ids <- 100L
-# arbitrarily selected ENSG IDs
-arbt_selected_ensg_ids <- c("ENSG00000213420", "ENSG00000157764",
-                            "ENSG00000273032")
-
-rand_selected_ensg_ids <- dplyr::sample_n(
-  dplyr::filter(
-    dplyr::select(tpm_data_lists$pt_all_cohorts$tpm_df, Gene_Ensembl_ID),
-    !(.data$Gene_Ensembl_ID %in% .env$arbt_selected_ensg_ids)),
-  size = n_down_sample_ensg_ids - length(arbt_selected_ensg_ids),
-  replace = FALSE)$Gene_Ensembl_ID
-
-selected_ensg_ids <- c(arbt_selected_ensg_ids, rand_selected_ensg_ids)
-
-stopifnot(identical(length(selected_ensg_ids), n_down_sample_ensg_ids))
-stopifnot(identical(
-  length(selected_ensg_ids), length(unique(selected_ensg_ids))
-))
-stopifnot(all(!is.na(selected_ensg_ids)))
-
-tpm_data_lists <- lapply(tpm_data_lists, function(xl) {
-  down_sample_tpm_df <- dplyr::filter(
-    xl$tpm_df, .data$Gene_Ensembl_ID %in% selected_ensg_ids)
-
-  stopifnot(identical(
-    sort(down_sample_tpm_df$Gene_Ensembl_ID), sort(selected_ensg_ids)))
-
-  down_sample_tpm_data_list <- list(
-    tpm_df = down_sample_tpm_df,
-    histology_df = xl$histology_df
-  )
-
-  return(down_sample_tpm_data_list)
 })
 
 stopifnot(identical(
