@@ -15,7 +15,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Lint Code Base
-        uses: github/super-linter@v4
+        uses: github/super-linter@v4.6.2
         env:
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: main
@@ -35,5 +35,5 @@ jobs:
 
       - name: Lint
 
-        run: lintr::lint_dir(linters = lintr::with_defaults(assignment_linter = NULL, line_length_linter = NULL, spaces_left_parentheses_linter = NULL), pattern = '[.]R$|[.]Rmd')
+        run: lintr::lint_dir(linters = lintr::with_defaults(object_name_linter = NULL, assignment_linter = NULL, line_length_linter = NULL, spaces_left_parentheses_linter = NULL, commented_code_linter = NULL, object_length_linter = NULL, cyclocomp_linter = lintr::cyclocomp_linter(complexity_limit = 25L)))
         shell: Rscript {0}
