@@ -39,7 +39,7 @@ get_gene_tpm_boxplot_tbl <- function(gene_tpm_tbl) {
   gene_tpm_boxplot_tbl <- dplyr::mutate(
     gene_tpm_boxplot_tbl,
     x_labels = paste0(
-      cohort, " ", box_group, " (N = ", cohort_box_group_n, ")"))
+      box_group, " (cohort = ", cohort, ", N = ", cohort_box_group_n, ")"))
 
   # If is.na(EFO), sample_type is normal. If !is.na(EFO), sample_type is
   # disease.
@@ -48,13 +48,14 @@ get_gene_tpm_boxplot_tbl <- function(gene_tpm_tbl) {
     sample_type = dplyr::if_else(
       is.na(EFO), true = "normal", false = "disease"))
 
-  xlabel_factor <- dplyr::arrange(
+  xlabel_levels <- dplyr::arrange(
     dplyr::distinct(
-      dplyr::select(gene_tpm_boxplot_tbl, sample_type, box_group, x_labels)),
-    sample_type, box_group)$x_labels
+      dplyr::select(
+        gene_tpm_boxplot_tbl, sample_type, box_group, cohort, x_labels)),
+    sample_type, box_group, cohort)$x_labels
 
   gene_tpm_boxplot_tbl$x_labels <- factor(
-    gene_tpm_boxplot_tbl$x_labels, levels = xlabel_factor)
+    gene_tpm_boxplot_tbl$x_labels, levels = xlabel_levels)
 
   return(gene_tpm_boxplot_tbl)
 }

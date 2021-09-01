@@ -19,7 +19,7 @@
 # - gene_tpm_boxplot_tbl: a tibble of a single-gene, one or more diseasees, and
 #   zero or more GTEx tissue(s), returned by get_gene_tpm_boxplot_tbl.
 #
-# Returns a tibble.
+# Returns a tibble with all NAs replaced by blank string "".
 get_gene_tpm_boxplot_summary_tbl <- function(gene_tpm_boxplot_tbl) {
   uniq_x_label_vec <- unique(gene_tpm_boxplot_tbl$x_labels)
   stopifnot(is.factor(uniq_x_label_vec))
@@ -44,6 +44,13 @@ get_gene_tpm_boxplot_summary_tbl <- function(gene_tpm_boxplot_tbl) {
     TPM_75th_percentile = round(quantile(TPM, 0.75), digits = 2),
     TPM_max = round(max(TPM), digits = 2)
   )
+
+  # Only replace NA with empty string in columns that have NA in them. This will
+  # not change the value types of the columns that have no NA.
+  gene_tpm_boxplot_summary_tbl <- dplyr::mutate_if(
+    gene_tpm_boxplot_summary_tbl,
+    function(x) sum(is.na(x)) > 0,
+    function(x) tidyr::replace_na(x, replace = ""))
 
   return(gene_tpm_boxplot_summary_tbl)
 }
