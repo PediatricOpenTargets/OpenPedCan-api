@@ -1,6 +1,5 @@
 x_labels	Gene_Ensembl_ID	Gene_symbol	PMTL	cohort	Disease	GTEx_tissue_subgroup	EFO	MONDO	GTEx_tissue_subgroup_UBERON	TPM_mean	TPM_sd	TPM_min	TPM_25th_percentile	TPM_median	TPM_75th_percentile	TPM_max
 Choroid plexus carcinoma (cohort = PBTA, N = 4)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Choroid plexus carcinoma		EFO_0007206	MONDO_0016718		12.53	11.31	2.74	3.27	10.87	20.14	25.64
-Choroid plexus cyst (cohort = PBTA, N = 1)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Choroid plexus cyst		EFO_0007206			0.04		0.04	0.04	0.04	0.04	0.04
 Adipose - Subcutaneous (cohort = GTEx, N = 663)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx		Adipose - Subcutaneous			UBERON_0002190	1.76	0.82	0.3	1.17	1.66	2.18	5.47
 Adipose - Visceral (Omentum) (cohort = GTEx, N = 541)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx		Adipose - Visceral (Omentum)			UBERON_0010414	1.2	0.65	0.14	0.71	1.04	1.54	4.09
 Adrenal Gland (cohort = GTEx, N = 258)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx		Adrenal Gland			UBERON_0002369	0.72	0.36	0.18	0.51	0.63	0.86	3.25

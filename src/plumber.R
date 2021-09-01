@@ -59,7 +59,8 @@ function(req, res) {
 #* @get /tpm/gene-disease-gtex/json
 function(ensemblId, efoId) {
   gene_tpm_tbl <- get_gene_tpm_tbl(
-    tpm_data_lists = tpm_data_lists, ensg_id = ensemblId, efo_id = efoId)
+    tpm_data_lists = tpm_data_lists, ensg_id = ensemblId, efo_id = efoId,
+    min_n_per_sample_group = 3)
 
   gene_tpm_tbl <- add_gene_tpm_box_group(gene_tpm_tbl)
 
@@ -80,7 +81,8 @@ function(ensemblId, efoId) {
 #* @get /tpm/gene-disease-gtex/plot
 function(ensemblId, efoId) {
   gene_tpm_tbl <- get_gene_tpm_tbl(
-    tpm_data_lists = tpm_data_lists, ensg_id = ensemblId, efo_id = efoId)
+    tpm_data_lists = tpm_data_lists, ensg_id = ensemblId, efo_id = efoId,
+    min_n_per_sample_group = 3)
 
   gene_tpm_tbl <- add_gene_tpm_box_group(gene_tpm_tbl)
 
@@ -99,7 +101,8 @@ function(ensemblId, efoId) {
 #* @get /tpm/gene-all-cancer/json
 function(ensemblId) {
   gene_tpm_tbl <- get_gene_tpm_tbl(
-    tpm_data_lists = tpm_data_lists, ensg_id = ensemblId)
+    tpm_data_lists = tpm_data_lists, ensg_id = ensemblId,
+    min_n_per_sample_group = 3)
 
   gene_tpm_tbl <- add_gene_tpm_box_group(gene_tpm_tbl)
 
@@ -119,7 +122,8 @@ function(ensemblId) {
 #* @get /tpm/gene-all-cancer/plot
 function(ensemblId) {
   gene_tpm_tbl <- get_gene_tpm_tbl(
-    tpm_data_lists = tpm_data_lists, ensg_id = ensemblId)
+    tpm_data_lists = tpm_data_lists, ensg_id = ensemblId,
+    min_n_per_sample_group = 3)
 
   gene_tpm_tbl <- add_gene_tpm_box_group(gene_tpm_tbl)
 

@@ -4,53 +4,35 @@ Acute Myeloid Leukemia (cohort = TARGET, N = 141)	ENSG00000273032	DGCR5		TARGET	
 Adamantinomatous Craniopharyngioma (cohort = PBTA, N = 17)	ENSG00000273032	DGCR5		PBTA	Adamantinomatous Craniopharyngioma		EFO_1000069	MONDO_0002787		0.65	0.4	0.09	0.41	0.63	0.81	1.89
 Adenoma (cohort = PBTA, N = 3)	ENSG00000273032	DGCR5		PBTA	Adenoma		EFO_0000232	MONDO_0002454		0.98	1.1	0.27	0.34	0.41	1.33	2.25
 Atypical Teratoid Rhabdoid Tumor (cohort = PBTA, N = 24)	ENSG00000273032	DGCR5		PBTA	Atypical Teratoid Rhabdoid Tumor		EFO_1002008	MONDO_0020560		1.87	5.08	0.03	0.47	0.64	0.98	25.47
-Cavernoma (cohort = PBTA, N = 1)	ENSG00000273032	DGCR5		PBTA	Cavernoma		EFO_1000151	MONDO_0003155		2.58		2.58	2.58	2.58	2.58	2.58
-Central Neurocytoma (cohort = PBTA, N = 1)	ENSG00000273032	DGCR5		PBTA	Central Neurocytoma		EFO_1000856	MONDO_0002714		0.47		0.47	0.47	0.47	0.47	0.47
 Chordoma (cohort = PBTA, N = 3)	ENSG00000273032	DGCR5		PBTA	Chordoma		EFO_0003820	MONDO_0008978		0.02	0.01	0.01	0.01	0.02	0.02	0.02
 Choroid plexus carcinoma (cohort = PBTA, N = 4)	ENSG00000273032	DGCR5		PBTA	Choroid plexus carcinoma		EFO_0007206	MONDO_0016718		0.55	0.17	0.37	0.44	0.52	0.64	0.77
-Choroid plexus cyst (cohort = PBTA, N = 1)	ENSG00000273032	DGCR5		PBTA	Choroid plexus cyst		EFO_0007206			0.25		0.25	0.25	0.25	0.25	0.25
 Choroid plexus papilloma (cohort = PBTA, N = 15)	ENSG00000273032	DGCR5		PBTA	Choroid plexus papilloma		EFO_1000177	MONDO_0009837		1.19	0.58	0.37	0.83	1.2	1.48	2.61
 Clear cell sarcoma of the kidney (cohort = TARGET, N = 13)	ENSG00000273032	DGCR5		TARGET	Clear cell sarcoma of the kidney		EFO_0000350	MONDO_0005006		0.01	0.03	0	0	0	0.01	0.12
 CNS Embryonal tumor (cohort = PBTA, N = 9)	ENSG00000273032	DGCR5		PBTA	CNS Embryonal tumor		EFO_0005784	MONDO_0018843		1.38	1.49	0	0.37	1.15	1.79	4.71
-CNS neuroblastoma (cohort = PBTA, N = 1)	ENSG00000273032	DGCR5		PBTA	CNS neuroblastoma		EFO_1000158	MONDO_0006130		1.22		1.22	1.22	1.22	1.22	1.22
 Craniopharyngioma (cohort = PBTA, N = 11)	ENSG00000273032	DGCR5		PBTA	Craniopharyngioma		EFO_1000209	MONDO_0002787		0.38	0.5	0.08	0.12	0.18	0.36	1.74
 Diffuse intrinsic pontine glioma (cohort = PBTA, N = 4)	ENSG00000273032	DGCR5		PBTA	Diffuse intrinsic pontine glioma		EFO_1000026	MONDO_0006033		2.38	2.78	0.1	0.6	1.55	3.33	6.31
 Diffuse midline glioma (cohort = PBTA, N = 47)	ENSG00000273032	DGCR5		PBTA	Diffuse midline glioma		EFO_1000026	MONDO_0006033		2	1.49	0.15	0.61	1.86	3.08	6.22
 Dysembryoplastic neuroepithelial tumor (cohort = PBTA, N = 19)	ENSG00000273032	DGCR5		PBTA	Dysembryoplastic neuroepithelial tumor		EFO_0005551	MONDO_0005505		2.73	2.92	0.14	0.7	1	3.77	10.11
-Dysplasia/Gliosis;Glial-neuronal tumor NOS (cohort = PBTA, N = 1)	ENSG00000273032	DGCR5		PBTA	Dysplasia/Gliosis;Glial-neuronal tumor NOS		EFO_0003094	MONDO_0016729		1.1		1.1	1.1	1.1	1.1	1.1
 Embryonal tumor with multilayer rosettes (cohort = PBTA, N = 4)	ENSG00000273032	DGCR5		PBTA	Embryonal tumor with multilayer rosettes		EFO_0005784	MONDO_0016715		1.58	0.77	0.56	1.35	1.66	1.89	2.43
 Ependymoma (cohort = PBTA, N = 69)	ENSG00000273032	DGCR5		PBTA	Ependymoma		EFO_1000028	MONDO_0016698		0.96	0.98	0	0.39	0.69	1.26	7.16
-Epilepsy (cohort = PBTA, N = 1)	ENSG00000273032	DGCR5		PBTA	Epilepsy		EFO_0000474	MONDO_0005027		1.19		1.19	1.19	1.19	1.19	1.19
 Ewing sarcoma (cohort = PBTA, N = 7)	ENSG00000273032	DGCR5		PBTA	Ewing sarcoma		EFO_0000174	MONDO_0012817		0.59	0.78	0	0.06	0.38	0.71	2.18
-Extraventricular Neurocytoma (cohort = PBTA, N = 1)	ENSG00000273032	DGCR5		PBTA	Extraventricular Neurocytoma		EFO_0007201	MONDO_0002682		0.22		0.22	0.22	0.22	0.22	0.22
-Ganglioglioma (cohort = PBTA, N = 1)	ENSG00000273032	DGCR5		PBTA	Ganglioglioma		EFO_0003094	MONDO_0016733		0.16		0.16	0.16	0.16	0.16	0.16
-Ganglioneuroblastoma (cohort = PBTA, N = 1)	ENSG00000273032	DGCR5		PBTA	Ganglioneuroblastoma		EFO_0000502	MONDO_0005035		0.15		0.15	0.15	0.15	0.15	0.15
-Ganglioneuroma (cohort = PBTA, N = 1)	ENSG00000273032	DGCR5		PBTA	Ganglioneuroma		EFO_0000500	MONDO_0005033		0.17		0.17	0.17	0.17	0.17	0.17
 Germinoma (cohort = PBTA, N = 4)	ENSG00000273032	DGCR5		PBTA	Germinoma		EFO_0000514	MONDO_0005040		0.3	0.39	0.05	0.06	0.14	0.38	0.88
 Glial-neuronal tumor NOS (cohort = PBTA, N = 5)	ENSG00000273032	DGCR5		PBTA	Glial-neuronal tumor NOS		EFO_0003833	MONDO_0016729		1.2	1.07	0.14	0.39	0.83	2.06	2.58
-Hemangioblastoma (cohort = PBTA, N = 2)	ENSG00000273032	DGCR5		PBTA	Hemangioblastoma		EFO_0003833	MONDO_0016748		2.42	3.24	0.13	1.27	2.42	3.56	4.71
 High-grade glioma/astrocytoma (cohort = PBTA, N = 51)	ENSG00000273032	DGCR5		PBTA	High-grade glioma/astrocytoma		EFO_0005543	MONDO_0100342		1.45	2.63	0.01	0.24	0.7	1.81	17.8
 Langerhans Cell histiocytosis (cohort = PBTA, N = 4)	ENSG00000273032	DGCR5		PBTA	Langerhans Cell histiocytosis		EFO_1000318	MONDO_0009519		0.03	0.01	0.01	0.02	0.03	0.03	0.04
 Low-grade glioma/astrocytoma (cohort = PBTA, N = 237)	ENSG00000273032	DGCR5		PBTA	Low-grade glioma/astrocytoma		EFO_0005543	MONDO_0016685		1.15	1.58	0	0.25	0.6	1.24	10.82
 Malignant peripheral nerve sheath tumor (cohort = PBTA, N = 3)	ENSG00000273032	DGCR5		PBTA	Malignant peripheral nerve sheath tumor		EFO_0000760	MONDO_0018078		0.08	0.11	0.02	0.02	0.02	0.11	0.21
 Medulloblastoma (cohort = PBTA, N = 105)	ENSG00000273032	DGCR5		PBTA	Medulloblastoma		EFO_0002939	MONDO_0007959		2.13	1.55	0.15	0.85	1.73	3.1	8.45
-Melanocytic tumor (cohort = PBTA, N = 1)	ENSG00000273032	DGCR5		PBTA	Melanocytic tumor		EFO_0000326	MONDO_0003222		0.02		0.02	0.02	0.02	0.02	0.02
 Meningioma (cohort = PBTA, N = 14)	ENSG00000273032	DGCR5		PBTA	Meningioma		EFO_0003851	MONDO_0016642		1.15	0.89	0.24	0.36	0.94	1.87	2.75
 Metastatic secondary tumors (cohort = PBTA, N = 3)	ENSG00000273032	DGCR5		PBTA	Metastatic secondary tumors		EFO_0009709	MONDO_0024883		1	0.99	0.11	0.46	0.81	1.44	2.07
-Myxoid spindle cell tumor (cohort = PBTA, N = 1)	ENSG00000273032	DGCR5		PBTA	Myxoid spindle cell tumor		EFO_0000705	MONDO_0020664		0.1		0.1	0.1	0.1	0.1	0.1
 Neuroblastoma (cohort = all_cohorts, N = 347)	ENSG00000273032	DGCR5		all_cohorts	Neuroblastoma		EFO_0000621	MONDO_0005072		2.92	2.35	0	1.28	2.34	3.95	15.96
 Neuroblastoma (cohort = GMKF, N = 209)	ENSG00000273032	DGCR5		GMKF	Neuroblastoma		EFO_0000621	MONDO_0005072		2.81	2.26	0	1.13	2.28	4.02	14.69
 Neuroblastoma (cohort = TARGET, N = 149)	ENSG00000273032	DGCR5		TARGET	Neuroblastoma		EFO_0000621	MONDO_0005072		3.11	2.44	0.04	1.67	2.49	3.86	15.96
 Neurofibroma/Plexiform (cohort = PBTA, N = 10)	ENSG00000273032	DGCR5		PBTA	Neurofibroma/Plexiform		EFO_0000658	MONDO_0003304		0.12	0.09	0.04	0.04	0.09	0.19	0.28
-Oligodendroglioma (cohort = PBTA, N = 1)	ENSG00000273032	DGCR5		PBTA	Oligodendroglioma		EFO_0000632			0.43		0.43	0.43	0.43	0.43	0.43
 Osteosarcoma (cohort = TARGET, N = 87)	ENSG00000273032	DGCR5		TARGET	Osteosarcoma		EFO_0000637	MONDO_0009807		0.29	0.45	0	0.01	0.07	0.44	2.36
 Pineoblastoma (cohort = PBTA, N = 4)	ENSG00000273032	DGCR5		PBTA	Pineoblastoma		EFO_1000475	MONDO_0016722		1.39	1.27	0.01	0.65	1.27	2.01	3
-Primary CNS lymphoma (cohort = PBTA, N = 1)	ENSG00000273032	DGCR5		PBTA	Primary CNS lymphoma		EFO_1000157	MONDO_0002571		0		0	0	0	0	0
 Rhabdoid tumor (cohort = TARGET, N = 64)	ENSG00000273032	DGCR5		TARGET	Rhabdoid tumor		EFO_0005701	MONDO_0002728		0.78	1.03	0.01	0.16	0.44	0.97	5.97
-Rhabdomyosarcoma (cohort = PBTA, N = 2)	ENSG00000273032	DGCR5		PBTA	Rhabdomyosarcoma		EFO_0002918	MONDO_0002847		0.3	0.21	0.15	0.22	0.3	0.38	0.45
-Rosai-Dorfman disease (cohort = PBTA, N = 1)	ENSG00000273032	DGCR5		PBTA	Rosai-Dorfman disease		EFO_1000297	MONDO_0006412		0		0	0	0	0	0
 Sarcoma (cohort = PBTA, N = 3)	ENSG00000273032	DGCR5		PBTA	Sarcoma		EFO_0000691	MONDO_0005089		0.01	0.02	0	0	0	0.02	0.04
 Schwannoma (cohort = PBTA, N = 14)	ENSG00000273032	DGCR5		PBTA	Schwannoma		EFO_0000693	MONDO_0002546		0.54	0.95	0.02	0.07	0.11	0.38	2.98
-Subependymal Giant Cell Astrocytoma (cohort = PBTA, N = 2)	ENSG00000273032	DGCR5		PBTA	Subependymal Giant Cell Astrocytoma		EFO_0000272	MONDO_0016693		0.15	0.01	0.14	0.14	0.15	0.15	0.15
 Teratoma (cohort = PBTA, N = 4)	ENSG00000273032	DGCR5		PBTA	Teratoma		EFO_0000514	MONDO_0002601		0.82	0.88	0.23	0.36	0.46	0.92	2.13
 Wilms tumor (cohort = TARGET, N = 124)	ENSG00000273032	DGCR5		TARGET	Wilms tumor		EFO_0003865	MONDO_0006058		0.16	0.38	0	0.02	0.06	0.15	3.64
