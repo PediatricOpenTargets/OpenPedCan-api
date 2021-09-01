@@ -72,6 +72,20 @@ get_gene_tpm_boxplot <- function(gene_tpm_boxplot_tbl) {
     box_fill_colors = c("disease" = "red3", "normal" = "grey80")
   }
 
+  # The x-axis labels are long and rotated 45 degrees, so they are out of the
+  # plot in the default margin. Increase right margin to fit all text.
+  plot_margin <- ggplot2::theme_get()$plot.margin
+
+  if (!identical(length(plot_margin), 4L)) {
+    plot_margin <- rep(grid::unit(x = 5.5, units = "points"), 4)
+  }
+
+  rightmost_x_label <- dplyr::last(
+    levels(gene_tpm_boxplot_tbl$x_labels), default = "")
+  # increase right margin by the width of the last x label * 0.71
+  plot_margin[2] <- grid::unit(
+    x = 0.8, units = "strwidth", data = rightmost_x_label)
+
   gene_tpm_boxplot <- ggplot2::ggplot(gene_tpm_boxplot_tbl,
                                       ggplot2::aes(x = x_labels, y = TPM,
                                                    fill = sample_type)) +
@@ -81,9 +95,9 @@ get_gene_tpm_boxplot <- function(gene_tpm_boxplot_tbl) {
     ggplot2::ylab("TPM") +
     ggplot2::xlab("") +
     ggplot2_publication_theme(base_size = 12) +
-    ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90,
-                                                       vjust = 0.5,
-                                                       hjust = 1)) +
+    ggplot2::theme(
+      axis.text.x = ggplot2::element_text(angle = -45, vjust = 1, hjust = 0),
+      plot.margin = plot_margin) +
     ggplot2::ggtitle(title) +
     ggplot2::scale_fill_manual(values = box_fill_colors) +
     ggplot2::guides(fill = "none")
