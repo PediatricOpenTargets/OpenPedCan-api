@@ -2,7 +2,7 @@
 
 [![GitHub Super-Linter](https://github.com/PediatricOpenTargets/OpenPedCan-api/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
 
-`OpenPedCan-api` implements OpenPedCan (Open Pediatric Cancers) project public API (application programming interface) to transfer [OpenPedCan-analysis](https://github.com/PediatricOpenTargets/OpenPedCan-analysis) results and plots via HTTP, which is publicly available at <https://openpedcan-api-dev.d3b.io/__docs__/>.
+`OpenPedCan-api` implements OpenPedCan (Open Pediatric Cancers) project public API (application programming interface) to transfer [OpenPedCan-analysis](https://github.com/PediatricOpenTargets/OpenPedCan-analysis) results and plots via HTTP, which is publicly available at <https://openpedcan-api-qa.d3b.io/__docs__/>.
 
 - [1. API endpoint specifications](#1-api-endpoint-specifications)
 - [2. Deploy `OpenPedCan-api`](#2-deploy-openpedcan-api)
@@ -24,7 +24,7 @@
 
 ## 1. API endpoint specifications
 
-<https://openpedcan-api-dev.d3b.io/__docs__/> specifies the following API endpoint attributes.
+<https://openpedcan-api-qa.d3b.io/__docs__/> specifies the following API endpoint attributes.
 
 - HTTP request method
 - Path
@@ -33,9 +33,17 @@
 
 ## 2. Deploy `OpenPedCan-api`
 
-Following is a comment by @blackdenc at <https://github.com/PediatricOpenTargets/OpenPedCan-api/issues/5#issuecomment-904824004>.
+According to comments and messages by @blackdenc :
 
-> As far as building in Jenkins, we build the container and tag it, then push it to ECR and give that tag to the ECS task definition at runtime.
+`OpenPedCan-api` is deployed with the following steps:
+
+- Build and tag `OpenPedCan-api` docker image using `Dockerfile`.
+- Push the built image to Amazon Elastic Container Registry (ECR).
+- Pass the ECR docker image tag to Amazon Elastic Container Service (ECS) Fargate (?) task definition at runtime.
+
+<https://openpedcan-api-qa.d3b.io/__docs__/> is the QA server that will only deploy the `main` branch of the repository.
+
+<http://openpedcan-api-dev.d3b.io/__docs__/> is the DEV server that will deploy any new branch of the repository, and the QA environment will remain un-changed until a new commit is merged to main.
 
 `Dockerfile` builds the `OpenPedCan-api` docker image to be run on Amazon ECS.
 
