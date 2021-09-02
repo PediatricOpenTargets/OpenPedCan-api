@@ -23,7 +23,7 @@
 #*   <a href="https://github.com/PediatricOpenTargets">Pediatric Open Targets project</a>.
 
 
-#* @apiVersion 0.1
+#* @apiVersion v0.2.0-alpha
 
 #* @apiContact list(name = "API Support", url =
 #*   "https://github.com/PediatricOpenTargets/OpenPedCan-api/issues")
