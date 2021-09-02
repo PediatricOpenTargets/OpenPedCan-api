@@ -1,6 +1,5 @@
 x_labels	Gene_Ensembl_ID	Gene_symbol	PMTL	Dataset	Disease	GTEx_tissue_subgroup	EFO	MONDO	GTEx_tissue_subgroup_UBERON	TPM_mean	TPM_sd	TPM_min	TPM_25th_percentile	TPM_median	TPM_75th_percentile	TPM_max
-High-grade glioma/astrocytoma (Dataset = PBTA, N = 51)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	High-grade glioma/astrocytoma		EFO_0005543	MONDO_0100342		11.23	14	0.15	2.74	5.66	14.88	59.91
-Low-grade glioma/astrocytoma (Dataset = PBTA, N = 237)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Low-grade glioma/astrocytoma		EFO_0005543	MONDO_0016685		2.88	2.14	0.17	1.27	2.48	4.11	12.52
+High-grade glioma/astrocytoma (Dataset = PBTA, N = 51)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	High-grade glioma/astrocytoma		MONDO_0016680	MONDO_0100342		11.23	14	0.15	2.74	5.66	14.88	59.91
 Adipose - Subcutaneous (Dataset = GTEx, N = 663)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx		Adipose - Subcutaneous			UBERON_0002190	1.76	0.82	0.3	1.17	1.66	2.18	5.47
 Adipose - Visceral (Omentum) (Dataset = GTEx, N = 541)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx		Adipose - Visceral (Omentum)			UBERON_0010414	1.2	0.65	0.14	0.71	1.04	1.54	4.09
 Adrenal Gland (Dataset = GTEx, N = 258)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GTEx		Adrenal Gland			UBERON_0002369	0.72	0.36	0.18	0.51	0.63	0.86	3.25

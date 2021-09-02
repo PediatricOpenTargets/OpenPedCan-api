@@ -14,9 +14,9 @@ cd ..
 echo "Download OpenPedCan-analysis data release..."
 # The commit ID to checkout to build data model.
 #
-# 61e23154a34e1d8b3fc1c50a67dd8f79c2067776 points to v8 release with updated
+# 96132ae1e7485d9ab129380898fac5e255ccb36f points to v9 release with updated
 # OpenPedCan-analysis/analyses/long-format-table-utils/annotator.
-OPEN_PED_CAN_ANALYSIS_COMMIT="61e23154a34e1d8b3fc1c50a67dd8f79c2067776"
+OPEN_PED_CAN_ANALYSIS_COMMIT="96132ae1e7485d9ab129380898fac5e255ccb36f"
 
 # If submodule repo url changes, e.g. rename, this will update the URL according
 # to the one in .gitmodules.
