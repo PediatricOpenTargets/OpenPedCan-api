@@ -10,13 +10,15 @@
 - Changed "cohort" to "Dataset" in boxplot summary table columns.
 - Increased minimum number of samples required per `Disease` or `GTEx_tissue_subgroup` from 1 to 3.
 - Rotated boxplot x-axis labels by 45 degrees.
+- Changed `tests/curl_test_endpoints.sh` variable `API_PORT` to `LOCAL_API_HOST_PORT`.
 - Updated `README.md`.
 
 ### Added
 
-- HTTP GET method for `/tpm/gene-all-cancer/json` API endpoint.
-- HTTP GET method for `/tpm/gene-all-cancer/plot` API endpoint.
-- This `changelog.md`.
+- Implemented HTTP GET method for `/tpm/gene-all-cancer/json` API endpoint.
+- Implemented HTTP GET method for `/tpm/gene-all-cancer/plot` API endpoint.
+- Added `API_HOST` variable in `tests/curl_test_endpoints.sh`, in order to test DEV and QA hosts.
+- Added this `changelog.md`.
 
 ## v0.1.0-alpha
 

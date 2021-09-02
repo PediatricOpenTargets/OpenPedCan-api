@@ -43,7 +43,7 @@ According to comments and messages by @blackdenc :
 
 <https://openpedcan-api-qa.d3b.io/__docs__/> is the QA server that will only deploy the `main` branch of the repository.
 
-<http://openpedcan-api-dev.d3b.io/__docs__/> is the DEV server that will deploy any new branch of the repository, and the QA environment will remain un-changed until a new commit is merged to main.
+<https://openpedcan-api-dev.d3b.io/__docs__/> is the DEV server that will deploy any new branch of the repository, and the QA environment will remain un-changed until a new commit is merged to main.
 
 `Dockerfile` builds the `OpenPedCan-api` docker image to be run on Amazon ECS.
 
@@ -149,7 +149,7 @@ Test the running server with the following command.
 ./tests/curl_test_endpoints.sh
 ```
 
-`tests/curl_test_endpoints.sh` sends multiple HTTP requests to `localhost:8082` by default, with the following steps. The port number of `localhost` can be changed by passing the `bash` environment variable `API_PORT` with a different value, but there has to be a `OpenPedCan-api` server listening on the port.
+`tests/curl_test_endpoints.sh` sends multiple HTTP requests to `localhost:8082` by default, with the following steps. The port number of `localhost` can be changed by passing the `bash` environment variable `LOCAL_API_HOST_PORT` with a different value, but there has to be a `OpenPedCan-api` server listening on the port. The API HTTP server host can be changed to <https://openpedcan-api-qa.d3b.io/__docs__/> or <https://openpedcan-api-dev.d3b.io/__docs__/>, by passing environment variable `API_HOST=qa` or `API_HOST=dev` respectively.
 
 - Send an HTTP request using `curl`.
 - Output the HTTP response body to `tests/http_response_output_files/png` or `tests/http_response_output_files/json`.

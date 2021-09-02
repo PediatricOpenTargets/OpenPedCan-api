@@ -9,20 +9,34 @@ set -o pipefail
 # Adapted from https://stackoverflow.com/a/3355423/4638182
 cd "$(dirname "$0")" || exit
 
-# Set API_PORT to 8082 if not set.
+# Set LOCAL_API_HOST_PORT to 8082 if not set.
 #
 # Adapted from
 #
 # - https://google.github.io/styleguide/shellguide.html
 # - https://stackoverflow.com/a/13864829/4638182
-if [[ -z "${API_PORT+x}" ]]; then
-  API_PORT=8082
+if [[ -z "${LOCAL_API_HOST_PORT+x}" ]]; then
+  LOCAL_API_HOST_PORT="8082"
+fi
+
+if [[ -z "${API_HOST+x}" ]]; then
+  API_HOST="local"
 fi
 
 # Adapted from https://stackoverflow.com/a/17030976/4638182
 printf "%0.s\n" {1..20}
 
-base_url="http://localhost:${API_PORT}"
+if [[ "${API_HOST}" == "local" ]]; then
+  base_url="http://localhost:${LOCAL_API_HOST_PORT}"
+elif [[ "${API_HOST}" == "qa" ]]; then
+  base_url="https://openpedcan-api-qa.d3b.io"
+elif [[ "${API_HOST}" == "dev" ]]; then
+  base_url="https://openpedcan-api-dev.d3b.io"
+else
+  echo "Invalid API_HOST=${API_HOST}. Please choose from local, qa, and dev and rerun." 1>&2
+  exit 1
+fi
+
 http_request_method="GET"
 
 for ensg_id in "ENSG00000213420" "ENSG00000157764" "ENSG00000273032"; do
