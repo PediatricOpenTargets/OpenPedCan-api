@@ -10,6 +10,7 @@
 - Changed "cohort" to "Dataset" in boxplot summary table columns.
 - Increased minimum number of samples required per `Disease` or `GTEx_tissue_subgroup` from 1 to 3.
 - Rotated boxplot x-axis labels by 45 degrees.
+- Updated `README.md`.
 
 ### Added
 
