@@ -30,7 +30,7 @@ get_gene_tpm_boxplot_summary_tbl <- function(gene_tpm_boxplot_tbl) {
     Gene_Ensembl_ID = unique(Gene_Ensembl_ID),
     Gene_symbol = unique(Gene_symbol),
     PMTL = unique(RMTL),
-    cohort = unique(cohort),
+    Dataset = unique(cohort),
     Disease = unique(Disease),
     GTEx_tissue_subgroup = unique(GTEx_tissue_subgroup),
     EFO = unique(EFO),
