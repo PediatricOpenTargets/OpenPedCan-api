@@ -203,7 +203,6 @@ Jenkinsfile and Dockerfile specify the procedures to deploy the `OpenPedCan-api`
 
 Implementation action items:
 
-- Remove gene down-sampling procedure in `db/tpm_data_lists.R`, in order to include all genes.
 - Build data model into a Postgres database. Implement/refactor R functions to interact with the Postgres database. This will reduce RAM usage. This may reduce run time.
 - Add unit tests to R functions.
 - Send more informative response HTTP status code. Currently, all failures use status code 500.
