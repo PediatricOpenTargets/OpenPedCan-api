@@ -1,4 +1,6 @@
 #!/bin/bash
+#
+# This is the main script for building OpenPedCan-api database.
 set -e
 set -u
 set -o pipefail

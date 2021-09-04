@@ -1,5 +1,6 @@
-# tpm_data_lists.R outputs a variable, tpm_data_lists, into tpm_data_lists.rds
-# that is used by other functions or procedures.
+# tpm_data_lists.R is called by build_db.Dockerfile to output a variable,
+# tpm_data_lists, into tpm_data_lists.rds that is used by other functions or
+# procedures.
 #
 # This file should be run with the directory that contains this file as working
 # directory.

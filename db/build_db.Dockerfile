@@ -1,3 +1,5 @@
+# This build_db.Dockerfile is called by build_db.sh to build OpenPedCan-api
+# database.
 FROM rocker/r-ver:4.1.0
 
 RUN install2.r --error \

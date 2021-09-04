@@ -1,4 +1,7 @@
 #!/bin/bash
+#
+# This script is called by the web application Dockerfile, which is in the
+# root directory of this repository, to load pre-built database.
 set -e
 set -u
 set -o pipefail
