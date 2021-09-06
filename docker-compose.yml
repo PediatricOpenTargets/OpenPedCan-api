@@ -1,0 +1,37 @@
+# docker-compose file reference:
+# https://docs.docker.com/compose/compose-file/compose-file-v3/
+version: "3.9"
+services:
+  web:
+    build:
+      context: .
+      args:
+        - DB_LOCATION=local
+    ports:
+      - "8082:8080"
+    depends_on:
+      - db
+    # Sensitive information is passed as environment variables in local
+    # development. Although local development can directly use plain text in
+    # code and cofigurations, these secrets are used to emulate production
+    # environment, so that locally developed applications can be deployed more
+    # straightforwardly.
+    #
+    # ../OpenPedCan-api-secrets directory is not in docker build context or
+    # tracked by git repository.
+    #
+    # Environment file format reference:
+    # https://docs.docker.com/compose/compose-file/compose-file-v3/#env_file
+    env_file: ../OpenPedCan-api-secrets/web.env
+  db:
+    build:
+      context: .
+      shm_size: 2gb
+      # postgres docker image has VOLUME /var/lib/postgresql/data. When running
+      # without specifying any volume, docker will create an anonymous volume,
+      # which is easier for cleaning up.
+      #
+      # docker-compose stopped containers and anonymous volume(s) can be cleaned
+      # up by `docker-compose rm -fv`.
+      dockerfile: db/db.Dockerfile
+    env_file: ../OpenPedCan-api-secrets/db.env
