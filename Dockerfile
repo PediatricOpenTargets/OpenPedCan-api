@@ -5,6 +5,9 @@ RUN apt-get update -qq && apt-get install -y --no-install-recommends \
   libssl-dev \
   libcurl4-gnutls-dev \
   curl \
+  unixodbc \
+  unixodbc-dev \
+  odbc-postgresql \
   && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /home/OpenPedCan-api
@@ -31,7 +34,9 @@ RUN install2.r --error \
   plumber \
   rprojroot \
   jsonlite \
-  ggthemes
+  ggthemes \
+  odbc \
+  DBI
 
 # Copy API server files to docker image WORKDIR
 COPY ./main.R .
