@@ -2,6 +2,7 @@
 OpenPedCan-analysis
 .git
 tests
+db/bk
 # ! excludes patterns
 !OpenPedCan-analysis/data
 !OpenPedCan-analysis/analyses/long-format-table-utils
