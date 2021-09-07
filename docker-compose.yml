@@ -22,7 +22,7 @@ services:
     #
     # Environment file format reference:
     # https://docs.docker.com/compose/compose-file/compose-file-v3/#env_file
-    env_file: ../OpenPedCan-api-secrets/web.env
+    env_file: ../OpenPedCan-api-secrets/access_db.env
   db:
     build:
       context: .
@@ -33,5 +33,19 @@ services:
       #
       # docker-compose stopped containers and anonymous volume(s) can be cleaned
       # up by `docker-compose rm -fv`.
+      #
+      # "Warning: scripts in /docker-entrypoint-initdb.d are only run if you
+      # start the container with a data directory that is empty; any
+      # pre-existing database will be left untouched on container startup."
+      #
+      # Reference: https://hub.docker.com/_/postgres
       dockerfile: db/db.Dockerfile
-    env_file: ../OpenPedCan-api-secrets/db.env
+    # postgres version 11 initdb sets password_encryption according to
+    # authmethodlocal and authmethodhost
+    #
+    # Ref:
+    # https://github.com/postgres/postgres/blob/REL_11_STABLE/src/bin/initdb/initdb.c#L1220-L1226
+    #
+    # load_db process is to run pg_restore on the output of build_db process.
+    # The build_db process is completed by running db/build_db.sh.
+    env_file: ../OpenPedCan-api-secrets/load_db.env
