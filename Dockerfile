@@ -33,15 +33,12 @@ RUN apt-get update -qq \
     jsonlite \
     ggthemes \
     odbc \
-    DBI
+    DBI \
+  && rm -rf /tmp/downloaded_packages/*
 
-# Use 5000 as docker group and user ID starting point, as a convention.
-RUN groupadd --gid 5000 open-ped-can-api-web \
-  && useradd -m -g open-ped-can-api-web --uid 5000 open-ped-can-api-web
-
-USER open-ped-can-api-web
-
-WORKDIR /home/open-ped-can-api-web
+# Run the following commands to run API HTTP server on port 80 as root user, by
+# design.
+WORKDIR /home/open-ped-can-api-web/
 
 # Copy API server files to docker image WORKDIR
 COPY ./main.R .
@@ -67,6 +64,6 @@ RUN ./load_db.sh
 
 WORKDIR /home/open-ped-can-api-web
 
-EXPOSE 8080
+EXPOSE 80
 
 ENTRYPOINT ["Rscript", "--vanilla", "main.R"]
