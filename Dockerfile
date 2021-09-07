@@ -1,24 +1,22 @@
 FROM rocker/r-ver:4.1.0
 
-# hadolint ignore=DL3008
-RUN apt-get update -qq && apt-get install -y --no-install-recommends \
-  libssl-dev \
-  libcurl4-gnutls-dev \
-  curl \
-  unixodbc \
-  unixodbc-dev \
-  odbc-postgresql \
-  && rm -rf /var/lib/apt/lists/*
-
-WORKDIR /home/OpenPedCan-api
-
-# Install R X11 runtime dependencies
-#
-# Adapted from
-# https://github.com/rocker-org/rocker-versioned/blob/dff37a27698cfe8cda894845fa194ecb5f668d84/X11/Dockerfile
+# Install operating system and R packages
 #
 # hadolint ignore=DL3008
-RUN apt-get update -qq && apt-get install -y --no-install-recommends \
+RUN apt-get update -qq \
+  && apt-get install -y --no-install-recommends \
+    libssl-dev \
+    libcurl4-gnutls-dev \
+    # Install curl to download data
+    curl \
+    # Install odbc to operate database
+    unixodbc \
+    unixodbc-dev \
+    odbc-postgresql \
+    # Install R X11 runtime dependencies
+    #
+    # Adapted from
+    # https://github.com/rocker-org/rocker-versioned/blob/dff37a27698cfe8cda894845fa194ecb5f668d84/X11/Dockerfile
     libx11-6 \
     libxss1 \
     libxt6 \
@@ -26,24 +24,31 @@ RUN apt-get update -qq && apt-get install -y --no-install-recommends \
     libsm6 \
     libice6 \
     xdg-utils \
-  && rm -rf /var/lib/apt/lists/*
+  && rm -rf /var/lib/apt/lists/* \
+  # Install R packages
+  && install2.r --error \
+    tidyverse \
+    plumber \
+    rprojroot \
+    jsonlite \
+    ggthemes \
+    odbc \
+    DBI
 
-# hadolint ignore=DL3059
-RUN install2.r --error \
-  tidyverse \
-  plumber \
-  rprojroot \
-  jsonlite \
-  ggthemes \
-  odbc \
-  DBI
+# Use 5000 as docker group and user ID starting point, as a convention.
+RUN groupadd --gid 5000 open-ped-can-api-web \
+  && useradd -m -g open-ped-can-api-web --uid 5000 open-ped-can-api-web
+
+USER open-ped-can-api-web
+
+WORKDIR /home/open-ped-can-api-web
 
 # Copy API server files to docker image WORKDIR
 COPY ./main.R .
 COPY ./src/ ./src/
 COPY ./db/ ./db/
 
-WORKDIR /home/OpenPedCan-api/db/
+WORKDIR /home/open-ped-can-api-web/db/
 
 # Use DB_LOCATION to determine where to get the database.
 #
@@ -60,6 +65,8 @@ ARG CACHE_DATE="not_a_date"
 
 RUN ./load_db.sh
 
-WORKDIR /home/OpenPedCan-api
-EXPOSE 80
+WORKDIR /home/open-ped-can-api-web
+
+EXPOSE 8080
+
 ENTRYPOINT ["Rscript", "--vanilla", "main.R"]
