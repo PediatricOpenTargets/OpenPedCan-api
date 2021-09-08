@@ -45,8 +45,6 @@ COPY ./main.R .
 COPY ./src/ ./src/
 COPY ./db/ ./db/
 
-WORKDIR /home/open-ped-can-api-web/db/
-
 # Use DB_LOCATION to determine where to get the database.
 #
 # - aws_s3: download database from aws s3 bucket.
@@ -60,9 +58,7 @@ ARG DB_LOCATION="aws_s3"
 # Adapted from https://stackoverflow.com/a/38261124/4638182
 ARG CACHE_DATE="not_a_date"
 
-RUN ./load_db.sh
-
-WORKDIR /home/open-ped-can-api-web
+RUN ./db/load_db.sh
 
 EXPOSE 80
 

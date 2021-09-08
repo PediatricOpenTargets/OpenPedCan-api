@@ -19,11 +19,21 @@ cd "$(dirname "$0")" || exit
 #   locally, report an error.
 DB_LOCATION=${DB_LOCATION:-aws_s3}
 
+# Path of buid_db output dir, relative to this file.
+LOCAL_DB_OUTPUT_DIR="build_outputs"
+
 printf '\n\nLoad database from %s...\n' "$DB_LOCATION"
+
+if [[ ! -d "${LOCAL_DB_OUTPUT_DIR}" ]]; then
+  mkdir "${LOCAL_DB_OUTPUT_DIR}"
+  echo "Info: created directory $(dirname "$0")/${LOCAL_DB_OUTPUT_DIR}."
+fi
+
+cd "${LOCAL_DB_OUTPUT_DIR}"
 
 if [[ "${DB_LOCATION}" == "local" ]]; then
   if [[ ! -f "sha256sum.txt" ]]; then
-    echo "./db/sha256sum.txt does not exist." 1>&2
+    echo "Error: local file ${PWD}/sha256sum.txt does not exist." 1>&2
     exit 1
   fi
 else
@@ -36,8 +46,8 @@ fi
 API_DB_BASE_URL="https://s3.amazonaws.com/kf-openaccess-us-east-1-prd-pbta/open-targets/api/dev"
 
 if [[ "${DB_LOCATION}" == "aws_s3" ]]; then \
-  curl "${API_DB_BASE_URL}/sha256sum.txt" -o sha256sum.txt
-  curl "${API_DB_BASE_URL}/tpm_data_lists.rds" -o tpm_data_lists.rds
+  curl "${API_DB_BASE_URL}/sha256sum.txt" -o "sha256sum.txt"
+  curl "${API_DB_BASE_URL}/tpm_data_lists.rds" -o "tpm_data_lists.rds"
 fi
 
 printf "\n\nCheck database sha256sum...\n"
@@ -46,7 +56,7 @@ printf "\n\nCheck database sha256sum...\n"
 #
 # Adapted from https://stackoverflow.com/a/26759734/4638182
 if [[ -x $(command -v sha256sum) ]]; then
-  sha256sum -c sha256sum.txt
+  sha256sum -c --strict sha256sum.txt
 elif [[ -x $(command -v shasum) ]]; then
   shasum -a 256 --strict -c sha256sum.txt
 else

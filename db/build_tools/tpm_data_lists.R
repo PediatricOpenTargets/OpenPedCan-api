@@ -7,11 +7,7 @@
 #
 # Call sequence:
 #
-# - docker run db/build_db.Dockerfile calls Rscript --vanilla tpm_data_lists.R
-#
-# Defined variables:
-#
-# - tpm_data_lists
+# - docker build db/build_tools/build_db.Dockerfile runs tpm_data_lists.R
 
 
 
@@ -22,11 +18,11 @@
 
 # Define input and output directory --------------------------------------------
 # Input dirs
-opc_analysis_dir <- file.path("..", "OpenPedCan-analysis")
+opc_analysis_dir <- file.path("..", "..", "OpenPedCan-analysis")
 data_dir <- file.path(opc_analysis_dir, "data")
 
 # Output dir
-output_dir <- file.path("..", "db")
+output_dir <- file.path("..", "build_outputs")
 if (!dir.exists(output_dir)) {
   dir.create(output_dir)
 }
