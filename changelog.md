@@ -5,6 +5,7 @@
 ### Changed
 
 - Updated data model using [`OpenPedCan-analysis` v9 release data](https://github.com/PediatricOpenTargets/OpenPedCan-analysis/pull/103).
+- Enabled endpoint Cross-Origin Resource Sharing (CORS) by default.
 - Changed `/tpm/gene-disease-gtex` boxplot title from "Disease vs. GTEx tissue bulk gene expression" to "Primary tumor vs GTEx tissue bulk gene expression".
 - Changed "cohort =" to "Dataset =" in boxplot and summary table x-axis labels.
 - Changed "cohort" to "Dataset" in boxplot summary table columns.
@@ -17,6 +18,7 @@
 
 - Implemented HTTP GET method for `/tpm/gene-all-cancer/json` API endpoint.
 - Implemented HTTP GET method for `/tpm/gene-all-cancer/plot` API endpoint.
+- Added `cors` filter to enable endpoint CORS by default.
 - Added `API_HOST` variable in `tests/curl_test_endpoints.sh`, in order to test DEV and QA hosts.
 - Added this `changelog.md`.
 
