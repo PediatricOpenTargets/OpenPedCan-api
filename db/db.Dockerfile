@@ -1,1 +1,3 @@
-FROM postgres:10.18
+FROM postgres:11.10
+
+USER postgres

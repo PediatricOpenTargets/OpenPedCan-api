@@ -7,6 +7,10 @@ RUN apt-get update -qq \
     curl \
     ca-certificates \
     gnupg \
+    # Install odbc to operate database
+    unixodbc \
+    unixodbc-dev \
+    odbc-postgresql \
   && rm -rf /var/lib/apt/lists/* \
   # Install postgres 11 from an actively maintained, as of Sep 2021, APT
   # repository https://wiki.postgresql.org/wiki/Apt .
@@ -25,25 +29,33 @@ RUN apt-get update -qq \
   && install2.r --error \
     tidyverse \
     rprojroot \
+    odbc \
+    DBI \
   && rm -rf /tmp/downloaded_packages/*
 
 WORKDIR /home/open-ped-can-api-db/
 
-COPY ./OpenPedCan-analysis/ ./OpenPedCan-analysis/
+# WORKDIR is created with root as owner
+RUN chown postgres:postgres .
+
+USER postgres
+
+COPY --chown=postgres:postgres \
+  ./OpenPedCan-analysis/ ./OpenPedCan-analysis/
 
 # Create a placeholder .git/index file for rprojroot to work
 RUN mkdir -p ./OpenPedCan-analysis/.git \
   && touch ./OpenPedCan-analysis/.git/index
 
-COPY ./db/build_tools/tpm_data_lists.R ./db/build_tools/tpm_data_lists.R
+COPY --chown=postgres:postgres \
+  ./db/build_tools/ ./db/build_tools/
 
-# tpm_data_lists.R should be run with the directory that contains this file as
-# working directory.
-WORKDIR /home/open-ped-can-api-db/db/build_tools/
-# This creates /home/OpenPedCan-api/db/tpm_data_lists.rds
-RUN Rscript --vanilla tpm_data_lists.R
+COPY --chown=postgres:postgres \
+  ./db/init_user_db.sh ./db/init_user_db.sh
 
-WORKDIR /home/open-ped-can-api-db/db/build_outputs/
+COPY --chown=postgres:postgres \
+  ./db/db_env_vars.R ./db/db_env_vars.R
 
-# Checksum used for checking download during deployment
-RUN sha256sum tpm_data_lists.rds > sha256sum.txt
+ENTRYPOINT ["sh", "-c"]
+
+CMD ["db/build_tools/build_db_docker_cmd.sh"]

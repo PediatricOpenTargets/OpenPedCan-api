@@ -56,17 +56,16 @@ cd ..
 
 printf "\n\nBuild data model using docker...\n"
 
-docker build --no-cache -f db/build_tools/build_db.Dockerfile -t open-ped-can-api-build-db .
+docker build --no-cache -f db/build_tools/build_db.Dockerfile \
+  -t open-ped-can-api-build-db .
 
-# Copy db files from image to host.
-#
-# Adapted from https://stackoverflow.com/a/31316636/4638182
+docker run --rm -it --env-file=../OpenPedCan-api-secrets/access_db.env \
+  --env-file=../OpenPedCan-api-secrets/common_db.env \
+  --env-file=../OpenPedCan-api-secrets/load_db.env \
+  -v "$(pwd)"/db/build_outputs/:/home/open-ped-can-api-db/db/build_outputs \
+  open-ped-can-api-build-db
+
 cd db/build_outputs
-
-docker_container_id=$(docker create open-ped-can-api-build-db)
-docker cp "${docker_container_id}:/home/open-ped-can-api-db/db/build_outputs/tpm_data_lists.rds" .
-docker cp "${docker_container_id}:/home/open-ped-can-api-db/db/build_outputs/sha256sum.txt" .
-docker rm -v "${docker_container_id}" > /dev/null
 
 printf "\n\nCheck data model sha256sum...\n"
 

@@ -53,7 +53,7 @@ cat("---------------------------------\n",
 #   can be tracked straightforwardly.
 # - Use ls() to check what variables are defined by previous scripts, make sure
 #   previously defined variables are not overwritten by the new script.
-tpm_data_lists <- readRDS("db/tpm_data_lists.rds")
+tpm_data_lists <- readRDS("db/build_outputs/tpm_data_lists.rds")
 
 cat("---------------------------------\n",
     as.character(Sys.time()), "\n",
@@ -65,6 +65,7 @@ cat("---------------------------------\n",
     "Number of genes: ", nrow(tpm_data_lists$pt_all_cohorts$tpm_df),
     "\n---------------------------------\n")
 
+source("db/db_env_vars.R")
 source("src/get_gene_tpm_tbl.R")
 source("src/ggplot2_publication_theme.R")
 source("src/get_gene_tpm_boxplot_tbl.R")
