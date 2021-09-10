@@ -32,7 +32,8 @@
 
 # Plumber API definitions ------------------------------------------------------
 
-#* Logger adapted from https://www.rplumber.io/articles/routing-and-input.html#forward-to-another-handler
+#* Logger adapted from
+#* https://www.rplumber.io/articles/routing-and-input.html#forward-to-another-handler
 #*
 #* Log some information about the incoming request
 #* @filter logger
@@ -47,6 +48,20 @@ function(req, res) {
   cat("res:\n")
   print(res)
   cat("--------------------------\n")
+  plumber::forward()
+}
+
+#* Cross-Origin Resource Sharing (CORS) workaround.
+#*
+#* Copied from
+#* https://www.rplumber.io/articles/security.html#cross-origin-resource-sharing-cors
+#*
+#* Enable Cross-Origin Resource Sharing (CORS) by default for all endpoints. To
+#* disable for certain endpoints, add preempt annotation to exclude this filter.
+#*
+#* @filter cors
+cors <- function(res) {
+  res$setHeader("Access-Control-Allow-Origin", "*")
   plumber::forward()
 }
 
