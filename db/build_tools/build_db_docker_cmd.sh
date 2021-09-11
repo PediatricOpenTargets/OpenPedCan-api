@@ -82,18 +82,19 @@ EOSQL
 
 cd "$BUILD_OUTPUT_DIR_PATH"
 
-db_dump_out_path="postgres_db_${DB_NAME}_schema_${BULK_EXP_SCHEMA}.dump"
+db_dump_out_path="postgres_db_${DB_NAME}_schema_${BULK_EXP_SCHEMA}.sql.gz"
 
 printf "\n\nDump database schema(s) and table(s)...\n"
 
-pg_dump -n "$BULK_EXP_SCHEMA" -Fc "$DB_NAME" > "$db_dump_out_path"
+pg_dump --clean --if-exists --no-owner --no-privileges \
+  --schema="$BULK_EXP_SCHEMA" --dbname="$DB_NAME" \
+  --host="$DB_HOST" --port="$DB_PORT" --username="$DB_USERNAME" \
+  | gzip --no-name -c > "$db_dump_out_path"
 
 # To restore from dump, run:
-#
-# pg_restore --dbname="$DB_NAME" --clean --if-exists --no-owner \
-#   --no-privileges \
-#   --host="$DB_HOST" --port="$DB_PORT" --username="$DB_USERNAME" \
-#   "$db_dump_out_path"
+# gunzip -c "$db_dump_out_path" | psql -v ON_ERROR_STOP=1 \
+#   --dbname="$DB_NAME" --username="$DB_USERNAME" \
+#    --host="$DB_HOST" --port="$DB_PORT"
 
 printf "\n\nChecksum...\n"
 
