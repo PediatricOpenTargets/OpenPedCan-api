@@ -9,6 +9,13 @@
 # 2. Run another R script to load the rds files output by step 1 and build a
 #    postgres database.
 # 3. Run pg_dump on the database built in step 2.
+#
+# This script takes the following env vars:
+#
+# - DOWN_SAMPLE_DB_GENES:
+#   - unset or 0: do not down sample genes for database.
+#   - 1: down sample genes for database
+#   - other: error
 set -e
 set -u
 set -o pipefail
@@ -59,9 +66,11 @@ printf "\n\nBuild data model using docker...\n"
 docker build --no-cache -f db/build_tools/build_db.Dockerfile \
   -t open-ped-can-api-build-db .
 
-docker run --rm -it --env-file=../OpenPedCan-api-secrets/access_db.env \
-  --env-file=../OpenPedCan-api-secrets/common_db.env \
-  --env-file=../OpenPedCan-api-secrets/load_db.env \
+docker run --rm -it \
+  --env-file ../OpenPedCan-api-secrets/access_db.env \
+  --env-file ../OpenPedCan-api-secrets/common_db.env \
+  --env-file ../OpenPedCan-api-secrets/load_db.env \
+  --env DOWN_SAMPLE_DB_GENES \
   -v "$(pwd)"/db/build_outputs/:/home/open-ped-can-api-db/db/build_outputs \
   open-ped-can-api-build-db
 

@@ -34,8 +34,8 @@ db_env_vars <- lapply(
 
     Database = "DB_NAME",
 
-    bulk_exp_schema = "bulk_exp_schema",
-    bulk_exp_tpm_histology_tbl = "bulk_exp_tpm_histology_tbl"
+    BULK_EXP_SCHEMA = "BULK_EXP_SCHEMA",
+    BULK_EXP_TPM_HISTOLOGY_TBL = "BULK_EXP_TPM_HISTOLOGY_TBL"
   ),
   # Get environmnt variable values.
   function(env_var_name) {
@@ -50,29 +50,18 @@ db_env_vars <- lapply(
     if (is.na(env_var_val)) {
       if (identical(env_var_name, "DB_DRIVER")) {
         env_var_val <- "PostgreSQL Unicode"
-      } else if (identical(env_var_name, "bulk_exp_schema")) {
+      } else if (identical(env_var_name, "BULK_EXP_SCHEMA")) {
         env_var_val <- "bulk_expression"
 
-      } else if (identical(env_var_name, "bulk_exp_gtex_tpm_tbl")) {
-        env_var_val <- "gtex_tpm"
-      } else if (identical(env_var_name, "bulk_exp_pt_all_cohorts_tpm_tbl")) {
-        env_var_val <- "pt_all_cohorts_tpm"
-      } else if (identical(env_var_name, "bulk_exp_pt_each_cohort_tpm_tbl")) {
-        env_var_val <- "pt_each_cohort_tpm"
-
-      } else if (identical(env_var_name, "bulk_exp_gtex_hist_tbl")) {
-        env_var_val <- "gtex_histology"
-      } else if (identical(env_var_name, "bulk_exp_pt_all_cohorts_hist_tbl")) {
-        env_var_val <- "pt_all_cohorts_histology"
-      } else if (identical(env_var_name, "bulk_exp_pt_each_cohort_hist_tbl")) {
-        env_var_val <- "pt_each_cohort_histology"
+      } else if (identical(env_var_name, "BULK_EXP_TPM_HISTOLOGY_TBL")) {
+        env_var_val <- "bulk_expression_tpm_histology"
 
       } else {
         stop(paste(
           "Error: Environment variable", env_var_name, "cannot be unset."))
       }
     }
-    
+
     # Handle value type conversion
     if (identical(env_var_name, "DB_PORT")) {
       # Assert DB_PORT is an integer

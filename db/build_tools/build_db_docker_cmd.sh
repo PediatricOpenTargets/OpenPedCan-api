@@ -10,9 +10,12 @@ set -o pipefail
 cd "$(dirname "$0")" || exit
 
 # Create a database cluster
-DB_CLUSTER_NAME=open_ped_can
+export DB_CLUSTER_NAME=open_ped_can
+
+printf "\n\nInitialize database...\n"
 
 # Adapted from postgres docker image
+# shellcheck disable=SC1004
 eval 'pg_createcluster --port=5432 11 "$DB_CLUSTER_NAME" -- \
   --username="$POSTGRES_USER" --pwfile=<(echo "$POSTGRES_PASSWORD") \
   $POSTGRES_INITDB_ARGS'
@@ -32,13 +35,17 @@ chmod 600 ~/.pgpass
 # simplify local development.
 #
 # https://www.postgresql.org/docs/current/libpq-pgpass.html
-echo "*:*:*:${DB_USERNAME}:${DB_PASSWORD}" >> ~/.pgpass
-echo "*:*:*:${POSTGRES_USER}:${POSTGRES_PASSWORD}" >> ~/.pgpass
-echo "*:*:*:${DB_READ_WRITE_USERNAME}:${DB_READ_WRITE_PASSWORD}" >> ~/.pgpass
+{
+  echo "*:*:*:${DB_USERNAME}:${DB_PASSWORD}"
+  echo "*:*:*:${POSTGRES_USER}:${POSTGRES_PASSWORD}"
+  echo "*:*:*:${DB_READ_WRITE_USERNAME}:${DB_READ_WRITE_PASSWORD}"
+} >> ~/.pgpass
 
 pg_ctlcluster 11 "$DB_CLUSTER_NAME" start
 
 ../init_user_db.sh
+
+printf "\n\nWrite R objects into database compatible csv file(s)...\n"
 
 Rscript --vanilla tpm_data_lists.R
 
@@ -51,6 +58,45 @@ export DB_PASSWORD="$DB_READ_WRITE_PASSWORD"
 # Use localhost
 export DB_HOST="localhost"
 
+# build_db.R take env var DOWN_SAMPLE_DB_GENES. See build_db.R for details.
+#
+# Output csv file paths have the following conventions:
+#
+# - filename has the format of ${schema_name}_${table_name}.csv
+# - output directory is ../build_outputs
+#
+# build_db.R does not take explicit options of output paths, by design, because
+# build_db.R does not need to be run anywhere else.
+#
+# This script hangs when readr::write_csv tries to print progress, if run with
+# --vanilla, so disable progress printing.
 Rscript --vanilla build_db.R
 
-# TODO: dump database. add checksum. remove intermediate files.
+printf "\n\nLoad the csv file(s) into database...\n"
+
+psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$DB_NAME" <<EOSQL
+COPY ${BULK_EXP_SCHEMA}.${BULK_EXP_TPM_HISTOLOGY_TBL}
+FROM '${BUILD_OUTPUT_DIR_PATH}/${BULK_EXP_SCHEMA}_${BULK_EXP_TPM_HISTOLOGY_TBL}.csv'
+WITH (FORMAT csv, HEADER);
+EOSQL
+
+cd "$BUILD_OUTPUT_DIR_PATH"
+
+db_dump_out_path="postgres_db_${DB_NAME}_schema_${BULK_EXP_SCHEMA}.dump"
+
+printf "\n\nDump database schema(s) and table(s)...\n"
+
+pg_dump -n "$BULK_EXP_SCHEMA" -Fc "$DB_NAME" > "$db_dump_out_path"
+
+# To restore from dump, run:
+#
+# pg_restore --dbname="$DB_NAME" --clean --if-exists --no-owner \
+#   --no-privileges \
+#   --host="$DB_HOST" --port="$DB_PORT" --username="$DB_USERNAME" \
+#   "$db_dump_out_path"
+
+printf "\n\nChecksum...\n"
+
+sha256sum "$db_dump_out_path" > sha256sum.txt
+
+printf "\n\nDone building database locally.\n"

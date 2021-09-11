@@ -2,11 +2,18 @@
 # database, with git root directory as build context.
 FROM rocker/r-ver:4.1.0
 
+# Set -o pipefail.
+#
+# Ref: https://github.com/hadolint/hadolint/wiki/DL4006
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+# hadolint ignore=DL3008
 RUN apt-get update -qq \
   && apt-get install -y --no-install-recommends \
     curl \
     ca-certificates \
     gnupg \
+    gosu \
     # Install odbc to operate database
     unixodbc \
     unixodbc-dev \
@@ -38,17 +45,24 @@ WORKDIR /home/open-ped-can-api-db/
 # WORKDIR is created with root as owner
 RUN chown postgres:postgres .
 
-USER postgres
-
 COPY --chown=postgres:postgres \
   ./OpenPedCan-analysis/ ./OpenPedCan-analysis/
 
 # Create a placeholder .git/index file for rprojroot to work
 RUN mkdir -p ./OpenPedCan-analysis/.git \
-  && touch ./OpenPedCan-analysis/.git/index
+  && touch ./OpenPedCan-analysis/.git/index \
+  && chown -R postgres:postgres ./OpenPedCan-analysis/.git/
 
-COPY --chown=postgres:postgres \
-  ./db/build_tools/ ./db/build_tools/
+# The relative path of db/build_outputs is used in various scripts. If this
+# needs to be changed, the complete code base needs to be searched for other
+# necessary changes.
+ENV BUILD_OUTPUT_DIR_PATH="/home/open-ped-can-api-db/db/build_outputs"
+
+# Make postgres user as the owner
+RUN mkdir -p "$BUILD_OUTPUT_DIR_PATH" \
+  && chown -R postgres:postgres "$BUILD_OUTPUT_DIR_PATH"
+
+VOLUME "$BUILD_OUTPUT_DIR_PATH"
 
 COPY --chown=postgres:postgres \
   ./db/init_user_db.sh ./db/init_user_db.sh
@@ -56,6 +70,13 @@ COPY --chown=postgres:postgres \
 COPY --chown=postgres:postgres \
   ./db/db_env_vars.R ./db/db_env_vars.R
 
-ENTRYPOINT ["sh", "-c"]
+COPY --chown=postgres:postgres \
+  ./db/build_tools/ ./db/build_tools/
+
+# Run as root to resolve some permission issues.
+#
+# docker volume z/Z option does not work for ubuntu images.
+
+ENTRYPOINT ["db/build_tools/build_db_docker_entrypoint.sh"]
 
 CMD ["db/build_tools/build_db_docker_cmd.sh"]

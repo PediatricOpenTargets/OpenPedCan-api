@@ -8,7 +8,13 @@
 #
 # - docker build db/build_tools/build_db.Dockerfile runs tpm_data_lists.R
 # - docker build db/build_tools/build_db.Dockerfile runs build_db.R
-
+#
+# Outputs:
+#
+# - ../build_outputs/${BULK_EXP_SCHEMA}_{BULK_EXP_TPM_HISTOLOGY_TBL}.csv
+# - Create empty database table
+#   ${DB_NAME}.${BULK_EXP_SCHEMA}.${BULK_EXP_TPM_HISTOLOGY_TBL} that have the
+#   same columns as the csv file.
 
 
 source("../db_env_vars.R")
@@ -16,9 +22,115 @@ source("../db_env_vars.R")
 # Get %>% without loading the whole library
 `%>%` <- magrittr::`%>%`
 
+# Get DOWN_SAMPLE_DB_GENES env var:
+# - 0 or unset: do not down sample genes for database
+# - 1: down sample genes for database, for efficient testing.
+# - Other values: error.
+DOWN_SAMPLE_DB_GENES <- Sys.getenv(
+  "DOWN_SAMPLE_DB_GENES", unset = NA_character_, names = FALSE)
+
+stopifnot(is.character(DOWN_SAMPLE_DB_GENES))
+stopifnot(identical(length(DOWN_SAMPLE_DB_GENES), 1L))
+
+if (is.na(DOWN_SAMPLE_DB_GENES)) {
+  # DOWN_SAMPLE_DB_GENES env var is not set. Set to FALSE by default.
+  DOWN_SAMPLE_DB_GENES <- FALSE
+} else if (identical(DOWN_SAMPLE_DB_GENES, "0")) {
+  DOWN_SAMPLE_DB_GENES <- FALSE
+} else if (identical(DOWN_SAMPLE_DB_GENES, "1")) {
+  DOWN_SAMPLE_DB_GENES <- TRUE
+} else {
+  stop(paste(
+    "Unknown DOWN_SAMPLE_DB_GENES environtment variable",
+    DOWN_SAMPLE_DB_GENES))
+}
+
+
+
+# Specify paths ----------------------------------------------------------------
+db_build_output_dir <- "../build_outputs"
+stopifnot(dir.exists(db_build_output_dir))
+
+output_fn_prefix <- paste0(
+  db_env_vars$BULK_EXP_SCHEMA, "_", db_env_vars$BULK_EXP_TPM_HISTOLOGY_TBL)
+
+csv_out_path <- file.path(
+  db_build_output_dir, paste0(output_fn_prefix, ".csv"))
+
+
+
+# Read data --------------------------------------------------------------------
+cat("Read data...\n")
+
+tpm_data_lists <- readRDS(file.path(db_build_output_dir, "tpm_data_lists.rds"))
+
 
 
 # Function definitions ---------------------------------------------------------
+
+# postgres compatible write csv function.
+#
+# Args:
+#  - x: A data frame or tibble to write to disk.
+#  - file: File or connection to write to.
+#  - append: If FALSE, will overwrite existing file. If TRUE, will append to
+#    existing file. In both cases, if the file does not exist a new file is
+#    created.
+#  - col_names: If FALSE, column names will not be included at the top of the
+#    file. If TRUE, column names will be included.
+#
+# Returns the input x invisibly.
+#
+# Notes on readr::write_csv format and postgres COPY format compatibility
+#
+# - header
+#   - COPY HEADER TRUE: "Specifies that the file contains a header line with the
+#     names of each column in the file. [...] on input, the first line is
+#     ignored."
+#   - readr::write_csv writes header only if output csv file does not exist.
+# - missing values
+#   - COPY NULL: "The default is [...] an unquoted empty string in CSV format."
+#   - readr::write_csv na = "" writes nothing to the field; "Missing values will
+#     never be quoted; strings with the same value as na will always be quoted."
+# - quote
+#   - COPY QUOTE: "Specifies the quoting character to be used when a data value
+#     is quoted. The default is double-quote."
+#   - readr::write_csv also uses double quotes. "quote = 'needed' - Only quote
+#     fields which need them."
+# - escape
+#   - COPY ESCAPE: "Specifies the character that should appear before a data
+#     character that matches the QUOTE value. The default is the same as the
+#     QUOTE value (so that the quoting character is doubled if it appears in the
+#     data)."
+#   - readr::write_csv: escape = "double" - quotes are escaped by doubling
+#     them."
+# - rownames
+#   - readr::write_csv: "do not include row names as a column in the written
+#     file."
+#
+# TODO: Validate special values.
+# - COPY: "Because backslash is not a special character in the CSV format, \.,
+#   the end-of-data marker, could also appear as a data value." readr::write_csv
+#   does not quote "\\.", so the following procedure assumes that there is no
+#   such value in the tibbles.
+# - COPY: "If the value contains the delimiter character, the QUOTE character,
+#   the NULL string, a carriage return, or line feed character, then the whole
+#   value is prefixed and suffixed by the QUOTE character, and any occurrence
+#   within the value of a QUOTE character or the ESCAPE character is preceded by
+#   the escape character."
+# - COPY: "The CSV format has no standard way to distinguish a NULL value from
+#   an empty string. PostgreSQL's COPY handles this by quoting. A NULL is output
+#   as the NULL parameter string and is not quoted, while a non-NULL value
+#   matching the NULL parameter string is quoted. For example, with the default
+#   settings, a NULL is written as an unquoted empty string, while an empty
+#   string data value is written with double quotes (""). Reading values follows
+#   similar rules. You can use FORCE_NOT_NULL to prevent NULL input comparisons
+#   for specific columns."
+pgc_write_csv <- function(x, file, append, col_names) {
+  readr::write_csv(
+    x, file, na = "", append = append, col_names = col_names,
+    quote = "needed", escape = "double", progress = FALSE)
+}
 
 # Write tibble::tibble or dataframe to database.
 #
@@ -31,8 +143,9 @@ source("../db_env_vars.R")
 #   table to be written.
 #
 # Returns TRUE invisibly if success.
-write_table <- function(df, conn, schema_name, table_name, overwrite = FALSE,
-                        append = FALSE, field.types = NULL, temporary = FALSE) {
+db_write_table <- function(df, conn, schema_name, table_name, overwrite = FALSE,
+                           append = FALSE, field.types = NULL,
+                           temporary = FALSE) {
   stopifnot(is.data.frame(df) || tibble::is_tibble(df))
 
   assert_is_valid_name <- function(x) {
@@ -145,23 +258,10 @@ get_ind_chunk_list <- function(n_elements, n_chunks) {
 
 
 
-# Specify paths ----------------------------------------------------------------
-db_build_output_dir <- "../build_outputs"
-stopifnot(dir.exists(db_build_output_dir))
+# Generate long format TPM tables and write to csv -----------------------------
+cat("Generate long format TPM tables and write to csv...\n")
 
-
-
-# Read data --------------------------------------------------------------------
-cat("Read data...\n")
-
-tpm_data_lists <- readRDS(file.path(db_build_output_dir, "tpm_data_lists.rds"))
-
-
-
-# Generate long format TPM tables and write to database ------------------------
-cat("Generate long format TPM tables and write to database...\n")
-
-# db_env_vars$Server <- "localhost"
+# db connection to create empty table.
 conn <- DBI::dbConnect(
   odbc::odbc(), Driver = db_env_vars$Driver,
   Server = db_env_vars$Server, Port = db_env_vars$Port,
@@ -261,8 +361,6 @@ place_holder_res <- purrr::imap_lgl(tpm_data_lists, function(xl, xname) {
   return(TRUE)
 })
 
-invisible(gc(reset=TRUE)) 
-
 # Handle all-cohorts/combined-cohorts/all_cohorts.
 #
 # Keep only all-cohorts diseases that have > 1 cohorts.
@@ -317,6 +415,29 @@ tpm_data_lists$pt_all_cohorts <- list(
   histology_df = padg1_histology_df
 )
 
+if (DOWN_SAMPLE_DB_GENES) {
+  # Arbitrarily selected genes for quick testing.
+  arbt_db_ensg_ids <- c("ENSG00000213420", "ENSG00000157764", "ENSG00000273032",
+                        "ENSG00000141510", "ENSG00000171094")
+
+  cat("Downsample ", length(arbt_db_ensg_ids),
+      " ENSG IDs for quick testing...\n", sep = "")
+
+  tpm_data_lists <- purrr::map(tpm_data_lists, function(xl) {
+    ds_tpm_df <- dplyr::filter(
+      xl$tpm_df, .data$Gene_Ensembl_ID %in% .env$arbt_db_ensg_ids)
+
+    x_dsl <- list(
+      tpm_df = ds_tpm_df,
+      histology_df = xl$histology_df
+    )
+  })
+}
+
+invisible(gc(reset = TRUE))
+
+stopifnot(!file.exists(csv_out_path))
+
 # chunk-wise write to database.
 place_holder_res <- purrr::imap_lgl(tpm_data_lists, function(xl, xname) {
   cat("Biospecimen source: ", xname, "\n", sep = "")
@@ -343,17 +464,12 @@ place_holder_res <- purrr::imap_lgl(tpm_data_lists, function(xl, xname) {
   # to long at once.
   #
   # Set n_row_chunks by estimating the memory usage of non-chunked operations.
-  #
-  # Set large n_row_chunks to see progress, because DBI::dbWriteTable hangs when
-  # there is a large number of rows to write.
-  #
-  # Roughly 3 rows per chunk. 10,000 chunks.
-  n_row_chunks <- ceiling(nrow(xl$tpm_df) / 3)
+  n_row_chunks <- 20
   tpm_row_ind_chunk_list <- get_ind_chunk_list(
     nrow(xl$tpm_df), min(n_row_chunks, nrow(xl$tpm_df)))
 
-  cat("  Chunk 1-5 will be printed. Every 1000 chunk is also printed. ",
-      length(tpm_row_ind_chunk_list), " total chunks.\n", sep = "")
+  cat("  Writing ",
+      length(tpm_row_ind_chunk_list), " total chunks to csv.\n", sep = "")
 
   # If xl$tpm_df has 0 row, tpm_row_ind_chunk_list is an empty list. The
   # function will not be mapped, and chunk_tpm_ann_dfs will be an empty 0 x 0
@@ -361,14 +477,7 @@ place_holder_res <- purrr::imap_lgl(tpm_data_lists, function(xl, xname) {
   chunk_tpm_ann_dfs <- purrr::imap_dfr(
     tpm_row_ind_chunk_list,
     function(x_row_inds, x_chunk_ind) {
-      # print progress messages
-      if (x_chunk_ind < 6) {
-        cat("  chunk #", x_chunk_ind, "\n", sep = "")
-      } else if (x_chunk_ind %% 1000 == 0) {
-        cat("  chunk #", x_chunk_ind, "\n", sep = "")
-      } else if (x_chunk_ind == length(tpm_row_ind_chunk_list)) {
-        cat("  chunk #", x_chunk_ind, "\n", sep = "")
-      }
+      cat("  chunk #", x_chunk_ind, "\n", sep = "")
 
       x_tpm_df <- xl$tpm_df[x_row_inds, ]
 
@@ -464,10 +573,23 @@ place_holder_res <- purrr::imap_lgl(tpm_data_lists, function(xl, xname) {
         stopifnot(identical(sum(is.na(x_long_tpm_tbl$Disease)), 0L))
       }
 
-      # Write to database
-      write_table(
-        x_long_tpm_tbl, conn, db_env_vars$bulk_exp_schema,
-        db_env_vars$bulk_exp_tpm_histology_tbl, append = TRUE)
+      if (file.exists(csv_out_path)) {
+        # Append.
+        pgc_write_csv(
+          x_long_tpm_tbl, csv_out_path, append = TRUE, col_names = FALSE)
+      } else {
+        # Write colnames and empty db table only, if output file does not exist.
+        pgc_write_csv(
+          x_long_tpm_tbl, csv_out_path, append = FALSE, col_names = TRUE)
+
+        # Create table. Table should not exist.
+        cat("  Create empty database table.\n")
+        # DBI table ID is case sensitive.
+        db_write_table(
+          dplyr::slice(x_long_tpm_tbl, 0), conn,
+          tolower(db_env_vars$BULK_EXP_SCHEMA),
+          tolower(db_env_vars$BULK_EXP_TPM_HISTOLOGY_TBL))
+      }
 
       return(x_tpm_ann_df)
     }
