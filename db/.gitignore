@@ -1,4 +1,6 @@
 tpm_data_lists.rds
 *.csv
 *.dump
+*.sql.gz
+*.sql
 bk/
