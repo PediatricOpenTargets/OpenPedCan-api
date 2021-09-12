@@ -1,5 +1,6 @@
 FROM postgres:11.10
 
+# hadolint ignore=DL3008
 RUN apt-get update -qq \
   && apt-get install -y --no-install-recommends \
     # Install curl to download data

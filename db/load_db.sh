@@ -95,4 +95,6 @@ GRANT SELECT ON ALL TABLES IN SCHEMA ${BULK_EXP_SCHEMA} TO ${DB_USERNAME};
 ALTER DEFAULT PRIVILEGES IN SCHEMA ${BULK_EXP_SCHEMA} GRANT SELECT ON TABLES TO ${DB_USERNAME};
 EOSQL
 
+# TODO: print a message of the number of total genes and samples.
+
 printf '\n\nDone running %s.\n' "$0"

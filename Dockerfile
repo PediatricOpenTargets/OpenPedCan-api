@@ -34,6 +34,7 @@ RUN apt-get update -qq \
     ggthemes \
     odbc \
     DBI \
+    glue \
   && rm -rf /tmp/downloaded_packages/*
 
 # Run the following commands to run API HTTP server on port 80 as root user, by
@@ -42,23 +43,10 @@ WORKDIR /home/open-ped-can-api-web/
 
 # Copy API server files to docker image WORKDIR
 COPY ./main.R .
+
 COPY ./src/ ./src/
-COPY ./db/ ./db/
 
-# Use DB_LOCATION to determine where to get the database.
-#
-# - aws_s3: download database from aws s3 bucket.
-# - local: use local database in ./db dir COPY. If database is not built
-#   locally, report an error.
-ARG DB_LOCATION="aws_s3"
-
-# Use CACHE_DATE to prevent the following RUN commands from using cache. Pass
-# new CACHE_DATE docker build --build-arg CACHE_DATE=$(date +%s) .
-#
-# Adapted from https://stackoverflow.com/a/38261124/4638182
-ARG CACHE_DATE="not_a_date"
-
-RUN ./db/load_db.sh
+COPY ./db/db_env_vars.R ./db/db_env_vars.R
 
 EXPOSE 80
 
