@@ -54,6 +54,7 @@ stopifnot(dir.exists(db_build_output_dir))
 output_fn_prefix <- paste0(
   db_env_vars$BULK_EXP_SCHEMA, "_", db_env_vars$BULK_EXP_TPM_HISTOLOGY_TBL)
 
+# Use .csv rather than .csv.gz to speed up database COPY command.
 csv_out_path <- file.path(
   db_build_output_dir, paste0(output_fn_prefix, ".csv"))
 

@@ -65,6 +65,8 @@ export DB_HOST="localhost"
 # - filename has the format of ${schema_name}_${table_name}.csv
 # - output directory is ../build_outputs
 #
+# Use .csv rather than .csv.gz to speed up database COPY command.
+#
 # build_db.R does not take explicit options of output paths, by design, because
 # build_db.R does not need to be run anywhere else.
 #
@@ -91,10 +93,16 @@ pg_dump --clean --if-exists --no-owner --no-privileges \
   --host="$DB_HOST" --port="$DB_PORT" --username="$DB_USERNAME" \
   | gzip --no-name -c > "$db_dump_out_path"
 
+# Append SQL line(s) to create index(es).
+#
+# "Multiple  compressed  files can be concatenated." -- gzip manual page
+echo "CREATE INDEX ensg_id_idx ON ${BULK_EXP_SCHEMA}.${BULK_EXP_TPM_HISTOLOGY_TBL} (\"Gene_Ensembl_ID\");" \
+  | gzip --no-name -c >> "$db_dump_out_path"
+
 # To restore from dump, run:
 # gunzip -c "$db_dump_out_path" | psql -v ON_ERROR_STOP=1 \
 #   --dbname="$DB_NAME" --username="$DB_USERNAME" \
-#    --host="$DB_HOST" --port="$DB_PORT"
+#   --host="$DB_HOST" --port="$DB_PORT"
 
 printf "\n\nChecksum...\n"
 
