@@ -15,6 +15,10 @@ cd ../../
 # Run hadolint on Dockerfiles
 #
 # https://github.com/hadolint/hadolint
-docker run --rm -i hadolint/hadolint < ./db/build_tools/build_db.Dockerfile
-docker run --rm -i hadolint/hadolint < ./db/db.Dockerfile
-docker run --rm -i hadolint/hadolint < ./Dockerfile
+
+for docker_file in "./db/build_tools/build_db.Dockerfile" \
+                   "./db/db.Dockerfile" \
+                   "./Dockerfile"; do
+  echo "$docker_file"
+  docker run --rm -i hadolint/hadolint < "$docker_file"
+done
