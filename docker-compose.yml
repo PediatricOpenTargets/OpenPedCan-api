@@ -5,8 +5,7 @@ services:
   web:
     build:
       context: .
-      args:
-        - DB_LOCATION=local
+      dockerfile: Dockerfile
     ports:
       - "8082:80"
     depends_on:
@@ -22,10 +21,14 @@ services:
     #
     # Environment file format reference:
     # https://docs.docker.com/compose/compose-file/compose-file-v3/#env_file
-    env_file: ../OpenPedCan-api-secrets/access_db.env
+    env_file:
+      - ../OpenPedCan-api-secrets/access_db.env
+      - ../OpenPedCan-api-secrets/common_db.env
   db:
     build:
       context: .
+      args:
+        - BUILD_OUTPUT_DIR_PATH=${BUILD_OUTPUT_DIR_PATH}
       shm_size: 2gb
       # postgres docker image has VOLUME /var/lib/postgresql/data. When running
       # without specifying any volume, docker will create an anonymous volume,
@@ -48,4 +51,18 @@ services:
     #
     # load_db process is to run pg_restore on the output of build_db process.
     # The build_db process is completed by running db/build_db.sh.
-    env_file: ../OpenPedCan-api-secrets/load_db.env
+    env_file:
+      - ../OpenPedCan-api-secrets/access_db.env
+      - ../OpenPedCan-api-secrets/load_db.env
+      - ../OpenPedCan-api-secrets/common_db.env
+    environment:
+      # Use DB_LOCATION to determine where to get the database.
+      #
+      # - aws_s3: download database from aws s3 bucket. Default.
+      # - local: use local database in ./db dir COPY. If database is not built
+      #   locally, report an error.
+      - DB_LOCATION
+    # Bind mount ./db/build_outputs/, so db container can use locally built
+    # database dump(s).
+    volumes:
+      - ./db/build_outputs/:${BUILD_OUTPUT_DIR_PATH}
