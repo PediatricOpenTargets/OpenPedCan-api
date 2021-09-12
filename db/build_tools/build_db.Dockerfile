@@ -67,7 +67,10 @@ RUN mkdir -p "$BUILD_OUTPUT_DIR_PATH" \
 VOLUME "$BUILD_OUTPUT_DIR_PATH"
 
 COPY --chown=postgres:postgres \
-  ./db/init_user_db.sh ./db/init_user_db.sh
+  ./db/init_db_pwfile.sh ./db/init_db_pwfile.sh
+
+COPY --chown=postgres:postgres \
+  ./db/init_db.sh ./db/init_db.sh
 
 COPY --chown=postgres:postgres \
   ./db/db_env_vars.R ./db/db_env_vars.R

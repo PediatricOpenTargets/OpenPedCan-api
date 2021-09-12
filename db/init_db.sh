@@ -3,7 +3,7 @@ set -e
 set -u
 set -o pipefail
 
-# init_user_db.sh is used to initialize OpenPedCan-api database.
+# Initialize an empty OpenPedCan-api database with schemas.
 #
 # This file can be run in any working directory.
 #

@@ -20,30 +20,15 @@ eval 'pg_createcluster --port=5432 11 "$DB_CLUSTER_NAME" -- \
   --username="$POSTGRES_USER" --pwfile=<(echo "$POSTGRES_PASSWORD") \
   $POSTGRES_INITDB_ARGS'
 
-
 echo "host all all all $POSTGRES_HOST_AUTH_METHOD" \
   >> "/etc/postgresql/11/${DB_CLUSTER_NAME}/pg_hba.conf"
 
-# postgres password file for password authentication
-touch ~/.pgpass
-chmod 600 ~/.pgpass
-# .pgpass format: hostname:port:database:username:password
-#
-# "If an entry needs to contain : or \, escape this character with \."
-#
-# Set username and password environment variables without special characters to
-# simplify local development.
-#
-# https://www.postgresql.org/docs/current/libpq-pgpass.html
-{
-  echo "*:*:*:${DB_USERNAME}:${DB_PASSWORD}"
-  echo "*:*:*:${POSTGRES_USER}:${POSTGRES_PASSWORD}"
-  echo "*:*:*:${DB_READ_WRITE_USERNAME}:${DB_READ_WRITE_PASSWORD}"
-} >> ~/.pgpass
+../init_db_pwfile.sh
 
+# Starting needs database password file.
 pg_ctlcluster 11 "$DB_CLUSTER_NAME" start
 
-../init_user_db.sh
+../init_db.sh
 
 printf "\n\nWrite R objects into database compatible csv file(s)...\n"
 
