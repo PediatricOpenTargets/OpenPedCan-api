@@ -63,7 +63,18 @@ cd ..
 
 printf "\n\nBuild data model using docker...\n"
 
-docker build --no-cache -f db/build_tools/build_db.Dockerfile \
+# The relative path of host db/build_outputs/ and relative/absolute path of
+# container /home/open-ped-can-api-db/db/build_outputs/ are used in various
+# scripts. If these paths need to be changed, the complete code base needs to be
+# searched for other necessary changes.
+#
+# BUILD_OUTPUT_DIR_PATH is the absolute path of container build output dir,
+# which is bind mounted to host db/build_outputs/.
+export BUILD_OUTPUT_DIR_PATH="/home/open-ped-can-api-db/db/build_outputs"
+
+docker build --no-cache \
+  --build-arg BUILD_OUTPUT_DIR_PATH="${BUILD_OUTPUT_DIR_PATH}" \
+  -f db/build_tools/build_db.Dockerfile \
   -t open-ped-can-api-build-db .
 
 docker run --rm -it \
@@ -71,7 +82,7 @@ docker run --rm -it \
   --env-file ../OpenPedCan-api-secrets/common_db.env \
   --env-file ../OpenPedCan-api-secrets/load_db.env \
   --env DOWN_SAMPLE_DB_GENES \
-  -v "$(pwd)"/db/build_outputs/:/home/open-ped-can-api-db/db/build_outputs \
+  -v "$(pwd)"/db/build_outputs/:"$BUILD_OUTPUT_DIR_PATH" \
   open-ped-can-api-build-db
 
 cd db/build_outputs

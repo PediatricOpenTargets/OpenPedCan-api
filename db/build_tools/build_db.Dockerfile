@@ -56,7 +56,9 @@ RUN mkdir -p ./OpenPedCan-analysis/.git \
 # The relative path of db/build_outputs is used in various scripts. If this
 # needs to be changed, the complete code base needs to be searched for other
 # necessary changes.
-ENV BUILD_OUTPUT_DIR_PATH="/home/open-ped-can-api-db/db/build_outputs"
+ARG BUILD_OUTPUT_DIR_PATH="/home/open-ped-can-api-db/db/build_outputs"
+
+ENV BUILD_OUTPUT_DIR_PATH="${BUILD_OUTPUT_DIR_PATH}"
 
 # Make postgres user as the owner
 RUN mkdir -p "$BUILD_OUTPUT_DIR_PATH" \
