@@ -3,8 +3,7 @@ OpenPedCan-analysis
 .git
 tests
 db/bk
-db/build_outputs/*.csv
-db/build_outputs/*.rds
+db/build_outputs
 
 # ! excludes patterns
 !OpenPedCan-analysis/data
