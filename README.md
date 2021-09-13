@@ -72,7 +72,11 @@ that contains the .git directory of the repository.
 ubuntu 18
 docker 19.03
 curl 7.78
+git 2.30
+ImageMagick 6.9
+shellcheck 0.7
 sha256sum 8.28 # shasum for Mac OS, but not tested for any version.
+md5sum 8.28
 R 4.1
 R package readr 1.4.0
 R package jsonlite 1.7.2
