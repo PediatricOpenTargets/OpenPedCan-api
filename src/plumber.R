@@ -42,11 +42,7 @@ function(req, res) {
      req$REQUEST_METHOD, req$PATH_INFO, "-\n",
      "body ", req$body, "-\n",
      "QUERY_STRING ", req$QUERY_STRING, "-\n",
-     req$HTTP_USER_AGENT, "@", req$REMOTE_ADDR,
-     "\nreq:\n")
-  print(req)
-  cat("res:\n")
-  print(res)
+     req$HTTP_USER_AGENT, "@", req$REMOTE_ADDR, "\n")
   cat("--------------------------\n")
   plumber::forward()
 }
