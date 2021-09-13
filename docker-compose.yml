@@ -31,7 +31,7 @@ services:
       context: .
       args:
         - BUILD_OUTPUT_DIR_PATH=${BUILD_OUTPUT_DIR_PATH}
-      shm_size: 2gb
+      shm_size: 2g
       # postgres docker image has VOLUME /var/lib/postgresql/data. When running
       # without specifying any volume, docker will create an anonymous volume,
       # which is easier for cleaning up.
@@ -68,3 +68,8 @@ services:
     # database dump(s).
     volumes:
       - ./db/build_outputs/:${BUILD_OUTPUT_DIR_PATH}
+    # Configure database. Ref: https://hub.docker.com/_/postgres
+    command: >
+      postgres
+      -c shared_buffers=1GB -c work_mem=256MB
+      -c maintenance_work_mem=8GB -c max_wal_size=8GB
