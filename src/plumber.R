@@ -164,25 +164,3 @@ function(ensemblId) {
 function(msg="") {
   list(msg = paste0("The message is: '", msg, "'"))
 }
-
-
-#* Plot a histogram
-#*
-#* @tag "API testing"
-#* @serializer png
-#* @get /plot
-function() {
-  rand <- rnorm(100)
-  hist(rand)
-}
-
-
-#* Return the sum of two numbers
-#*
-#* @tag "API testing"
-#* @param a The first number to add
-#* @param b The second number to add
-#* @post /sum
-function(a, b) {
-  as.numeric(a) + as.numeric(b)
-}
