@@ -17,15 +17,35 @@
 
 
 # Define input and output directory --------------------------------------------
+
+# Helper function to get env vars
+get_env_var <- function(env_var_name) {
+  env_var_val <- Sys.getenv(
+    env_var_name, unset = NA_character_, names = FALSE)
+
+  # Assert env_var_val is character of length 1
+  stopifnot(is.character(env_var_val))
+  stopifnot(identical(length(env_var_val), 1L))
+
+  if (is.na(env_var_val)) {
+    stop(paste(
+      "Error: Environment variable", env_var_name, "cannot be unset."))
+  }
+
+  return(env_var_val)
+}
+
 # Input dirs
-opc_analysis_dir <- file.path("..", "..", "OpenPedCan-analysis")
+opc_analysis_dir <- file.path(
+  get_env_var("DB_HOME_DIR_PATH"), "OpenPedCan-analysis")
+stopifnot(dir.exists(opc_analysis_dir))
+
 data_dir <- file.path(opc_analysis_dir, "data")
+stopifnot(dir.exists(data_dir))
 
 # Output dir
-output_dir <- file.path("..", "build_outputs")
-if (!dir.exists(output_dir)) {
-  dir.create(output_dir)
-}
+output_dir <- get_env_var("BUILD_OUTPUT_DIR_PATH")
+stopifnot(dir.exists(output_dir))
 
 
 

@@ -53,6 +53,13 @@ git checkout -q "${OPEN_PED_CAN_ANALYSIS_COMMIT}"
 ./download-data.sh
 git switch -q -
 
+# Add read access to OpenPedCan-analysis data.
+#
+# Files under ./data/ are not tracked.
+chmod -R "a+r" ./data/
+# ./data/v* are directories that have files.
+chmod "a+x" ./data/v*/
+
 # Build data model
 #
 # NOTE: if more files in OpenPedCan-analysis are used, exclude them in the
@@ -68,20 +75,29 @@ printf "\n\nBuild data model using docker...\n"
 # scripts. If these paths need to be changed, the complete code base needs to be
 # searched for other necessary changes.
 #
-# BUILD_OUTPUT_DIR_PATH is the absolute path of container build output dir,
-# which is bind mounted to host db/build_outputs/.
-export BUILD_OUTPUT_DIR_PATH="/home/open-ped-can-api-db/db/build_outputs"
+# Pass env vars for for the following build steps that are split into multiple
+# scripts:
+#
+# - DB_HOME_DIR_PATH is the absolute path of the container db building home dir.
+# - BUILD_OUTPUT_DIR_PATH is the absolute path of container build output dir,
+#   which is bind mounted to host db/build_outputs/.
+export DB_HOME_DIR_PATH="/home/open-ped-can-api-db"
+export BUILD_OUTPUT_DIR_PATH="${DB_HOME_DIR_PATH}/db/build_outputs"
 
 docker build --no-cache \
+  --build-arg DB_HOME_DIR_PATH="${DB_HOME_DIR_PATH}" \
   --build-arg BUILD_OUTPUT_DIR_PATH="${BUILD_OUTPUT_DIR_PATH}" \
   -f db/build_tools/build_db.Dockerfile \
   -t open-ped-can-api-build-db .
 
+# Bind mount db/build_outputs and OpenPedCan-analysis to avoid passing large
+# docker build context to daemon.
 docker run --rm -it \
   --env-file ../OpenPedCan-api-secrets/access_db.env \
   --env-file ../OpenPedCan-api-secrets/common_db.env \
   --env-file ../OpenPedCan-api-secrets/load_db.env \
   --env DOWN_SAMPLE_DB_GENES \
+  -v "$(pwd)"/OpenPedCan-analysis/:"$DB_HOME_DIR_PATH"/OpenPedCan-analysis/ \
   -v "$(pwd)"/db/build_outputs/:"$BUILD_OUTPUT_DIR_PATH" \
   open-ped-can-api-build-db
 

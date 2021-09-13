@@ -40,23 +40,24 @@ RUN apt-get update -qq \
     DBI \
   && rm -rf /tmp/downloaded_packages/*
 
-WORKDIR /home/open-ped-can-api-db/
+# DB_HOME_DIR_PATH env var is passed from build_db.sh for efficient refactoring
+# at a later point.
+ARG DB_HOME_DIR_PATH="/home/open-ped-can-api-db"
+
+ENV DB_HOME_DIR_PATH="${DB_HOME_DIR_PATH}"
+
+WORKDIR "$DB_HOME_DIR_PATH"
 
 # WORKDIR is created with root as owner
 RUN chown postgres:postgres .
 
-COPY --chown=postgres:postgres \
-  ./OpenPedCan-analysis/ ./OpenPedCan-analysis/
-
-# Create a placeholder .git/index file for rprojroot to work
-RUN mkdir -p ./OpenPedCan-analysis/.git \
-  && touch ./OpenPedCan-analysis/.git/index \
-  && chown -R postgres:postgres ./OpenPedCan-analysis/.git/
-
 # The relative path of db/build_outputs is used in various scripts. If this
 # needs to be changed, the complete code base needs to be searched for other
 # necessary changes.
-ARG BUILD_OUTPUT_DIR_PATH="/home/open-ped-can-api-db/db/build_outputs"
+#
+# BUILD_OUTPUT_DIR_PATH env var is passed from build_db.sh for efficient
+# refactoring at a later point.
+ARG BUILD_OUTPUT_DIR_PATH="${DB_HOME_DIR_PATH}/db/build_outputs"
 
 ENV BUILD_OUTPUT_DIR_PATH="${BUILD_OUTPUT_DIR_PATH}"
 

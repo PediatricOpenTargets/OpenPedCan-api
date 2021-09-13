@@ -48,7 +48,25 @@ if (is.na(DOWN_SAMPLE_DB_GENES)) {
 
 
 # Specify paths ----------------------------------------------------------------
-db_build_output_dir <- "../build_outputs"
+
+# Helper function to get env vars
+get_env_var <- function(env_var_name) {
+  env_var_val <- Sys.getenv(
+    env_var_name, unset = NA_character_, names = FALSE)
+
+  # Assert env_var_val is character of length 1
+  stopifnot(is.character(env_var_val))
+  stopifnot(identical(length(env_var_val), 1L))
+
+  if (is.na(env_var_val)) {
+    stop(paste(
+      "Error: Environment variable", env_var_name, "cannot be unset."))
+  }
+
+  return(env_var_val)
+}
+
+db_build_output_dir <- get_env_var("BUILD_OUTPUT_DIR_PATH")
 stopifnot(dir.exists(db_build_output_dir))
 
 output_fn_prefix <- paste0(
