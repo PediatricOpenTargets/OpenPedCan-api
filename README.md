@@ -5,7 +5,7 @@
 `OpenPedCan-api` implements OpenPedCan (Open Pediatric Cancers) project public API (application programming interface) to transfer [OpenPedCan-analysis](https://github.com/PediatricOpenTargets/OpenPedCan-analysis) results and plots via HTTP, which is publicly available at <https://openpedcan-api-qa.d3b.io/__docs__/>.
 
 - [1. API endpoint specifications](#1-api-endpoint-specifications)
-- [2. Deploy `OpenPedCan-api`](#2-deploy-openpedcan-api)
+- [2. `OpenPedCan-api` server deployment](#2-openpedcan-api-server-deployment)
 - [3. Test run `OpenPedCan-api` server locally](#3-test-run-openpedcan-api-server-locally)
   - [3.1. `git clone` `OpenPedCan-api` repository](#31-git-clone-openpedcan-api-repository)
   - [3.2. Run static R code analysis using R package `lintr`](#32-run-static-r-code-analysis-using-r-package-lintr)
@@ -31,26 +31,21 @@
 - Parameters
 - Response media type
 
-## 2. Deploy `OpenPedCan-api`
+## 2. `OpenPedCan-api` server deployment
 
-According to comments and messages by @blackdenc :
+`OpenPedCan-api` server is deployed using Amazon Web Services (AWS). `OpenPedCan-api` HTTP server is deployed using Amazon Elastic Container Registry (ECR), Elastic Container Service (ECS), and Fargate. The HTTP server queries `OpenPedCan-api` database server, and the database is deployed using Amazon Relational Database Service (RDS).
 
-`OpenPedCan-api` is deployed with the following steps:
+<https://openpedcan-api-qa.d3b.io/__docs__/> is the URL of `OpenPedCan-api` QA server. The QA server will only deploy the `main` branch of the repository.
+
+<https://openpedcan-api-dev.d3b.io/__docs__/> is the URL of `OpenPedCan-api` DEV server. The DEV server will deploy any new branch of the repository, and the QA environment will remain un-changed until a new commit is merged to main.
+
+`OpenPedCan-api` HTTP server is deployed with the following steps, according to comments and messages by @blackdenc .
 
 - Build and tag `OpenPedCan-api` docker image using `Dockerfile`.
-- Push the built image to Amazon Elastic Container Registry (ECR).
-- Pass the ECR docker image tag to Amazon Elastic Container Service (ECS) Fargate (?) task definition at runtime.
+- Push the built image to ECR.
+- Pass the ECR docker image tag to Amazon Elastic Container Service (ECS) Fargate task definition at runtime.
 
-<https://openpedcan-api-qa.d3b.io/__docs__/> is the QA server that will only deploy the `main` branch of the repository.
-
-<https://openpedcan-api-dev.d3b.io/__docs__/> is the DEV server that will deploy any new branch of the repository, and the QA environment will remain un-changed until a new commit is merged to main.
-
-`Dockerfile` builds the `OpenPedCan-api` docker image to be run on Amazon ECS.
-
-To deploy without using docker:
-
-- `Rscript --vanilla main.R` needs to be run with the same working directory as the last `WORKDIR` path in `Dockerfile` prior to the docker instruction `ENTRYPOINT ["Rscript", "--vanilla", "main.R"]`.
-- Build or download `db` files according to the commands in `Dockerfile`.
+`OpenPedCan-api` database server deployment procedure is still under development.
 
 ## 3. Test run `OpenPedCan-api` server locally
 
@@ -215,10 +210,8 @@ Jenkinsfile and Dockerfile specify the procedures to deploy the `OpenPedCan-api`
 
 Implementation action items:
 
-- Build data model into a Postgres database. Implement/refactor R functions to interact with the Postgres database. This will reduce RAM usage. This may reduce run time.
 - Add unit tests to R functions.
 - Send more informative response HTTP status code. Currently, all failures use status code 500.
-- Speed up docker image build process by specifying only required files in one or more `.dockerignore` files.
 
 Design action items:
 
