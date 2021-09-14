@@ -12,7 +12,7 @@ services:
       - db
     # Sensitive information is passed as environment variables in local
     # development. Although local development can directly use plain text in
-    # code and cofigurations, these secrets are used to emulate production
+    # code and configurations, these secrets are used to emulate production
     # environment, so that locally developed applications can be deployed more
     # straightforwardly.
     #
@@ -22,9 +22,17 @@ services:
     # Environment file format reference:
     # https://docs.docker.com/compose/compose-file/compose-file-v3/#env_file
     env_file:
+      # Required environemnt variables in environment files are listed in
+      # README.md.
       - ../OpenPedCan-api-secrets/access_db.env
       - ../OpenPedCan-api-secrets/common_db.env
     environment:
+      # DEBUG environment variable is used by main.R to determine whether to run
+      # extra assertions or not.
+      #
+      # unset or 0: do not run extra assertions.
+      # 1: run extra assertions.
+      # other: raise an error.
       - DEBUG=1
   db:
     build:
@@ -54,11 +62,14 @@ services:
     # load_db process is to run pg_restore on the output of build_db process.
     # The build_db process is completed by running db/build_db.sh.
     env_file:
+      # Required environemnt variables in environment files are listed in
+      # README.md.
       - ../OpenPedCan-api-secrets/access_db.env
       - ../OpenPedCan-api-secrets/load_db.env
       - ../OpenPedCan-api-secrets/common_db.env
     environment:
-      # Use DB_LOCATION to determine where to get the database.
+      # DB_LOCATION environment variable is used to determine where to get the
+      # database.
       #
       # - aws_s3: download database from aws s3 bucket. Default.
       # - local: use local database in ./db dir COPY. If database is not built
