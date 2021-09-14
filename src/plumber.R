@@ -144,9 +144,7 @@ function(ensemblId) {
 
 
 # Testing endpoints ------------------------------------------------------------
-# Placeholder for simple testing
-# Source https://github.com/rstudio/plumber/
-
+# Simple testing endpoints. Source: https://github.com/rstudio/plumber/ .
 
 #* Echo back the input
 #*
@@ -155,4 +153,80 @@ function(ensemblId) {
 #* @get /echo
 function(msg="") {
   list(msg = paste0("The message is: '", msg, "'"))
+}
+
+#* Get database statistics
+#*
+#* @tag "API testing"
+#* @serializer unboxedJSON
+#* @get /db-stats
+function() {
+  # TODO: extract db query procedure into a function.
+
+  # Query database.
+  conn <- DBI::dbConnect(
+    odbc::odbc(), Driver = db_env_vars$Driver,
+    Server = db_env_vars$Server, Port = db_env_vars$Port,
+    Uid = db_env_vars$Uid, Pwd = db_env_vars$Pwd,
+    Database = db_env_vars$Database)
+
+  # Case insensitive db schema and table names. DBI/glue quotes names. Table
+  # columns are case sensitive.
+  q_schema <- tolower(db_env_vars$BULK_EXP_SCHEMA)  # nolint: object_usage_linter.
+  q_table <- tolower(db_env_vars$BULK_EXP_TPM_HISTOLOGY_TBL)  # nolint: object_usage_linter.
+
+  q_rs <- DBI::dbSendQuery(
+    conn,
+    glue::glue_sql("
+      SELECT *
+      FROM {`q_schema`}.{`q_table`}
+      LIMIT 1
+    ", .con = conn)
+  )
+  # "dbFetch() always returns a data.frame with as many rows as records were
+  # fetched and as many columns as fields in the result set, even if the result
+  # is a single value or has one or zero rows."
+  #
+  # Ref: https://dbi.r-dbi.org/reference/dbfetch
+  q_rs_df <- DBI::dbFetch(q_rs)
+  DBI::dbClearResult(q_rs)
+
+  stopifnot(nrow(q_rs_df) == 1)
+  stopifnot("Gene_Ensembl_ID" %in% colnames(q_rs_df))
+
+  ensg_id <- q_rs_df$Gene_Ensembl_ID
+  stopifnot(is.character(ensg_id))
+
+  # Use parameterized queries to protect queries from SQL injection attacks.
+  #
+  # https://db.rstudio.com/best-practices/run-queries-safely/#parameterized-queries
+  q_rs <- DBI::dbSendQuery(
+    conn,
+    glue::glue_sql("
+      SELECT *
+      FROM {`q_schema`}.{`q_table`}
+      WHERE \"Gene_Ensembl_ID\" = ?
+    ", .con = conn)
+  )
+  # Bind ? in the query statment with values.
+  DBI::dbBind(q_rs, list(ensg_id))
+  # "dbFetch() always returns a data.frame with as many rows as records were
+  # fetched and as many columns as fields in the result set, even if the result
+  # is a single value or has one or zero rows."
+  #
+  # Ref: https://dbi.r-dbi.org/reference/dbfetch
+  q_rs_df <- DBI::dbFetch(q_rs)
+  DBI::dbClearResult(q_rs)
+
+  DBI::dbDisconnect(conn)
+
+  stopifnot("Kids_First_Biospecimen_ID" %in% colnames(q_rs_df))
+  db_bids <- q_rs_df$Kids_First_Biospecimen_ID
+  stopifnot(is.character(db_bids))
+
+  db_stats <- list(
+    n_unique_biospecimens = length(unique(db_bids))
+  )
+
+  return(db_stats)
 }
