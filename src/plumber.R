@@ -64,8 +64,8 @@ cors <- function(res) {
 #* Get a single-gene single-disease all-GTEx-tissue-subgroups TPM summary table
 #*
 #* @tag "Bulk tissue gene expression"
-#* @param ensemblId:str a single character value of gene ENSG ID.
-#* @param efoId:str a single character value of EFO ID.
+#* @param ensemblId:str one gene ENSG ID.
+#* @param efoId:str one EFO ID.
 #* @serializer json
 #* @get /tpm/gene-disease-gtex/json
 function(ensemblId, efoId) {
@@ -85,8 +85,8 @@ function(ensemblId, efoId) {
 #* Get a single-gene single-disease all-GTEx-tissue-subgroups TPM boxplot
 #*
 #* @tag "Bulk tissue gene expression"
-#* @param ensemblId:str a single character value of gene ENSG ID.
-#* @param efoId:str a single character value of EFO ID.
+#* @param ensemblId:str one gene ENSG ID.
+#* @param efoId:str one EFO ID.
 #* @serializer png list(res = 300, width = 3900, height = 2700)
 #* @get /tpm/gene-disease-gtex/plot
 function(ensemblId, efoId) {
@@ -105,7 +105,7 @@ function(ensemblId, efoId) {
 #* Get a single-gene all-diseases TPM summary table
 #*
 #* @tag "Bulk tissue gene expression"
-#* @param ensemblId:str a single character value of gene ENSG ID.
+#* @param ensemblId:str one gene ENSG ID.
 #* @serializer json
 #* @get /tpm/gene-all-cancer/json
 function(ensemblId) {
@@ -125,7 +125,7 @@ function(ensemblId) {
 #* Get a single-gene all-diseases TPM boxplot
 #*
 #* @tag "Bulk tissue gene expression"
-#* @param ensemblId:str a single character value of gene ENSG ID.
+#* @param ensemblId:str one gene ENSG ID.
 #* @serializer png list(res = 300, width = 3900, height = 2700)
 #* @get /tpm/gene-all-cancer/plot
 function(ensemblId) {
@@ -155,26 +155,4 @@ function(ensemblId) {
 #* @get /echo
 function(msg="") {
   list(msg = paste0("The message is: '", msg, "'"))
-}
-
-
-#* Plot a histogram
-#*
-#* @tag "API testing"
-#* @serializer png
-#* @get /plot
-function() {
-  rand <- rnorm(100)
-  hist(rand)
-}
-
-
-#* Return the sum of two numbers
-#*
-#* @tag "API testing"
-#* @param a The first number to add
-#* @param b The second number to add
-#* @post /sum
-function(a, b) {
-  as.numeric(a) + as.numeric(b)
 }
