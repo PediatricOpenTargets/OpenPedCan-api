@@ -1,2 +1,38 @@
-ensemblId
-ENSG00000213420
+x_labels	Gene_Ensembl_ID	Gene_symbol	PMTL	Dataset	Disease	GTEx_tissue_subgroup	EFO	MONDO	GTEx_tissue_subgroup_UBERON	TPM_mean	TPM_sd	TPM_min	TPM_25th_percentile	TPM_median	TPM_75th_percentile	TPM_max
+Acute Lymphoblastic Leukemia (Dataset = TARGET, N = 458)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	TARGET	Acute Lymphoblastic Leukemia		EFO_0000220	MONDO_0004967		7.81	12.99	0.08	1.91	3.5	7.4	117.72
+Acute Myeloid Leukemia (Dataset = TARGET, N = 141)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	TARGET	Acute Myeloid Leukemia		EFO_0000222	MONDO_0018874		0.5	0.83	0	0.1	0.22	0.48	5.21
+Adamantinomatous Craniopharyngioma (Dataset = PBTA, N = 17)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Adamantinomatous Craniopharyngioma		EFO_1000069	MONDO_0002787		1.42	0.59	0.5	0.99	1.44	1.91	2.27
+Adenoma (Dataset = PBTA, N = 3)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Adenoma		EFO_0000232	MONDO_0002454		0.3	0.26	0.12	0.16	0.19	0.4	0.6
+Atypical Teratoid Rhabdoid Tumor (Dataset = PBTA, N = 24)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Atypical Teratoid Rhabdoid Tumor		EFO_1002008	MONDO_0020560		3.96	4.18	0.15	0.91	1.8	6.41	14.53
+Chordoma (Dataset = PBTA, N = 3)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Chordoma		Orphanet_178	MONDO_0008978		0.54	0.12	0.4	0.49	0.58	0.61	0.64
+Choroid plexus carcinoma (Dataset = PBTA, N = 4)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Choroid plexus carcinoma		MONDO_0016718	MONDO_0016718		12.53	11.31	2.74	3.27	10.87	20.14	25.64
+Choroid plexus papilloma (Dataset = PBTA, N = 15)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Choroid plexus papilloma		EFO_1000177	MONDO_0009837		0.32	0.19	0.05	0.16	0.28	0.45	0.68
+Clear cell sarcoma of the kidney (Dataset = TARGET, N = 13)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	TARGET	Clear cell sarcoma of the kidney		EFO_0000350	MONDO_0005006		1.63	0.96	0.59	1.08	1.38	1.77	4.5
+CNS Embryonal tumor (Dataset = PBTA, N = 9)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	CNS Embryonal tumor		EFO_0005784	MONDO_0018843		36.28	37.13	2.25	14.75	23.04	50.91	118.9
+Craniopharyngioma (Dataset = PBTA, N = 11)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Craniopharyngioma		EFO_1000209	MONDO_0002787		0.47	0.25	0.14	0.26	0.42	0.68	0.9
+Diffuse intrinsic pontine glioma (Dataset = PBTA, N = 4)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Diffuse intrinsic pontine glioma		EFO_1000026	MONDO_0006033		3.83	1.82	2.16	2.72	3.41	4.51	6.35
+Diffuse midline glioma (Dataset = PBTA, N = 47)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Diffuse midline glioma		MONDO_0003869	MONDO_0006033		9.73	10.24	0.98	2.99	6.28	12.61	59.85
+Dysembryoplastic neuroepithelial tumor (Dataset = PBTA, N = 19)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Dysembryoplastic neuroepithelial tumor		EFO_0005551	MONDO_0005505		3.95	3.2	0.47	0.84	3.99	6.93	9.24
+Embryonal tumor with multilayer rosettes (Dataset = PBTA, N = 4)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Embryonal tumor with multilayer rosettes		MONDO_0016715	MONDO_0016715		46.28	20.46	20.58	35.02	48.96	60.23	66.64
+Ependymoma (Dataset = PBTA, N = 69)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Ependymoma		EFO_1000028	MONDO_0016698		1.16	1.42	0.02	0.43	0.73	1.11	7.9
+Ewing sarcoma (Dataset = PBTA, N = 7)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Ewing sarcoma		EFO_0000174	MONDO_0012817		6	6.36	0.75	1.52	2.87	8.61	18.13
+Germinoma (Dataset = PBTA, N = 4)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Germinoma		EFO_0000514	MONDO_0005040		6.31	4.95	1.96	3.96	4.93	7.28	13.43
+Glial-neuronal tumor NOS (Dataset = PBTA, N = 5)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Glial-neuronal tumor NOS		MONDO_0016729	MONDO_0016729		2.55	1.69	1.02	1.07	2.25	3.42	5
+High-grade glioma/astrocytoma (Dataset = PBTA, N = 51)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	High-grade glioma/astrocytoma		MONDO_0016680	MONDO_0100342		11.23	14	0.15	2.74	5.66	14.88	59.91
+Langerhans Cell histiocytosis (Dataset = PBTA, N = 4)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Langerhans Cell histiocytosis		EFO_1000318	MONDO_0009519		0.47	0.25	0.28	0.31	0.39	0.55	0.83
+Low-grade glioma/astrocytoma (Dataset = PBTA, N = 237)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Low-grade glioma/astrocytoma		MONDO_0016685	MONDO_0016685		2.88	2.14	0.17	1.27	2.48	4.11	12.52
+Malignant peripheral nerve sheath tumor (Dataset = PBTA, N = 3)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Malignant peripheral nerve sheath tumor		EFO_0000760	MONDO_0018078		0.42	0.09	0.33	0.38	0.43	0.47	0.51
+Medulloblastoma (Dataset = PBTA, N = 105)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Medulloblastoma		EFO_0002939	MONDO_0007959		27.55	17.65	3.21	15.51	24.29	32.75	87.11
+Meningioma (Dataset = PBTA, N = 14)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Meningioma		Orphanet_2495	MONDO_0016642		0.68	0.5	0.16	0.39	0.58	0.78	2.03
+Metastatic secondary tumors (Dataset = PBTA, N = 3)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Metastatic secondary tumors		EFO_0009812	MONDO_0024883		12	19.27	0.33	0.88	1.43	17.84	34.24
+Neuroblastoma (Dataset = all_cohorts, N = 347)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	all_cohorts	Neuroblastoma		EFO_0000621	MONDO_0005072		50.05	45.34	0.52	21.65	37	63.88	332.67
+Neuroblastoma (Dataset = GMKF, N = 209)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	GMKF	Neuroblastoma		EFO_0000621	MONDO_0005072		27.83	15.74	0.52	17.23	26.63	38.92	73.07
+Neuroblastoma (Dataset = TARGET, N = 149)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	TARGET	Neuroblastoma		EFO_0000621	MONDO_0005072		81.2	53.17	1.2	43.22	72.03	112.68	332.67
+Neurofibroma/Plexiform (Dataset = PBTA, N = 10)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Neurofibroma/Plexiform		EFO_0000658	MONDO_0003304		0.38	0.2	0.08	0.24	0.3	0.54	0.68
+Osteosarcoma (Dataset = TARGET, N = 87)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	TARGET	Osteosarcoma		EFO_0000637	MONDO_0009807		4.18	5.59	0.28	1.41	3.17	4.8	47.24
+Pineoblastoma (Dataset = PBTA, N = 4)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Pineoblastoma		EFO_1000475	MONDO_0016722		12.37	14.77	2.15	4.52	6.54	14.38	34.25
+Rhabdoid tumor (Dataset = TARGET, N = 64)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	TARGET	Rhabdoid tumor		EFO_0005701	MONDO_0002728		4.94	16.77	0.06	0.49	1.07	3.24	131.03
+Sarcoma (Dataset = PBTA, N = 3)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Sarcoma		EFO_0000691	MONDO_0005089		2.29	2.65	0.17	0.8	1.44	3.35	5.27
+Schwannoma (Dataset = PBTA, N = 14)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Schwannoma		EFO_0000693	MONDO_0002546		0.62	0.2	0.3	0.48	0.6	0.75	0.98
+Teratoma (Dataset = PBTA, N = 4)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	PBTA	Teratoma		MONDO_0002601	MONDO_0002601		3.31	3.44	0.6	0.92	2.28	4.66	8.1
+Wilms tumor (Dataset = TARGET, N = 124)	ENSG00000213420	GPC2	Relevant Molecular Target (RMTL version 1.0)	TARGET	Wilms tumor		MONDO_0019004	MONDO_0006058		6.44	3.57	0.2	3.48	6.14	8.78	17.93

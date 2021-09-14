@@ -36,9 +36,9 @@ get_gene_tpm_boxplot <- function(gene_tpm_boxplot_tbl) {
   stopifnot(is.factor(uniq_x_label_vec))
   stopifnot(all(!is.na(uniq_x_label_vec)))
 
-  sample_type_vec <- unique(gene_tpm_boxplot_tbl$sample_type)
-  stopifnot(is.character(sample_type_vec))
-  stopifnot(all(sample_type_vec %in% c("disease", "normal")))
+  uniq_sample_type_vec <- unique(gene_tpm_boxplot_tbl$sample_type)
+  stopifnot(is.character(uniq_sample_type_vec))
+  stopifnot(all(uniq_sample_type_vec %in% c("disease", "normal")))
 
   efo_id_vec <- purrr::discard(unique(gene_tpm_boxplot_tbl$EFO), is.na)
   stopifnot(is.character(efo_id_vec))
@@ -51,14 +51,40 @@ get_gene_tpm_boxplot <- function(gene_tpm_boxplot_tbl) {
   if (length(gtex_subgroup_vec) > 0) {
     title <- paste(
       paste0(gene_symbol, " (", ensg_id, ")"),
-      "Disease vs. GTEx tissue bulk gene expression",
+      "Primary tumor vs GTEx tissue bulk gene expression",
       sep = "\n")
   } else {
     title <- paste(
       paste0(gene_symbol, " (", ensg_id, ")"),
-      "Disease tissue bulk gene expression",
+      "Primary tumor tissue bulk gene expression",
       sep = "\n")
   }
+
+  if (identical(length(uniq_sample_type_vec), 1L)) {
+    # Only one sample type.
+    #
+    # Use grey for either one.
+    box_fill_colors = c("disease" = "grey80", "normal" = "grey80")
+  } else {
+    # More than one saple types.
+    #
+    # Use red for diease and grey for normal.
+    box_fill_colors = c("disease" = "red3", "normal" = "grey80")
+  }
+
+  # The x-axis labels are long and rotated 45 degrees, so they are out of the
+  # plot in the default margin. Increase right margin to fit all text.
+  plot_margin <- ggplot2::theme_get()$plot.margin
+
+  if (!identical(length(plot_margin), 4L)) {
+    plot_margin <- rep(grid::unit(x = 5.5, units = "points"), 4)
+  }
+
+  rightmost_x_label <- dplyr::last(
+    levels(gene_tpm_boxplot_tbl$x_labels), default = "")
+  # increase right margin by the width of the last x label * 0.71
+  plot_margin[2] <- grid::unit(
+    x = 0.8, units = "strwidth", data = rightmost_x_label)
 
   gene_tpm_boxplot <- ggplot2::ggplot(gene_tpm_boxplot_tbl,
                                       ggplot2::aes(x = x_labels, y = TPM,
@@ -69,12 +95,11 @@ get_gene_tpm_boxplot <- function(gene_tpm_boxplot_tbl) {
     ggplot2::ylab("TPM") +
     ggplot2::xlab("") +
     ggplot2_publication_theme(base_size = 12) +
-    ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90,
-                                                       vjust = 0.5,
-                                                       hjust = 1)) +
+    ggplot2::theme(
+      axis.text.x = ggplot2::element_text(angle = -45, vjust = 1, hjust = 0),
+      plot.margin = plot_margin) +
     ggplot2::ggtitle(title) +
-    ggplot2::scale_fill_manual(values = c("disease" = "red3",
-                                          "normal" = "grey80")) +
+    ggplot2::scale_fill_manual(values = box_fill_colors) +
     ggplot2::guides(fill = "none")
 
   return(gene_tpm_boxplot)
