@@ -54,8 +54,8 @@ cat("---------------------------------\n",
 # - Use ls() to check what variables are defined by previous scripts, make sure
 #   previously defined variables are not overwritten by the new script.
 
-source("db/db_env_vars.R")
-source("db/connect_db.R")
+source("db/r_interfaces/db_env_vars.R")
+source("db/r_interfaces/connect_db.R")
 source("src/get_gene_tpm_tbl.R")
 source("src/ggplot2_publication_theme.R")
 source("src/get_gene_tpm_boxplot_tbl.R")

@@ -4,7 +4,7 @@
 # Call sequence:
 #
 # - docker run calls Rscript --vanilla main.R
-# - ../main.R calls source("src/connect_db.R")
+# - ../main.R calls source("db/r_interfaces/connect_db.R")
 #
 # Defined variables:
 #
@@ -14,17 +14,17 @@
 
 # Connect to OpenPedCan-api database
 #
-# Returns a DBIConnection to OpenPedCan-api database.
-#
 # Args:
 # - db_env_vars: a list of environment variable values defined in
-#   db/db_env_vars.R.
+#   db/r_interfaces/db_env_vars.R.
+#
+# Returns a DBIConnection to OpenPedCan-api database.
 #
 # Notes:
 #
 # - The environment variable values in db_env_vars, which is defined in
-#   db/db_env_vars.R, are passed to the database building process or API HTTP
-#   server at deployment time.
+#   db/r_interfaces/db_env_vars.R, are passed to the database building process
+#   or API HTTP server at deployment time.
 # - The returned connection needs to be disconnected by DBI::dbDisconnect.
 connect_db <- function(db_env_vars) {
   conn <- DBI::dbConnect(

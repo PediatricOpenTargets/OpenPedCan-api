@@ -1,5 +1,6 @@
-# build_db.R is called by build_db.Dockerfile to load the rds files build a
-# database.
+# This file is called by build_db.Dockerfile to load the rds files build a
+# database. Note that this file requires env vars defined in
+# build_db.Dockerfile.
 #
 # This file should be run with the directory that contains this file as working
 # directory.
@@ -11,17 +12,51 @@
 #
 # Outputs:
 #
-# - ../build_outputs/${BULK_EXP_SCHEMA}_{BULK_EXP_TPM_HISTOLOGY_TBL}.csv
+# - ${BUILD_OUTPUT_DIR_PATH}/build_outputs/${BULK_EXP_SCHEMA}_${BULK_EXP_TPM_HISTOLOGY_TBL}.csv
 # - Create empty database table
 #   ${DB_NAME}.${BULK_EXP_SCHEMA}.${BULK_EXP_TPM_HISTOLOGY_TBL} that have the
 #   same columns as the csv file.
 
-# TODO: do not rely on relative paths.
-source("../db_env_vars.R")
-source("../connect_db.R")
+
+
+# Specify paths and define global variables-------------------------------------
 
 # Get %>% without loading the whole library
 `%>%` <- magrittr::`%>%`
+
+# Helper function to get env vars
+get_env_var <- function(env_var_name) {
+  env_var_val <- Sys.getenv(
+    env_var_name, unset = NA_character_, names = FALSE)
+
+  # Assert env_var_val is character of length 1
+  stopifnot(is.character(env_var_val))
+  stopifnot(identical(length(env_var_val), 1L))
+
+  if (is.na(env_var_val)) {
+    stop(paste(
+      "Error: Environment variable", env_var_name, "cannot be unset."))
+  }
+
+  return(env_var_val)
+}
+
+db_r_interface_dir <- file.path(
+  get_env_var("DB_HOME_DIR_PATH"), "db/r_interfaces")
+stopifnot(dir.exists(db_r_interface_dir))
+
+source(file.path(db_r_interface_dir, "db_env_vars.R"))
+source(file.path(db_r_interface_dir, "connect_db.R"))
+
+db_build_output_dir <- get_env_var("BUILD_OUTPUT_DIR_PATH")
+stopifnot(dir.exists(db_build_output_dir))
+
+output_fn_prefix <- paste0(
+  db_env_vars$BULK_EXP_SCHEMA, "_", db_env_vars$BULK_EXP_TPM_HISTOLOGY_TBL)
+
+# Use .csv rather than .csv.gz to speed up database COPY command.
+csv_out_path <- file.path(
+  db_build_output_dir, paste0(output_fn_prefix, ".csv"))
 
 # Get DOWN_SAMPLE_DB_GENES env var:
 # - 0 or unset: do not down sample genes for database
@@ -45,37 +80,6 @@ if (is.na(DOWN_SAMPLE_DB_GENES)) {
     "Unknown DOWN_SAMPLE_DB_GENES environtment variable",
     DOWN_SAMPLE_DB_GENES))
 }
-
-
-
-# Specify paths ----------------------------------------------------------------
-
-# Helper function to get env vars
-get_env_var <- function(env_var_name) {
-  env_var_val <- Sys.getenv(
-    env_var_name, unset = NA_character_, names = FALSE)
-
-  # Assert env_var_val is character of length 1
-  stopifnot(is.character(env_var_val))
-  stopifnot(identical(length(env_var_val), 1L))
-
-  if (is.na(env_var_val)) {
-    stop(paste(
-      "Error: Environment variable", env_var_name, "cannot be unset."))
-  }
-
-  return(env_var_val)
-}
-
-db_build_output_dir <- get_env_var("BUILD_OUTPUT_DIR_PATH")
-stopifnot(dir.exists(db_build_output_dir))
-
-output_fn_prefix <- paste0(
-  db_env_vars$BULK_EXP_SCHEMA, "_", db_env_vars$BULK_EXP_TPM_HISTOLOGY_TBL)
-
-# Use .csv rather than .csv.gz to speed up database COPY command.
-csv_out_path <- file.path(
-  db_build_output_dir, paste0(output_fn_prefix, ".csv"))
 
 
 

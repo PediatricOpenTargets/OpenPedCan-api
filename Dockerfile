@@ -54,10 +54,7 @@ COPY ./main.R .
 
 COPY ./src/ ./src/
 
-# TODO: create r interface dir under db.
-COPY ./db/db_env_vars.R ./db/db_env_vars.R
-
-COPY ./db/connect_db.R ./db/connect_db.R
+COPY ./db/r_interfaces/ ./db/r_interfaces/
 
 EXPOSE 80
 
