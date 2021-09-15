@@ -1,5 +1,27 @@
 # OpenPedCan-api
 
+## v0.3.0-beta
+
+### Changed
+
+- Changed data model layer backend from memory to database.
+- Changed data model building procedure in `db/build_db.sh`.
+- Changed data model loading procedure in `db/load_db.sh`.
+- Changed `.dockerignore` to ignore `OpenPedCan-analysis` and `db/build_outputs`. The ignored directories are bind mounted to docker containers when necessary, in order to prevent transferring a large amount, potentially over 100GB, of data to docker daemon when building images.
+- Changed static code analysis script from `tests/run_r_lintr.sh` to `tests/run_linters.sh`.
+
+### Added
+
+- Added `docker-compose.yml` to test coordinations between `OpenPedCan-api` HTTP server and database server locally.
+- Added `db/db.Dockerfile` to test run `OpenPedCan-api` database server locally.
+- Added `db/build_tools` to organize tools for building data model.
+- Added `db/build_outputs` to organize output files of data model building procedure.
+- Added `db/init_db.sh` and `db/init_db_pwfile.sh` to initialize database management system (DBMS) for building and loading data model locally.
+- Added `db/r_interfaces` for analysis logic layer to interact with data model layer.
+- Added `.env` file for `docker-compose.yml` runtime environment.
+- Added `tests/linters` to organize static code analysis tools.
+- Added `tests/git_diff_image.sh` to compare images with git `HEAD` for pixel differences.
+
 ## v0.2.0-alpha
 
 ### Changed
