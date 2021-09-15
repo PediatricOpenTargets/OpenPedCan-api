@@ -73,8 +73,12 @@ COPY --chown=postgres:postgres \
 COPY --chown=postgres:postgres \
   ./db/init_db.sh ./db/init_db.sh
 
+# TODO: create r interface dir under db.
 COPY --chown=postgres:postgres \
   ./db/db_env_vars.R ./db/db_env_vars.R
+
+COPY --chown=postgres:postgres \
+  ./db/connect_db.R ./db/connect_db.R
 
 COPY --chown=postgres:postgres \
   ./db/build_tools/ ./db/build_tools/

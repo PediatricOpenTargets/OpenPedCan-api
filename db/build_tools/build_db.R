@@ -16,8 +16,9 @@
 #   ${DB_NAME}.${BULK_EXP_SCHEMA}.${BULK_EXP_TPM_HISTOLOGY_TBL} that have the
 #   same columns as the csv file.
 
-
+# TODO: do not rely on relative paths.
 source("../db_env_vars.R")
+source("../connect_db.R")
 
 # Get %>% without loading the whole library
 `%>%` <- magrittr::`%>%`
@@ -281,11 +282,7 @@ get_ind_chunk_list <- function(n_elements, n_chunks) {
 cat("Generate long format TPM tables and write to csv...\n")
 
 # db connection to create empty table.
-conn <- DBI::dbConnect(
-  odbc::odbc(), Driver = db_env_vars$Driver,
-  Server = db_env_vars$Server, Port = db_env_vars$Port,
-  Uid = db_env_vars$Uid, Pwd = db_env_vars$Pwd,
-  Database = db_env_vars$Database)
+conn <- connect_db(db_env_vars)
 
 # postgres "tables can have at most 1600 columns", but TPM datafarme has >
 # 20,000 columns/samples.

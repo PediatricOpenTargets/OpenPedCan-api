@@ -164,11 +164,7 @@ function() {
   # TODO: extract db query procedure into a function.
 
   # Query database.
-  conn <- DBI::dbConnect(
-    odbc::odbc(), Driver = db_env_vars$Driver,
-    Server = db_env_vars$Server, Port = db_env_vars$Port,
-    Uid = db_env_vars$Uid, Pwd = db_env_vars$Pwd,
-    Database = db_env_vars$Database)
+  conn <- connect_db(db_env_vars)
 
   # Case insensitive db schema and table names. DBI/glue quotes names. Table
   # columns are case sensitive.
@@ -241,11 +237,7 @@ function() {
   # TODO: extract db query procedure into a function.
 
   # Query database.
-  conn <- DBI::dbConnect(
-    odbc::odbc(), Driver = db_env_vars$Driver,
-    Server = db_env_vars$Server, Port = db_env_vars$Port,
-    Uid = db_env_vars$Uid, Pwd = db_env_vars$Pwd,
-    Database = db_env_vars$Database)
+  conn <- connect_db(db_env_vars)
 
   # Case insensitive db schema and table names. DBI/glue quotes names. Table
   # columns are case sensitive.

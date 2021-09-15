@@ -86,11 +86,9 @@ get_gene_tpm_tbl <- function(ensg_id, efo_id = NULL, gene_symbol = NULL,
   all_cohorts_str_id <- "all_cohorts"  # nolint: object_usage_linter.
 
   # Query database.
-  conn <- DBI::dbConnect(
-    odbc::odbc(), Driver = db_env_vars$Driver,
-    Server = db_env_vars$Server, Port = db_env_vars$Port,
-    Uid = db_env_vars$Uid, Pwd = db_env_vars$Pwd,
-    Database = db_env_vars$Database)
+  #
+  # connect_db and db_env_vars are coming from main.R.
+  conn <- connect_db(db_env_vars)  # nolint: object_usage_linter.
 
   # Case insensitive db schema and table names. DBI/glue quotes names. Table
   # columns are case sensitive.
