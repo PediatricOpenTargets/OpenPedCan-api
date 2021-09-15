@@ -161,8 +161,6 @@ function(msg="") {
 #* @serializer unboxedJSON
 #* @get /db-stats
 function() {
-  # TODO: extract db query procedure into a function.
-
   # Query database.
   conn <- connect_db(db_env_vars)
 
