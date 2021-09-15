@@ -161,6 +161,7 @@ function(msg="") {
 #* @serializer unboxedJSON
 #* @get /db-stats
 function() {
+  # jscpd:ignore-start
   # Query database.
   #
   # Database queries are handled in a case-by-case manner, by design, rather
@@ -222,6 +223,7 @@ function() {
   DBI::dbClearResult(q_rs)
 
   DBI::dbDisconnect(conn)
+  # jscpd:ignore-end
 
   stopifnot("Kids_First_Biospecimen_ID" %in% colnames(q_rs_df))
   db_bids <- q_rs_df$Kids_First_Biospecimen_ID
@@ -242,6 +244,7 @@ function() {
 function() {
   # Get the first row of a database table that should exist.
 
+  # jscpd:ignore-start
   # Query database.
   conn <- connect_db(db_env_vars)
 
@@ -266,6 +269,7 @@ function() {
   q_rs_df <- DBI::dbFetch(q_rs)
   DBI::dbClearResult(q_rs)
   DBI::dbDisconnect(conn)
+  # jscpd:ignore-end
 
   return(q_rs_df)
 }
