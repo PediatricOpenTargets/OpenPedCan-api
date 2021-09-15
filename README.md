@@ -43,9 +43,17 @@
 
 - Build and tag `OpenPedCan-api` docker image using `Dockerfile`.
 - Push the built image to ECR.
-- Pass the ECR docker image tag to Amazon Elastic Container Service (ECS) Fargate task definition at runtime.
+- Pass the ECR docker image tag to Amazon Elastic Container Service (ECS) Fargate task definition at runtime. The following environment variables are used for database server connection:
+  - DB_USERNAME
+  - DB_PASSWORD
+  - DB_PORT
+  - DB_HOST
+  - DB_NAME
 
-`OpenPedCan-api` database server deployment procedure is still under development.
+`OpenPedCan-api` database server is deployed with the following steps:
+
+- Start an RDS instance.
+- Load data into the RDS instance from an EC2 instance.
 
 ## 3. Test run `OpenPedCan-api` server locally
 
