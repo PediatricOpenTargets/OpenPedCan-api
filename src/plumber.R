@@ -232,7 +232,6 @@ function() {
 #* @get /db-connection
 function() {
   # Get the first row of a database table that should exist.
-  # TODO: extract db query procedure into a function.
 
   # Query database.
   conn <- connect_db(db_env_vars)
