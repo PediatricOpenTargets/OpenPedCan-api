@@ -21,6 +21,8 @@
 - Added `.env` file for `docker-compose.yml` runtime environment.
 - Added `tests/linters` to organize static code analysis tools.
 - Added `tests/git_diff_image.sh` to compare images with git `HEAD` for pixel differences.
+- Added `/db-stats` API testing endpoint to get database statistics.
+- Added `/db-connection` API testing endpoint to run a simple query.
 
 ## v0.2.0-alpha
 
