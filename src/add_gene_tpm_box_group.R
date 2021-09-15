@@ -12,8 +12,6 @@
 
 
 
-# Helper functions for plotting and tabulating ---------------------------------
-
 # Add box_group column to a gene_tpm_tbl
 #
 # Args:
