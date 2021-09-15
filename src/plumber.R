@@ -162,6 +162,15 @@ function(msg="") {
 #* @get /db-stats
 function() {
   # Query database.
+  #
+  # Database queries are handled in a case-by-case manner, by design, rather
+  # than developing an interface, mainly for the following reasons:
+  #
+  # - Security. Simpler query procedures can be more straightforwardly checked
+  #   for security issues.
+  # - Flexibility. The developers have to specify schema, table, query statment,
+  #   e.g. WHERE, LIMIT, etc, for each query. Different queries may be very
+  #   different, so abstracting the statements is going to be very complex.
   conn <- connect_db(db_env_vars)
 
   # Case insensitive db schema and table names. DBI/glue quotes names. Table
