@@ -87,9 +87,10 @@ function(ensemblId, efoId) {
 #* @tag "Bulk tissue gene expression"
 #* @param ensemblId:str one gene ENSG ID.
 #* @param efoId:str one EFO ID.
+#* @param yAxisScale:str linear or log10
 #* @serializer png list(res = 300, width = 3900, height = 2700)
 #* @get /tpm/gene-disease-gtex/plot
-function(ensemblId, efoId) {
+function(ensemblId, efoId, yAxisScale) {
   gene_tpm_tbl <- get_gene_tpm_tbl(
     ensg_id = ensemblId, efo_id = efoId, min_n_per_sample_group = 3)
 
@@ -97,7 +98,8 @@ function(ensemblId, efoId) {
 
   gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(gene_tpm_tbl)
 
-  res_plot <- get_gene_tpm_boxplot(gene_tpm_boxplot_tbl)
+  res_plot <- get_gene_tpm_boxplot(
+    gene_tpm_boxplot_tbl, y_axis_scale = yAxisScale)
 
   print(res_plot)
 }
@@ -126,9 +128,10 @@ function(ensemblId) {
 #*
 #* @tag "Bulk tissue gene expression"
 #* @param ensemblId:str one gene ENSG ID.
+#* @param yAxisScale:str linear or log10
 #* @serializer png list(res = 300, width = 3900, height = 2700)
 #* @get /tpm/gene-all-cancer/plot
-function(ensemblId) {
+function(ensemblId, yAxisScale) {
   gene_tpm_tbl <- get_gene_tpm_tbl(
     ensg_id = ensemblId, min_n_per_sample_group = 3)
 
@@ -136,7 +139,8 @@ function(ensemblId) {
 
   gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(gene_tpm_tbl)
 
-  res_plot <- get_gene_tpm_boxplot(gene_tpm_boxplot_tbl)
+  res_plot <- get_gene_tpm_boxplot(
+    gene_tpm_boxplot_tbl, y_axis_scale = yAxisScale)
 
   print(res_plot)
 }
