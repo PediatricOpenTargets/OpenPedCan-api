@@ -11,6 +11,7 @@ ecs_service_type_1_standard {
     prd_cidr = "0.0.0.0/0"
     qa_cidr = "0.0.0.0/0"
     dev_cidr = "0.0.0.0/0"
+    desired_count = "3"
     vcpu_container             = "4096"
     memory_container           = "10240"
     vcpu_task                  = "4096"
