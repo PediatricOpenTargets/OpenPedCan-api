@@ -4,6 +4,8 @@
 
 ### Changed
 
+- Changed required parameters in `/tpm/gene-disease-gtex/plot` and `/tpm/gene-all-cancer/plot` endpoints, by adding `yAxisScale` as a required parameter.
+- Changed `tests/curl_test_endpoints.sh` to test `yAxisScale` parameter.
 - Changed data model layer backend from memory to database.
 - Changed data model building procedure in `db/build_db.sh`.
 - Changed data model loading procedure in `db/load_db.sh`.
@@ -12,6 +14,7 @@
 
 ### Added
 
+- Added `yAxisScale` as a required parameter in `/tpm/gene-disease-gtex/plot` and `/tpm/gene-all-cancer/plot` endpoints.
 - Added `docker-compose.yml` to test coordinations between `OpenPedCan-api` HTTP server and database server locally.
 - Added `db/db.Dockerfile` to test run `OpenPedCan-api` database server locally.
 - Added `db/build_tools` to organize tools for building data model.
