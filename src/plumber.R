@@ -56,7 +56,7 @@ function(req, res) {
 #* disable for certain endpoints, add preempt annotation to exclude this filter.
 #*
 #* @filter cors
-cors <- function(res) {
+function(res) {
   res$setHeader("Access-Control-Allow-Origin", "*")
   plumber::forward()
 }
