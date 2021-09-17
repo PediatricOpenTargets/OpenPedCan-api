@@ -33,7 +33,7 @@
 
 ## 2. `OpenPedCan-api` server deployment
 
-`OpenPedCan-api` server is deployed using Amazon Web Services (AWS). `OpenPedCan-api` HTTP server is deployed using Amazon Elastic Container Registry (ECR), Elastic Container Service (ECS), and Fargate. The HTTP server queries `OpenPedCan-api` database server, and the database is deployed using Amazon Relational Database Service (RDS).
+`OpenPedCan-api` server is deployed using Amazon Web Services (AWS). `OpenPedCan-api` HTTP server is deployed using Amazon Elastic Container Registry (ECR), Elastic Container Service (ECS), and Fargate. The HTTP server queries `OpenPedCan-api` database server, and the database server is deployed using Amazon Relational Database Service (RDS).
 
 <https://openpedcan-api-qa.d3b.io/__docs__/> is the URL of `OpenPedCan-api` QA server. The QA server will only deploy the `main` branch of the repository.
 
@@ -289,7 +289,7 @@ The `OpenPedCan-api` server system has the following layers:
 
 For more details about implementations, see [Test run `OpenPedCan-api` server locally](#test-run-openpedcan-api-server-locally) section.
 
-The root directory of this repository should only contain starting points of different layer and configuration files.
+The root directory of this repository should only contain starting points of different layers and configuration files.
 
 ### 4.1. Data model layer
 
@@ -298,6 +298,8 @@ The root directory of this repository should only contain starting points of dif
 `db/build_db.sh` builds data model files that are used by analysis logic layer.
 
 `db/load_db.sh` loads local or remote pre-built data model files to the HTTP server layer.
+
+`db/r_interfaces` directory contains files that define data model interfaces for R runtime.
 
 ### 4.2. Analysis logic layer
 
@@ -325,10 +327,10 @@ The `tests` directory contains all tools and code for testing the API server. `t
 
 ### 4.6. Deployment layer
 
-Jenkinsfile and Dockerfile specify the procedures to deploy the `OpenPedCan-api` server.
+`Jenkinsfile` and `Dockerfile` specify the procedures to deploy the `OpenPedCan-api` server.
 
 ## 5. API Development roadmap
 
-- #27
-- #22 and #23
+- Optimize HTTP server deployment task scaling rules and memory/CPU resource allocations to balance performance and cost.
+- Optimize database server deployment memory/CPU resource allocations and DBMS runtime configurations, e.g. `shared_buffers` and `work_mem`, to balance performance and cost.
 - Add bulk tissue differential expression table and plot endpoints.
