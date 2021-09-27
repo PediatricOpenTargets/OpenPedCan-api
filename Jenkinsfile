@@ -12,6 +12,7 @@ ecs_service_type_1_standard {
     qa_cidr = "0.0.0.0/0"
     dev_cidr = "0.0.0.0/0"
     min_ecs_capacity = "5"
+    max_ecs_capacity = "10"
     vcpu_container             = "4096"
     memory_container           = "10240"
     vcpu_task                  = "4096"
