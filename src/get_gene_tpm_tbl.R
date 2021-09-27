@@ -16,8 +16,6 @@
 # more GTEx tissue subgroup(s).
 #
 # Args:
-# - tpm_data_lists: tpm_data_lists loaded from the tpm_data_lists.rds output of
-#   db/tpm_data_lists.R. Required.
 # - ensg_id: a single character value of gene ENSG ID. Required.
 # - efo_id: NULL or a single character value of EFO ID. Default is NULL, which
 #   is to include all diseases and zero GTEx tissue, aka gene-all-cancer. If
@@ -59,11 +57,8 @@
 #   may not match PedOT.
 # - Identify the gene symbol that match PedOT.
 # - Completely drop gene_symbol, as it is also shown on PedOT.
-get_gene_tpm_tbl <- function(tpm_data_lists, ensg_id, efo_id = NULL,
-                             gene_symbol = NULL, min_n_per_sample_group = 1L) {
-  # Adapted from https://stackoverflow.com/a/38539734/4638182
-  stopifnot(inherits(tpm_data_lists, "list"))
-
+get_gene_tpm_tbl <- function(ensg_id, efo_id = NULL, gene_symbol = NULL,
+                             min_n_per_sample_group = 1L) {
   stopifnot(is.character(ensg_id))
   stopifnot(identical(length(ensg_id), 1L))
   stopifnot(!is.na(ensg_id))
@@ -84,271 +79,253 @@ get_gene_tpm_tbl <- function(tpm_data_lists, ensg_id, efo_id = NULL,
   stopifnot(identical(length(min_n_per_sample_group), 1L))
   stopifnot(!is.na(min_n_per_sample_group))
 
-  all_cohorts_str_id <- "all_cohorts"
+  # In OpenPedCan-analysis project, "all_cohorts" is used as the cohort of
+  # combined cohorts. The value "all_cohorts" may be changed at a later point.
+  # If "all_cohorts" is changed to some other value. search the whole code base
+  # and make relevant chagnes.
+  all_cohorts_str_id <- "all_cohorts"  # nolint: object_usage_linter.
 
-  long_tpm_tbl_list <- purrr::imap(tpm_data_lists, function(xl, xname) {
-    # .data and .env are from rlang package, but they do not need to be imported
-    # to work. "The .data pronoun is automatically created for you by
-    # data-masking functions using the tidy eval framework." This should also
-    # apply to .env.
-    #
-    # - .data "retrieves data-variables from the data frame".
-    # - .env "retrieves env-variables from the environment".
-    # - Ref: https://rlang.r-lib.org/reference/tidyeval-data.html
-    #
-    # tpm_df cols: Gene_Ensembl_ID, Gene_symbol, RMTL, Sample1, Sample2, ...
-    ensg_tpm_df <- dplyr::filter(
-      xl$tpm_df, .data$Gene_Ensembl_ID == .env$ensg_id)
+  # Query database.
+  #
+  # connect_db and db_env_vars are coming from main.R.
+  conn <- connect_db(db_env_vars)  # nolint: object_usage_linter.
 
-    if (identical(nrow(ensg_tpm_df), 0L)) {
-      # ensg id is not in tpm df
-      stop(paste(ensg_id, "is not available."))
+  # Case insensitive db schema and table names. DBI/glue quotes names. Table
+  # columns are case sensitive.
+  q_schema <- tolower(db_env_vars$BULK_EXP_SCHEMA)  # nolint: object_usage_linter.
+  q_table <- tolower(db_env_vars$BULK_EXP_TPM_HISTOLOGY_TBL)  # nolint: object_usage_linter.
+
+  # Use parameterized queries to protect queries from SQL injection attacks.
+  #
+  # https://db.rstudio.com/best-practices/run-queries-safely/#parameterized-queries
+  q_rs <- DBI::dbSendQuery(
+    conn,
+    glue::glue_sql("
+      SELECT *
+      FROM {`q_schema`}.{`q_table`}
+      WHERE \"Gene_Ensembl_ID\" = ?
+    ", .con = conn)
+  )
+  # Bind ? in the query statment with values.
+  DBI::dbBind(q_rs, list(ensg_id))
+  # "dbFetch() always returns a data.frame with as many rows as records were
+  # fetched and as many columns as fields in the result set, even if the result
+  # is a single value or has one or zero rows."
+  #
+  # Ref: https://dbi.r-dbi.org/reference/dbfetch
+  q_rs_df <- DBI::dbFetch(q_rs)
+  DBI::dbClearResult(q_rs)
+  DBI::dbDisconnect(conn)
+
+  long_tpm_tbl <- tibble::as_tibble(q_rs_df)
+
+  # Raise error if table is empty, i.e. no data available.
+  stopifnot(nrow(long_tpm_tbl) > 0)
+
+  # Raise error if table is not expected.
+  stopifnot(identical(
+    colnames(long_tpm_tbl),
+    c("Kids_First_Biospecimen_ID", "cohort", "EFO", "MONDO",
+      "Disease", "GTEx_tissue_subgroup_UBERON", "GTEx_tissue_subgroup", "TPM",
+      "Gene_Ensembl_ID", "Gene_symbol", "RMTL")
+  ))
+  # Assert column types are expected.
+  placeholder_res <- purrr::imap_lgl(long_tpm_tbl, function(xcol, xcolname) {
+    if (xcolname == "TPM") {
+      stopifnot(is.numeric(xcol))
+    } else {
+      stopifnot(is.character(xcol))
     }
+    return(TRUE)
+  })
+  # Assert input ensg_id is the only ENSG ID.
+  stopifnot(identical(unique(long_tpm_tbl$Gene_Ensembl_ID), ensg_id))
+  # Assert no NA in ID columns.
+  stopifnot(identical(
+    sum(is.na(
+      dplyr::select(
+        long_tpm_tbl, Kids_First_Biospecimen_ID, cohort, TPM, Gene_Ensembl_ID,
+        Gene_symbol))),
+    0L
+  ))
+  # Assert no duplicated (sample, gene) tuple.
+  stopifnot(identical(
+    nrow(dplyr::distinct(dplyr::select(long_tpm_tbl, -TPM))),
+    nrow(long_tpm_tbl)
+  ))
 
-    if (!identical(nrow(ensg_tpm_df), 1L)) {
-      # ensg id is mapped to multiple symbols
-      if (!is.null(gene_symbol)) {
-        stopifnot(is.character(gene_symbol))
-        stopifnot(identical(length(gene_symbol), 1L))
-        stopifnot(!is.na(gene_symbol))
+  # .data and .env are from rlang package, but they do not need to be imported
+  # to work. "The .data pronoun is automatically created for you by data-masking
+  # functions using the tidy eval framework." This should also apply to .env.
+  #
+  # - .data "retrieves data-variables from the data frame".
+  # - .env "retrieves env-variables from the environment".
+  # - Ref: https://rlang.r-lib.org/reference/tidyeval-data.html
+  #
+  # tpm_df cols: Gene_Ensembl_ID, Gene_symbol, RMTL, Sample1, Sample2, ...
 
-        ensg_tpm_df <- dplyr::filter(
-          ensg_tpm_df, .data$Gene_symbol == .env$gene_symbol)
+  # Handle one ENSG ID mapping to more than one symbols
+  #
+  # Predicates at this point:
+  #
+  # - long_tpm_tbl has > 0 rows.
+  # - ensg_id is the only ENSG ID.
+  # - long_tpm_tbl$Gene_symbol has no NA.
+  ltt_uniq_gene_symbols <- unique(long_tpm_tbl$Gene_symbol)
 
-        if (identical(nrow(ensg_tpm_df), 0L)) {
-          stop(paste(ensg_id, gene_symbol, "is not available."))
-        }
-      }
-    }
+  if (DEBUG) {
+    stopifnot(is.character(ltt_uniq_gene_symbols))
+    stopifnot(length(ltt_uniq_gene_symbols) > 0)
+  }
 
-    if (!identical(nrow(ensg_tpm_df), 1L)) {
-      # This branch could be reached by
-      # - is.null(gene_symbol): one ensg mapped to multiple symbols
-      # - !is.null(gene_symbol): (ensg, symbol) tuple is duplicated in tpm_df
-      #
-      # Either way, the selection method works.
-      ensg_tpm_df <- dplyr::slice(
-        dplyr::arrange(ensg_tpm_df, .data$Gene_symbol),
-        1L)
-    }
+  if (length(ltt_uniq_gene_symbols) > 1) {
+    # ensg id is mapped to multiple symbols
+    if (!is.null(gene_symbol)) {
+      stopifnot(is.character(gene_symbol))
+      stopifnot(identical(length(gene_symbol), 1L))
+      stopifnot(!is.na(gene_symbol))
 
-    if (DEBUG) {
-      stopifnot(identical(nrow(ensg_tpm_df), 1L))
-    }
+      long_tpm_tbl <- dplyr::filter(
+        long_tpm_tbl, .data$Gene_symbol == .env$gene_symbol)
 
-    # The annotation columns of ensg_tpm_df, all other columns must be samples
-    # TPM values.
-    ensg_tpm_df_ann_cols <- c("Gene_symbol", "RMTL", "Gene_Ensembl_ID")
-
-    # Subset samples
-    if (identical(xname, "gtex")) {
-      if (is.null(efo_id)) {
-        # all-diseases table and plot
-        #
-        # - keep zero gtex subgroups
-        selected_sids <- character()
-      } else {
-        # disease vs gtex table and plot
-        #
-        # - keep all gtex subgroups that have >= min_n_per_sample_group samples
-        selected_sids <- dplyr::filter(
-          dplyr::add_count(
-            xl$histology_df, GTEx_tissue_subgroup,
-            name = "gtex_subgroup_n"),
-          gtex_subgroup_n >= min_n_per_sample_group)$Kids_First_Biospecimen_ID
+      if (nrow(long_tpm_tbl) == 0) {
+        stop(paste(ensg_id, gene_symbol, "is not available."))
       }
     } else {
-      disease_n_histology_df <- dplyr::filter(
-        dplyr::add_count(xl$histology_df, Disease, name = "disease_n"),
-        disease_n >= min_n_per_sample_group)
+      first_sorted_ltt_uniq_gene_symbol <- dplyr::first(
+        sort(ltt_uniq_gene_symbols))
 
-      if (is.null(efo_id)) {
-        # all-diseases table and plot
-        #
-        # - keep all cancer groups that have >= min_n_per_sample_group samples
-        selected_sids <- disease_n_histology_df$Kids_First_Biospecimen_ID
-      } else {
-        # disease vs gtex table and plot
-        #
-        # - keep all cancer groups that are mapped to input efo_id and have >=
-        #   min_n_per_sample_group samples
-        selected_sids <- dplyr::filter(
-          disease_n_histology_df, EFO == efo_id)$Kids_First_Biospecimen_ID
-      }
+      long_tpm_tbl <- dplyr::filter(
+        long_tpm_tbl,
+        .data$Gene_symbol == .env$first_sorted_ltt_uniq_gene_symbol)
     }
+  }
 
-    ensg_tpm_df <- ensg_tpm_df[, c(ensg_tpm_df_ann_cols, selected_sids)]
+  if (DEBUG) {
+    stopifnot(identical(length(unique(long_tpm_tbl$Gene_symbol)), 1L))
+  }
+
+  # Subset samples.
+
+  # The following predicates are asserted in the database building procedure:
+  #
+  # - If Disease is NA, GTEx_tissue_subgroup is not NA.
+  # - If GTEx_tissue_subgroup is NA, Disease is not NA.
+  # - If Disease is not NA, EFO is not NA.
+  if (DEBUG) {
+    # xor evaluates to TRUE if two values are different
+    stopifnot(all(xor(
+      is.na(long_tpm_tbl$Disease),
+      is.na(long_tpm_tbl$GTEx_tissue_subgroup)
+    )))
+    stopifnot(identical(
+      is.na(long_tpm_tbl$Disease),
+      is.na(long_tpm_tbl$EFO)
+    ))
+  }
+
+  long_tpm_tbl <- dplyr::add_count(
+    long_tpm_tbl, .data$Disease, name = "disease_n")
+
+  if (is.null(efo_id)) {
+    # all-diseases table and plot
+    #
+    # - keep all Disease (aka cancer groups) that have >= min_n_per_sample_group
+    #   samples.
+    # - keep zero gtex subgroup sample.
+    long_tpm_tbl <- dplyr::select(
+      dplyr::filter(
+        long_tpm_tbl, !is.na(.data$Disease),
+        .data$disease_n >= min_n_per_sample_group),
+      !c(disease_n))
+    # Raise error if no Disease passes the filter, i.e. data not available.
+    stopifnot(nrow(long_tpm_tbl) > 0)
+  } else {
+    # disease vs gtex table and plot
+    #
+    # - keep all gtex subgroups that have >= min_n_per_sample_group samples.
+    # - keep all Disease (aka cancer groups) that are mapped to input efo_id and
+    #   have >= min_n_per_sample_group samples
+
+    # Separate gtex and disease tables to simplify filtering procedure, because
+    # the sample group counts have counts for NA values.
+    disease_long_tpm_tbl <- dplyr::select(
+      dplyr::filter(
+        long_tpm_tbl, !is.na(.data$Disease), .data$EFO == .env$efo_id,
+        .data$disease_n >= min_n_per_sample_group),
+      !c(disease_n))
+
+    # Raise error if no Disease passes the filter, i.e. data not available.
+    stopifnot(nrow(disease_long_tpm_tbl) > 0)
+
+    long_tpm_tbl <- dplyr::add_count(
+      long_tpm_tbl, .data$GTEx_tissue_subgroup, name = "gtex_subgroup_n")
+
+    gtex_long_tpm_tbl <- dplyr::select(
+      dplyr::filter(
+        long_tpm_tbl, !is.na(.data$GTEx_tissue_subgroup),
+        .data$gtex_subgroup_n >= min_n_per_sample_group),
+      !c(disease_n, gtex_subgroup_n))
+
+    # Raise error if no GTEx_tissue_subgroup passes the filter, i.e. data not
+    # available.
+    stopifnot(nrow(gtex_long_tpm_tbl) > 0)
 
     if (DEBUG) {
-      # Assert all sample columns are numeric.
-      purrr::walk(
-        dplyr::select(ensg_tpm_df, !dplyr::all_of(ensg_tpm_df_ann_cols)),
-        function(xcol) {
-          stopifnot(is.numeric(xcol))
-        }
-      )
-    }
-
-    # initial ensg_long_tpm_tbl column names
-    init_ensg_long_tpm_tbl_cols <- c(ensg_tpm_df_ann_cols,
-                                     "Kids_First_Biospecimen_ID", "TPM")
-
-    if (identical(sort(colnames(ensg_tpm_df)), sort(ensg_tpm_df_ann_cols))) {
-      # no sample selected
-      #
-      # For gtex, use empty tibble.
-      #
-      # For disease, raise error.
-      if (identical(xname, "gtex")) {
-        # Create empty tibble.
-        ensg_long_tpm_tbl <- purrr::map_dfc(
-          init_ensg_long_tpm_tbl_cols,
-          function(xcol) {
-            empty_tbl <- tibble::tibble()
-            if (identical(xcol, "TPM")) {
-              empty_tbl[, xcol] <- numeric()
-            } else {
-              empty_tbl[, xcol] <- character()
-            }
-            return(empty_tbl)
-          }
-        )
-      } else {
-        if (is.null(efo_id)) {
-          stop(paste("No Disease has >=", min_n_per_sample_group, "samples."))
-        } else {
-          stop(paste(
-            efo_id, "has no Disease with >=", min_n_per_sample_group,
-            "samples."))
-        }
-      }
-    } else {
-      # >= 1 sample selected
-
-      # Each row of ensg_long_tpm_tbl is Gene_Ensembl_ID, Gene_symbol,
-      # Kids_First_Biospecimen_ID (prev colname), TPM.
-      ensg_long_tpm_tbl <- tidyr::pivot_longer(
-        ensg_tpm_df, !dplyr::all_of(ensg_tpm_df_ann_cols),
-        names_to = "Kids_First_Biospecimen_ID", values_to = "TPM")
-    }
-
-    # Ensure constent column names of ensg_long_tpm_tbl.
-    ensg_long_tpm_tbl <- dplyr::select(
-      ensg_long_tpm_tbl, dplyr::all_of(init_ensg_long_tpm_tbl_cols))
-
-    if (DEBUG) {
       stopifnot(identical(
-        colnames(ensg_long_tpm_tbl), init_ensg_long_tpm_tbl_cols))
-      stopifnot(identical(
-        sum(is.na(dplyr::select(ensg_long_tpm_tbl, -RMTL))), 0L))
-
-      if (nrow(ensg_long_tpm_tbl) > 0) {
-        stopifnot(identical(
-          sort(unique(ensg_long_tpm_tbl$Gene_symbol)),
-          sort(unique(ensg_tpm_df$Gene_symbol))))
-      }
-
-      stopifnot(identical(
-        sort(unique(
-          c("Gene_Ensembl_ID", "Gene_symbol", "RMTL",
-            ensg_long_tpm_tbl$Kids_First_Biospecimen_ID))),
-        sort(unique(colnames(ensg_tpm_df)))
+        colnames(disease_long_tpm_tbl),
+        colnames(gtex_long_tpm_tbl)
       ))
     }
 
-    ensg_long_tpm_tbl <- dplyr::left_join(
-      ensg_long_tpm_tbl, xl$histology_df, by = "Kids_First_Biospecimen_ID")
-    ensg_long_tpm_tbl <- dplyr::select(
-      ensg_long_tpm_tbl, "Kids_First_Biospecimen_ID", "cohort", "EFO", "MONDO",
-      "Disease", "GTEx_tissue_subgroup_UBERON", "GTEx_tissue_subgroup", "TPM",
-      "Gene_Ensembl_ID", "Gene_symbol", "RMTL")
+    long_tpm_tbl <- dplyr::bind_rows(disease_long_tpm_tbl, gtex_long_tpm_tbl)
+  }
 
-    if (DEBUG) {
-      stopifnot(identical(
-        nrow(ensg_long_tpm_tbl),
-        length(unique(ensg_long_tpm_tbl$Kids_First_Biospecimen_ID))))
+  # Let return table have the same colnames and order.
+  long_tpm_tbl <- dplyr::select(
+    long_tpm_tbl,
+    dplyr::all_of(
+      c("Kids_First_Biospecimen_ID", "cohort", "EFO", "MONDO",
+        "Disease", "GTEx_tissue_subgroup_UBERON", "GTEx_tissue_subgroup", "TPM",
+        "Gene_Ensembl_ID", "Gene_symbol", "RMTL")))
 
-      stopifnot(identical(sum(is.na(ensg_long_tpm_tbl$cohort)), 0L))
-      stopifnot(!all_cohorts_str_id %in% ensg_long_tpm_tbl$cohort)
-      if (identical(xname, "gtex")) {
-        if (is.null(efo_id)) {
-          # gene-all-cancer
-          stopifnot(identical(nrow(ensg_long_tpm_tbl), 0L))
-        }
-
-        stopifnot(identical(
-          sum(is.na(ensg_long_tpm_tbl$GTEx_tissue_subgroup)), 0L))
-
-        stopifnot(identical(sum(!is.na(ensg_long_tpm_tbl$EFO)), 0L))
-
-        stopifnot(identical(sum(!is.na(ensg_long_tpm_tbl$Disease)), 0L))
-      } else {
-        if (!is.null(efo_id)) {
-          # gene-disease-gtex
-          stopifnot(identical(unique(ensg_long_tpm_tbl$EFO), efo_id))
-        }
-
-        stopifnot(identical(sum(is.na(ensg_long_tpm_tbl$EFO)), 0L))
-
-        stopifnot(identical(
-          sum(!is.na(ensg_long_tpm_tbl$GTEx_tissue_subgroup)), 0L))
-
-        stopifnot(identical(sum(is.na(ensg_long_tpm_tbl$Disease)), 0L))
-      }
-    }
-
-    return(ensg_long_tpm_tbl)
-  })
-
-  # Bind pt_all_cohorts, pt_each_cohort, and gtex long_tpm_tbls
   if (DEBUG) {
+    stopifnot(nrow(long_tpm_tbl) > 0)
+    stopifnot(identical(sum(is.na(long_tpm_tbl$cohort)), 0L))
+
+    all_cohorts_long_tpm_tbl <- dplyr::filter(
+      long_tpm_tbl, .data$cohort == .env$all_cohorts_str_id)
+
+    each_cohort_long_tpm_tbl <- dplyr::filter(
+      long_tpm_tbl, .data$cohort != .env$all_cohorts_str_id)
+
+    # all_cohorts_long_tpm_tbl and each_cohort_long_tpm_tbl can have duplicated
+    # Kids_First_Biospecimen_ID.
     stopifnot(identical(
-      colnames(long_tpm_tbl_list$gtex),
-      colnames(long_tpm_tbl_list$pt_each_cohort)))
+      nrow(all_cohorts_long_tpm_tbl),
+      length(unique(all_cohorts_long_tpm_tbl$Kids_First_Biospecimen_ID))))
 
     stopifnot(identical(
-      colnames(long_tpm_tbl_list$gtex),
-      colnames(long_tpm_tbl_list$pt_all_cohorts)))
-  }
+      nrow(each_cohort_long_tpm_tbl),
+      length(unique(each_cohort_long_tpm_tbl$Kids_First_Biospecimen_ID))))
 
-  res_long_tpm_tbl <- dplyr::bind_rows(
-    long_tpm_tbl_list$pt_each_cohort, long_tpm_tbl_list$gtex)
-  # Handle all-cohorts/combined-cohorts/all_cohorts.
-  #
-  # For any Disease that has two or more cohorts, append all_cohorts rows.
-  #
-  # Primary tumor all-cohorts independent (disease, n unique cohort > 1) table.
-  pt_aci_disease_n_uniq_cohorts_g1_tbl <- dplyr::filter(
-    dplyr::summarise(
-      dplyr::group_by(long_tpm_tbl_list$pt_all_cohorts, Disease),
-      n_uniq_cohorts = length(unique(cohort))),
-    n_uniq_cohorts > 1)
-
-  if (nrow(pt_aci_disease_n_uniq_cohorts_g1_tbl) > 0) {
-    pt_aci_disease_n_uniq_cohorts_g1_long_tpm_tbl <- purrr::map_dfr(
-      pt_aci_disease_n_uniq_cohorts_g1_tbl$Disease,
-      function(x) {
-        x_long_tbl <- dplyr::filter(
-          long_tpm_tbl_list$pt_all_cohorts, Disease == x)
-
-        if (DEBUG) {
-          stopifnot(nrow(x_long_tbl) > 0)
-        }
-
-        x_long_tbl$cohort <- all_cohorts_str_id
-        return(x_long_tbl)
-      }
-    )
-
-    if (DEBUG) {
-      stopifnot(identical(
-        colnames(pt_aci_disease_n_uniq_cohorts_g1_long_tpm_tbl),
-        colnames(res_long_tpm_tbl)))
+    if (is.null(efo_id)) {
+      # gene-all-cancer
+      stopifnot(all(is.na(long_tpm_tbl$GTEx_tissue_subgroup)))
+      stopifnot(all(!is.na(long_tpm_tbl$EFO)))
+      stopifnot(all(!is.na(long_tpm_tbl$Disease)))
+    } else {
+      # gene-disease-gtex
+      stopifnot(identical(is.na(long_tpm_tbl$EFO), is.na(long_tpm_tbl$Disease)))
+      stopifnot(sum(!is.na(long_tpm_tbl$EFO)) > 0)
+      stopifnot(sum(!is.na(long_tpm_tbl$GTEx_tissue_subgroup)) > 0)
+      # xor evaluates to TRUE if two values are different
+      stopifnot(all(xor(
+        is.na(long_tpm_tbl$Disease),
+        is.na(long_tpm_tbl$GTEx_tissue_subgroup)
+      )))
     }
-
-    res_long_tpm_tbl <- dplyr::bind_rows(
-      pt_aci_disease_n_uniq_cohorts_g1_long_tpm_tbl, res_long_tpm_tbl)
   }
 
-  return(res_long_tpm_tbl)
+  return(long_tpm_tbl)
 }

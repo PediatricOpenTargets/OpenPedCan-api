@@ -48,11 +48,12 @@ for ensg_id in "ENSG00000213420" "ENSG00000157764" "ENSG00000273032"; do
     # convert json to tsv
     Rscript --vanilla -e "readr::write_tsv(jsonlite::fromJSON('${output_dir}/${output_fn}'), 'results/${output_fn%.json}.tsv')"
 
-
-    query_url="${base_url}/tpm/gene-disease-gtex/plot?ensemblId=${ensg_id}&efoId=${efo_id}"
-    output_dir="http_response_output_files/png"
-    output_fn="test-tpm-gene-disease-gtex-${ensg_id}-${efo_id}.png"
-    curl -X "${http_request_method}" -s -w "${http_request_method} ${query_url}\nhttp_code: %{http_code}\ncontent_type: %{content_type}\ntime_total: %{time_total} seconds\n\n\n" -o "${output_dir}/${output_fn}" "${query_url}"
+    for y_axis_scale in "linear" "log10"; do
+      query_url="${base_url}/tpm/gene-disease-gtex/plot?ensemblId=${ensg_id}&efoId=${efo_id}&yAxisScale=${y_axis_scale}"
+      output_dir="http_response_output_files/png"
+      output_fn="test-tpm-gene-disease-gtex-${ensg_id}-${efo_id}-y-scale-${y_axis_scale}.png"
+      curl -X "${http_request_method}" -s -w "${http_request_method} ${query_url}\nhttp_code: %{http_code}\ncontent_type: %{content_type}\ntime_total: %{time_total} seconds\n\n\n" -o "${output_dir}/${output_fn}" "${query_url}"
+    done
   done
 
 
@@ -64,8 +65,10 @@ for ensg_id in "ENSG00000213420" "ENSG00000157764" "ENSG00000273032"; do
   Rscript --vanilla -e "readr::write_tsv(jsonlite::fromJSON('${output_dir}/${output_fn}'), 'results/${output_fn%.json}.tsv')"
 
 
-  query_url="${base_url}/tpm/gene-all-cancer/plot?ensemblId=${ensg_id}"
-  output_dir="http_response_output_files/png"
-  output_fn="test-tpm-gene-all-cancer-${ensg_id}.png"
-  curl -X "${http_request_method}" -s -w "${http_request_method} ${query_url}\nhttp_code: %{http_code}\ncontent_type: %{content_type}\ntime_total: %{time_total} seconds\n\n\n" -o "${output_dir}/${output_fn}" "${query_url}"
+  for y_axis_scale in "linear" "log10"; do
+    query_url="${base_url}/tpm/gene-all-cancer/plot?ensemblId=${ensg_id}&yAxisScale=${y_axis_scale}"
+    output_dir="http_response_output_files/png"
+    output_fn="test-tpm-gene-all-cancer-${ensg_id}-y-scale-${y_axis_scale}.png"
+    curl -X "${http_request_method}" -s -w "${http_request_method} ${query_url}\nhttp_code: %{http_code}\ncontent_type: %{content_type}\ntime_total: %{time_total} seconds\n\n\n" -o "${output_dir}/${output_fn}" "${query_url}"
+  done
 done

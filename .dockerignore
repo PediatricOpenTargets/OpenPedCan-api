@@ -1,7 +1,8 @@
-# Config for docker build to only transfer required files to docker daemon
-OpenPedCan-analysis
+# Config for docker build to only transfer required files to docker daemon.
 .git
 tests
-# ! excludes patterns
-!OpenPedCan-analysis/data
-!OpenPedCan-analysis/analyses/long-format-table-utils
+db/bk
+
+# The following directories are bind mounted.
+OpenPedCan-analysis
+db/build_outputs

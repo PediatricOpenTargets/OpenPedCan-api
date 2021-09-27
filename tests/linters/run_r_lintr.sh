@@ -9,7 +9,8 @@ set -o pipefail
 # Adapted from https://stackoverflow.com/a/3355423/4638182
 cd "$(dirname "$0")" || exit
 
-cd ..
+# Change working dir to git root dir
+cd ../../
 
 lintrs_val="lintr::with_defaults(object_name_linter = NULL, assignment_linter = NULL, line_length_linter = NULL, spaces_left_parentheses_linter = NULL, commented_code_linter = NULL, object_length_linter = NULL, cyclocomp_linter = lintr::cyclocomp_linter(complexity_limit = 35L))"
 

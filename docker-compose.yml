@@ -1,0 +1,86 @@
+# docker-compose file reference:
+# https://docs.docker.com/compose/compose-file/compose-file-v3/
+version: "3.9"
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8082:80"
+    depends_on:
+      - db
+    # Sensitive information is passed as environment variables in local
+    # development. Although local development can directly use plain text in
+    # code and configurations, these secrets are used to emulate production
+    # environment, so that locally developed applications can be deployed more
+    # straightforwardly.
+    #
+    # ../OpenPedCan-api-secrets directory is not in docker build context or
+    # tracked by git repository.
+    #
+    # Environment file format reference:
+    # https://docs.docker.com/compose/compose-file/compose-file-v3/#env_file
+    env_file:
+      # Required environemnt variables in environment files are listed in
+      # README.md.
+      - ../OpenPedCan-api-secrets/access_db.env
+      - ../OpenPedCan-api-secrets/common_db.env
+    environment:
+      # DEBUG environment variable is used by main.R to determine whether to run
+      # extra assertions or not.
+      #
+      # unset or 0: do not run extra assertions.
+      # 1: run extra assertions.
+      # other: raise an error.
+      - DEBUG=1
+  db:
+    build:
+      context: .
+      args:
+        - BUILD_OUTPUT_DIR_PATH=${BUILD_OUTPUT_DIR_PATH}
+      shm_size: 2g
+      # postgres docker image has VOLUME /var/lib/postgresql/data. When running
+      # without specifying any volume, docker will create an anonymous volume,
+      # which is easier for cleaning up.
+      #
+      # docker-compose stopped containers and anonymous volume(s) can be cleaned
+      # up by `docker-compose rm -fv`.
+      #
+      # "Warning: scripts in /docker-entrypoint-initdb.d are only run if you
+      # start the container with a data directory that is empty; any
+      # pre-existing database will be left untouched on container startup."
+      #
+      # Reference: https://hub.docker.com/_/postgres
+      dockerfile: db/db.Dockerfile
+    # postgres version 11 initdb sets password_encryption according to
+    # authmethodlocal and authmethodhost
+    #
+    # Ref:
+    # https://github.com/postgres/postgres/blob/REL_11_STABLE/src/bin/initdb/initdb.c#L1220-L1226
+    #
+    # load_db process is to run pg_restore on the output of build_db process.
+    # The build_db process is completed by running db/build_db.sh.
+    env_file:
+      # Required environemnt variables in environment files are listed in
+      # README.md.
+      - ../OpenPedCan-api-secrets/access_db.env
+      - ../OpenPedCan-api-secrets/load_db.env
+      - ../OpenPedCan-api-secrets/common_db.env
+    environment:
+      # DB_LOCATION environment variable is used to determine where to get the
+      # database.
+      #
+      # - aws_s3: download database from aws s3 bucket. Default.
+      # - local: use local database in ./db dir COPY. If database is not built
+      #   locally, report an error.
+      - DB_LOCATION
+    # Bind mount ./db/build_outputs/, so db container can use locally built
+    # database dump(s).
+    volumes:
+      - ./db/build_outputs/:${BUILD_OUTPUT_DIR_PATH}
+    # Configure database. Ref: https://hub.docker.com/_/postgres
+    command: >
+      postgres
+      -c shared_buffers=1GB -c work_mem=256MB
+      -c maintenance_work_mem=8GB -c max_wal_size=8GB

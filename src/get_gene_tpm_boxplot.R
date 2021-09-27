@@ -18,10 +18,15 @@
 # Args:
 # - gene_tpm_boxplot_tbl: a tibble of a single-gene, one or more diseasees, and
 #   zero or more GTEx tissue(s), returned by get_gene_tpm_boxplot_tbl.
+# - y_axis_scale: a single character value of either "linear" or "log10".
 #
 # Returns a ggplot boxplot of a single-gene, one or more diseasees, and zero or
 # more GTEx tissue(s).
-get_gene_tpm_boxplot <- function(gene_tpm_boxplot_tbl) {
+get_gene_tpm_boxplot <- function(gene_tpm_boxplot_tbl, y_axis_scale) {
+  stopifnot(is.character(y_axis_scale))
+  stopifnot(identical(length(y_axis_scale), 1L))
+  stopifnot(y_axis_scale %in% c("linear", "log10"))
+
   ensg_id <- unique(gene_tpm_boxplot_tbl$Gene_Ensembl_ID)
   stopifnot(is.character(ensg_id))
   stopifnot(!is.na(ensg_id))
@@ -86,13 +91,23 @@ get_gene_tpm_boxplot <- function(gene_tpm_boxplot_tbl) {
   plot_margin[2] <- grid::unit(
     x = 0.8, units = "strwidth", data = rightmost_x_label)
 
+  if (y_axis_scale == "linear") {
+    y_axis_label <- "TPM"
+  } else if (y_axis_scale == "log10") {
+    y_axis_label <- "log10(TPM + 1)"
+    gene_tpm_boxplot_tbl <- dplyr::mutate(
+      gene_tpm_boxplot_tbl, TPM = log10(.data$TPM + 1))
+  } else {
+    stop(paste0("y_axis_scale = ", y_axis_scale, " is not implemented."))
+  }
+
   gene_tpm_boxplot <- ggplot2::ggplot(gene_tpm_boxplot_tbl,
                                       ggplot2::aes(x = x_labels, y = TPM,
                                                    fill = sample_type)) +
     ggplot2::stat_boxplot(geom = "errorbar", width = 0.2) +
     ggplot2::geom_boxplot(lwd = 0.5, fatten = 0.7, outlier.shape = 1,
                           width = 0.5, outlier.size = 1) +
-    ggplot2::ylab("TPM") +
+    ggplot2::ylab(y_axis_label) +
     ggplot2::xlab("") +
     ggplot2_publication_theme(base_size = 12) +
     ggplot2::theme(
