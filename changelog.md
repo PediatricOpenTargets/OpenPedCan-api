@@ -1,5 +1,11 @@
 # OpenPedCan-api
 
+## v0.3.1-beta
+
+### Changed
+
+- Changed `tpm/gene-disease-gtex/plot` boxplot title from "Primary tumor vs GTEx tissue bulk gene expression" to "Primary tumor and GTEx tissue bulk gene expression".
+
 ## v0.3.0-beta
 
 ### Changed

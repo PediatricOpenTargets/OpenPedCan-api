@@ -17,13 +17,13 @@
 #* @apiDescription OpenPedCan (Open Pediatric Cancers) project public API
 #*   transfers
 #*   <a href="https://github.com/PediatricOpenTargets/OpenPedCan-analysis">OpenPedCan-analysis</a>
-#*   results and plots via HTTP. This API is under alpha phase development at
+#*   results and plots via HTTP. This API is under beta phase development at
 #*   <a href="https://github.com/PediatricOpenTargets/OpenPedCan-api">OpenPedCan-api</a>.
 #*   The OpenPedCan project is a sub-project of
 #*   <a href="https://github.com/PediatricOpenTargets">Pediatric Open Targets project</a>.
 
 
-#* @apiVersion v0.3.0-beta
+#* @apiVersion v0.3.1-beta
 
 #* @apiContact list(name = "API Support", url =
 #*   "https://github.com/PediatricOpenTargets/OpenPedCan-api/issues")
