@@ -2,7 +2,7 @@
 
 [![GitHub Super-Linter](https://github.com/PediatricOpenTargets/OpenPedCan-api/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
 
-`OpenPedCan-api` implements OpenPedCan (Open Pediatric Cancers) project public API (application programming interface) to transfer [OpenPedCan-analysis](https://github.com/PediatricOpenTargets/OpenPedCan-analysis) results and plots via HTTP, which is publicly available at <https://openpedcan-api-qa.d3b.io/__docs__/>.
+`OpenPedCan-api` implements OpenPedCan (Open Pediatric Cancers) project public API (application programming interface) to transfer [OpenPedCan-analysis](https://github.com/PediatricOpenTargets/OpenPedCan-analysis) results and plots via HTTP, which is publicly available at <https://openpedcan-api.d3b.io/__docs__/>.
 
 - [1. API endpoint specifications](#1-api-endpoint-specifications)
 - [2. `OpenPedCan-api` server deployment](#2-openpedcan-api-server-deployment)
@@ -35,9 +35,11 @@
 
 `OpenPedCan-api` server is deployed using Amazon Web Services (AWS). `OpenPedCan-api` HTTP server is deployed using Amazon Elastic Container Registry (ECR), Elastic Container Service (ECS), and Fargate. The HTTP server queries `OpenPedCan-api` database server, and the database server is deployed using Amazon Relational Database Service (RDS).
 
-<https://openpedcan-api-qa.d3b.io/__docs__/> is the URL of `OpenPedCan-api` QA server. The QA server will only deploy the `main` branch of the repository.
+<https://openpedcan-api.d3b.io/__docs__/> is the URL of `OpenPedCan-api` PRD (production) server. The PRD server will only deploy the latest release of the repository.
 
-<https://openpedcan-api-dev.d3b.io/__docs__/> is the URL of `OpenPedCan-api` DEV server. The DEV server will deploy any new branch of the repository, and the QA environment will remain un-changed until a new commit is merged to main.
+<https://openpedcan-api-qa.d3b.io/__docs__/> is the URL of `OpenPedCan-api` QA (quality assurance) server. The QA server will only deploy the latest commit to the `main` branch of the repository.
+
+<https://openpedcan-api-dev.d3b.io/__docs__/> is the URL of `OpenPedCan-api` DEV (development) server. The DEV server will deploy the latest commit to any branch of the repository.
 
 `OpenPedCan-api` HTTP server is deployed with the following steps, according to comments and messages by @blackdenc .
 
