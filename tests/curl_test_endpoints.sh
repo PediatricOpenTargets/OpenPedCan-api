@@ -32,6 +32,8 @@ elif [[ "${API_HOST}" == "qa" ]]; then
   base_url="https://openpedcan-api-qa.d3b.io"
 elif [[ "${API_HOST}" == "dev" ]]; then
   base_url="https://openpedcan-api-dev.d3b.io"
+elif [[ "${API_HOST}" == "prd" ]]; then
+  base_url="https://openpedcan-api.d3b.io"
 else
   echo "Invalid API_HOST=${API_HOST}. Please choose from local, qa, and dev and rerun." 1>&2
   exit 1
