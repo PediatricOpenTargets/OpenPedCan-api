@@ -294,6 +294,8 @@ cat("---------------------------------\n",
     "\n---------------------------------\n")
 
 # Assert tpm_data_lists is valid -----------------------------------------------
+all_cohorts_str_id <- "All Cohorts"
+
 purrr::iwalk(tpm_data_lists, function(xl, xname) {
   stopifnot(identical(
     ncol(xl$tpm_df),
@@ -301,7 +303,7 @@ purrr::iwalk(tpm_data_lists, function(xl, xname) {
   ))
 
   stopifnot(identical(sum(is.na(xl$histology_df$cohort)), 0L))
-  stopifnot(!"all_cohorts" %in% xl$histology_df$cohort)
+  stopifnot(!all_cohorts_str_id %in% xl$histology_df$cohort)
 
   if (identical(xname, "gtex")) {
     stopifnot(identical(

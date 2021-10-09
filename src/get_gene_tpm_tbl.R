@@ -32,7 +32,7 @@
 # Returns a tibble with the following columns:
 # - Kids_First_Biospecimen_ID: a single Kids_First_Biospecimen_ID
 # - cohort: a single cohort. If the input efo_id has more than one histology_df
-#   cohorts, e.g. GMKF and TARGET, include an additional cohort "all_cohorts" in
+#   cohorts, e.g. GMKF and TARGET, include an additional cohort "All Cohorts" in
 #   the result table.
 # - EFO: a single EFO ID
 # - MONDO: a single MONDO ID
@@ -79,11 +79,11 @@ get_gene_tpm_tbl <- function(ensg_id, efo_id = NULL, gene_symbol = NULL,
   stopifnot(identical(length(min_n_per_sample_group), 1L))
   stopifnot(!is.na(min_n_per_sample_group))
 
-  # In OpenPedCan-analysis project, "all_cohorts" is used as the cohort of
-  # combined cohorts. The value "all_cohorts" may be changed at a later point.
-  # If "all_cohorts" is changed to some other value. search the whole code base
+  # In OpenPedCan-analysis project, "All Cohorts" is used as the cohort of
+  # combined cohorts. The value "All Cohorts" may be changed at a later point.
+  # If "All Cohorts" is changed to some other value. search the whole code base
   # and make relevant chagnes.
-  all_cohorts_str_id <- "all_cohorts"  # nolint: object_usage_linter.
+  all_cohorts_str_id <- "All Cohorts"  # nolint: object_usage_linter.
 
   # Query database.
   #

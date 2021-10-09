@@ -305,7 +305,7 @@ conn <- connect_db(db_env_vars)
 # there.
 
 # Distinguish all-cohorts from each-cohort
-all_cohorts_str_id <- "all_cohorts"
+all_cohorts_str_id <- "All Cohorts"
 
 # The annotation columns of tpm_df, all other columns must be samples TPM
 # values.
