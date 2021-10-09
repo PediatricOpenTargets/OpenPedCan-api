@@ -309,7 +309,7 @@ all_cohorts_str_id <- "all_cohorts"
 
 # The annotation columns of tpm_df, all other columns must be samples TPM
 # values.
-tpm_df_ann_cols <- c("Gene_symbol", "RMTL", "Gene_Ensembl_ID")
+tpm_df_ann_cols <- c("Gene_symbol", "PMTL", "Gene_Ensembl_ID")
 
 # Assert tpm_data_lists entries are valid for the following procedures. If this
 # assertion fails, check all code.
@@ -323,7 +323,7 @@ place_holder_res <- purrr::imap_lgl(tpm_data_lists, function(xl, xname) {
   stopifnot(tibble::is_tibble(xl$tpm_df))
   stopifnot(tibble::is_tibble(xl$histology_df))
 
-  stopifnot(identical(sum(is.na(dplyr::select(xl$tpm_df, -RMTL))), 0L))
+  stopifnot(identical(sum(is.na(dplyr::select(xl$tpm_df, -PMTL))), 0L))
   stopifnot(identical(
     sum(is.na(xl$histology_df[, c("Kids_First_Biospecimen_ID", "cohort")])), 0L
   ))
@@ -407,7 +407,7 @@ padg1_tpm_df <- dplyr::select(
       padg1_histology_df$Kids_First_Biospecimen_ID)))
 
 stopifnot(identical(
-  sum(is.na(dplyr::select(padg1_tpm_df, -RMTL))), 0L
+  sum(is.na(dplyr::select(padg1_tpm_df, -PMTL))), 0L
 ))
 
 stopifnot(identical(
@@ -502,7 +502,7 @@ place_holder_res <- purrr::imap_lgl(tpm_data_lists, function(xl, xname) {
       x_tpm_df <- xl$tpm_df[x_row_inds, ]
 
       stopifnot(tibble::is_tibble(x_tpm_df))
-      stopifnot(identical(sum(is.na(dplyr::select(x_tpm_df, -RMTL))), 0L))
+      stopifnot(identical(sum(is.na(dplyr::select(x_tpm_df, -PMTL))), 0L))
       stopifnot(identical(nrow(x_tpm_df), length(x_row_inds)))
       stopifnot(nrow(x_tpm_df) > 0)
       stopifnot(ncol(x_tpm_df) > length(tpm_df_ann_cols))
@@ -530,7 +530,7 @@ place_holder_res <- purrr::imap_lgl(tpm_data_lists, function(xl, xname) {
       stopifnot(identical(
         colnames(x_long_tpm_tbl), init_x_long_tpm_tbl_cols))
       stopifnot(identical(
-        sum(is.na(dplyr::select(x_long_tpm_tbl, -RMTL))), 0L))
+        sum(is.na(dplyr::select(x_long_tpm_tbl, -PMTL))), 0L))
 
       # dplyr::across selects all columns by default.
       stopifnot(identical(
@@ -542,7 +542,7 @@ place_holder_res <- purrr::imap_lgl(tpm_data_lists, function(xl, xname) {
 
       stopifnot(identical(
         sort(
-          unique(c("Gene_Ensembl_ID", "Gene_symbol", "RMTL",
+          unique(c("Gene_Ensembl_ID", "Gene_symbol", "PMTL",
                    x_long_tpm_tbl$Kids_First_Biospecimen_ID)),
           na.last = TRUE),
         sort(unique(colnames(x_tpm_df)), na.last = TRUE)
@@ -563,7 +563,7 @@ place_holder_res <- purrr::imap_lgl(tpm_data_lists, function(xl, xname) {
       x_long_tpm_tbl <- dplyr::select(
         x_long_tpm_tbl, "Kids_First_Biospecimen_ID", "cohort", "EFO", "MONDO",
         "Disease", "GTEx_tissue_subgroup_UBERON", "GTEx_tissue_subgroup", "TPM",
-        "Gene_Ensembl_ID", "Gene_symbol", "RMTL")
+        "Gene_Ensembl_ID", "Gene_symbol", "PMTL")
 
       stopifnot(identical(
         nrow(xl$histology_df),

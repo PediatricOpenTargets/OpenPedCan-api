@@ -63,8 +63,8 @@ input_df_list <- list(
     col_types = readr::cols()),
   tpm_df = readRDS(
     file.path(data_dir, "gene-expression-rsem-tpm-collapsed.rds")),
-  ensg_symbol_rmtl_df = readr::read_tsv(
-    file.path(data_dir, "ensg-hugo-rmtl-mapping.tsv"),
+  ensg_symbol_pmtl_df = readr::read_tsv(
+    file.path(data_dir, "ensg-hugo-pmtl-mapping.tsv"),
     col_types = readr::cols())
 )
 
@@ -92,31 +92,33 @@ stopifnot(identical(sum(is.na(colnames(input_df_list$tpm_df))), 0L))
 stopifnot(identical(sum(is.na(rownames(input_df_list$tpm_df))), 0L))
 
 stopifnot(identical(
-  is.na(input_df_list$ensg_symbol_rmtl_df$rmtl),
-  is.na(input_df_list$ensg_symbol_rmtl_df$version)))
+  is.na(input_df_list$ensg_symbol_pmtl_df$pmtl),
+  is.na(input_df_list$ensg_symbol_pmtl_df$version)))
 
-input_df_list$ensg_symbol_rmtl_df <- input_df_list$ensg_symbol_rmtl_df %>%
+# Remove ensg_id Symbol_Not_Found, which has NA gene_symbol
+input_df_list$ensg_symbol_pmtl_df <- input_df_list$ensg_symbol_pmtl_df %>%
   dplyr::mutate(
-    RMTL = dplyr::if_else(
-      is.na(rmtl), true = NA_character_,
-      false = paste0(rmtl, " (", version, ")"))) %>%
-  dplyr::select(ensg_id, gene_symbol, RMTL) %>%
+    PMTL = dplyr::if_else(
+      is.na(pmtl), true = NA_character_,
+      false = paste0(pmtl, " (", version, ")"))) %>%
+  dplyr::select(ensg_id, gene_symbol, PMTL) %>%
+  dplyr::filter(ensg_id != "Symbol_Not_Found") %>%
   dplyr::rename(Gene_Ensembl_ID = ensg_id, Gene_symbol = gene_symbol) %>%
   dplyr::distinct()
 
-stopifnot(!is.null(input_df_list$ensg_symbol_rmtl_df$Gene_Ensembl_ID))
+stopifnot(!is.null(input_df_list$ensg_symbol_pmtl_df$Gene_Ensembl_ID))
 stopifnot(identical(
-  sum(is.na(input_df_list$ensg_symbol_rmtl_df$Gene_Ensembl_ID)),
+  sum(is.na(input_df_list$ensg_symbol_pmtl_df$Gene_Ensembl_ID)),
   0L))
-stopifnot(!is.null(input_df_list$ensg_symbol_rmtl_df$Gene_symbol))
+stopifnot(!is.null(input_df_list$ensg_symbol_pmtl_df$Gene_symbol))
 stopifnot(identical(
-  sum(is.na(input_df_list$ensg_symbol_rmtl_df$Gene_symbol)),
+  sum(is.na(input_df_list$ensg_symbol_pmtl_df$Gene_symbol)),
   0L))
 stopifnot(identical(
-  nrow(input_df_list$ensg_symbol_rmtl_df),
+  nrow(input_df_list$ensg_symbol_pmtl_df),
   nrow(dplyr::distinct(
     dplyr::select(
-      input_df_list$ensg_symbol_rmtl_df,
+      input_df_list$ensg_symbol_pmtl_df,
       Gene_Ensembl_ID, Gene_symbol)))))
 
 # Annotate histology df --------------------------------------------------------
@@ -244,19 +246,19 @@ tpm_data_lists <- lapply(tpm_data_lists, function(xl) {
   # Gene_symbol
   overlap_tpm_tbl <- tibble::as_tibble(overlap_tpm_df, rownames = "Gene_symbol")
   stopifnot(identical(overlap_tpm_tbl$Gene_symbol, rownames(xl$tpm_df)))
-  # Add ENSG IDs and RMTL
+  # Add ENSG IDs and PMTL
   overlap_tpm_tbl <- dplyr::left_join(
     overlap_tpm_tbl,
-    input_df_list$ensg_symbol_rmtl_df,
+    input_df_list$ensg_symbol_pmtl_df,
     by = "Gene_symbol")
 
   stopifnot(identical(
     sort(colnames(overlap_tpm_tbl)),
-    sort(c("Gene_symbol", "Gene_Ensembl_ID", "RMTL", colnames(overlap_tpm_df)))
+    sort(c("Gene_symbol", "Gene_Ensembl_ID", "PMTL", colnames(overlap_tpm_df)))
   ))
 
   stopifnot(identical(
-    sum(is.na(dplyr::select(overlap_tpm_tbl, -RMTL))), 0L))
+    sum(is.na(dplyr::select(overlap_tpm_tbl, -PMTL))), 0L))
 
   overlap_data_list <- list(
     tpm_df = overlap_tpm_tbl,
