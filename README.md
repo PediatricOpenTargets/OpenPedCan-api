@@ -84,7 +84,7 @@ shellcheck 0.7
 sha256sum 8.30 # shasum for Mac OS, but not tested for any version.
 md5sum 8.30
 R 4.1
-R package readr 1.4.0
+R package readr 2.0.2
 R package jsonlite 1.7.2
 R package lintr 2.0.1
 ```
