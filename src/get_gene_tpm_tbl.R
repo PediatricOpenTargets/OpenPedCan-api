@@ -42,7 +42,7 @@
 # - TPM: a single TPM value
 # - Gene_Ensembl_ID: a single ENSG ID
 # - Gene_symbol: a single gene symbol
-# - RMTL: a single RMTL value
+# - PMTL: a single PMTL value
 #
 # Note on havng both ensg_id and gene_symbol to align PedOT with
 # OpenPedCan-analysis: One ENSG ID can map to multiple gene symbols in the
@@ -127,7 +127,7 @@ get_gene_tpm_tbl <- function(ensg_id, efo_id = NULL, gene_symbol = NULL,
     colnames(long_tpm_tbl),
     c("Kids_First_Biospecimen_ID", "cohort", "EFO", "MONDO",
       "Disease", "GTEx_tissue_subgroup_UBERON", "GTEx_tissue_subgroup", "TPM",
-      "Gene_Ensembl_ID", "Gene_symbol", "RMTL")
+      "Gene_Ensembl_ID", "Gene_symbol", "PMTL")
   ))
   # Assert column types are expected.
   placeholder_res <- purrr::imap_lgl(long_tpm_tbl, function(xcol, xcolname) {
@@ -162,7 +162,7 @@ get_gene_tpm_tbl <- function(ensg_id, efo_id = NULL, gene_symbol = NULL,
   # - .env "retrieves env-variables from the environment".
   # - Ref: https://rlang.r-lib.org/reference/tidyeval-data.html
   #
-  # tpm_df cols: Gene_Ensembl_ID, Gene_symbol, RMTL, Sample1, Sample2, ...
+  # tpm_df cols: Gene_Ensembl_ID, Gene_symbol, PMTL, Sample1, Sample2, ...
 
   # Handle one ENSG ID mapping to more than one symbols
   #
@@ -287,7 +287,7 @@ get_gene_tpm_tbl <- function(ensg_id, efo_id = NULL, gene_symbol = NULL,
     dplyr::all_of(
       c("Kids_First_Biospecimen_ID", "cohort", "EFO", "MONDO",
         "Disease", "GTEx_tissue_subgroup_UBERON", "GTEx_tissue_subgroup", "TPM",
-        "Gene_Ensembl_ID", "Gene_symbol", "RMTL")))
+        "Gene_Ensembl_ID", "Gene_symbol", "PMTL")))
 
   if (DEBUG) {
     stopifnot(nrow(long_tpm_tbl) > 0)
