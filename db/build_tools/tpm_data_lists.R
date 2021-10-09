@@ -279,10 +279,6 @@ stopifnot(identical(
 ))
 
 
-
-# Converting tpm_data_lists to a single long plotting table takes > 30 GB RAM,
-# so plotting long table is created for each plot.
-
 cat("---------------------------------\n",
     as.character(Sys.time()), "\n",
     "Primary tumor all-cohorts independent n samples: ",
