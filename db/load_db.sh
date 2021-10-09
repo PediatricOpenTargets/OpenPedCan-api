@@ -45,7 +45,7 @@ else
   fi
 fi
 
-db_dump_fn="postgres_db_open_ped_can_db_schema_bulk_expression.sql.gz"
+db_dump_fn="open_ped_can_db_postgres_pg_dump.sql.gz"
 
 API_DB_BASE_URL="https://s3.amazonaws.com/kf-openaccess-us-east-1-prd-pbta/open-targets/api/db-dev"
 

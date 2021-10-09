@@ -69,10 +69,18 @@ EOSQL
 
 cd "$BUILD_OUTPUT_DIR_PATH"
 
-db_dump_out_path="postgres_db_${DB_NAME}_schema_${BULK_EXP_SCHEMA}.sql.gz"
+db_dump_out_path="${DB_NAME}_postgres_pg_dump.sql.gz"
 
 printf "\n\nDump database schema(s) and table(s)...\n"
 
+# To dump multiple schemas:
+#
+# $ pg_dump -n 'east*gsm' -n 'west*gsm' -N '*test*' mydb > db.sql
+#
+# To dump all schemas whose names start with east or west and end in gsm,
+# excluding any schemas whose names contain the word test.
+#
+# Ref: https://www.postgresql.org/docs/11/app-pgdump.html
 pg_dump --clean --if-exists --no-owner --no-privileges \
   --schema="$BULK_EXP_SCHEMA" --dbname="$DB_NAME" \
   --host="$DB_HOST" --port="$DB_PORT" --username="$DB_USERNAME" \
