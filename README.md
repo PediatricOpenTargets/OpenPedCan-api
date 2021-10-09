@@ -74,15 +74,15 @@ Note that this test run procedure has only been tested on linux operating system
 Working directory is the git repository root directory, i.e. the directory
 that contains the .git directory of the repository.
 
-ubuntu 18
-docker 19.03
+ubuntu 20.04
+docker 20.10
 docker-compose 1.29.2
-curl 7.78
-git 2.30
+curl 7.79
+git 2.25
 ImageMagick 6.9
 shellcheck 0.7
-sha256sum 8.28 # shasum for Mac OS, but not tested for any version.
-md5sum 8.28
+sha256sum 8.30 # shasum for Mac OS, but not tested for any version.
+md5sum 8.30
 R 4.1
 R package readr 1.4.0
 R package jsonlite 1.7.2
