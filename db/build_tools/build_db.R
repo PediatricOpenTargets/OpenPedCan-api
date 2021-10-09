@@ -387,6 +387,9 @@ place_holder_res <- purrr::imap_lgl(tpm_data_lists, function(xl, xname) {
 #
 # Primary tumor all-cohorts independent (disease, n unique cohort > 1) table.
 # Use shorthand prefix padg1 to reduce variable name redundancy.
+#
+# It is asserted above that tpm_data_lists$pt_all_cohorts$histology_df$Disease
+# has no NA.
 padg1_tbl <- dplyr::group_by(tpm_data_lists$pt_all_cohorts$histology_df,
                              .data$Disease) %>%
   dplyr::summarise(n_uniq_cohorts = length(unique(.data$cohort))) %>%
@@ -398,6 +401,9 @@ padg1_histology_df <- dplyr::filter(
 
 # If padg1_histology_df is empty, the following expression does not add any row
 # or raise any error.
+#
+# Empty padg1_histology_df and no-biospecimen
+# tpm_data_lists$pt_all_cohorts$tpm_df are handled in chunk-wise operations.
 padg1_histology_df$cohort <- all_cohorts_str_id
 
 padg1_tpm_df <- dplyr::select(
@@ -463,7 +469,7 @@ place_holder_res <- purrr::imap_lgl(tpm_data_lists, function(xl, xname) {
   cat("Biospecimen source: ", xname, "\n", sep = "")
 
   # If xl$padg1_histology_df has 0 row, xl$tpm_df must only have
-  # tpm_df_ann_cols, so there is no need to write to the database.
+  # tpm_df_ann_cols, so there is no need to write to CSV file or database.
   stopifnot(is.integer(nrow(xl$histology_df)))
 
   if (identical(nrow(xl$histology_df), 0L)) {
