@@ -76,6 +76,7 @@ that contains the .git directory of the repository.
 
 ubuntu 18
 docker 19.03
+docker-compose 1.29.2
 curl 7.78
 git 2.30
 ImageMagick 6.9
