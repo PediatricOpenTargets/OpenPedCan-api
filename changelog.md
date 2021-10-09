@@ -1,5 +1,20 @@
 # OpenPedCan-api
 
+## v0.3.2-beta
+
+### Changed
+
+- Changed OpenPedCan-api database source data from OpenPedCan-analysis v9 release to v10 release.
+- Updated `OpenPedCan-analysis` submodule to `dev` branch v10 release commit.
+- Changed `db/build_db.sh` `OPEN_PED_CAN_ANALYSIS_COMMIT` from `OpenPedCan-analysis` `dev` branch v9 release commit to v10 release commit.
+- Renamed OpenPedCan-api database "RMTL" column to "PMTL".
+- Changed OpenPedCan-api database "cohort" column "all_cohorts" values to "All Cohorts".
+- Renamed OpenPedCan-api database dump file from "postgres_db_open_ped_can_db_schema_bulk_expression.sql.gz" to "open_ped_can_db_postgres_pg_dump.sql.gz".
+
+### Added
+
+- Add `API_HOST=prd` option in `tests/curl_test_endpoints.sh` to test production API site URL <https://openpedcan-api.d3b.io>.
+
 ## v0.3.1-beta
 
 ### Changed
