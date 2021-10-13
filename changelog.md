@@ -10,8 +10,8 @@
 - Renamed OpenPedCan-api database "RMTL" column to "PMTL".
 - Changed OpenPedCan-api database "cohort" column "all_cohorts" values to "All Cohorts".
 - Renamed OpenPedCan-api database dump file from "postgres_db_open_ped_can_db_schema_bulk_expression.sql.gz" to "open_ped_can_db_postgres_pg_dump.sql.gz".
-- Changed `/tpm/gene-disease-gtex` boxplot title from "Primary tumor and GTEx tissue bulk gene expression" to "Pediatric primary tumor and GTEx normal adult tissue gene expression".
-- Changed `/tpm/gene-all-cancer` boxplot title from "Primary tumor tissue bulk gene expression" to "Pediatric primary tumor gene expression".
+- Changed `/tpm/gene-disease-gtex` boxplot title from "Primary tumor and GTEx tissue bulk gene expression" to "Pediatric tumor and GTEx normal adult tissue gene expression".
+- Changed `/tpm/gene-all-cancer` boxplot title from "Primary tumor tissue bulk gene expression" to "Pediatric tumor gene expression".
 
 ### Added
 
