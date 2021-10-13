@@ -56,12 +56,12 @@ get_gene_tpm_boxplot <- function(gene_tpm_boxplot_tbl, y_axis_scale) {
   if (length(gtex_subgroup_vec) > 0) {
     title <- paste(
       paste0(gene_symbol, " (", ensg_id, ")"),
-      "Primary tumor and GTEx tissue bulk gene expression",
+      "Pediatric tumor and GTEx normal adult tissue gene expression",
       sep = "\n")
   } else {
     title <- paste(
       paste0(gene_symbol, " (", ensg_id, ")"),
-      "Primary tumor tissue bulk gene expression",
+      "Pediatric tumor gene expression",
       sep = "\n")
   }
 

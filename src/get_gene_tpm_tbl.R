@@ -32,7 +32,7 @@
 # Returns a tibble with the following columns:
 # - Kids_First_Biospecimen_ID: a single Kids_First_Biospecimen_ID
 # - cohort: a single cohort. If the input efo_id has more than one histology_df
-#   cohorts, e.g. GMKF and TARGET, include an additional cohort "all_cohorts" in
+#   cohorts, e.g. GMKF and TARGET, include an additional cohort "All Cohorts" in
 #   the result table.
 # - EFO: a single EFO ID
 # - MONDO: a single MONDO ID
@@ -42,7 +42,7 @@
 # - TPM: a single TPM value
 # - Gene_Ensembl_ID: a single ENSG ID
 # - Gene_symbol: a single gene symbol
-# - RMTL: a single RMTL value
+# - PMTL: a single PMTL value
 #
 # Note on havng both ensg_id and gene_symbol to align PedOT with
 # OpenPedCan-analysis: One ENSG ID can map to multiple gene symbols in the
@@ -79,11 +79,11 @@ get_gene_tpm_tbl <- function(ensg_id, efo_id = NULL, gene_symbol = NULL,
   stopifnot(identical(length(min_n_per_sample_group), 1L))
   stopifnot(!is.na(min_n_per_sample_group))
 
-  # In OpenPedCan-analysis project, "all_cohorts" is used as the cohort of
-  # combined cohorts. The value "all_cohorts" may be changed at a later point.
-  # If "all_cohorts" is changed to some other value. search the whole code base
+  # In OpenPedCan-analysis project, "All Cohorts" is used as the cohort of
+  # combined cohorts. The value "All Cohorts" may be changed at a later point.
+  # If "All Cohorts" is changed to some other value. search the whole code base
   # and make relevant chagnes.
-  all_cohorts_str_id <- "all_cohorts"  # nolint: object_usage_linter.
+  all_cohorts_str_id <- "All Cohorts"  # nolint: object_usage_linter.
 
   # Query database.
   #
@@ -127,7 +127,7 @@ get_gene_tpm_tbl <- function(ensg_id, efo_id = NULL, gene_symbol = NULL,
     colnames(long_tpm_tbl),
     c("Kids_First_Biospecimen_ID", "cohort", "EFO", "MONDO",
       "Disease", "GTEx_tissue_subgroup_UBERON", "GTEx_tissue_subgroup", "TPM",
-      "Gene_Ensembl_ID", "Gene_symbol", "RMTL")
+      "Gene_Ensembl_ID", "Gene_symbol", "PMTL")
   ))
   # Assert column types are expected.
   placeholder_res <- purrr::imap_lgl(long_tpm_tbl, function(xcol, xcolname) {
@@ -162,7 +162,7 @@ get_gene_tpm_tbl <- function(ensg_id, efo_id = NULL, gene_symbol = NULL,
   # - .env "retrieves env-variables from the environment".
   # - Ref: https://rlang.r-lib.org/reference/tidyeval-data.html
   #
-  # tpm_df cols: Gene_Ensembl_ID, Gene_symbol, RMTL, Sample1, Sample2, ...
+  # tpm_df cols: Gene_Ensembl_ID, Gene_symbol, PMTL, Sample1, Sample2, ...
 
   # Handle one ENSG ID mapping to more than one symbols
   #
@@ -287,7 +287,7 @@ get_gene_tpm_tbl <- function(ensg_id, efo_id = NULL, gene_symbol = NULL,
     dplyr::all_of(
       c("Kids_First_Biospecimen_ID", "cohort", "EFO", "MONDO",
         "Disease", "GTEx_tissue_subgroup_UBERON", "GTEx_tissue_subgroup", "TPM",
-        "Gene_Ensembl_ID", "Gene_symbol", "RMTL")))
+        "Gene_Ensembl_ID", "Gene_symbol", "PMTL")))
 
   if (DEBUG) {
     stopifnot(nrow(long_tpm_tbl) > 0)
