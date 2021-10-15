@@ -11,12 +11,25 @@
 #
 # - get_gene_tpm_tbl
 
+# Design notes:
+#
+# - gtex_sample_group parameter is designed to be required to prevent complex
+#   default value behaviors.
+# - gtex_sample_group parameter is designed to take character values to allow
+#   additional choices, e.g. subset certain tissue subgroups, at a later point.
+#   Therefore, the name of the parameter is gtex_sample_group rather than
+#   include_gtex_sample_group, which would take a boolean value.
 
 # Get a TPM tibble of a single-gene, one or more disease group(s), and zero or
 # more GTEx tissue subgroup(s).
 #
 # Args:
 # - ensg_id: a single character value of gene ENSG ID. Required.
+# - gtex_sample_group: a single character value with the following choices.
+#   Required.
+#   - "exclude": exclude GTEx samples.
+#   - "include": include all GTEx tissue subgroups that have >=
+#     min_n_per_sample_group samples.
 # - efo_id: NULL or a single character value of EFO ID. Default is NULL, which
 #   is to include all diseases and zero GTEx tissue, aka gene-all-cancer. If
 #   efo_id is not NULL, include all samples that have the EFO ID and all GTEx
@@ -57,11 +70,15 @@
 #   may not match PedOT.
 # - Identify the gene symbol that match PedOT.
 # - Completely drop gene_symbol, as it is also shown on PedOT.
-get_gene_tpm_tbl <- function(ensg_id, efo_id = NULL, gene_symbol = NULL,
-                             min_n_per_sample_group = 1L) {
+get_gene_tpm_tbl <- function(ensg_id, gtex_sample_group, efo_id = NULL,
+                             gene_symbol = NULL, min_n_per_sample_group = 1L) {
   stopifnot(is.character(ensg_id))
   stopifnot(identical(length(ensg_id), 1L))
   stopifnot(!is.na(ensg_id))
+
+  stopifnot(is.character(gtex_sample_group))
+  stopifnot(identical(length(gtex_sample_group), 1L))
+  stopifnot(gtex_sample_group %in% c("include", "exclude"))
 
   if (!is.null(efo_id)) {
     stopifnot(is.character(efo_id))
@@ -227,40 +244,35 @@ get_gene_tpm_tbl <- function(ensg_id, efo_id = NULL, gene_symbol = NULL,
   long_tpm_tbl <- dplyr::add_count(
     long_tpm_tbl, .data$Disease, name = "disease_n")
 
-  if (is.null(efo_id)) {
-    # all-diseases table and plot
-    #
-    # - keep all Disease (aka cancer groups) that have >= min_n_per_sample_group
-    #   samples.
-    # - keep zero gtex subgroup sample.
-    long_tpm_tbl <- dplyr::select(
-      dplyr::filter(
-        long_tpm_tbl, !is.na(.data$Disease),
-        .data$disease_n >= min_n_per_sample_group),
-      !c(disease_n))
-    # Raise error if no Disease passes the filter, i.e. data not available.
-    stopifnot(nrow(long_tpm_tbl) > 0)
-  } else {
-    # disease vs gtex table and plot
-    #
-    # - keep all gtex subgroups that have >= min_n_per_sample_group samples.
-    # - keep all Disease (aka cancer groups) that are mapped to input efo_id and
-    #   have >= min_n_per_sample_group samples
+  # Keep all Disease (aka cancer groups) that have >= min_n_per_sample_group
+  # samples.
+  #
+  # Separate gtex and disease tables to simplify filtering procedure, because
+  # the sample group counts have counts for NA values.
+  disease_long_tpm_tbl <- dplyr::select(
+    dplyr::filter(
+      long_tpm_tbl, !is.na(.data$Disease),
+      .data$disease_n >= min_n_per_sample_group),
+    !c(disease_n))
+  # Raise error if no Disease passes the filter, i.e. data not available.
+  stopifnot(nrow(disease_long_tpm_tbl) > 0)
 
-    # Separate gtex and disease tables to simplify filtering procedure, because
-    # the sample group counts have counts for NA values.
-    disease_long_tpm_tbl <- dplyr::select(
-      dplyr::filter(
-        long_tpm_tbl, !is.na(.data$Disease), .data$EFO == .env$efo_id,
-        .data$disease_n >= min_n_per_sample_group),
-      !c(disease_n))
+  if (!is.null(efo_id)) {
+    # Keep only Disease (aka cancer group) that is mapped to input efo_id.
+    disease_long_tpm_tbl <- dplyr::filter(
+      disease_long_tpm_tbl, .data$EFO == .env$efo_id)
 
     # Raise error if no Disease passes the filter, i.e. data not available.
     stopifnot(nrow(disease_long_tpm_tbl) > 0)
+  }
 
+  if (gtex_sample_group == "include") {
+    # Include all gtex subgroups that have >= min_n_per_sample_group samples.
     long_tpm_tbl <- dplyr::add_count(
       long_tpm_tbl, .data$GTEx_tissue_subgroup, name = "gtex_subgroup_n")
 
+    # disease_n column is still present in long_tpm_tbl, since it is only
+    # removed from disease_long_tpm_tbl.
     gtex_long_tpm_tbl <- dplyr::select(
       dplyr::filter(
         long_tpm_tbl, !is.na(.data$GTEx_tissue_subgroup),
@@ -279,6 +291,12 @@ get_gene_tpm_tbl <- function(ensg_id, efo_id = NULL, gene_symbol = NULL,
     }
 
     long_tpm_tbl <- dplyr::bind_rows(disease_long_tpm_tbl, gtex_long_tpm_tbl)
+  } else if (gtex_sample_group == "exclude") {
+    # Exclude gtex samples.
+    long_tpm_tbl <- disease_long_tpm_tbl
+  } else {
+    stop(paste0(
+      "Not implemented gtex_sample_group value ", gtex_sample_group))
   }
 
   # Let return table have the same colnames and order.
