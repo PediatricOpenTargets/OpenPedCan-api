@@ -149,7 +149,27 @@ function(ensemblId, yAxisScale) {
   print(res_plot)
 }
 
+#* Get a single-gene all-diseases all-GTEx-tissues TPM summary table
+#*
+#* @tag "Bulk tissue gene expression"
+#* @param ensemblId:str one gene ENSG ID.
+#* @serializer json
+#* @get /tpm/gene-all-cancer-gtex/json
+function(ensemblId) {
+  gene_tpm_tbl <- get_gene_tpm_tbl(
+    ensg_id = ensemblId, gtex_sample_group = "include",
+    min_n_per_sample_group = 3)
 
+  gene_tpm_tbl <- add_gene_tpm_box_group(
+    gene_tpm_tbl, gtex_box_group = "collapse")
+
+  gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(gene_tpm_tbl)
+
+  gene_tpm_boxplot_summary_tbl <- get_gene_tpm_boxplot_summary_tbl(
+    gene_tpm_boxplot_tbl)
+
+  return(gene_tpm_boxplot_summary_tbl)
+}
 
 # Testing endpoints ------------------------------------------------------------
 # Simple testing endpoints. Source: https://github.com/rstudio/plumber/ .
