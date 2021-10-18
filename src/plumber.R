@@ -61,7 +61,7 @@ function(res) {
   plumber::forward()
 }
 
-#* Get a single-gene single-disease all-GTEx-tissue-subgroups TPM summary table
+#* Get a single-gene single-disease all-GTEx-tissues TPM summary table
 #*
 #* @tag "Bulk tissue gene expression"
 #* @param ensemblId:str one gene ENSG ID.
@@ -83,7 +83,7 @@ function(ensemblId, efoId) {
   return(gene_tpm_boxplot_summary_tbl)
 }
 
-#* Get a single-gene single-disease all-GTEx-tissue-subgroups TPM boxplot
+#* Get a single-gene single-disease all-GTEx-tissues TPM boxplot
 #*
 #* @tag "Bulk tissue gene expression"
 #* @param ensemblId:str one gene ENSG ID.
