@@ -327,13 +327,20 @@ get_gene_tpm_tbl <- function(ensg_id, gtex_sample_group, efo_id = NULL,
       nrow(each_cohort_long_tpm_tbl),
       length(unique(each_cohort_long_tpm_tbl$Kids_First_Biospecimen_ID))))
 
-    if (is.null(efo_id)) {
+    if (gtex_sample_group == "exclude") {
       # gene-all-cancer
       stopifnot(all(is.na(long_tpm_tbl$GTEx_tissue_subgroup)))
       stopifnot(all(!is.na(long_tpm_tbl$EFO)))
       stopifnot(all(!is.na(long_tpm_tbl$Disease)))
-    } else {
+    } else if (gtex_sample_group == "include") {
       # gene-disease-gtex
+      if (!is.null(efo_id)) {
+        stopifnot(identical(
+          efo_id,
+          purrr::discard(unique(long_tpm_tbl$EFO), is.na)
+        ))
+      }
+      # gene-all-cancer-gtex
       stopifnot(identical(is.na(long_tpm_tbl$EFO), is.na(long_tpm_tbl$Disease)))
       stopifnot(sum(!is.na(long_tpm_tbl$EFO)) > 0)
       stopifnot(sum(!is.na(long_tpm_tbl$GTEx_tissue_subgroup)) > 0)
@@ -342,6 +349,9 @@ get_gene_tpm_tbl <- function(ensg_id, gtex_sample_group, efo_id = NULL,
         is.na(long_tpm_tbl$Disease),
         is.na(long_tpm_tbl$GTEx_tissue_subgroup)
       )))
+    } else {
+      stop(paste0(
+        "Not implemented gtex_sample_group value ", gtex_sample_group))
     }
   }
 
