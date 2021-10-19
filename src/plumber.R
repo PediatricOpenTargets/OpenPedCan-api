@@ -149,12 +149,12 @@ function(ensemblId, yAxisScale) {
   print(res_plot)
 }
 
-#* Get a single-gene all-diseases all-GTEx-tissues TPM summary table
+#* Get a single-gene all-diseases all-GTEx-tissues-collapsed TPM summary table
 #*
 #* @tag "Bulk tissue gene expression"
 #* @param ensemblId:str one gene ENSG ID.
 #* @serializer json
-#* @get /tpm/gene-all-cancer-gtex/json
+#* @get /tpm/gene-all-cancer-collapsed-gtex/json
 function(ensemblId) {
   gene_tpm_tbl <- get_gene_tpm_tbl(
     ensg_id = ensemblId, gtex_sample_group = "include",
@@ -171,13 +171,13 @@ function(ensemblId) {
   return(gene_tpm_boxplot_summary_tbl)
 }
 
-#* Get a single-gene all-diseases all-GTEx-tissues TPM boxplot
+#* Get a single-gene all-diseases all-GTEx-tissues-collapsed TPM boxplot
 #*
 #* @tag "Bulk tissue gene expression"
 #* @param ensemblId:str one gene ENSG ID.
 #* @param yAxisScale:str linear or log10
 #* @serializer png list(res = 300, width = 3900, height = 2700)
-#* @get /tpm/gene-all-cancer-gtex/plot
+#* @get /tpm/gene-all-cancer-collapsed-gtex/plot
 function(ensemblId, yAxisScale) {
   gene_tpm_tbl <- get_gene_tpm_tbl(
     ensg_id = ensemblId, gtex_sample_group = "include",

@@ -74,18 +74,18 @@ for ensg_id in "ENSG00000213420" "ENSG00000157764" "ENSG00000273032"; do
     curl -X "${http_request_method}" -s -w "${http_request_method} ${query_url}\nhttp_code: %{http_code}\ncontent_type: %{content_type}\ntime_total: %{time_total} seconds\n\n\n" -o "${output_dir}/${output_fn}" "${query_url}"
   done
 
-  query_url="${base_url}/tpm/gene-all-cancer-gtex/json?ensemblId=${ensg_id}"
+  query_url="${base_url}/tpm/gene-all-cancer-collapsed-gtex/json?ensemblId=${ensg_id}"
   output_dir="http_response_output_files/json"
-  output_fn="test-tpm-gene-all-cancer-gtex-${ensg_id}.json"
+  output_fn="test-tpm-gene-all-cancer-collapsed-gtex-${ensg_id}.json"
   curl -X "${http_request_method}" -s -w "${http_request_method} ${query_url}\nhttp_code: %{http_code}\ncontent_type: %{content_type}\ntime_total: %{time_total} seconds\n\n\n" -o "${output_dir}/${output_fn}" "${query_url}"
   # convert json to tsv
   Rscript --vanilla -e "readr::write_tsv(jsonlite::fromJSON('${output_dir}/${output_fn}'), 'results/${output_fn%.json}.tsv')"
 
 
   for y_axis_scale in "linear" "log10"; do
-    query_url="${base_url}/tpm/gene-all-cancer-gtex/plot?ensemblId=${ensg_id}&yAxisScale=${y_axis_scale}"
+    query_url="${base_url}/tpm/gene-all-cancer-collapsed-gtex/plot?ensemblId=${ensg_id}&yAxisScale=${y_axis_scale}"
     output_dir="http_response_output_files/png"
-    output_fn="test-tpm-gene-all-cancer-gtex-${ensg_id}-y-scale-${y_axis_scale}.png"
+    output_fn="test-tpm-gene-all-cancer-collapsed-gtex-${ensg_id}-y-scale-${y_axis_scale}.png"
     curl -X "${http_request_method}" -s -w "${http_request_method} ${query_url}\nhttp_code: %{http_code}\ncontent_type: %{content_type}\ntime_total: %{time_total} seconds\n\n\n" -o "${output_dir}/${output_fn}" "${query_url}"
   done
 done
