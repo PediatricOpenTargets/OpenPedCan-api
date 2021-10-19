@@ -1,5 +1,22 @@
 # OpenPedCan-api
 
+## v0.3.3-beta
+
+### Changed
+
+- Changed the interface of `get_gene_tpm_tbl` function by adding a required parameter `gtex_sample_group`.
+- Changed the interface of `add_gene_tpm_box_group` function by adding an optional parameter `gtex_box_group`.
+- Changed the behavior of `get_gene_tpm_boxplot_summary_tbl` function by allowing one sample group to have multiple unique `GTEx_tissue_subgroup`s and `GTEx_tissue_subgroup_UBERON`s.
+
+### Added
+
+- Added the following all-cancer and all-GTEx-tissue TPM boxplot and summary table endpoints:
+  - `/tpm/gene-all-cancer-collapsed-gtex/plot` transfers boxplot with all GTEx tissues collapsed into one box.
+  - `/tpm/gene-all-cancer-collapsed-gtex/json` transfers summary table with all GTEx tissues collapsed into one sample group.
+  - `/tpm/gene-all-cancer-gtex/plot` transfers boxplot with each GTEx tissue subgroup as one box.
+  - `/tpm/gene-all-cancer-gtex/json` transfers summary table with each GTEx tissue subgroup as one sample group.
+- Added `curl` tests for the above all-cancer and all-GTEx-tissue TPM boxplot and summary table endpoints, in `tests/curl_test_endpoints.sh`.
+
 ## v0.3.2-beta
 
 ### Changed
