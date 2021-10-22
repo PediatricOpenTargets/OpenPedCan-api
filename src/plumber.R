@@ -73,8 +73,6 @@ function(ensemblId, efoId) {
     ensg_id = ensemblId, gtex_sample_group = "include",
     efo_id = efoId, min_n_per_sample_group = 3)
 
-  gene_tpm_tbl <- add_gene_tpm_box_group(gene_tpm_tbl)
-
   gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(gene_tpm_tbl)
 
   gene_tpm_boxplot_summary_tbl <- get_gene_tpm_boxplot_summary_tbl(
@@ -96,8 +94,6 @@ function(ensemblId, efoId, yAxisScale) {
     ensg_id = ensemblId, gtex_sample_group = "include",
     efo_id = efoId, min_n_per_sample_group = 3)
 
-  gene_tpm_tbl <- add_gene_tpm_box_group(gene_tpm_tbl)
-
   gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(gene_tpm_tbl)
 
   res_plot <- get_gene_tpm_boxplot(
@@ -116,8 +112,6 @@ function(ensemblId) {
   gene_tpm_tbl <- get_gene_tpm_tbl(
     ensg_id = ensemblId, gtex_sample_group = "exclude",
     min_n_per_sample_group = 3)
-
-  gene_tpm_tbl <- add_gene_tpm_box_group(gene_tpm_tbl)
 
   gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(gene_tpm_tbl)
 
@@ -139,8 +133,6 @@ function(ensemblId, yAxisScale) {
     ensg_id = ensemblId, gtex_sample_group = "exclude",
     min_n_per_sample_group = 3)
 
-  gene_tpm_tbl <- add_gene_tpm_box_group(gene_tpm_tbl)
-
   gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(gene_tpm_tbl)
 
   res_plot <- get_gene_tpm_boxplot(
@@ -160,10 +152,8 @@ function(ensemblId) {
     ensg_id = ensemblId, gtex_sample_group = "include",
     min_n_per_sample_group = 3)
 
-  gene_tpm_tbl <- add_gene_tpm_box_group(
+  gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(
     gene_tpm_tbl, gtex_box_group = "collapse")
-
-  gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(gene_tpm_tbl)
 
   gene_tpm_boxplot_summary_tbl <- get_gene_tpm_boxplot_summary_tbl(
     gene_tpm_boxplot_tbl)
@@ -183,10 +173,8 @@ function(ensemblId, yAxisScale) {
     ensg_id = ensemblId, gtex_sample_group = "include",
     min_n_per_sample_group = 3)
 
-  gene_tpm_tbl <- add_gene_tpm_box_group(
+  gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(
     gene_tpm_tbl, gtex_box_group = "collapse")
-
-  gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(gene_tpm_tbl)
 
   res_plot <- get_gene_tpm_boxplot(
     gene_tpm_boxplot_tbl, y_axis_scale = yAxisScale)
@@ -205,10 +193,8 @@ function(ensemblId) {
     ensg_id = ensemblId, gtex_sample_group = "include",
     min_n_per_sample_group = 3)
 
-  gene_tpm_tbl <- add_gene_tpm_box_group(
+  gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(
     gene_tpm_tbl, gtex_box_group = "tissue_subgroup")
-
-  gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(gene_tpm_tbl)
 
   gene_tpm_boxplot_summary_tbl <- get_gene_tpm_boxplot_summary_tbl(
     gene_tpm_boxplot_tbl)
@@ -228,10 +214,8 @@ function(ensemblId, yAxisScale) {
     ensg_id = ensemblId, gtex_sample_group = "include",
     min_n_per_sample_group = 3)
 
-  gene_tpm_tbl <- add_gene_tpm_box_group(
+  gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(
     gene_tpm_tbl, gtex_box_group = "tissue_subgroup")
-
-  gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(gene_tpm_tbl)
 
   res_plot <- get_gene_tpm_boxplot(
     gene_tpm_boxplot_tbl, y_axis_scale = yAxisScale)

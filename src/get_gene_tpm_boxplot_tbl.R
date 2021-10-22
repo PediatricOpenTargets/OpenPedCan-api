@@ -18,10 +18,33 @@
 #   more GTEx tissue(s), returned by get_gene_tpm_tbl, with an additional column
 #   named box_group. The box_group column is used to agglomerate rows into
 #   boxes.
+# - gtex_box_group: a single character value with the following choices:
+#   - "tissue_subgroup": Default. Use GTEx_tissue_subgroup column as box group.
+#   - "collapse": Collapse all GTEx samples into one box group with the
+#     following name, "All tissue subgroups".
 #
 # Returns a tibble for generating a ggplot boxplot of a single-gene, one or more
 # diseasees, and zero or more GTEx tissue(s).
-get_gene_tpm_boxplot_tbl <- function(gene_tpm_tbl) {
+get_gene_tpm_boxplot_tbl <- function(gene_tpm_tbl,
+                                     gtex_box_group = "tissue_subgroup") {
+  stopifnot(is.character(gtex_box_group))
+  stopifnot(identical(length(gtex_box_group), 1L))
+  stopifnot(gtex_box_group %in% c("tissue_subgroup", "collapse"))
+
+  if (gtex_box_group == "tissue_subgroup") {
+    gene_tpm_tbl <- dplyr::mutate(
+      gene_tpm_tbl,
+      box_group = dplyr::if_else(
+        is.na(Disease), true = GTEx_tissue_subgroup, false = Disease))
+  } else if (gtex_box_group == "collapse") {
+    gene_tpm_tbl <- dplyr::mutate(
+      gene_tpm_tbl,
+      box_group = dplyr::if_else(
+        is.na(Disease), true = "All tissue subgroups", false = Disease))
+  } else {
+    stop(paste0("Not implemented gtex_box_group option ", gtex_box_group))
+  }
+
   if (DEBUG) {
     stopifnot(identical(sum(is.na(gene_tpm_tbl$cohort)), 0L))
     stopifnot(identical(sum(is.na(gene_tpm_tbl$box_group)), 0L))
@@ -32,6 +55,7 @@ get_gene_tpm_boxplot_tbl <- function(gene_tpm_tbl) {
         is.na(gene_tpm_tbl$GTEx_tissue_subgroup))),
       0L))
   }
+
   # add cohort box_group count
   gene_tpm_boxplot_tbl <- dplyr::add_count(
     gene_tpm_tbl, cohort, box_group, name = "cohort_box_group_n")
