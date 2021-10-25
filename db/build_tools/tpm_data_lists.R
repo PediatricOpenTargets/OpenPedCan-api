@@ -10,9 +10,94 @@
 # - docker build db/build_tools/build_db.Dockerfile runs tpm_data_lists.R
 
 
-
+# Define functions -------------------------------------------------------------
 # Get %>% without loading the whole library
 `%>%` <- magrittr::`%>%`
+
+
+# Combine primary and relapse independent sample data frame
+#
+# Args:
+# - prm_indep_sdf: primary independent specimen data frame.
+# - rlp_indep_sdf: primary independent specimen data frame.
+#
+# Returns a tibble of combined primary and relapse independent specimen data
+# frame.
+#
+# TODO: Unit test for empty tibbles. Should work.
+combine_prm_rlp_indep_sdf <- function(prm_indep_sdf, rlp_indep_sdf) {
+  stopifnot(tibble::is_tibble(prm_indep_sdf))
+  stopifnot(tibble::is_tibble(rlp_indep_sdf))
+
+  stopifnot(identical(
+    colnames(prm_indep_sdf),
+    c("Kids_First_Participant_ID", "Kids_First_Biospecimen_ID")
+  ))
+
+  stopifnot(identical(
+    colnames(rlp_indep_sdf),
+    c("Kids_First_Participant_ID", "Kids_First_Biospecimen_ID")
+  ))
+
+  # Assert no overlapping between primary and relapse specimen IDs.
+  stopifnot(identical(
+    length(dplyr::intersect(
+      prm_indep_sdf$Kids_First_Biospecimen_ID,
+      rlp_indep_sdf$Kids_First_Biospecimen_ID)),
+    0L
+  ))
+
+  prm_indep_sdf <- dplyr::mutate(
+    prm_indep_sdf, specimen_descriptor = "Primary Tumor")
+
+  rlp_indep_sdf <- dplyr::mutate(
+    rlp_indep_sdf, specimen_descriptor = "Relapse Tumor")
+
+  stopifnot(identical(
+    colnames(prm_indep_sdf),
+    c("Kids_First_Participant_ID", "Kids_First_Biospecimen_ID",
+      "specimen_descriptor")
+  ))
+
+  stopifnot(identical(
+    colnames(rlp_indep_sdf),
+    c("Kids_First_Participant_ID", "Kids_First_Biospecimen_ID",
+      "specimen_descriptor")
+  ))
+
+  prm_rlp_indep_sdf <- dplyr::bind_rows(prm_indep_sdf, rlp_indep_sdf)
+
+  stopifnot(identical(
+    colnames(prm_rlp_indep_sdf),
+    c("Kids_First_Participant_ID", "Kids_First_Biospecimen_ID",
+      "specimen_descriptor")
+  ))
+
+  return(prm_rlp_indep_sdf)
+}
+
+
+# Format specimen descriptor counts for printing
+#
+# Args:
+# - spec_desc_vec: a character vector of specimen descriptor.
+#
+# Return a single character value.
+format_spec_desc_counts <- function(spec_desc_vec) {
+  stopifnot(is.character(spec_desc_vec))
+  stopifnot(all(!is.na(spec_desc_vec)))
+
+  spec_desc_cnt_tbl <- tibble::tibble(spec_desc = spec_desc_vec) %>%
+    dplyr::count(spec_desc, name = "n")
+
+  fmt_spec_desc_cnt_chr <- paste(
+    paste0(
+      "  - ",
+      paste(spec_desc_cnt_tbl$spec_desc, spec_desc_cnt_tbl$n, sep = ": ")),
+    collapse = "\n")
+
+  return(fmt_spec_desc_cnt_chr)
+}
 
 
 
@@ -55,11 +140,17 @@ input_df_list <- list(
   histology_df = readr::read_tsv(
     file.path(data_dir, "histologies.tsv"),
     col_types = readr::cols(), guess_max = 1e6),
-  all_cohorts_indep_samples = readr::read_tsv(
+  primary_all_cohorts_indep_samples = readr::read_tsv(
     file.path(data_dir, "independent-specimens.rnaseq.primary.tsv"),
     col_types = readr::cols()),
-  each_cohort_indep_samples = readr::read_tsv(
+  primary_each_cohort_indep_samples = readr::read_tsv(
     file.path(data_dir, "independent-specimens.rnaseq.primary.eachcohort.tsv"),
+    col_types = readr::cols()),
+  relapse_all_cohorts_indep_samples = readr::read_tsv(
+    file.path(data_dir, "independent-specimens.rnaseq.relapse.tsv"),
+    col_types = readr::cols()),
+  relapse_each_cohort_indep_samples = readr::read_tsv(
+    file.path(data_dir, "independent-specimens.rnaseq.relapse.eachcohort.tsv"),
     col_types = readr::cols()),
   tpm_df = readRDS(
     file.path(data_dir, "gene-expression-rsem-tpm-collapsed.rds")),
@@ -69,8 +160,11 @@ input_df_list <- list(
 )
 
 purrr::walk(
-  input_df_list[c("histology_df", "all_cohorts_indep_samples",
-                  "each_cohort_indep_samples")],
+  input_df_list[c("histology_df",
+                  "primary_all_cohorts_indep_samples",
+                  "primary_each_cohort_indep_samples",
+                  "relapse_all_cohorts_indep_samples",
+                  "relapse_each_cohort_indep_samples")],
   function(x) {
     stopifnot(!is.null(x$Kids_First_Participant_ID))
     stopifnot(!is.null(x$Kids_First_Biospecimen_ID))
@@ -120,6 +214,8 @@ stopifnot(identical(
     dplyr::select(
       input_df_list$ensg_symbol_pmtl_df,
       Gene_Ensembl_ID, Gene_symbol)))))
+
+
 
 # Annotate histology df --------------------------------------------------------
 # Rename columns to annotator columns
@@ -172,7 +268,30 @@ stopifnot(identical(
 )
 
 
+
 # Subset independent samples ---------------------------------------------------
+# - Combine primary and relapse independent sample lists. Before combining, add
+#   "Primary Tumor" and "Relapse Tumor" to independent sample lists.
+# - Add "GTEx Normal" to all GTEx sample list.
+# - Subset samples.
+
+sample_subset_df_list <- list(
+  gtex = dplyr::filter(input_df_list$histology_df, cohort == "GTEx") %>%
+    dplyr::select(Kids_First_Participant_ID, Kids_First_Biospecimen_ID) %>%
+    dplyr::mutate(specimen_descriptor = "GTEx Normal") %>%
+    dplyr::select(Kids_First_Participant_ID, Kids_First_Biospecimen_ID,
+                  specimen_descriptor),
+
+  prm_rlp_all_cohorts_indep = combine_prm_rlp_indep_sdf(
+    input_df_list$primary_all_cohorts_indep_samples,
+    input_df_list$relapse_all_cohorts_indep_samples),
+
+  prm_rlp_each_cohort_indep = combine_prm_rlp_indep_sdf(
+    input_df_list$primary_each_cohort_indep_samples,
+    input_df_list$relapse_each_cohort_indep_samples)
+)
+
+
 # Initialize tpm_data_lists
 #
 # - Remove primary tumor samples that have Disease as NA.
@@ -183,26 +302,24 @@ stopifnot(identical(
 # - Remove primary tumor samples that have EFO as NA. EFO is used to subset
 #   samples in API.
 tpm_data_lists <- list(
-  # primary tumor all-cohorts independent samples
-  pt_all_cohorts = list(
+  # primary and relapse tumor all-cohorts independent samples
+  prm_rlp_all_cohorts = list(
     tpm_df = input_df_list$tpm_df,
-    sample_subset_df = input_df_list$all_cohorts_indep_samples,
+    sample_subset_df = sample_subset_df_list$prm_rlp_all_cohorts_indep,
     histology_df = dplyr::filter(
       input_df_list$histology_df, !is.na(Disease), !is.na(EFO))
   ),
-  # primary tumor each-cohort independent samples
-  pt_each_cohort = list(
+  # primary and relapse tumor each-cohort independent samples
+  prm_rlp_each_cohort = list(
     tpm_df = input_df_list$tpm_df,
-    sample_subset_df = input_df_list$each_cohort_indep_samples,
+    sample_subset_df = sample_subset_df_list$prm_rlp_each_cohort_indep,
     histology_df = dplyr::filter(
       input_df_list$histology_df, !is.na(Disease), !is.na(EFO))
   ),
   # gtex all samples. sample_subset_df entry is a tibble of all gtex samples.
   gtex = list(
     tpm_df = input_df_list$tpm_df,
-    sample_subset_df = dplyr::select(
-      dplyr::filter(input_df_list$histology_df, cohort == "GTEx"),
-      Kids_First_Participant_ID, Kids_First_Biospecimen_ID),
+    sample_subset_df = sample_subset_df_list$gtex,
     histology_df = dplyr::filter(
       input_df_list$histology_df, !is.na(GTEx_tissue_subgroup))
   )
@@ -230,17 +347,28 @@ tpm_data_lists <- lapply(tpm_data_lists, function(xl) {
     dplyr::filter(Kids_First_Biospecimen_ID %in% overlap_sids) %>%
     dplyr::select(
       Kids_First_Biospecimen_ID, cohort, EFO, MONDO, Disease,
-      GTEx_tissue_subgroup_UBERON, GTEx_tissue_subgroup)
+      GTEx_tissue_subgroup_UBERON, GTEx_tissue_subgroup) %>%
+    dplyr::left_join(
+      dplyr::select(
+        overlap_sample_subset_df, Kids_First_Biospecimen_ID,
+        specimen_descriptor),
+      by = "Kids_First_Biospecimen_ID")
+
+  # overlap_sids is asserted above to have no NA
+  stopifnot(identical(
+    sort(overlap_sids),
+    sort(colnames(overlap_tpm_df), na.last = TRUE),
+  ))
 
   stopifnot(identical(
-    sort(colnames(overlap_tpm_df)),
-    sort(overlap_sids)))
+    sort(overlap_sids),
+    sort(overlap_sample_subset_df$Kids_First_Biospecimen_ID, na.last = TRUE)
+  ))
+
   stopifnot(identical(
-    sort(colnames(overlap_tpm_df)),
-    sort(overlap_sample_subset_df$Kids_First_Biospecimen_ID)))
-  stopifnot(identical(
-    sort(colnames(overlap_tpm_df)),
-    sort(overlap_histology_df$Kids_First_Biospecimen_ID)))
+    sort(overlap_sids),
+    sort(overlap_histology_df$Kids_First_Biospecimen_ID, na.last = TRUE)
+  ))
 
   # Convert overlap_tpm_df to tibble, with rownames added as a new column named
   # Gene_symbol
@@ -262,7 +390,8 @@ tpm_data_lists <- lapply(tpm_data_lists, function(xl) {
 
   overlap_data_list <- list(
     tpm_df = overlap_tpm_tbl,
-    histology_df = overlap_histology_df
+    histology_df = overlap_histology_df,
+    sample_subset_df = overlap_sample_subset_df
   )
 
   return(overlap_data_list)
@@ -270,24 +399,27 @@ tpm_data_lists <- lapply(tpm_data_lists, function(xl) {
 
 stopifnot(identical(
   sort(tpm_data_lists$gtex$tpm_df$Gene_Ensembl_ID),
-  sort(tpm_data_lists$pt_all_cohorts$tpm_df$Gene_Ensembl_ID)
+  sort(tpm_data_lists$prm_rlp_all_cohorts$tpm_df$Gene_Ensembl_ID)
 ))
 
 stopifnot(identical(
   sort(tpm_data_lists$gtex$tpm_df$Gene_Ensembl_ID),
-  sort(tpm_data_lists$pt_each_cohort$tpm_df$Gene_Ensembl_ID)
+  sort(tpm_data_lists$prm_rlp_each_cohort$tpm_df$Gene_Ensembl_ID)
 ))
-
 
 cat("---------------------------------\n",
     as.character(Sys.time()), "\n",
-    "Primary tumor all-cohorts independent n samples: ",
-    nrow(tpm_data_lists$pt_all_cohorts$histology_df), "\n",
-    "Primary tumor each-cohort independent n samples: ",
-    nrow(tpm_data_lists$pt_each_cohort$histology_df), "\n",
+    "All-cohorts independent n tumor samples:\n",
+    format_spec_desc_counts(
+      tpm_data_lists$prm_rlp_all_cohorts$histology_df$specimen_descriptor),
+    "\n",
+    "Each-cohort independent n tumor samples:\n",
+    format_spec_desc_counts(
+      tpm_data_lists$prm_rlp_each_cohort$histology_df$specimen_descriptor),
+    "\n",
     "GTEx all n samples: ", nrow(tpm_data_lists$gtex$histology_df), "\n",
-    "Number of genes: ", nrow(tpm_data_lists$pt_all_cohorts$tpm_df),
-    "\n---------------------------------\n")
+    "Number of genes: ", nrow(tpm_data_lists$prm_rlp_all_cohorts$tpm_df),
+    "\n---------------------------------\n", sep = "")
 
 # Assert tpm_data_lists is valid -----------------------------------------------
 all_cohorts_str_id <- "All Cohorts"
