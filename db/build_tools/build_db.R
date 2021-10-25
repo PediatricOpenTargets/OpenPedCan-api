@@ -312,17 +312,20 @@ tpm_df_ann_cols <- c("Gene_symbol", "PMTL", "Gene_Ensembl_ID")
 # assertion fails, check all code.
 stopifnot(identical(
   sort(names(tpm_data_lists), na.last = TRUE),
-  sort(c("gtex", "pt_all_cohorts", "pt_each_cohort"))
+  sort(c("gtex", "prm_rlp_all_cohorts", "prm_rlp_each_cohort"))
 ))
 
 # Assert tpm_data_lists contents are valid for the following procedures.
 place_holder_res <- purrr::imap_lgl(tpm_data_lists, function(xl, xname) {
   stopifnot(tibble::is_tibble(xl$tpm_df))
   stopifnot(tibble::is_tibble(xl$histology_df))
+  stopifnot(tibble::is_tibble(xl$sample_subset_df))
 
   stopifnot(identical(sum(is.na(dplyr::select(xl$tpm_df, -PMTL))), 0L))
   stopifnot(identical(
-    sum(is.na(xl$histology_df[, c("Kids_First_Biospecimen_ID", "cohort")])), 0L
+    sum(is.na(xl$histology_df[, c("Kids_First_Biospecimen_ID",
+                                  "cohort", "specimen_descriptor")])),
+    0L
   ))
 
   stopifnot(identical(
@@ -341,12 +344,20 @@ place_holder_res <- purrr::imap_lgl(tpm_data_lists, function(xl, xname) {
 
     stopifnot(identical(sum(!is.na(xl$histology_df$EFO)), 0L))
     stopifnot(identical(sum(!is.na(xl$histology_df$Disease)), 0L))
+
+    stopifnot(identical(
+      unique(xl$histology_df$specimen_descriptor), "GTEx Normal"))
   } else {
     stopifnot(identical(sum(is.na(xl$histology_df$EFO)), 0L))
     stopifnot(identical(sum(is.na(xl$histology_df$Disease)), 0L))
 
     stopifnot(identical(
       sum(!is.na(xl$histology_df$GTEx_tissue_subgroup)), 0L))
+
+    stopifnot(
+      all(unique(xl$histology_df$specimen_descriptor) %in% c("Primary Tumor",
+                                                             "Relapse Tumor"))
+    )
   }
 
   tpm_df_colnames <- colnames(xl$tpm_df)
@@ -385,29 +396,30 @@ place_holder_res <- purrr::imap_lgl(tpm_data_lists, function(xl, xname) {
 # Primary tumor all-cohorts independent (disease, n unique cohort > 1) table.
 # Use shorthand prefix padg1 to reduce variable name redundancy.
 #
-# It is asserted above that tpm_data_lists$pt_all_cohorts$histology_df$Disease
-# has no NA.
-padg1_tbl <- dplyr::group_by(tpm_data_lists$pt_all_cohorts$histology_df,
+# It is asserted above that
+# tpm_data_lists$prm_rlp_all_cohorts$histology_df$Disease and
+# tpm_data_lists$prm_rlp_all_cohorts$histology_df$cohort have no NA.
+padg1_tbl <- dplyr::group_by(tpm_data_lists$prm_rlp_all_cohorts$histology_df,
                              .data$Disease) %>%
   dplyr::summarise(n_uniq_cohorts = length(unique(.data$cohort))) %>%
   dplyr::filter(.data$n_uniq_cohorts > 1)
 
 padg1_histology_df <- dplyr::filter(
-  tpm_data_lists$pt_all_cohorts$histology_df,
+  tpm_data_lists$prm_rlp_all_cohorts$histology_df,
   .data$Disease %in% .env$padg1_tbl$Disease)
 
 # If padg1_histology_df is empty, the following expression does not add any row
 # or raise any error.
 #
 # Empty padg1_histology_df and no-biospecimen
-# tpm_data_lists$pt_all_cohorts$tpm_df are handled in chunk-wise operations.
+# tpm_data_lists$prm_rlp_all_cohorts$tpm_df are handled in chunk-wise
+# operations.
 padg1_histology_df$cohort <- all_cohorts_str_id
 
 padg1_tpm_df <- dplyr::select(
-  tpm_data_lists$pt_all_cohorts$tpm_df,
+  tpm_data_lists$prm_rlp_all_cohorts$tpm_df,
   tidyselect::all_of(
-    c(tpm_df_ann_cols,
-      padg1_histology_df$Kids_First_Biospecimen_ID)))
+    c(tpm_df_ann_cols, padg1_histology_df$Kids_First_Biospecimen_ID)))
 
 stopifnot(identical(
   sum(is.na(dplyr::select(padg1_tpm_df, -PMTL))), 0L
@@ -415,8 +427,7 @@ stopifnot(identical(
 
 stopifnot(identical(
   sum(is.na(dplyr::select(
-    padg1_histology_df,
-    Kids_First_Biospecimen_ID, cohort))),
+    padg1_histology_df, Kids_First_Biospecimen_ID, cohort))),
   0L
 ))
 
@@ -433,7 +444,7 @@ stopifnot(identical(
        na.last = TRUE)
 ))
 
-tpm_data_lists$pt_all_cohorts <- list(
+tpm_data_lists$prm_rlp_all_cohorts <- list(
   tpm_df = padg1_tpm_df,
   histology_df = padg1_histology_df
 )
@@ -565,8 +576,8 @@ place_holder_res <- purrr::imap_lgl(tpm_data_lists, function(xl, xname) {
         x_long_tpm_tbl, xl$histology_df, by = "Kids_First_Biospecimen_ID")
       x_long_tpm_tbl <- dplyr::select(
         x_long_tpm_tbl, "Kids_First_Biospecimen_ID", "cohort", "EFO", "MONDO",
-        "Disease", "GTEx_tissue_subgroup_UBERON", "GTEx_tissue_subgroup", "TPM",
-        "Gene_Ensembl_ID", "Gene_symbol", "PMTL")
+        "Disease", "GTEx_tissue_subgroup_UBERON", "GTEx_tissue_subgroup",
+        "specimen_descriptor", "TPM", "Gene_Ensembl_ID", "Gene_symbol", "PMTL")
 
       stopifnot(identical(
         nrow(xl$histology_df),
@@ -574,7 +585,8 @@ place_holder_res <- purrr::imap_lgl(tpm_data_lists, function(xl, xname) {
       ))
 
       stopifnot(identical(sum(is.na(x_long_tpm_tbl$cohort)), 0L))
-      if (identical(xname, "pt_all_cohorts")) {
+
+      if (identical(xname, "prm_rlp_all_cohorts")) {
         stopifnot(identical(unique(x_long_tpm_tbl$cohort), all_cohorts_str_id))
       } else {
         stopifnot(!all_cohorts_str_id %in% x_long_tpm_tbl$cohort)
@@ -587,6 +599,9 @@ place_holder_res <- purrr::imap_lgl(tpm_data_lists, function(xl, xname) {
         stopifnot(identical(sum(!is.na(x_long_tpm_tbl$EFO)), 0L))
 
         stopifnot(identical(sum(!is.na(x_long_tpm_tbl$Disease)), 0L))
+
+        stopifnot(identical(
+          unique(x_long_tpm_tbl$specimen_descriptor), "GTEx Normal"))
       } else {
         stopifnot(identical(sum(is.na(x_long_tpm_tbl$EFO)), 0L))
 
@@ -594,6 +609,12 @@ place_holder_res <- purrr::imap_lgl(tpm_data_lists, function(xl, xname) {
           sum(!is.na(x_long_tpm_tbl$GTEx_tissue_subgroup)), 0L))
 
         stopifnot(identical(sum(is.na(x_long_tpm_tbl$Disease)), 0L))
+
+        stopifnot(
+          all(unique(
+            x_long_tpm_tbl$specimen_descriptor) %in% c("Primary Tumor",
+                                                       "Relapse Tumor"))
+        )
       }
 
       if (file.exists(csv_out_path)) {
