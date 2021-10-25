@@ -285,9 +285,6 @@ get_ind_chunk_list <- function(n_elements, n_chunks) {
 # Generate long format TPM tables and write to csv -----------------------------
 cat("Generate long format TPM tables and write to csv...\n")
 
-# db connection to create empty table.
-conn <- connect_db(db_env_vars)
-
 # postgres "tables can have at most 1600 columns", but TPM datafarme has >
 # 20,000 columns/samples.
 #
@@ -610,11 +607,15 @@ place_holder_res <- purrr::imap_lgl(tpm_data_lists, function(xl, xname) {
 
         # Create table. Table should not exist.
         cat("  Create empty database table.\n")
+
+        conn <- connect_db(db_env_vars)
         # DBI table ID is case sensitive.
         db_write_table(
           dplyr::slice(x_long_tpm_tbl, 0), conn,
           tolower(db_env_vars$BULK_EXP_SCHEMA),
           tolower(db_env_vars$BULK_EXP_TPM_HISTOLOGY_TBL))
+
+        DBI::dbDisconnect(conn)
       }
 
       return(x_tpm_ann_df)
@@ -635,7 +636,5 @@ place_holder_res <- purrr::imap_lgl(tpm_data_lists, function(xl, xname) {
 
   return(TRUE)
 })
-
-DBI::dbDisconnect(conn)
 
 cat("Done running build_db.R.\n")
