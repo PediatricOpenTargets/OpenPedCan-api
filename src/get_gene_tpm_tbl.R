@@ -39,8 +39,6 @@
 #   to multiple gene symbols. If gene_symbol is not NULL, the (efo_id,
 #   gene_symbol) tuple is selected when one ENSG ID maps to multiple gene
 #   symbols.
-# - min_n_per_sample_group: a single numeric value of the minimum number of
-#   samples per Disease or GTEx_tissue_subgroup. Default is 1.
 #
 # Returns a tibble with the following columns:
 # - Kids_First_Biospecimen_ID: a single Kids_First_Biospecimen_ID
@@ -71,7 +69,7 @@
 # - Identify the gene symbol that match PedOT.
 # - Completely drop gene_symbol, as it is also shown on PedOT.
 get_gene_tpm_tbl <- function(ensg_id, gtex_sample_group, efo_id = NULL,
-                             gene_symbol = NULL, min_n_per_sample_group = 1L) {
+                             gene_symbol = NULL) {
   stopifnot(is.character(ensg_id))
   stopifnot(identical(length(ensg_id), 1L))
   stopifnot(!is.na(ensg_id))
@@ -91,10 +89,6 @@ get_gene_tpm_tbl <- function(ensg_id, gtex_sample_group, efo_id = NULL,
     stopifnot(identical(length(gene_symbol), 1L))
     stopifnot(!is.na(gene_symbol))
   }
-
-  stopifnot(is.numeric(min_n_per_sample_group))
-  stopifnot(identical(length(min_n_per_sample_group), 1L))
-  stopifnot(!is.na(min_n_per_sample_group))
 
   # In OpenPedCan-analysis project, "All Cohorts" is used as the cohort of
   # combined cohorts. The value "All Cohorts" may be changed at a later point.
@@ -241,20 +235,13 @@ get_gene_tpm_tbl <- function(ensg_id, gtex_sample_group, efo_id = NULL,
     ))
   }
 
-  long_tpm_tbl <- dplyr::add_count(
-    long_tpm_tbl, .data$Disease, name = "disease_n")
-
-  # Keep all Disease (aka cancer groups) that have >= min_n_per_sample_group
-  # samples.
+  # Subset Diseases (aka cancer groups)
   #
-  # Separate gtex and disease tables to simplify filtering procedure, because
-  # the sample group counts have counts for NA values.
-  disease_long_tpm_tbl <- dplyr::select(
-    dplyr::filter(
-      long_tpm_tbl, !is.na(.data$Disease),
-      .data$disease_n >= min_n_per_sample_group),
-    !c(disease_n))
-  # Raise error if no Disease passes the filter, i.e. data not available.
+  # Separate gtex and disease tables to simplify different procedures for
+  # handling Diseases and GTEx tissues.
+  disease_long_tpm_tbl <- dplyr::filter(
+    long_tpm_tbl, !is.na(.data$Disease))  # nolint: object_usage_linter.
+  # Raise error if no Disease, i.e. data not available.
   stopifnot(nrow(disease_long_tpm_tbl) > 0)
 
   if (!is.null(efo_id)) {
@@ -267,20 +254,10 @@ get_gene_tpm_tbl <- function(ensg_id, gtex_sample_group, efo_id = NULL,
   }
 
   if (gtex_sample_group == "include") {
-    # Include all gtex subgroups that have >= min_n_per_sample_group samples.
-    long_tpm_tbl <- dplyr::add_count(
-      long_tpm_tbl, .data$GTEx_tissue_subgroup, name = "gtex_subgroup_n")
+    gtex_long_tpm_tbl <- dplyr::filter(
+      long_tpm_tbl, !is.na(.data$GTEx_tissue_subgroup))
 
-    # disease_n column is still present in long_tpm_tbl, since it is only
-    # removed from disease_long_tpm_tbl.
-    gtex_long_tpm_tbl <- dplyr::select(
-      dplyr::filter(
-        long_tpm_tbl, !is.na(.data$GTEx_tissue_subgroup),
-        .data$gtex_subgroup_n >= min_n_per_sample_group),
-      !c(disease_n, gtex_subgroup_n))
-
-    # Raise error if no GTEx_tissue_subgroup passes the filter, i.e. data not
-    # available.
+    # Raise error if no GTEx_tissue_subgroup, i.e. data not available.
     stopifnot(nrow(gtex_long_tpm_tbl) > 0)
 
     if (DEBUG) {
