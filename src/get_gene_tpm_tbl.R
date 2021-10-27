@@ -28,13 +28,16 @@
 # - ensg_id: a single character value of gene ENSG ID. Required.
 # - gtex_sample_group: a single character value with the following choices.
 #   Required.
-#   - "exclude": exclude GTEx samples.
-#   - "include": include all GTEx tissue subgroups that have >=
-#     min_n_per_sample_group samples.
+#   - "exclude": Exclude GTEx samples. Does NOT raise error if there is no GTEx
+#     sample.
+#   - "require": Require all GTEx samples. Raise error if there is no GTEx
+#     sample.
 # - relapse_sample_group: a single character value with the following choices.
 #   Required.
-#   - "exclude": exclude relapse tumors.
-#   - "include": include relapse tumors.
+#   - "exclude": Exclude relapse tumors. Does NOT raise error if there is no
+#     relapse tumor.
+#   - "require": Require all relapse tumors. Raise error if there is no relapse
+#     tumor.
 # - efo_id: NULL or a single character value of EFO ID. Default is NULL, which
 #   is to include all diseases and zero GTEx tissue, aka gene-all-cancer. If
 #   efo_id is not NULL, include all samples that have the EFO ID and all GTEx
@@ -82,11 +85,11 @@ get_gene_tpm_tbl <- function(ensg_id, gtex_sample_group, relapse_sample_group,
 
   stopifnot(is.character(gtex_sample_group))
   stopifnot(identical(length(gtex_sample_group), 1L))
-  stopifnot(gtex_sample_group %in% c("include", "exclude"))
+  stopifnot(gtex_sample_group %in% c("require", "exclude"))
 
   stopifnot(is.character(relapse_sample_group))
   stopifnot(identical(length(relapse_sample_group), 1L))
-  stopifnot(relapse_sample_group %in% c("include", "exclude"))
+  stopifnot(relapse_sample_group %in% c("require", "exclude"))
 
   if (!is.null(efo_id)) {
     stopifnot(is.character(efo_id))
@@ -113,8 +116,10 @@ get_gene_tpm_tbl <- function(ensg_id, gtex_sample_group, relapse_sample_group,
 
   # Case insensitive db schema and table names. DBI/glue quotes names. Table
   # columns are case sensitive.
-  q_schema <- tolower(db_env_vars$BULK_EXP_SCHEMA)  # nolint: object_usage_linter.
-  q_table <- tolower(db_env_vars$BULK_EXP_TPM_HISTOLOGY_TBL)  # nolint: object_usage_linter.
+  q_schema <- tolower(
+    db_env_vars$BULK_EXP_SCHEMA)  # nolint: object_usage_linter.
+  q_table <- tolower(
+    db_env_vars$BULK_EXP_TPM_HISTOLOGY_TBL)  # nolint: object_usage_linter.
 
   # Use parameterized queries to protect queries from SQL injection attacks.
   #
@@ -245,17 +250,26 @@ get_gene_tpm_tbl <- function(ensg_id, gtex_sample_group, relapse_sample_group,
     ))
   }
 
-  if (relapse_sample_group == "exclude") {
-    long_tpm_tbl <- dplyr::filter(
-      long_tpm_tbl, specimen_descriptor != "Relapse Tumor")
-  }
-
   # Subset Diseases (aka cancer groups)
   #
   # Separate gtex and disease tables to simplify different procedures for
   # handling Diseases and GTEx tissues.
   disease_long_tpm_tbl <- dplyr::filter(
     long_tpm_tbl, !is.na(.data$Disease))  # nolint: object_usage_linter.
+
+  # specimen_descriptor is asserted above to have no NA
+  if (relapse_sample_group == "exclude") {
+    disease_long_tpm_tbl <- dplyr::filter(
+      disease_long_tpm_tbl, specimen_descriptor != "Relapse Tumor")
+  } else if (relapse_sample_group == "require") {
+    # Raise error if no relapse sample, i.e., data not available. Raising error
+    # is favored over analyzing without required samples, by design.
+    stopifnot(any(disease_long_tpm_tbl$specimen_descriptor == "Relapse Tumor"))
+  } else {
+    stop(paste0(
+      "Not implemented relapse_sample_group value ", relapse_sample_group))
+  }
+
   # Raise error if no Disease, i.e. data not available.
   stopifnot(nrow(disease_long_tpm_tbl) > 0)
 
@@ -264,15 +278,15 @@ get_gene_tpm_tbl <- function(ensg_id, gtex_sample_group, relapse_sample_group,
     disease_long_tpm_tbl <- dplyr::filter(
       disease_long_tpm_tbl, .data$EFO == .env$efo_id)
 
-    # Raise error if no Disease passes the filter, i.e. data not available.
+    # Raise error if no Disease passes the filter, i.e., data not available.
     stopifnot(nrow(disease_long_tpm_tbl) > 0)
   }
 
-  if (gtex_sample_group == "include") {
+  if (gtex_sample_group == "require") {
     gtex_long_tpm_tbl <- dplyr::filter(
       long_tpm_tbl, !is.na(.data$GTEx_tissue_subgroup))
 
-    # Raise error if no GTEx_tissue_subgroup, i.e. data not available.
+    # Raise error if no GTEx_tissue_subgroup, i.e., data not available.
     stopifnot(nrow(gtex_long_tpm_tbl) > 0)
 
     if (DEBUG) {
