@@ -13,12 +13,13 @@
 
 # Design notes:
 #
-# - gtex_sample_group parameter is designed to be required to prevent complex
-#   default value behaviors.
-# - gtex_sample_group parameter is designed to take character values to allow
-#   additional choices, e.g. subset certain tissue subgroups, at a later point.
-#   Therefore, the name of the parameter is gtex_sample_group rather than
-#   include_gtex_sample_group, which would take a boolean value.
+# - gtex_sample_group and relapse_sample_group parameters are designed to be
+#   required to prevent complex default value behaviors.
+# - gtex_sample_group and relapse_sample_group parameters are designed to take
+#   character values to allow additional choices, e.g. subset certain tissue
+#   subgroups or tumor descriptors, at a later point. Therefore, the name of the
+#   parameter is gtex_sample_group rather than include_gtex_sample_group, which
+#   would take a boolean value.
 
 # Get a TPM tibble of a single-gene, one or more disease group(s), and zero or
 # more GTEx tissue subgroup(s).
@@ -30,6 +31,10 @@
 #   - "exclude": exclude GTEx samples.
 #   - "include": include all GTEx tissue subgroups that have >=
 #     min_n_per_sample_group samples.
+# - relapse_sample_group: a single character value with the following choices.
+#   Required.
+#   - "exclude": exclude relapse tumors.
+#   - "include": include relapse tumors.
 # - efo_id: NULL or a single character value of EFO ID. Default is NULL, which
 #   is to include all diseases and zero GTEx tissue, aka gene-all-cancer. If
 #   efo_id is not NULL, include all samples that have the EFO ID and all GTEx
@@ -50,6 +55,7 @@
 # - Disease: a single Disease/cancer_group
 # - GTEx_tissue_subgroup_UBERON: a single GTEx tissue subgroup UBERON ID
 # - GTEx_tissue_subgroup: a single GTEx tissue subgroup
+# - specimen_descriptor: a single specimen descriptor.
 # - TPM: a single TPM value
 # - Gene_Ensembl_ID: a single ENSG ID
 # - Gene_symbol: a single gene symbol
@@ -68,8 +74,8 @@
 #   may not match PedOT.
 # - Identify the gene symbol that match PedOT.
 # - Completely drop gene_symbol, as it is also shown on PedOT.
-get_gene_tpm_tbl <- function(ensg_id, gtex_sample_group, efo_id = NULL,
-                             gene_symbol = NULL) {
+get_gene_tpm_tbl <- function(ensg_id, gtex_sample_group, relapse_sample_group,
+                             efo_id = NULL, gene_symbol = NULL) {
   stopifnot(is.character(ensg_id))
   stopifnot(identical(length(ensg_id), 1L))
   stopifnot(!is.na(ensg_id))
@@ -77,6 +83,10 @@ get_gene_tpm_tbl <- function(ensg_id, gtex_sample_group, efo_id = NULL,
   stopifnot(is.character(gtex_sample_group))
   stopifnot(identical(length(gtex_sample_group), 1L))
   stopifnot(gtex_sample_group %in% c("include", "exclude"))
+
+  stopifnot(is.character(relapse_sample_group))
+  stopifnot(identical(length(relapse_sample_group), 1L))
+  stopifnot(relapse_sample_group %in% c("include", "exclude"))
 
   if (!is.null(efo_id)) {
     stopifnot(is.character(efo_id))
@@ -137,8 +147,8 @@ get_gene_tpm_tbl <- function(ensg_id, gtex_sample_group, efo_id = NULL,
   stopifnot(identical(
     colnames(long_tpm_tbl),
     c("Kids_First_Biospecimen_ID", "cohort", "EFO", "MONDO",
-      "Disease", "GTEx_tissue_subgroup_UBERON", "GTEx_tissue_subgroup", "TPM",
-      "Gene_Ensembl_ID", "Gene_symbol", "PMTL")
+      "Disease", "GTEx_tissue_subgroup_UBERON", "GTEx_tissue_subgroup",
+      "specimen_descriptor", "TPM", "Gene_Ensembl_ID", "Gene_symbol", "PMTL")
   ))
   # Assert column types are expected.
   placeholder_res <- purrr::imap_lgl(long_tpm_tbl, function(xcol, xcolname) {
@@ -151,12 +161,12 @@ get_gene_tpm_tbl <- function(ensg_id, gtex_sample_group, efo_id = NULL,
   })
   # Assert input ensg_id is the only ENSG ID.
   stopifnot(identical(unique(long_tpm_tbl$Gene_Ensembl_ID), ensg_id))
-  # Assert no NA in ID columns.
+  # Assert no NA in required columns.
   stopifnot(identical(
     sum(is.na(
       dplyr::select(
-        long_tpm_tbl, Kids_First_Biospecimen_ID, cohort, TPM, Gene_Ensembl_ID,
-        Gene_symbol))),
+        long_tpm_tbl, Kids_First_Biospecimen_ID, cohort, specimen_descriptor,
+        TPM, Gene_Ensembl_ID, Gene_symbol))),
     0L
   ))
   # Assert no duplicated (sample, gene) tuple.
@@ -235,6 +245,11 @@ get_gene_tpm_tbl <- function(ensg_id, gtex_sample_group, efo_id = NULL,
     ))
   }
 
+  if (relapse_sample_group == "exclude") {
+    long_tpm_tbl <- dplyr::filter(
+      long_tpm_tbl, specimen_descriptor != "Relapse Tumor")
+  }
+
   # Subset Diseases (aka cancer groups)
   #
   # Separate gtex and disease tables to simplify different procedures for
@@ -281,12 +296,16 @@ get_gene_tpm_tbl <- function(ensg_id, gtex_sample_group, efo_id = NULL,
     long_tpm_tbl,
     dplyr::all_of(
       c("Kids_First_Biospecimen_ID", "cohort", "EFO", "MONDO",
-        "Disease", "GTEx_tissue_subgroup_UBERON", "GTEx_tissue_subgroup", "TPM",
-        "Gene_Ensembl_ID", "Gene_symbol", "PMTL")))
+        "Disease", "GTEx_tissue_subgroup_UBERON", "GTEx_tissue_subgroup",
+        "specimen_descriptor", "TPM", "Gene_Ensembl_ID", "Gene_symbol",
+        "PMTL")
+    )
+  )
 
   if (DEBUG) {
     stopifnot(nrow(long_tpm_tbl) > 0)
     stopifnot(identical(sum(is.na(long_tpm_tbl$cohort)), 0L))
+    stopifnot(identical(sum(is.na(long_tpm_tbl$specimen_descriptor)), 0L))
 
     all_cohorts_long_tpm_tbl <- dplyr::filter(
       long_tpm_tbl, .data$cohort == .env$all_cohorts_str_id)
@@ -294,8 +313,9 @@ get_gene_tpm_tbl <- function(ensg_id, gtex_sample_group, efo_id = NULL,
     each_cohort_long_tpm_tbl <- dplyr::filter(
       long_tpm_tbl, .data$cohort != .env$all_cohorts_str_id)
 
-    # all_cohorts_long_tpm_tbl and each_cohort_long_tpm_tbl can have duplicated
-    # Kids_First_Biospecimen_ID.
+    # all_cohorts_long_tpm_tbl and each_cohort_long_tpm_tbl cannot have
+    # duplicated Kids_First_Biospecimen_ID. All Kids_First_Biospecimen_IDs must
+    # be unique.
     stopifnot(identical(
       nrow(all_cohorts_long_tpm_tbl),
       length(unique(all_cohorts_long_tpm_tbl$Kids_First_Biospecimen_ID))))
