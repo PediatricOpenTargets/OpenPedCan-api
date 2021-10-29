@@ -47,6 +47,8 @@ combine_prm_rlp_indep_sdf <- function(prm_indep_sdf, rlp_indep_sdf) {
     0L
   ))
 
+  # The exact specimen_descriptor values are used in multple places. Changing
+  # any of them needs to completely review code base.
   prm_indep_sdf <- dplyr::mutate(
     prm_indep_sdf, specimen_descriptor = "Primary Tumor")
 
