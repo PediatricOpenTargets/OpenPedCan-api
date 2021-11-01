@@ -14,6 +14,10 @@
 # Get %>% without loading the whole library
 `%>%` <- magrittr::`%>%`
 
+# specimen_descriptor values are "Primary Tumor", "Relapse Tumor", and "GTEx
+# Normal". Changing or adding specimen_descriptor value(s) require reviewing
+# entire code base, because they are used in both database building and API
+# code.
 
 # Combine primary and relapse independent sample data frame
 #
