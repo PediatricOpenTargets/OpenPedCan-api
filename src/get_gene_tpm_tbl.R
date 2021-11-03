@@ -343,7 +343,7 @@ get_gene_tpm_tbl <- function(ensg_id, gtex_sample_group, relapse_sample_group,
       stopifnot(all(is.na(long_tpm_tbl$GTEx_tissue_subgroup)))
       stopifnot(all(!is.na(long_tpm_tbl$EFO)))
       stopifnot(all(!is.na(long_tpm_tbl$Disease)))
-    } else if (gtex_sample_group == "include") {
+    } else if (gtex_sample_group == "require") {
       # gene-disease-gtex
       if (!is.null(efo_id)) {
         stopifnot(identical(
