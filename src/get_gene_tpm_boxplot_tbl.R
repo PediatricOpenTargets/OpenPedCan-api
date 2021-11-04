@@ -221,8 +221,8 @@ get_gene_tpm_boxplot_tbl <- function(
       bp_tbl,
       x_label = paste0(
         .env$grp_key_tbl$histology_group, " ",
-        .data$specimen_descriptor_x_label,
         " (Dataset = ", .env$grp_key_tbl$cohort,
+        ", Specimen = ", .data$specimen_descriptor_x_label,
         ", N = ", .data$x_label_sample_count, ")"))
 
     # Filter boxes by box_sample_count.
