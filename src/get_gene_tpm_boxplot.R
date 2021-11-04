@@ -109,7 +109,7 @@ get_gene_tpm_boxplot <- function(gene_tpm_boxplot_tbl, y_axis_scale) {
                           width = 0.5, outlier.size = 1) +
     ggplot2::ylab(y_axis_label) +
     ggplot2::xlab("") +
-    ggplot2_publication_theme(base_size = 12) +
+    ggplot2_boxplot_theme(base_size = 12) +
     ggplot2::theme(
       axis.text.x = ggplot2::element_text(angle = -45, vjust = 1, hjust = 0),
       plot.margin = plot_margin) +

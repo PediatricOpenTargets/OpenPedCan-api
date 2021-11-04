@@ -2,20 +2,20 @@
 # Date: 11/11/2019
 # Function: publication quality ggplot2 themes
 
-# ggplot2_publication_theme.R defines a function ggplot2_publication_theme to
+# ggplot2_boxplot_theme.R defines a function ggplot2_boxplot_theme to
 # return a ggplot2 theme.
 #
 # Call sequence:
 #
 # - docker run calls Rscript --vanilla main.R
-# - ../main.R calls source("src/ggplot2_publication_theme.R")
+# - ../main.R calls source("src/ggplot2_boxplot_theme.R")
 #
 # Defined variables:
 #
-# - ggplot2_publication_theme
+# - ggplot2_boxplot_theme
 
 
-ggplot2_publication_theme <- function(base_size = 12,
+ggplot2_boxplot_theme <- function(base_size = 12,
                                       base_family = "Helvetica") {
   res_theme <- ggthemes::theme_foundation(base_size = base_size,
                                           base_family = base_family) +
