@@ -61,19 +61,20 @@ function(res) {
   plumber::forward()
 }
 
+# The param of plumber endpoint cannot be broken into multiple lines.
+
 #* Get a single-gene single-disease all-GTEx-tissues TPM summary table
 #*
 #* @tag "Bulk tissue gene expression"
 #* @param ensemblId:str one gene ENSG ID.
 #* @param efoId:str one EFO ID.
+#* @param includeTumorDesc:str primaryOnly, or relapseOnly, or primaryAndRelapseInSameBox, or primaryAndRelapseInDifferentBoxes.
 #* @serializer json
 #* @get /tpm/gene-disease-gtex/json
-function(ensemblId, efoId) {
-  gene_tpm_tbl <- get_gene_tpm_tbl(
-    ensg_id = ensemblId, gtex_sample_group = "include", efo_id = efoId)
-
-  gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(
-    gene_tpm_tbl, min_n_per_sample_group = 3)
+function(ensemblId, efoId, includeTumorDesc) {
+  gene_tpm_boxplot_tbl <- get_tpm_endpoint_tbl(
+    ensg_id = ensemblId, efo_id = efoId, include_tumor_desc = includeTumorDesc,
+    gtex_sample_group = "include", min_n_per_box = 3L)
 
   gene_tpm_boxplot_summary_tbl <- get_gene_tpm_boxplot_summary_tbl(
     gene_tpm_boxplot_tbl)
@@ -87,14 +88,13 @@ function(ensemblId, efoId) {
 #* @param ensemblId:str one gene ENSG ID.
 #* @param efoId:str one EFO ID.
 #* @param yAxisScale:str linear or log10
+#* @param includeTumorDesc:str primaryOnly, or relapseOnly, or primaryAndRelapseInSameBox, or primaryAndRelapseInDifferentBoxes.
 #* @serializer png list(res = 300, width = 3900, height = 2700)
 #* @get /tpm/gene-disease-gtex/plot
-function(ensemblId, efoId, yAxisScale) {
-  gene_tpm_tbl <- get_gene_tpm_tbl(
-    ensg_id = ensemblId, gtex_sample_group = "include", efo_id = efoId)
-
-  gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(
-    gene_tpm_tbl, min_n_per_sample_group = 3)
+function(ensemblId, efoId, yAxisScale, includeTumorDesc) {
+  gene_tpm_boxplot_tbl <- get_tpm_endpoint_tbl(
+    ensg_id = ensemblId, efo_id = efoId, include_tumor_desc = includeTumorDesc,
+    gtex_sample_group = "include", min_n_per_box = 3L)
 
   res_plot <- get_gene_tpm_boxplot(
     gene_tpm_boxplot_tbl, y_axis_scale = yAxisScale)
@@ -106,14 +106,13 @@ function(ensemblId, efoId, yAxisScale) {
 #*
 #* @tag "Bulk tissue gene expression"
 #* @param ensemblId:str one gene ENSG ID.
+#* @param includeTumorDesc:str primaryOnly, or relapseOnly, or primaryAndRelapseInSameBox, or primaryAndRelapseInDifferentBoxes.
 #* @serializer json
 #* @get /tpm/gene-all-cancer/json
-function(ensemblId) {
-  gene_tpm_tbl <- get_gene_tpm_tbl(
-    ensg_id = ensemblId, gtex_sample_group = "exclude")
-
-  gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(
-    gene_tpm_tbl, min_n_per_sample_group = 3)
+function(ensemblId, includeTumorDesc) {
+  gene_tpm_boxplot_tbl <- get_tpm_endpoint_tbl(
+    ensg_id = ensemblId, efo_id = NULL, include_tumor_desc = includeTumorDesc,
+    gtex_sample_group = "exclude", min_n_per_box = 3L)
 
   gene_tpm_boxplot_summary_tbl <- get_gene_tpm_boxplot_summary_tbl(
     gene_tpm_boxplot_tbl)
@@ -126,14 +125,13 @@ function(ensemblId) {
 #* @tag "Bulk tissue gene expression"
 #* @param ensemblId:str one gene ENSG ID.
 #* @param yAxisScale:str linear or log10
+#* @param includeTumorDesc:str primaryOnly, or relapseOnly, or primaryAndRelapseInSameBox, or primaryAndRelapseInDifferentBoxes.
 #* @serializer png list(res = 300, width = 3900, height = 2700)
 #* @get /tpm/gene-all-cancer/plot
-function(ensemblId, yAxisScale) {
-  gene_tpm_tbl <- get_gene_tpm_tbl(
-    ensg_id = ensemblId, gtex_sample_group = "exclude")
-
-  gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(
-    gene_tpm_tbl, min_n_per_sample_group = 3)
+function(ensemblId, yAxisScale, includeTumorDesc) {
+  gene_tpm_boxplot_tbl <- get_tpm_endpoint_tbl(
+    ensg_id = ensemblId, efo_id = NULL, include_tumor_desc = includeTumorDesc,
+    gtex_sample_group = "exclude", min_n_per_box = 3L)
 
   res_plot <- get_gene_tpm_boxplot(
     gene_tpm_boxplot_tbl, y_axis_scale = yAxisScale)
@@ -145,14 +143,14 @@ function(ensemblId, yAxisScale) {
 #*
 #* @tag "Bulk tissue gene expression"
 #* @param ensemblId:str one gene ENSG ID.
+#* @param includeTumorDesc:str primaryOnly, or relapseOnly, or primaryAndRelapseInSameBox, or primaryAndRelapseInDifferentBoxes.
 #* @serializer json
 #* @get /tpm/gene-all-cancer-collapsed-gtex/json
-function(ensemblId) {
-  gene_tpm_tbl <- get_gene_tpm_tbl(
-    ensg_id = ensemblId, gtex_sample_group = "include")
-
-  gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(
-    gene_tpm_tbl, gtex_box_group = "collapse", min_n_per_sample_group = 3)
+function(ensemblId, includeTumorDesc) {
+  gene_tpm_boxplot_tbl <- get_tpm_endpoint_tbl(
+    ensg_id = ensemblId, efo_id = NULL, include_tumor_desc = includeTumorDesc,
+    gtex_sample_group = "require", gtex_histology_group = "collapse",
+    min_n_per_box = 3L)
 
   gene_tpm_boxplot_summary_tbl <- get_gene_tpm_boxplot_summary_tbl(
     gene_tpm_boxplot_tbl)
@@ -165,14 +163,14 @@ function(ensemblId) {
 #* @tag "Bulk tissue gene expression"
 #* @param ensemblId:str one gene ENSG ID.
 #* @param yAxisScale:str linear or log10
+#* @param includeTumorDesc:str primaryOnly, or relapseOnly, or primaryAndRelapseInSameBox, or primaryAndRelapseInDifferentBoxes.
 #* @serializer png list(res = 300, width = 3900, height = 2700)
 #* @get /tpm/gene-all-cancer-collapsed-gtex/plot
-function(ensemblId, yAxisScale) {
-  gene_tpm_tbl <- get_gene_tpm_tbl(
-    ensg_id = ensemblId, gtex_sample_group = "include")
-
-  gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(
-    gene_tpm_tbl, gtex_box_group = "collapse", min_n_per_sample_group = 3)
+function(ensemblId, yAxisScale, includeTumorDesc) {
+  gene_tpm_boxplot_tbl <- get_tpm_endpoint_tbl(
+    ensg_id = ensemblId, efo_id = NULL, include_tumor_desc = includeTumorDesc,
+    gtex_sample_group = "require", gtex_histology_group = "collapse",
+    min_n_per_box = 3L)
 
   res_plot <- get_gene_tpm_boxplot(
     gene_tpm_boxplot_tbl, y_axis_scale = yAxisScale)
@@ -184,15 +182,14 @@ function(ensemblId, yAxisScale) {
 #*
 #* @tag "Bulk tissue gene expression"
 #* @param ensemblId:str one gene ENSG ID.
+#* @param includeTumorDesc:str primaryOnly, or relapseOnly, or primaryAndRelapseInSameBox, or primaryAndRelapseInDifferentBoxes.
 #* @serializer json
 #* @get /tpm/gene-all-cancer-gtex/json
-function(ensemblId) {
-  gene_tpm_tbl <- get_gene_tpm_tbl(
-    ensg_id = ensemblId, gtex_sample_group = "include")
-
-  gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(
-    gene_tpm_tbl, gtex_box_group = "tissue_subgroup",
-    min_n_per_sample_group = 3)
+function(ensemblId, includeTumorDesc) {
+  gene_tpm_boxplot_tbl <- get_tpm_endpoint_tbl(
+    ensg_id = ensemblId, efo_id = NULL, include_tumor_desc = includeTumorDesc,
+    gtex_sample_group = "require", gtex_histology_group = "tissue_subgroup",
+    min_n_per_box = 3L)
 
   gene_tpm_boxplot_summary_tbl <- get_gene_tpm_boxplot_summary_tbl(
     gene_tpm_boxplot_tbl)
@@ -205,15 +202,14 @@ function(ensemblId) {
 #* @tag "Bulk tissue gene expression"
 #* @param ensemblId:str one gene ENSG ID.
 #* @param yAxisScale:str linear or log10
+#* @param includeTumorDesc:str primaryOnly, or relapseOnly, or primaryAndRelapseInSameBox, or primaryAndRelapseInDifferentBoxes.
 #* @serializer png list(res = 300, width = 7800, height = 2700)
 #* @get /tpm/gene-all-cancer-gtex/plot
-function(ensemblId, yAxisScale) {
-  gene_tpm_tbl <- get_gene_tpm_tbl(
-    ensg_id = ensemblId, gtex_sample_group = "include")
-
-  gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(
-    gene_tpm_tbl, gtex_box_group = "tissue_subgroup",
-    min_n_per_sample_group = 3)
+function(ensemblId, yAxisScale, includeTumorDesc) {
+  gene_tpm_boxplot_tbl <- get_tpm_endpoint_tbl(
+    ensg_id = ensemblId, efo_id = NULL, include_tumor_desc = includeTumorDesc,
+    gtex_sample_group = "require", gtex_histology_group = "tissue_subgroup",
+    min_n_per_box = 3L)
 
   res_plot <- get_gene_tpm_boxplot(
     gene_tpm_boxplot_tbl, y_axis_scale = yAxisScale)
