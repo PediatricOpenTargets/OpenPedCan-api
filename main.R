@@ -59,6 +59,7 @@ source("db/r_interfaces/connect_db.R")
 source("src/get_gene_tpm_tbl.R")
 source("src/ggplot2_boxplot_theme.R")
 source("src/get_gene_tpm_boxplot_tbl.R")
+source("src/get_tpm_endpoint_tbl.R")
 source("src/get_gene_tpm_boxplot.R")
 source("src/get_gene_tpm_boxplot_summary_tbl.R")
 
