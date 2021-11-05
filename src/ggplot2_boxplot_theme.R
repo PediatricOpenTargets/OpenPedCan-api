@@ -15,8 +15,7 @@
 # - ggplot2_boxplot_theme
 
 
-ggplot2_boxplot_theme <- function(base_size = 12,
-                                      base_family = "Helvetica") {
+ggplot2_boxplot_theme <- function(base_size = 12, base_family = "Helvetica") {
   res_theme <- ggthemes::theme_foundation(base_size = base_size,
                                           base_family = base_family) +
     ggplot2::theme(
