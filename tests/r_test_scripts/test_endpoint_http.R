@@ -4,64 +4,7 @@
 # testthat package is loaded, if this file is executed by test_dir
 context("tests/r_test_scripts/test_endpoint_http.R")
 
-base_url <- Sys.getenv("BASE_URL", unset = NA_character_)
-stopifnot(!is.na(base_url))
-stopifnot(is.character(base_url))
-stopifnot(identical(length(base_url), 1L))
-
-param_val_list <- list(
-  ensemblId = c("ENSG00000213420", "ENSG00000157764", "ENSG00000273032"),
-
-  efoId = c("EFO_0000621", "Orphanet_178", "MONDO_0016718",
-            "MONDO_0016680", "MONDO_0016685"),
-
-  yAxisScale = c("linear", "log10"),
-
-  includeTumorDesc = c("primaryOnly", "relapseOnly",
-                       "primaryAndRelapseInSameBox",
-                       "primaryAndRelapseInDifferentBoxes")
-)
-
-endpoint_spec_list <- list(
-  list(
-    path = "/tpm/gene-disease-gtex/json",
-    params = c("ensemblId", "efoId", "includeTumorDesc")),
-  list(
-    path = "/tpm/gene-disease-gtex/plot",
-    params = c("ensemblId", "efoId", "yAxisScale", "includeTumorDesc")),
-  list(
-    path = "/tpm/gene-all-cancer/json",
-    params = c("ensemblId", "includeTumorDesc")),
-  list(
-    path = "/tpm/gene-all-cancer/plot",
-    params = c("ensemblId", "yAxisScale", "includeTumorDesc")),
-  list(
-    path = "/tpm/gene-all-cancer-collapsed-gtex/json",
-    params = c("ensemblId", "includeTumorDesc")),
-  list(
-    path = "/tpm/gene-all-cancer-collapsed-gtex/plot",
-    params = c("ensemblId", "yAxisScale", "includeTumorDesc")),
-  list(
-    path = "/tpm/gene-all-cancer-gtex/json",
-    params = c("ensemblId", "includeTumorDesc")),
-  list(
-    path = "/tpm/gene-all-cancer-gtex/plot",
-    params = c("ensemblId", "yAxisScale", "includeTumorDesc"))
-)
-
-output_spec_list <- list(
-  tsv = list(
-    output_dir = file.path("..", "results"),
-    output_sfx = ".tsv"),
-  json = list(
-    output_dir = file.path("..", "http_response_output_files", "json"),
-    output_sfx = ".json"),
-  png = list(
-    output_dir = file.path("..", "http_response_output_files", "png"),
-    output_sfx = ".png")
-)
-
-
+# Function definitions ---------------------------------------------------------
 
 # Send HTTP GET request and get response
 #
@@ -183,5 +126,69 @@ test_endpoint <- function(endpoint_spec) {
   return(res_time_list)
 }
 
+
+# Data variable definitaions ---------------------------------------------------
+
+base_url <- Sys.getenv("BASE_URL", unset = NA_character_)
+stopifnot(!is.na(base_url))
+stopifnot(is.character(base_url))
+stopifnot(identical(length(base_url), 1L))
+
+param_val_list <- list(
+  ensemblId = c("ENSG00000213420", "ENSG00000157764", "ENSG00000273032"),
+
+  efoId = c("EFO_0000621", "Orphanet_178", "MONDO_0016718",
+            "MONDO_0016680", "MONDO_0016685"),
+
+  yAxisScale = c("linear", "log10"),
+
+  includeTumorDesc = c("primaryOnly", "relapseOnly",
+                       "primaryAndRelapseInSameBox",
+                       "primaryAndRelapseInDifferentBoxes")
+)
+
+endpoint_spec_list <- list(
+  list(
+    path = "/tpm/gene-disease-gtex/json",
+    params = c("ensemblId", "efoId", "includeTumorDesc")),
+  list(
+    path = "/tpm/gene-disease-gtex/plot",
+    params = c("ensemblId", "efoId", "yAxisScale", "includeTumorDesc")),
+  list(
+    path = "/tpm/gene-all-cancer/json",
+    params = c("ensemblId", "includeTumorDesc")),
+  list(
+    path = "/tpm/gene-all-cancer/plot",
+    params = c("ensemblId", "yAxisScale", "includeTumorDesc")),
+  list(
+    path = "/tpm/gene-all-cancer-collapsed-gtex/json",
+    params = c("ensemblId", "includeTumorDesc")),
+  list(
+    path = "/tpm/gene-all-cancer-collapsed-gtex/plot",
+    params = c("ensemblId", "yAxisScale", "includeTumorDesc")),
+  list(
+    path = "/tpm/gene-all-cancer-gtex/json",
+    params = c("ensemblId", "includeTumorDesc")),
+  list(
+    path = "/tpm/gene-all-cancer-gtex/plot",
+    params = c("ensemblId", "yAxisScale", "includeTumorDesc"))
+)
+
+output_spec_list <- list(
+  tsv = list(
+    output_dir = file.path("..", "results"),
+    output_sfx = ".tsv"),
+  json = list(
+    output_dir = file.path("..", "http_response_output_files", "json"),
+    output_sfx = ".json"),
+  png = list(
+    output_dir = file.path("..", "http_response_output_files", "png"),
+    output_sfx = ".png")
+)
+
+
+
+# Run tests and summarise results ----------------------------------------------
 endpoint_res_time_list <- purrr::map(endpoint_spec_list, test_endpoint)
+
 print(endpoint_res_time_list)
