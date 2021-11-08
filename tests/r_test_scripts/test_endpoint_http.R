@@ -26,7 +26,8 @@ http_get <- function(url, expected_response_code) {
     label = paste0("GET ", url, " response code"))
 
   res_list <- list(
-    time = res$times,
+    res_code = res$status_code,
+    res_time = res$times,
     content = httr::content(res, "raw")
   )
 
@@ -157,7 +158,7 @@ test_endpoint <- function(endpoint_spec) {
             jsonlite::fromJSON(output_json_path), output_tsv_path)
         }
 
-        return(res_list$time)
+        return(res_list)
       }
     )
 
@@ -176,7 +177,7 @@ test_endpoint <- function(endpoint_spec) {
           writeBin(res_list$content, output_png_path)
         }
 
-        return(res_list$time)
+        return(res_list)
       }
     )
 
@@ -184,10 +185,11 @@ test_endpoint <- function(endpoint_spec) {
     stop(paste0("Unknown response type ", res_type))
   }
 
-  res_time_df <- purrr::map_dfr(res_time_list, function(x) {
+  res_time_df <- purrr::map_dfr(res_time_list, function(xl) {
     rt_dfr <- tibble::tibble(
       endpoint = endpoint_spec$path,
-      response_time = x["total"])
+      response_code = as.character(xl$res_code),
+      response_time_in_seconds = xl$res_time["total"])
   })
 
   return(res_time_df)
@@ -256,6 +258,38 @@ output_spec_list <- list(
 
 
 # Run tests and summarise results ----------------------------------------------
-endpoint_res_time_df <- purrr::map_dfr(endpoint_spec_list[1], test_endpoint)
+endpoint_res_time_df <- purrr::map_dfr(endpoint_spec_list, test_endpoint)
 
-print(endpoint_res_time_df)
+readr::write_tsv(
+  endpoint_res_time_df,
+  file.path("..", "results", "endpoint_response_times.tsv"))
+
+endpoint_res_time_df <- dplyr::add_count(
+  endpoint_res_time_df, endpoint, name = "n_requests")
+
+endpoint_res_time_df <- dplyr::mutate(
+  endpoint_res_time_df,
+  x_label = paste0(.data$endpoint, " (N Requests = ", .data$n_requests, ")"))
+
+endpoint_res_time_boxplot <- ggplot2::ggplot(endpoint_res_time_df,
+                                             ggplot2::aes(
+                                               x = x_label,
+                                               y = response_time_in_seconds,
+                                               color = response_code)) +
+  ggplot2::stat_boxplot(
+    geom = "errorbar", width = 0.25,
+    position = ggplot2::position_dodge(0.5)) +
+  ggplot2::geom_boxplot(
+    lwd = 0.5, fatten = 0.7, outlier.shape = 1,
+    width = 0.5, outlier.size = 1,
+    position = ggplot2::position_dodge(0.5)) +
+  ggplot2::ylim(0, NA) +
+  ggplot2::ylab("HTTP response time in seconds") +
+  ggplot2::xlab("Endpoint path") +
+  ggplot2::theme(
+    axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5, hjust = 1))
+
+ggplot2::ggsave(
+  file.path("..", "plots", "endpoint_response_time_boxplot.png"),
+  endpoint_res_time_boxplot,
+  width = length(endpoint_spec_list), height = 9)
