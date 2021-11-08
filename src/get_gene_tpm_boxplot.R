@@ -104,10 +104,9 @@ get_gene_tpm_boxplot <- function(gene_tpm_boxplot_tbl, y_axis_scale) {
   # The x-axis labels are long and rotated 45 degrees, so they are out of the
   # plot in the default margin. Increase right margin to fit all text.
   if (identical(fill_guide, "none")) {
-    # increase right margin by the width of the last x label * 0.75
-    plot_margin[2] <- grid::unit(x = 25, units = "char")
+    plot_margin[2] <- grid::unit(x = 31, units = "char")
   } else {
-    plot_margin[2] <- grid::unit(x = 15, units = "char")
+    plot_margin[2] <- grid::unit(x = 16, units = "char")
   }
 
   gene_tpm_boxplot <- ggplot2::ggplot(gene_tpm_boxplot_tbl,
