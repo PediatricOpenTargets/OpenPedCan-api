@@ -184,7 +184,13 @@ test_endpoint <- function(endpoint_spec) {
     stop(paste0("Unknown response type ", res_type))
   }
 
-  return(res_time_list)
+  res_time_df <- purrr::map_dfr(res_time_list, function(x) {
+    rt_dfr <- tibble::tibble(
+      endpoint = endpoint_spec$path,
+      response_time = x["total"])
+  })
+
+  return(res_time_df)
 }
 
 
@@ -250,6 +256,6 @@ output_spec_list <- list(
 
 
 # Run tests and summarise results ----------------------------------------------
-endpoint_res_time_list <- purrr::map(endpoint_spec_list, test_endpoint)
+endpoint_res_time_df <- purrr::map_dfr(endpoint_spec_list[1], test_endpoint)
 
-print(endpoint_res_time_list)
+print(endpoint_res_time_df)
