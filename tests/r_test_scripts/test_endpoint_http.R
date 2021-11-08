@@ -51,15 +51,44 @@ endpoint_spec_list <- list(
 
 output_spec_list <- list(
   tsv = list(
-    output_dir = file.path("tests", "results"),
+    output_dir = file.path("..", "results"),
     output_sfx = ".tsv"),
   json = list(
-    output_dir = file.path("tests", "http_response_output_files", "json"),
+    output_dir = file.path("..", "http_response_output_files", "json"),
     output_sfx = ".json"),
   png = list(
-    output_dir = file.path("tests", "http_response_output_files", "png"),
+    output_dir = file.path("..", "http_response_output_files", "png"),
     output_sfx = ".png")
 )
+
+
+
+# Send HTTP GET request and get response
+#
+# Args:
+# - url: a single character value of url.
+#
+# Returns a list with time and content entries.
+http_get <- function(url) {
+  stopifnot(is.character(url))
+  stopifnot(identical(length(url), 1L))
+  stopifnot(all(!is.na(url)))
+
+  res <- httr::GET(url)
+
+  testthat::expect_identical(
+    res$status_code, 200L,
+    label = paste0("GET ", url, " response code"))
+
+  res_list <- list(
+    time = res$times,
+    content = httr::content(res, "raw")
+  )
+
+  return(res_list)
+}
+
+
 
 # Test API endpoint through HTTP
 #
@@ -120,15 +149,39 @@ test_endpoint <- function(endpoint_spec) {
       endpoint_test_tbl,
       output_json_path = glue::glue(output_path_glue_template_list$json),
       output_tsv_path = glue::glue(output_path_glue_template_list$tsv))
+
+    res_time_list <- purrr::pmap(
+      endpoint_test_tbl[, c("test_url", "output_json_path", "output_tsv_path")],
+      function(test_url, output_json_path, output_tsv_path) {
+        res_list <- http_get(test_url)
+        writeBin(res_list$content, output_json_path)
+        readr::write_tsv(jsonlite::fromJSON(output_json_path), output_tsv_path)
+
+        return(res_list$time)
+      }
+    )
+
   } else if (res_type == "plot") {
     endpoint_test_tbl <- dplyr::mutate(
       endpoint_test_tbl,
       output_png_path = glue::glue(output_path_glue_template_list$png))
+
+    res_time_list <- purrr::pmap(
+      endpoint_test_tbl[, c("test_url", "output_png_path")],
+      function(test_url, output_png_path) {
+        res_list <- http_get(test_url)
+        writeBin(res_list$content, output_png_path)
+
+        return(res_list$time)
+      }
+    )
+
   } else {
     stop(paste0("Unknown response type ", res_type))
   }
 
-  print(endpoint_test_tbl, width = Inf)
+  return(res_time_list)
 }
 
-purrr::map(endpoint_spec_list, test_endpoint)
+endpoint_res_time_list <- purrr::map(endpoint_spec_list, test_endpoint)
+print(endpoint_res_time_list)
