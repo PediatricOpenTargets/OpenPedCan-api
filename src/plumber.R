@@ -74,7 +74,7 @@ function(res) {
 function(ensemblId, efoId, includeTumorDesc) {
   gene_tpm_boxplot_tbl <- get_tpm_endpoint_tbl(
     ensg_id = ensemblId, efo_id = efoId, include_tumor_desc = includeTumorDesc,
-    gtex_sample_group = "include", min_n_per_box = 3L)
+    gtex_sample_group = "require", min_n_per_box = 3L)
 
   gene_tpm_boxplot_summary_tbl <- get_gene_tpm_boxplot_summary_tbl(
     gene_tpm_boxplot_tbl)
@@ -94,7 +94,7 @@ function(ensemblId, efoId, includeTumorDesc) {
 function(ensemblId, efoId, yAxisScale, includeTumorDesc) {
   gene_tpm_boxplot_tbl <- get_tpm_endpoint_tbl(
     ensg_id = ensemblId, efo_id = efoId, include_tumor_desc = includeTumorDesc,
-    gtex_sample_group = "include", min_n_per_box = 3L)
+    gtex_sample_group = "require", min_n_per_box = 3L)
 
   res_plot <- get_gene_tpm_boxplot(
     gene_tpm_boxplot_tbl, y_axis_scale = yAxisScale)
