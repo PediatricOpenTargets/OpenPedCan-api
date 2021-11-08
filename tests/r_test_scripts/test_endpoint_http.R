@@ -245,7 +245,7 @@ endpoint_spec_list <- list(
 
 output_spec_list <- list(
   tsv = list(
-    output_dir = file.path("..", "results"),
+    output_dir = file.path("..", "results", "tsv"),
     output_sfx = ".tsv"),
   json = list(
     output_dir = file.path("..", "http_response_output_files", "json"),
