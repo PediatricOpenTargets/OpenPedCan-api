@@ -89,7 +89,7 @@ function(ensemblId, efoId, includeTumorDesc) {
 #* @param efoId:str one EFO ID.
 #* @param yAxisScale:str linear or log10
 #* @param includeTumorDesc:str primaryOnly, or relapseOnly, or primaryAndRelapseInSameBox, or primaryAndRelapseInDifferentBoxes.
-#* @serializer png list(res = 300, width = 3900, height = 2700)
+#* @serializer png list(res = 300, width = 6000, height = 2700)
 #* @get /tpm/gene-disease-gtex/plot
 function(ensemblId, efoId, yAxisScale, includeTumorDesc) {
   gene_tpm_boxplot_tbl <- get_tpm_endpoint_tbl(
@@ -126,7 +126,7 @@ function(ensemblId, includeTumorDesc) {
 #* @param ensemblId:str one gene ENSG ID.
 #* @param yAxisScale:str linear or log10
 #* @param includeTumorDesc:str primaryOnly, or relapseOnly, or primaryAndRelapseInSameBox, or primaryAndRelapseInDifferentBoxes.
-#* @serializer png list(res = 300, width = 3900, height = 2700)
+#* @serializer png list(res = 300, width = 4500, height = 2700)
 #* @get /tpm/gene-all-cancer/plot
 function(ensemblId, yAxisScale, includeTumorDesc) {
   gene_tpm_boxplot_tbl <- get_tpm_endpoint_tbl(
@@ -164,7 +164,7 @@ function(ensemblId, includeTumorDesc) {
 #* @param ensemblId:str one gene ENSG ID.
 #* @param yAxisScale:str linear or log10
 #* @param includeTumorDesc:str primaryOnly, or relapseOnly, or primaryAndRelapseInSameBox, or primaryAndRelapseInDifferentBoxes.
-#* @serializer png list(res = 300, width = 3900, height = 2700)
+#* @serializer png list(res = 300, width = 4500, height = 2700)
 #* @get /tpm/gene-all-cancer-collapsed-gtex/plot
 function(ensemblId, yAxisScale, includeTumorDesc) {
   gene_tpm_boxplot_tbl <- get_tpm_endpoint_tbl(
