@@ -88,7 +88,7 @@ get_gene_tpm_boxplot <- function(gene_tpm_boxplot_tbl, y_axis_scale) {
   }
 
   # Set fill guide/legend
-  if (length(spec_desc_fill_color_vec) > 2) {
+  if (length(spec_desc_fill_color_vec) > 1) {
     fill_guide <- ggplot2::guide_legend(title = "")
   } else {
     fill_guide <- "none"
