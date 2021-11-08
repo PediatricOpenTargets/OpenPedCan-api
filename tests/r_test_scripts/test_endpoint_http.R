@@ -61,7 +61,13 @@ output_spec_list <- list(
     output_sfx = ".png")
 )
 
-
+# Test API endpoint through HTTP
+#
+# Args:
+# - endpoint_spec: endpoint specification, with is a list with path and params
+#   entries.
+#
+# Returns a list of endpoint response times.
 test_endpoint <- function(endpoint_spec) {
   stopifnot(is.character(endpoint_spec$path))
   stopifnot(identical(length(endpoint_spec$path), 1L))
