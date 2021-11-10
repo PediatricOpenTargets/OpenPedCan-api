@@ -5,6 +5,7 @@
 `OpenPedCan-api` implements OpenPedCan (Open Pediatric Cancers) project public API (application programming interface) to transfer [OpenPedCan-analysis](https://github.com/PediatricOpenTargets/OpenPedCan-analysis) results and plots via HTTP, which is publicly available at <https://openpedcan-api.d3b.io/__docs__/>.
 
 - [1. API endpoint specifications](#1-api-endpoint-specifications)
+  - [1.1. `includeTumorDesc` parameter in `/tpm/*` endpoints](#11-includetumordesc-parameter-in-tpm-endpoints)
 - [2. `OpenPedCan-api` server deployment](#2-openpedcan-api-server-deployment)
 - [3. Test run `OpenPedCan-api` server locally](#3-test-run-openpedcan-api-server-locally)
   - [3.1. `git clone` `OpenPedCan-api` repository](#31-git-clone-openpedcan-api-repository)
@@ -12,7 +13,7 @@
   - [3.3. Run static code analysis](#33-run-static-code-analysis)
   - [3.4. (Optional) Build `OpenPedCan-api` database locally](#34-optional-build-openpedcan-api-database-locally)
   - [3.5. Build and run `OpenPedCan-api` HTTP server and database server docker images](#35-build-and-run-openpedcan-api-http-server-and-database-server-docker-images)
-  - [3.6. Test `OpenPedCan-api` server using `curl`](#36-test-openpedcan-api-server-using-curl)
+  - [3.6. Test `OpenPedCan-api` server](#36-test-openpedcan-api-server)
 - [4. API system design](#4-api-system-design)
   - [4.1. Data model layer](#41-data-model-layer)
   - [4.2. Analysis logic layer](#42-analysis-logic-layer)
@@ -30,6 +31,15 @@
 - Path
 - Parameters
 - Response media type
+
+### 1.1. `includeTumorDesc` parameter in `/tpm/*` endpoints
+
+`includeTumorDesc` parameter determines how independent primary and relapse tumor samples should be handled, which takes one of the following four values.
+
+- `primaryOnly`: Only include independent primary tumor samples of the `(Disease, Dataset)` tuples, aka `(cancer_group, cohort)` tuples, that have `>= 3` independent primary tumor samples.
+- `relapseOnly`: Only include independent relapse tumor samples of the `(Disease, Dataset)` tuples that have `>= 3` independent relapse tumor samples.
+- `primaryAndRelapseInSameBox`: Only include independent primary and relapse tumor samples of the `(Disease, Dataset)` tuples that have `>= 3` independent tumor samples that include both primary and relapse tumor samples. In boxplot, show independent primary and relapse tumor samples of the same `(Disease, Dataset)` tuple in the same box. In summary table, list independent primary and relapse tumor samples of a `(Disease, Dataset)` tuple in the same row.
+- `primaryAndRelapseInDifferentBoxes`: Only include independent primary and relapse tumor samples of `(Disease, Dataset)` tuples that have three or more primary tumor samples and three or more relapse tumor samples. In boxplot, show independent primary and relapse tumor samples of the same `(Disease, Dataset)` tuple in different boxes of the same x-label. In summary table, list independent primary and relapse tumor samples of a `(Disease, Dataset)` tuple in different rows.
 
 ## 2. `OpenPedCan-api` server deployment
 
@@ -66,7 +76,7 @@ Test run `OpenPedCan-api` server with the following steps:
 - Run static code analysis.
 - (Optional) Build `OpenPedCan-api` database locally. This step takes about 25GB memory and 250GB disk space. This step is optional, because pre-built `OpenPedCan-api` database dump file is publicly available via HTTP.
 - Build and run `OpenPedCan-api` HTTP server and database server docker images. The database docker container can initialize database either using local or remote pre-built database dump file. This step takes less than 10GB memory and about 150GB disk space.
-- Test `OpenPedCan-api` server using `curl`.
+- Test `OpenPedCan-api` server.
 
 Note that this test run procedure has only been tested on linux operating system, with the following environment.
 
@@ -87,6 +97,10 @@ R 4.1
 R package readr 2.0.2
 R package jsonlite 1.7.2
 R package lintr 2.0.1
+R package httr 1.4.2
+R package testthat 3.0.4
+R package glue 1.4.2
+R package stringr 1.4.0
 ```
 
 ### 3.1. `git clone` `OpenPedCan-api` repository
@@ -262,20 +276,22 @@ Use the following bash commands to build and run `OpenPedCan-api` HTTP server an
   DB_LOCATION=local docker-compose up
   ```
 
-### 3.6. Test `OpenPedCan-api` server using `curl`
+### 3.6. Test `OpenPedCan-api` server
 
 Test the running server with the following command.
 
 ```bash
-./tests/curl_test_endpoints.sh
+./tests/run_tests.sh
 ```
 
 `tests/curl_test_endpoints.sh` sends multiple HTTP requests to `localhost:8082` by default, with the following steps.
 
-- Send an HTTP request using `curl`.
+- Send an HTTP request using R package `httr`.
 - Output the HTTP response body to `tests/http_response_output_files/png` or `tests/http_response_output_files/json`.
-- Print HTTP response status code, content type, and run time.
 - If response body content type is JSON, convert the JSON file to TSV file in `tests/results`.
+- Assert HTTP response status code as expected.
+- Output HTTP response times in `tests/results/endpoint_response_times.tsv`.
+- Summarize HTTP response times as a boxplot in `tests/plots/endpoint_response_time_boxplot.png`.
 
 The port number of `localhost` can be changed by passing the `bash` environment variable `LOCAL_API_HOST_PORT` with a different value, but there has to be a `OpenPedCan-api` server listening on the port. The API HTTP server host can be changed to <https://openpedcan-api-qa.d3b.io/__docs__/> or <https://openpedcan-api-dev.d3b.io/__docs__/>, by passing environment variable `API_HOST=qa` or `API_HOST=dev` respectively.
 
@@ -326,7 +342,7 @@ The API HTTP server handles every HTTP request [sequentially](https://www.rplumb
 
 ### 4.5. Testing layer
 
-The `tests` directory contains all tools and code for testing the API server. `tests/http_response_output_files` contains the API server response plots and tables. `tests/results` contains results generated during test run.
+The `tests` directory contains all tools and code for testing the API server. `tests/http_response_output_files` contains the API server response plots and tables. `tests/results` and `tests/plots` contain results and plots generated during test run.
 
 ### 4.6. Deployment layer
 
