@@ -286,6 +286,7 @@ endpoint_res_time_boxplot <- ggplot2::ggplot(endpoint_res_time_df,
   ggplot2::ylim(0, NA) +
   ggplot2::ylab("HTTP response time in seconds") +
   ggplot2::xlab("Endpoint path") +
+  ggplot2::ggtitle(paste("API HTTP server base url:", base_url)) +
   ggplot2::theme(
     axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5, hjust = 1))
 
