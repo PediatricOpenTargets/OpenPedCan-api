@@ -51,9 +51,9 @@ get_gene_tpm_boxplot <- function(gene_tpm_boxplot_tbl, y_axis_scale) {
 
   spec_desc_fill_color_vec <- c(
     "GTEx Normal Adult Tissues" = "grey80",
-    "Pediatric Primary and Relapse Tumors" = "red1",
-    "Pediatric Primary Tumors" = "red1",
-    "Pediatric Relapse Tumors" = "red4")
+    "Pediatric Primary and Relapse Tumors" = "#56B4E9",
+    "Pediatric Primary Tumors" = "#56B4E9",
+    "Pediatric Relapse Tumors" = "#E69F00")
 
   uniq_spec_desc_fill_vec <- unique(
     gene_tpm_boxplot_tbl$specimen_descriptor_fill)
