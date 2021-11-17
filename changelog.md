@@ -38,7 +38,10 @@
   - Added `box_sample_count` column.
 - Renamed `src/ggplot2_publication_theme.R` to `src/ggplot2_boxplot_theme.R`.
 - Moved `results/test-*.tsv` to `results/tsv/test-*.tsv`.
-- Changed boxplot tumor box fill colors from red to blue and orange for primary and relapse tumor samples respectively.
+- Changed boxplot tumor box fill colors from red to blue, orange, and purple for primary, relapse, and primary-and-relapse tumor samples respectively.
+- Changed boxplot titles to describe primary and relapse conditions of included tumor samples.
+- Changed boxplot title alignment from centered to left-aligned.
+- Changed boxplot legend location from right to top-left.
 - Changed boxplot right margin and image width.
 - Added legend to boxplot with two or more box colors.
 
