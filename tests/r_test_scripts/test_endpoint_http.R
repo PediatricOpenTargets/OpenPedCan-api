@@ -293,7 +293,7 @@ endpoint_res_time_boxplot <- ggplot2::ggplot(endpoint_res_time_df,
     position = ggplot2::position_dodge(0.5)) +
   ggplot2::ylim(0, NA) +
   ggplot2::ylab(paste0(
-    "Total response time in seconds\n",
+    "Response time in seconds\n",
     "to each serial HTTP request")) +
   ggplot2::xlab("Endpoint path") +
   ggplot2::ggtitle(paste("API HTTP server base URL:\n", base_url)) +
