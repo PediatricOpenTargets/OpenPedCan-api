@@ -50,16 +50,20 @@ get_gene_tpm_boxplot <- function(gene_tpm_boxplot_tbl, y_axis_scale) {
   stopifnot(all(!is.na(uniq_x_label_vec)))
 
   spec_desc_fill_color_vec <- c(
-    "GTEx Normal Adult Tissues" = "grey80",
     "Pediatric Primary and Relapse Tumors" = "#A997DF",
     "Pediatric Primary Tumors" = "#56B4E9",
-    "Pediatric Relapse Tumors" = "#E69F00")
+    "Pediatric Relapse Tumors" = "#E69F00",
+    "GTEx Normal Adult Tissues" = "grey80")
 
   uniq_spec_desc_fill_vec <- unique(
     gene_tpm_boxplot_tbl$specimen_descriptor_fill)
   stopifnot(is.character(uniq_spec_desc_fill_vec))
   stopifnot(all(!is.na(uniq_spec_desc_fill_vec)))
   stopifnot(all(uniq_spec_desc_fill_vec %in% names(spec_desc_fill_color_vec)))
+
+  # Order disease before normal
+  spec_desc_fill_color_vec <- spec_desc_fill_color_vec[
+    names(spec_desc_fill_color_vec) %in% uniq_spec_desc_fill_vec]
 
   # When there is "Pediatric Primary and Relapse Tumors", there is no "Pediatric
   # Primary Tumors" or "Pediatric Relapse Tumors"
