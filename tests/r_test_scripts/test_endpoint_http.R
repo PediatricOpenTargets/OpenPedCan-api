@@ -269,13 +269,21 @@ endpoint_res_time_df <- dplyr::add_count(
 
 endpoint_res_time_df <- dplyr::mutate(
   endpoint_res_time_df,
-  x_label = paste0(.data$endpoint, " (N Requests = ", .data$n_requests, ")"))
+  x_label = paste0(
+    .data$endpoint, "\n     (Number of requests = ",
+    .data$n_requests, ")"),
+  res_desc = dplyr::case_when(
+    .data$response_code == "200" ~ "PNG plot or JSON table",
+    .data$response_code == "500" ~ "Requested data are not available",
+    TRUE ~ NA_character_
+  )
+)
 
 endpoint_res_time_boxplot <- ggplot2::ggplot(endpoint_res_time_df,
                                              ggplot2::aes(
                                                x = x_label,
                                                y = response_time_in_seconds,
-                                               color = response_code)) +
+                                               color = res_desc)) +
   ggplot2::stat_boxplot(
     geom = "errorbar", width = 0.25,
     position = ggplot2::position_dodge(0.5)) +
@@ -284,13 +292,27 @@ endpoint_res_time_boxplot <- ggplot2::ggplot(endpoint_res_time_df,
     width = 0.5, outlier.size = 1,
     position = ggplot2::position_dodge(0.5)) +
   ggplot2::ylim(0, NA) +
-  ggplot2::ylab("HTTP response time in seconds") +
+  ggplot2::ylab(paste0(
+    "Total response time in seconds\n",
+    "to each serial HTTP request")) +
   ggplot2::xlab("Endpoint path") +
-  ggplot2::ggtitle(paste("API HTTP server base url:", base_url)) +
+  ggplot2::ggtitle(paste("API HTTP server base URL:\n", base_url)) +
+  ggplot2::guides(
+    color = ggplot2::guide_legend(
+      title = "Expected HTTP response")) +
+  ggplot2::scale_color_manual(
+    values = c(
+      "PNG plot or JSON table" = "#56B4E9",
+      "Requested data are not available" = "#E69F00")) +
+  ggplot2::theme_light(base_size = 20, base_family = "Helvetica") +
   ggplot2::theme(
-    axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5, hjust = 1))
+    axis.title.y = ggplot2::element_text(size = 20, color = "#000000"),
+    axis.text.x = ggplot2::element_text(
+      size = 20, color = "#000000", angle = -45, vjust = 1, hjust = 0),
+    legend.text = ggplot2::element_text(size = 18, color = "#000000"),
+    legend.key.size = grid::unit(2, "line"))
 
 ggplot2::ggsave(
   file.path("..", "plots", "endpoint_response_time_boxplot.png"),
   endpoint_res_time_boxplot,
-  width = length(endpoint_spec_list), height = 9)
+  width = 17, height = 11)
