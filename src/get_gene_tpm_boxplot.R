@@ -61,19 +61,35 @@ get_gene_tpm_boxplot <- function(gene_tpm_boxplot_tbl, y_axis_scale) {
   stopifnot(all(!is.na(uniq_spec_desc_fill_vec)))
   stopifnot(all(uniq_spec_desc_fill_vec %in% names(spec_desc_fill_color_vec)))
 
-  spec_desc_fill_color_vec <- spec_desc_fill_color_vec[uniq_spec_desc_fill_vec]
+  # When there is "Pediatric Primary and Relapse Tumors", there is no "Pediatric
+  # Primary Tumors" or "Pediatric Relapse Tumors"
+  if (all(c("Pediatric Primary Tumors", "Pediatric Relapse Tumors") %in%
+            uniq_spec_desc_fill_vec) ||
+        ("Pediatric Primary and Relapse Tumors" %in% uniq_spec_desc_fill_vec)) {
+
+    tumor_title_desc <- "Pediatric primary and relapse tumor"
+
+  } else if ("Pediatric Primary Tumors" %in% uniq_spec_desc_fill_vec) {
+    tumor_title_desc <- "Pediatric primary only tumor"
+
+  } else if ("Pediatric Relapse Tumors" %in% uniq_spec_desc_fill_vec) {
+    tumor_title_desc <- "Pediatric relapse only tumor"
+
+  } else {
+    stop(paste0(
+      "Internal error: not supported unique tumor descriptors ",
+      paste(uniq_spec_desc_fill_vec, collapse = ", ")))
+  }
 
   # Set title
   if (length(gtex_subgroup_vec) > 0) {
-    title <- paste(
-      paste0(gene_symbol, " (", ensg_id, ")"),
-      "Pediatric tumor and GTEx normal adult tissue gene expression",
-      sep = "\n")
+    title <- paste0(
+      gene_symbol, " (", ensg_id, ")\n",
+      tumor_title_desc, " and GTEx normal adult tissue gene expression")
   } else {
-    title <- paste(
-      paste0(gene_symbol, " (", ensg_id, ")"),
-      "Pediatric tumor gene expression",
-      sep = "\n")
+    title <- paste0(
+      gene_symbol, " (", ensg_id, ")\n",
+      tumor_title_desc, " gene expression")
   }
 
   # Set y-axis label
