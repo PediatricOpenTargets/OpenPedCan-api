@@ -19,7 +19,7 @@ ggplot2_boxplot_theme <- function(base_size = 12, base_family = "Helvetica") {
   res_theme <- ggthemes::theme_foundation(base_size = base_size,
                                           base_family = base_family) +
     ggplot2::theme(
-      plot.title = ggplot2::element_text(size = ggplot2::rel(1.2), hjust = 0.5),
+      plot.title = ggplot2::element_text(size = ggplot2::rel(1.2)),
       text = ggplot2::element_text(),
       panel.background = ggplot2::element_rect(colour = NA),
       plot.background = ggplot2::element_rect(colour = NA),
