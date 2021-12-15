@@ -1,4 +1,5 @@
-tpm_data_lists.rds
+*.rds
+*.RDS
 *.csv
 *.dump
 *.sql.gz
