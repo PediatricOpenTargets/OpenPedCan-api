@@ -54,14 +54,20 @@ cat("---------------------------------\n",
 # - Use ls() to check what variables are defined by previous scripts, make sure
 #   previously defined variables are not overwritten by the new script.
 
+# db
 source("db/r_interfaces/db_env_vars.R")
 source("db/r_interfaces/connect_db.R")
+
+# TPM boxplot
 source("src/get_gene_tpm_tbl.R")
 source("src/ggplot2_boxplot_theme.R")
 source("src/get_gene_tpm_boxplot_tbl.R")
 source("src/get_tpm_endpoint_tbl.R")
 source("src/get_gene_tpm_boxplot.R")
 source("src/get_gene_tpm_boxplot_summary_tbl.R")
+
+# differential expression
+source("src/get_diff_exp_tbl.R")
 
 # Adapted from https://www.rplumber.io/articles/quickstart.html
 plumber::pr_run(plumber::pr("src/plumber.R"), port = 80, host = "0.0.0.0")
