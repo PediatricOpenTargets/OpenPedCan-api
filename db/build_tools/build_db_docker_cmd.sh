@@ -102,6 +102,24 @@ echo "CREATE INDEX diff_exp_ensg_id_idx ON ${BULK_EXP_SCHEMA}.${BULK_EXP_DIFF_EX
 echo "CREATE INDEX diff_exp_efo_id_idx ON ${BULK_EXP_SCHEMA}.${BULK_EXP_DIFF_EXP_TBL} (\"EFO\");" \
   | gzip --no-name -c >> "$db_dump_out_path"
 
+echo "CREATE INDEX diff_cancer_group_all_gene_up_reg_rank_idx ON ${BULK_EXP_SCHEMA}.${BULK_EXP_DIFF_EXP_TBL} (\"cancer_group_all_gene_up_reg_rank\");" \
+  | gzip --no-name -c >> "$db_dump_out_path"
+
+echo "CREATE INDEX diff_cancer_group_all_gene_down_reg_rank_idx ON ${BULK_EXP_SCHEMA}.${BULK_EXP_DIFF_EXP_TBL} (\"cancer_group_all_gene_down_reg_rank\");" \
+  | gzip --no-name -c >> "$db_dump_out_path"
+
+echo "CREATE INDEX diff_cancer_group_all_gene_up_and_down_reg_rank_idx ON ${BULK_EXP_SCHEMA}.${BULK_EXP_DIFF_EXP_TBL} (\"cancer_group_all_gene_up_and_down_reg_rank\");" \
+  | gzip --no-name -c >> "$db_dump_out_path"
+
+echo "CREATE INDEX diff_cancer_group_pmtl_gene_up_reg_rank_idx ON ${BULK_EXP_SCHEMA}.${BULK_EXP_DIFF_EXP_TBL} (\"cancer_group_pmtl_gene_up_reg_rank\");" \
+  | gzip --no-name -c >> "$db_dump_out_path"
+
+echo "CREATE INDEX diff_cancer_group_pmtl_gene_down_reg_rank_idx ON ${BULK_EXP_SCHEMA}.${BULK_EXP_DIFF_EXP_TBL} (\"cancer_group_pmtl_gene_down_reg_rank\");" \
+  | gzip --no-name -c >> "$db_dump_out_path"
+
+echo "CREATE INDEX diff_cancer_group_pmtl_gene_up_and_down_reg_rank_idx ON ${BULK_EXP_SCHEMA}.${BULK_EXP_DIFF_EXP_TBL} (\"cancer_group_pmtl_gene_up_and_down_reg_rank\");" \
+  | gzip --no-name -c >> "$db_dump_out_path"
+
 # To restore from dump, run:
 # gunzip -c "$db_dump_out_path" | psql -v ON_ERROR_STOP=1 \
 #   --dbname="$DB_NAME" --username="$DB_USERNAME" \

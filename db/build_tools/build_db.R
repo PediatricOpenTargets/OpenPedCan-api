@@ -417,6 +417,8 @@ place_holder_res <- purrr::map_dfr(
       dplyr::mutate(
         EFO = dplyr::na_if(.data$EFO, ""),
         MONDO = dplyr::na_if(.data$MONDO, ""),
+        GTEx_tissue_subgroup_UBERON = dplyr::na_if(
+          .data$GTEx_tissue_subgroup_UBERON, ""),
         Disease_specimen_descriptor = "Primary Tumor") %>%
       dplyr::select(
         cohort, EFO, MONDO, Disease, Disease_specimen_descriptor,
@@ -427,7 +429,89 @@ place_holder_res <- purrr::map_dfr(
         GTEx_tissue_subgroup_mean_TPM, base_mean, log2_fold_change,
         lfcSE, stat, pvalue, padj, PMTL)
 
-    purrr::imap_lgl(cge2nc_ucc_diff_exp_tbl, function(xcol, xname) {
+    invisible(gc())
+
+    ensg_symbol_pmtl_tbl <- dplyr::distinct(
+      dplyr::select(
+        cge2nc_ucc_diff_exp_tbl, Gene_symbol, Gene_Ensembl_ID, PMTL))
+
+    # All ENSG IDs and symbols have the same PMTL.
+    stopifnot(identical(
+      nrow(ensg_symbol_pmtl_tbl),
+      nrow(
+        dplyr::distinct(
+          dplyr::select(ensg_symbol_pmtl_tbl, Gene_symbol, Gene_Ensembl_ID)))
+    ))
+
+    invisible(gc())
+
+    # TODO: Whether down regulated gene ranks neeed to be NA if log fold change
+    # > 0, vice versa?
+    cge2nc_ucc_de_gene_rank_tbl <- cge2nc_ucc_diff_exp_tbl %>%
+      dplyr::mutate(
+        log2_fold_change = tidyr::replace_na(.data$log2_fold_change, 0)) %>%
+      dplyr::group_by(.data$Gene_Ensembl_ID, .data$Gene_symbol, .data$PMTL) %>%
+      dplyr::summarise(
+        mean_gtex_log2_fc = mean(.data$log2_fold_change), .groups = "drop") %>%
+      dplyr::mutate(
+        cancer_group_all_gene_up_reg_rank = rank(
+          -.data$mean_gtex_log2_fc, na.last = TRUE, ties.method = "first"),
+
+        cancer_group_all_gene_down_reg_rank = rank(
+          .data$mean_gtex_log2_fc, na.last = TRUE, ties.method = "first"),
+
+        cancer_group_all_gene_up_and_down_reg_rank = rank(
+          -abs(.data$mean_gtex_log2_fc), na.last = TRUE, ties.method = "first")
+      ) %>%
+      dplyr::mutate(
+        cancer_group_pmtl_gene_up_reg_rank = dplyr::if_else(
+          is.na(.data$PMTL),
+          true = NA_integer_,
+          false = rank(
+            dplyr::if_else(
+              is.na(.data$PMTL), true = NA_integer_,
+              false = .data$cancer_group_all_gene_up_reg_rank),
+            na.last = TRUE, ties.method = "first")
+        ),
+
+        cancer_group_pmtl_gene_down_reg_rank = dplyr::if_else(
+          is.na(.data$PMTL),
+          true = NA_integer_,
+          false = rank(
+            dplyr::if_else(
+              is.na(.data$PMTL), true = NA_integer_,
+              false = .data$cancer_group_all_gene_down_reg_rank),
+            na.last = TRUE, ties.method = "first")
+        ),
+
+        cancer_group_pmtl_gene_up_and_down_reg_rank = dplyr::if_else(
+          is.na(.data$PMTL),
+          true = NA_integer_,
+          false = rank(
+            dplyr::if_else(
+              is.na(.data$PMTL), true = NA_integer_,
+              false = .data$cancer_group_all_gene_up_and_down_reg_rank),
+            na.last = TRUE, ties.method = "first")
+        )
+      )
+
+    invisible(gc())
+
+    cge2nc_ucc_diff_exp_rank_tbl <- dplyr::left_join(
+      cge2nc_ucc_diff_exp_tbl,
+      dplyr::select(cge2nc_ucc_de_gene_rank_tbl, !c(mean_gtex_log2_fc)),
+      by = c("Gene_Ensembl_ID", "Gene_symbol", "PMTL"))
+
+    invisible(gc())
+    stopifnot(identical(
+      cge2nc_ucc_diff_exp_rank_tbl[, c("Gene_Ensembl_ID", "Gene_symbol",
+                                       "PMTL")],
+      cge2nc_ucc_diff_exp_tbl[, c("Gene_Ensembl_ID", "Gene_symbol", "PMTL")]
+    ))
+
+    pmtl_is_na_vec <- is.na(cge2nc_ucc_diff_exp_rank_tbl$PMTL)
+
+    purrr::imap_lgl(cge2nc_ucc_diff_exp_rank_tbl, function(xcol, xname) {
       stopifnot(!is.factor(xcol))
       char_cols <- c("cohort", "EFO", "MONDO", "Disease",
                      "GTEx_tissue_subgroup_UBERON", "GTEx_tissue_subgroup",
@@ -437,18 +521,41 @@ place_holder_res <- purrr::map_dfr(
       num_cols <- c("Disease_sample_count", "GTEx_tissue_subgroup_sample_count",
                     "Disease_mean_TPM", "GTEx_tissue_subgroup_mean_TPM",
                     "base_mean", "log2_fold_change", "lfcSE", "stat", "pvalue",
-                    "padj")
+                    "padj", "cancer_group_all_gene_up_reg_rank",
+                    "cancer_group_all_gene_down_reg_rank",
+                    "cancer_group_all_gene_up_and_down_reg_rank",
+                    "cancer_group_pmtl_gene_up_reg_rank",
+                    "cancer_group_pmtl_gene_down_reg_rank",
+                    "cancer_group_pmtl_gene_up_and_down_reg_rank")
 
       if (xname %in% char_cols) {
         stopifnot(is.character(xcol))
+        stopifnot(!("" %in% xcol))
+
         if (xname %in% c("cohort", "Disease", "GTEx_tissue_subgroup",
-                         "GTEx_tissue_subgroup_UBERON", "Gene_symbol",
-                         "Gene_Ensembl_ID", "Disease_specimen_descriptor")) {
+                         "Gene_symbol", "Gene_Ensembl_ID",
+                         "Disease_specimen_descriptor")) {
 
           stopifnot(all(!is.na(xcol)))
         }
       } else if (xname %in% num_cols) {
         stopifnot(is.numeric(xcol))
+
+        if (xname %in% c("Disease_sample_count",
+                         "GTEx_tissue_subgroup_sample_count",
+                         "cancer_group_all_gene_up_reg_rank",
+                         "cancer_group_all_gene_down_reg_rank",
+                         "cancer_group_all_gene_up_and_down_reg_rank")) {
+
+          stopifnot(all(!is.na(xcol)))
+        }
+
+        if (xname %in% c("cancer_group_pmtl_gene_up_reg_rank",
+                         "cancer_group_pmtl_gene_down_reg_rank",
+                         "cancer_group_pmtl_gene_up_and_down_reg_rank")) {
+
+          stopifnot(identical(pmtl_is_na_vec, is.na(xcol)))
+        }
       } else {
         stop(paste0("Unknown diff exp table column ", xname))
       }
@@ -459,12 +566,12 @@ place_holder_res <- purrr::map_dfr(
     if (file.exists(diff_exp_csv_out_path)) {
       # Append.
       pgc_write_csv(
-        cge2nc_ucc_diff_exp_tbl, diff_exp_csv_out_path, append = TRUE,
+        cge2nc_ucc_diff_exp_rank_tbl, diff_exp_csv_out_path, append = TRUE,
         col_names = FALSE)
     } else {
       # Write colnames and empty db table only, if output file does not exist.
       pgc_write_csv(
-        cge2nc_ucc_diff_exp_tbl, diff_exp_csv_out_path, append = FALSE,
+        cge2nc_ucc_diff_exp_rank_tbl, diff_exp_csv_out_path, append = FALSE,
         col_names = TRUE)
 
       # Create table. Table should not exist.
@@ -473,16 +580,17 @@ place_holder_res <- purrr::map_dfr(
       conn <- connect_db(db_env_vars)
       # DBI table ID is case sensitive.
       db_write_table(
-        dplyr::slice(cge2nc_ucc_diff_exp_tbl, 0), conn,
+        dplyr::slice(cge2nc_ucc_diff_exp_rank_tbl, 0), conn,
         tolower(db_env_vars$BULK_EXP_SCHEMA),
         tolower(db_env_vars$BULK_EXP_DIFF_EXP_TBL))
-
       DBI::dbDisconnect(conn)
     }
 
     return(cge2nc_ucc_row)
   }
 )
+
+stopifnot(identical(place_holder_res, cg_ge2_nc_uniq_cg_cohort_tbl))
 
 rm(diff_exp_df, uniq_cg_cohort_tbl, cg_ge2_nat_cohorts_tbl,
    cg_ge2_nc_uniq_cg_cohort_tbl, place_holder_res)
