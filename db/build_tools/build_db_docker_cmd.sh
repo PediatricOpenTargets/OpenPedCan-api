@@ -93,6 +93,8 @@ pg_dump --clean --if-exists --no-owner --no-privileges \
 # Append SQL line(s) to create index(es).
 #
 # "Multiple  compressed  files can be concatenated." -- gzip manual page
+#
+# shellcheck disable=SC2129
 echo "CREATE INDEX tpm_ensg_id_idx ON ${BULK_EXP_SCHEMA}.${BULK_EXP_TPM_HISTOLOGY_TBL} (\"Gene_Ensembl_ID\");" \
   | gzip --no-name -c >> "$db_dump_out_path"
 
