@@ -67,7 +67,8 @@ source("src/get_gene_tpm_boxplot.R")
 source("src/get_gene_tpm_boxplot_summary_tbl.R")
 
 # differential expression
-source("src/get_diff_exp_tbl.R")
+source("src/get_one_efo_top_ensg_diff_exp_tbl.R")
+source("src/get_one_ensg_all_efo_diff_exp_tbl.R")
 
 # Adapted from https://www.rplumber.io/articles/quickstart.html
 plumber::pr_run(plumber::pr("src/plumber.R"), port = 80, host = "0.0.0.0")
