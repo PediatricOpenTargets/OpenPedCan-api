@@ -19,25 +19,24 @@
 # Args:
 # - efo_id: a single character value of EFO ID. Default is NULL.
 # - rank_genes_by: a single character value of the following.
-#   - "cancer_group_all_gene_up_reg_rank": Ranking of up-regulation among all
-#     genes in each cancer_group and cohort, comparing to GTEx tissues.
-#   - "cancer_group_all_gene_down_reg_rank": Ranking of down-regulation among
-#     all genes in each cancer_group and cohort, comparing to GTEx tissues.
-#   - "cancer_group_all_gene_up_and_down_reg_rank": Ranking of up- and
-#     down-regulation among all genes in each cancer_group and cohort, comparing
-#     to GTEx tissues.
-#   - "cancer_group_pmtl_gene_up_reg_rank": Ranking of up-regulation among PMTL
-#     genes in each cancer_group and cohort, comparing to GTEx tissues. If rank
-#     genes by this option, only PMTL genes will be included in database query
-#     result.
-#   - "cancer_group_pmtl_gene_down_reg_rank": Ranking of down-regulation among
-#     PMTL genes in each cancer_group and cohort, comparing to GTEx tissues. If
-#     rank genes by this option, only PMTL genes will be included in database
-#     query result.
-#   - "cancer_group_pmtl_gene_up_and_down_reg_rank": Ranking of up- and
-#     down-regulation among PMTL genes in each cancer_group and cohort,
-#     comparing to GTEx tissues. If rank genes by this option, only PMTL genes
-#     will be included in database query result.
+#   - "cgc_all_gene_up_reg_rank": Ranking of up-regulation among all genes in
+#     each cancer_group and cohort, comparing to GTEx tissues. cgc is a
+#     shorthand for (cancer_group, cohort) tuple.
+#   - "cgc_all_gene_down_reg_rank": Ranking of down-regulation among all genes
+#     in each cancer_group and cohort, comparing to GTEx tissues.
+#   - "cgc_all_gene_up_and_down_reg_rank": Ranking of up- and down-regulation
+#     among all genes in each cancer_group and cohort, comparing to GTEx
+#     tissues.
+#   - "cgc_pmtl_gene_up_reg_rank": Ranking of up-regulation among PMTL genes in
+#     each cancer_group and cohort, comparing to GTEx tissues. If rank genes by
+#     this option, only PMTL genes will be included in database query result.
+#   - "cgc_pmtl_gene_down_reg_rank": Ranking of down-regulation among PMTL genes
+#     in each cancer_group and cohort, comparing to GTEx tissues. If rank genes
+#     by this option, only PMTL genes will be included in database query result.
+#   - "cgc_pmtl_gene_up_and_down_reg_rank": Ranking of up- and down-regulation
+#     among PMTL genes in each cancer_group and cohort, comparing to GTEx
+#     tissues. If rank genes by this option, only PMTL genes will be included in
+#     database query result.
 # - max_gene_rank: a single non-negative integer value. Only genes with rank <=
 #   max_gene_rank are included in database query result.
 #
@@ -63,12 +62,13 @@
 # - pvalue
 # - padj
 # - PMTL
-# - cancer_group_all_gene_up_reg_rank
-# - cancer_group_all_gene_down_reg_rank
-# - cancer_group_all_gene_up_and_down_reg_rank
-# - cancer_group_pmtl_gene_up_reg_rank
-# - cancer_group_pmtl_gene_down_reg_rank
-# - cancer_group_pmtl_gene_up_and_down_reg_rank
+# - cgc_all_gene_up_reg_rank: cgc is a shorthand for (cancer_group, cohort)
+#   tuple.
+# - cgc_all_gene_down_reg_rank
+# - cgc_all_gene_up_and_down_reg_rank
+# - cgc_pmtl_gene_up_reg_rank
+# - cgc_pmtl_gene_down_reg_rank
+# - cgc_pmtl_gene_up_and_down_reg_rank
 get_one_efo_top_ensg_diff_exp_tbl <- function(efo_id, rank_genes_by,
                                               max_gene_rank) {
 
@@ -79,12 +79,12 @@ get_one_efo_top_ensg_diff_exp_tbl <- function(efo_id, rank_genes_by,
   stopifnot(is.character(rank_genes_by))
   stopifnot(identical(length(rank_genes_by), 1L))
   stopifnot(!is.na(rank_genes_by))
-  stopifnot(rank_genes_by %in% c("cancer_group_all_gene_up_reg_rank",
-                                 "cancer_group_all_gene_down_reg_rank",
-                                 "cancer_group_all_gene_up_and_down_reg_rank",
-                                 "cancer_group_pmtl_gene_up_reg_rank",
-                                 "cancer_group_pmtl_gene_down_reg_rank",
-                                 "cancer_group_pmtl_gene_up_and_down_reg_rank"))
+  stopifnot(rank_genes_by %in% c("cgc_all_gene_up_reg_rank",
+                                 "cgc_all_gene_down_reg_rank",
+                                 "cgc_all_gene_up_and_down_reg_rank",
+                                 "cgc_pmtl_gene_up_reg_rank",
+                                 "cgc_pmtl_gene_down_reg_rank",
+                                 "cgc_pmtl_gene_up_and_down_reg_rank"))
 
   stopifnot(is.numeric(max_gene_rank))
   stopifnot(identical(length(max_gene_rank), 1L))

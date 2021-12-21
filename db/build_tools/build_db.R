@@ -447,6 +447,8 @@ place_holder_res <- purrr::map_dfr(
 
     # TODO: Whether down regulated gene ranks neeed to be NA if log fold change
     # > 0, vice versa?
+    #
+    # cgc is a shorthand for (cancer_group, cohort) tuple.
     cge2nc_ucc_de_gene_rank_tbl <- cge2nc_ucc_diff_exp_tbl %>%
       dplyr::mutate(
         log2_fold_change = tidyr::replace_na(.data$log2_fold_change, 0)) %>%
@@ -454,43 +456,43 @@ place_holder_res <- purrr::map_dfr(
       dplyr::summarise(
         mean_gtex_log2_fc = mean(.data$log2_fold_change), .groups = "drop") %>%
       dplyr::mutate(
-        cancer_group_all_gene_up_reg_rank = rank(
+        cgc_all_gene_up_reg_rank = rank(
           -.data$mean_gtex_log2_fc, na.last = TRUE, ties.method = "first"),
 
-        cancer_group_all_gene_down_reg_rank = rank(
+        cgc_all_gene_down_reg_rank = rank(
           .data$mean_gtex_log2_fc, na.last = TRUE, ties.method = "first"),
 
-        cancer_group_all_gene_up_and_down_reg_rank = rank(
+        cgc_all_gene_up_and_down_reg_rank = rank(
           -abs(.data$mean_gtex_log2_fc), na.last = TRUE, ties.method = "first")
       ) %>%
       dplyr::mutate(
-        cancer_group_pmtl_gene_up_reg_rank = dplyr::if_else(
+        cgc_pmtl_gene_up_reg_rank = dplyr::if_else(
           is.na(.data$PMTL),
           true = NA_integer_,
           false = rank(
             dplyr::if_else(
               is.na(.data$PMTL), true = NA_integer_,
-              false = .data$cancer_group_all_gene_up_reg_rank),
+              false = .data$cgc_all_gene_up_reg_rank),
             na.last = TRUE, ties.method = "first")
         ),
 
-        cancer_group_pmtl_gene_down_reg_rank = dplyr::if_else(
+        cgc_pmtl_gene_down_reg_rank = dplyr::if_else(
           is.na(.data$PMTL),
           true = NA_integer_,
           false = rank(
             dplyr::if_else(
               is.na(.data$PMTL), true = NA_integer_,
-              false = .data$cancer_group_all_gene_down_reg_rank),
+              false = .data$cgc_all_gene_down_reg_rank),
             na.last = TRUE, ties.method = "first")
         ),
 
-        cancer_group_pmtl_gene_up_and_down_reg_rank = dplyr::if_else(
+        cgc_pmtl_gene_up_and_down_reg_rank = dplyr::if_else(
           is.na(.data$PMTL),
           true = NA_integer_,
           false = rank(
             dplyr::if_else(
               is.na(.data$PMTL), true = NA_integer_,
-              false = .data$cancer_group_all_gene_up_and_down_reg_rank),
+              false = .data$cgc_all_gene_up_and_down_reg_rank),
             na.last = TRUE, ties.method = "first")
         )
       )
@@ -521,12 +523,12 @@ place_holder_res <- purrr::map_dfr(
       num_cols <- c("Disease_sample_count", "GTEx_tissue_subgroup_sample_count",
                     "Disease_mean_TPM", "GTEx_tissue_subgroup_mean_TPM",
                     "base_mean", "log2_fold_change", "lfcSE", "stat", "pvalue",
-                    "padj", "cancer_group_all_gene_up_reg_rank",
-                    "cancer_group_all_gene_down_reg_rank",
-                    "cancer_group_all_gene_up_and_down_reg_rank",
-                    "cancer_group_pmtl_gene_up_reg_rank",
-                    "cancer_group_pmtl_gene_down_reg_rank",
-                    "cancer_group_pmtl_gene_up_and_down_reg_rank")
+                    "padj", "cgc_all_gene_up_reg_rank",
+                    "cgc_all_gene_down_reg_rank",
+                    "cgc_all_gene_up_and_down_reg_rank",
+                    "cgc_pmtl_gene_up_reg_rank",
+                    "cgc_pmtl_gene_down_reg_rank",
+                    "cgc_pmtl_gene_up_and_down_reg_rank")
 
       if (xname %in% char_cols) {
         stopifnot(is.character(xcol))
@@ -543,16 +545,16 @@ place_holder_res <- purrr::map_dfr(
 
         if (xname %in% c("Disease_sample_count",
                          "GTEx_tissue_subgroup_sample_count",
-                         "cancer_group_all_gene_up_reg_rank",
-                         "cancer_group_all_gene_down_reg_rank",
-                         "cancer_group_all_gene_up_and_down_reg_rank")) {
+                         "cgc_all_gene_up_reg_rank",
+                         "cgc_all_gene_down_reg_rank",
+                         "cgc_all_gene_up_and_down_reg_rank")) {
 
           stopifnot(all(!is.na(xcol)))
         }
 
-        if (xname %in% c("cancer_group_pmtl_gene_up_reg_rank",
-                         "cancer_group_pmtl_gene_down_reg_rank",
-                         "cancer_group_pmtl_gene_up_and_down_reg_rank")) {
+        if (xname %in% c("cgc_pmtl_gene_up_reg_rank",
+                         "cgc_pmtl_gene_down_reg_rank",
+                         "cgc_pmtl_gene_up_and_down_reg_rank")) {
 
           stopifnot(identical(pmtl_is_na_vec, is.na(xcol)))
         }

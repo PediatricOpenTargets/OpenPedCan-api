@@ -40,12 +40,13 @@
 # - pvalue
 # - padj
 # - PMTL
-# - cancer_group_all_gene_up_reg_rank
-# - cancer_group_all_gene_down_reg_rank
-# - cancer_group_all_gene_up_and_down_reg_rank
-# - cancer_group_pmtl_gene_up_reg_rank
-# - cancer_group_pmtl_gene_down_reg_rank
-# - cancer_group_pmtl_gene_up_and_down_reg_rank
+# - cgc_all_gene_up_reg_rank: cgc is a shorthand for (cancer_group, cohort)
+#   tuple.
+# - cgc_all_gene_down_reg_rank
+# - cgc_all_gene_up_and_down_reg_rank
+# - cgc_pmtl_gene_up_reg_rank
+# - cgc_pmtl_gene_down_reg_rank
+# - cgc_pmtl_gene_up_and_down_reg_rank
 get_one_ensg_all_efo_diff_exp_tbl <- function(ensg_id) {
   stopifnot(is.character(ensg_id))
   stopifnot(identical(length(ensg_id), 1L))
