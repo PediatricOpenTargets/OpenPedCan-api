@@ -131,13 +131,17 @@ test_endpoint <- function(endpoint_spec) {
   }
 
   if ("efoId" %in% colnames(endpoint_test_tbl)) {
-    endpoint_test_tbl <- dplyr::group_modify(
-      dplyr::group_by(endpoint_test_tbl, efoId, includeTumorDesc),
-      get_expected_response_code)
+    endpoint_test_tbl <- dplyr::ungroup(
+      dplyr::group_modify(
+        dplyr::group_by(endpoint_test_tbl, efoId, includeTumorDesc),
+        get_expected_response_code)
+    )
   } else {
-    endpoint_test_tbl <- dplyr::group_modify(
-      dplyr::group_by(endpoint_test_tbl, includeTumorDesc),
-      get_expected_response_code)
+    endpoint_test_tbl <- dplyr::ungroup(
+      dplyr::group_modify(
+        dplyr::group_by(endpoint_test_tbl, includeTumorDesc),
+        get_expected_response_code)
+    )
   }
 
   if (res_type == "json") {
