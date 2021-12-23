@@ -17,7 +17,7 @@
 # expressed ENSG IDs
 #
 # Args:
-# - efo_id: a single character value of EFO ID. Default is NULL.
+# - efo_id: a single character value of EFO ID.
 # - rank_genes_by: a single character value of the following.
 #   - "cgc_all_gene_up_reg_rank": Ranking of up-regulation among all genes in
 #     each cancer_group and cohort, comparing to GTEx tissues. cgc is a
