@@ -89,6 +89,7 @@ get_one_efo_top_ensg_diff_exp_tbl <- function(efo_id, rank_genes_by,
   stopifnot(is.numeric(max_gene_rank))
   stopifnot(identical(length(max_gene_rank), 1L))
   stopifnot(!is.na(max_gene_rank))
+  stopifnot(is.finite(max_gene_rank))
   max_gene_rank <- as.integer(max_gene_rank)
   stopifnot(max_gene_rank >= 0)
 
