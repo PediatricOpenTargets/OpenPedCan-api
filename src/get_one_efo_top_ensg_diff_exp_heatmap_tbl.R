@@ -97,12 +97,57 @@ get_one_efo_top_ensg_diff_exp_heatmap_tbl <- function(
 
   stopifnot(nrow(diff_exp_tbl) > 0)
 
-  diff_exp_log2_fc_mat <- tidyr::pivot_wider(
+  diff_exp_tbl <- dplyr::mutate(
     diff_exp_tbl,
-    id_cols = c(cohort, EFO, MONDO, Disease, Disease_specimen_descriptor,
+    log2_fold_change = tidyr::replace_na(.data$log2_fold_change, 0),
+    row_id = glue::glue(
+      paste0(
+        "{Gene_symbol} {Gene_Ensembl_ID} {Disease} ",
+        "(Dataset = {cohort}, Specimen = {Disease_specimen_descriptor}, ",
+        "N = {Disease_sample_count})")))
+
+  stopifnot(identical(
+    sum(is.na(
+      dplyr::select(
+        diff_exp_tbl, cohort, EFO, Disease, Disease_specimen_descriptor,
+        Disease_sample_count, Gene_Ensembl_ID, Gene_symbol, log2_fold_change,
+        GTEx_tissue_subgroup))),
+    0L
+  ))
+
+  diff_exp_log2_fc_tbl <- tidyr::pivot_wider(
+    diff_exp_tbl,
+    id_cols = c(cohort, EFO, Disease, Disease_specimen_descriptor,
                 Disease_sample_count, Gene_Ensembl_ID, Gene_symbol),
     names_from = GTEx_tissue_subgroup,
     values_from = log2_fold_change)
 
-  return(diff_exp_log2_fc_mat)
+  diff_exp_log2_fc_df <- dplyr::mutate(
+    diff_exp_log2_fc_tbl,
+    row_id = glue::glue(
+      paste0(
+        "{Gene_symbol} {Gene_Ensembl_ID} {Disease} ",
+        "(Dataset = {cohort}, Specimen = {Disease_specimen_descriptor}, ",
+        "N = {Disease_sample_count})")))
+
+  diff_exp_log2_fc_df <- dplyr::select(
+    diff_exp_log2_fc_df,
+    !c(cohort, EFO, Disease, Disease_specimen_descriptor,
+       Disease_sample_count, Gene_Ensembl_ID, Gene_symbol))
+
+  stopifnot(identical(
+    length(diff_exp_log2_fc_df$row_id),
+    length(unique(diff_exp_log2_fc_df$row_id))
+  ))
+
+  diff_exp_log2_fc_df <- tibble::column_to_rownames(
+    diff_exp_log2_fc_df, var = "row_id")
+
+  diff_exp_log2_fc_df <- diff_exp_log2_fc_df[
+    order(rownames(diff_exp_log2_fc_df), decreasing = FALSE),
+    order(colnames(diff_exp_log2_fc_df), decreasing = FALSE)]
+
+  diff_exp_log2_fc_pheatmap <- pheatmap::pheatmap(diff_exp_log2_fc_df)
+
+  return(diff_exp_log2_fc_pheatmap)
 }
