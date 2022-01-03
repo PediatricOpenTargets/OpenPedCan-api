@@ -37,14 +37,6 @@ get_gene_tpm_boxplot <- function(gene_tpm_boxplot_tbl, y_axis_scale) {
   stopifnot(!is.na(gene_symbol))
   stopifnot(identical(length(gene_symbol), 1L))
 
-  uniq_x_label_vec <- unique(gene_tpm_boxplot_tbl$x_labels)
-  stopifnot(is.factor(uniq_x_label_vec))
-  stopifnot(all(!is.na(uniq_x_label_vec)))
-
-  uniq_sample_type_vec <- unique(gene_tpm_boxplot_tbl$sample_type)
-  stopifnot(is.character(uniq_sample_type_vec))
-  stopifnot(all(uniq_sample_type_vec %in% c("disease", "normal")))
-
   efo_id_vec <- purrr::discard(unique(gene_tpm_boxplot_tbl$EFO), is.na)
   stopifnot(is.character(efo_id_vec))
   stopifnot(length(efo_id_vec) > 0)
@@ -53,44 +45,58 @@ get_gene_tpm_boxplot <- function(gene_tpm_boxplot_tbl, y_axis_scale) {
     unique(gene_tpm_boxplot_tbl$GTEx_tissue_subgroup), is.na)
   stopifnot(is.character(gtex_subgroup_vec))
 
+  uniq_x_label_vec <- unique(gene_tpm_boxplot_tbl$x_label)
+  stopifnot(is.factor(uniq_x_label_vec))
+  stopifnot(all(!is.na(uniq_x_label_vec)))
+
+  spec_desc_fill_color_vec <- c(
+    "Pediatric Primary and Relapse Tumors" = "#A997DF",
+    "Pediatric Primary Tumors" = "#56B4E9",
+    "Pediatric Relapse Tumors" = "#E69F00",
+    "GTEx Normal Adult Tissues" = "grey80")
+
+  uniq_spec_desc_fill_vec <- unique(
+    gene_tpm_boxplot_tbl$specimen_descriptor_fill)
+  stopifnot(is.character(uniq_spec_desc_fill_vec))
+  stopifnot(all(!is.na(uniq_spec_desc_fill_vec)))
+  stopifnot(all(uniq_spec_desc_fill_vec %in% names(spec_desc_fill_color_vec)))
+
+  # Order disease before normal
+  spec_desc_fill_color_vec <- spec_desc_fill_color_vec[
+    names(spec_desc_fill_color_vec) %in% uniq_spec_desc_fill_vec]
+
+  # When there is "Pediatric Primary and Relapse Tumors", there is no "Pediatric
+  # Primary Tumors" or "Pediatric Relapse Tumors"
+  if (all(c("Pediatric Primary Tumors", "Pediatric Relapse Tumors") %in%
+            uniq_spec_desc_fill_vec) ||
+        ("Pediatric Primary and Relapse Tumors" %in% uniq_spec_desc_fill_vec)) {
+
+    tumor_title_desc <- "Pediatric primary and relapse tumor"
+
+  } else if ("Pediatric Primary Tumors" %in% uniq_spec_desc_fill_vec) {
+    tumor_title_desc <- "Pediatric primary only tumor"
+
+  } else if ("Pediatric Relapse Tumors" %in% uniq_spec_desc_fill_vec) {
+    tumor_title_desc <- "Pediatric relapse only tumor"
+
+  } else {
+    stop(paste0(
+      "Internal error: not supported unique tumor descriptors ",
+      paste(uniq_spec_desc_fill_vec, collapse = ", ")))
+  }
+
+  # Set title
   if (length(gtex_subgroup_vec) > 0) {
-    title <- paste(
-      paste0(gene_symbol, " (", ensg_id, ")"),
-      "Pediatric tumor and GTEx normal adult tissue gene expression",
-      sep = "\n")
+    title <- paste0(
+      gene_symbol, " (", ensg_id, ")\n",
+      tumor_title_desc, " and GTEx normal adult tissue gene expression")
   } else {
-    title <- paste(
-      paste0(gene_symbol, " (", ensg_id, ")"),
-      "Pediatric tumor gene expression",
-      sep = "\n")
+    title <- paste0(
+      gene_symbol, " (", ensg_id, ")\n",
+      tumor_title_desc, " gene expression")
   }
 
-  if (identical(length(uniq_sample_type_vec), 1L)) {
-    # Only one sample type.
-    #
-    # Use grey for either one.
-    box_fill_colors = c("disease" = "grey80", "normal" = "grey80")
-  } else {
-    # More than one saple types.
-    #
-    # Use red for diease and grey for normal.
-    box_fill_colors = c("disease" = "red3", "normal" = "grey80")
-  }
-
-  # The x-axis labels are long and rotated 45 degrees, so they are out of the
-  # plot in the default margin. Increase right margin to fit all text.
-  plot_margin <- ggplot2::theme_get()$plot.margin
-
-  if (!identical(length(plot_margin), 4L)) {
-    plot_margin <- rep(grid::unit(x = 5.5, units = "points"), 4)
-  }
-
-  rightmost_x_label <- dplyr::last(
-    levels(gene_tpm_boxplot_tbl$x_labels), default = "")
-  # increase right margin by the width of the last x label * 0.71
-  plot_margin[2] <- grid::unit(
-    x = 0.8, units = "strwidth", data = rightmost_x_label)
-
+  # Set y-axis label
   if (y_axis_scale == "linear") {
     y_axis_label <- "TPM"
   } else if (y_axis_scale == "log10") {
@@ -101,21 +107,47 @@ get_gene_tpm_boxplot <- function(gene_tpm_boxplot_tbl, y_axis_scale) {
     stop(paste0("y_axis_scale = ", y_axis_scale, " is not implemented."))
   }
 
+  # Set fill guide/legend
+  if (length(spec_desc_fill_color_vec) > 1) {
+    fill_guide <- ggplot2::guide_legend(title = "")
+  } else {
+    fill_guide <- "none"
+  }
+
+  # Set margin
+  plot_margin <- ggplot2::theme_get()$plot.margin
+
+  if (!identical(length(plot_margin), 4L)) {
+    plot_margin <- rep(grid::unit(x = 5.5, units = "points"), 4)
+  }
+
+  # The x-axis labels are long and rotated 45 degrees, so they are out of the
+  # plot in the default margin. Increase right margin to fit all text.
+  plot_margin[2] <- grid::unit(x = 29, units = "char")
+
   gene_tpm_boxplot <- ggplot2::ggplot(gene_tpm_boxplot_tbl,
-                                      ggplot2::aes(x = x_labels, y = TPM,
-                                                   fill = sample_type)) +
-    ggplot2::stat_boxplot(geom = "errorbar", width = 0.2) +
-    ggplot2::geom_boxplot(lwd = 0.5, fatten = 0.7, outlier.shape = 1,
-                          width = 0.5, outlier.size = 1) +
+                                      ggplot2::aes(
+                                        x = x_label, y = TPM,
+                                        fill = specimen_descriptor_fill)) +
+    ggplot2::stat_boxplot(
+      geom = "errorbar", width = 0.25,
+      position = ggplot2::position_dodge(0.5)) +
+    ggplot2::geom_boxplot(
+      lwd = 0.5, fatten = 0.7, outlier.shape = 1,
+      width = 0.5, outlier.size = 1,
+      position = ggplot2::position_dodge(0.5)) +
     ggplot2::ylab(y_axis_label) +
     ggplot2::xlab("") +
-    ggplot2_publication_theme(base_size = 12) +
+    ggplot2_boxplot_theme(base_size = 12) +
     ggplot2::theme(
       axis.text.x = ggplot2::element_text(angle = -45, vjust = 1, hjust = 0),
-      plot.margin = plot_margin) +
+      plot.margin = plot_margin,
+      legend.position = "top", legend.justification = "left",
+      legend.box.just = "left",
+      legend.box.margin = ggplot2::margin(-0.6, 0, -1, 0, unit = "line")) +
     ggplot2::ggtitle(title) +
-    ggplot2::scale_fill_manual(values = box_fill_colors) +
-    ggplot2::guides(fill = "none")
+    ggplot2::scale_fill_manual(values = spec_desc_fill_color_vec) +
+    ggplot2::guides(fill = fill_guide)
 
   return(gene_tpm_boxplot)
 }

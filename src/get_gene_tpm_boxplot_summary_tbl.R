@@ -21,7 +21,7 @@
 #
 # Returns a tibble with all NAs replaced by blank string "".
 get_gene_tpm_boxplot_summary_tbl <- function(gene_tpm_boxplot_tbl) {
-  uniq_x_label_vec <- unique(gene_tpm_boxplot_tbl$x_labels)
+  uniq_x_label_vec <- unique(gene_tpm_boxplot_tbl$x_label)
   stopifnot(is.factor(uniq_x_label_vec))
   stopifnot(all(!is.na(uniq_x_label_vec)))
 
@@ -60,7 +60,8 @@ get_gene_tpm_boxplot_summary_tbl <- function(gene_tpm_boxplot_tbl) {
   }
 
   gene_tpm_boxplot_summary_tbl <- dplyr::summarise(
-    dplyr::group_by(gene_tpm_boxplot_tbl, x_labels),
+    dplyr::group_by(gene_tpm_boxplot_tbl, x_label, specimen_descriptor_fill),
+    box_sample_count = unique(box_sample_count),
     Gene_Ensembl_ID = unique(Gene_Ensembl_ID),
     Gene_symbol = unique(Gene_symbol),
     PMTL = unique(PMTL),
@@ -77,7 +78,8 @@ get_gene_tpm_boxplot_summary_tbl <- function(gene_tpm_boxplot_tbl) {
     TPM_25th_percentile = round(quantile(TPM, 0.25), digits = 2),
     TPM_median = round(median(TPM), digits = 2),
     TPM_75th_percentile = round(quantile(TPM, 0.75), digits = 2),
-    TPM_max = round(max(TPM), digits = 2)
+    TPM_max = round(max(TPM), digits = 2),
+    .groups = "drop"
   )
 
   # Only replace NA with empty string in columns that have NA in them. This will

@@ -1,5 +1,58 @@
 # OpenPedCan-api
 
+## v0.4.0-beta
+
+### Changed
+
+- Changed the interfaces of the following endpoints by adding a required parameter `includeTumorDesc` to determine how independent primary and relapse tumor samples should be handled.
+  - `/tpm/gene-disease-gtex/json`
+  - `/tpm/gene-disease-gtex/plot`
+  - `/tpm/gene-all-cancer/json`
+  - `/tpm/gene-all-cancer/plot`
+  - `/tpm/gene-all-cancer-collapsed-gtex/json`
+  - `/tpm/gene-all-cancer-collapsed-gtex/plot`
+  - `/tpm/gene-all-cancer-gtex/json`
+  - `/tpm/gene-all-cancer-gtex/plot`
+- Removed `tests/curl_test_endpoints.sh`.
+- Changed the interface of `get_gene_tpm_tbl` function:
+  - Changed `gtex_sample_group` parameter value choices to `"require"` and `"exclude"`.
+  - Added a required parameter `relapse_sample_group`.
+  - Removed `min_n_per_sample_group` parameter.
+  - Added a column `specimen_descriptor` to returned table.
+- Removed `src/add_gene_tpm_box_group.R`. The procedure in `add_gene_tpm_box_group` function is integrated into `get_gene_tpm_boxplot_tbl` function.
+- Changed the interface of `get_gene_tpm_boxplot_tbl` function:
+  - Added a required parameter `gtex_histology_group`.
+  - Added a required parameter `spec_desc_group`.
+  - Added a required parameter `min_n_per_box`.
+  - Changed the returned table:
+    - Renamed `x_labels` column to `x_label`.
+    - Removed `box_group` column.
+    - Added `histology_group` column.
+    - Added `specimen_descriptor` column.
+    - Added `specimen_descriptor_fill` column.
+    - Added `specimen_descriptor_x_label` column.
+    - Added `box_sample_count` column.
+    - Added `x_label_sample_count` column.
+- Changed the returned table of `tpm_boxplot_summary_tbl` function:
+  - Added `specimen_descriptor_fill` column.
+  - Added `box_sample_count` column.
+- Renamed `src/ggplot2_publication_theme.R` to `src/ggplot2_boxplot_theme.R`.
+- Moved `results/test-*.tsv` to `results/tsv/test-*.tsv`.
+- Changed boxplot tumor box fill colors from red to blue, orange, and purple for primary, relapse, and primary-and-relapse tumor samples respectively.
+- Changed boxplot titles to describe primary and relapse conditions of included tumor samples.
+- Changed boxplot title alignment from centered to left-aligned.
+- Changed boxplot legend location from right to top-left.
+- Changed boxplot right margin and image width.
+- Added legend to boxplot with two or more box colors.
+
+### Added
+
+- Added independent relapse tumor samples to OpenPedCan-api database `bulk_expression` schema and `bulk_expression_tpm_histology` table.
+- Added `specimen_descriptor` column to OpenPedCan-api database `bulk_expression` schema and `bulk_expression_tpm_histology` table. The `specimen_descriptor` column describes whether a specimen is obtained from primary tumor, or relapse tumor, or normal tissue.
+- Added `tests/run_tests.sh` to test API.
+- Added `tests/r_test_scripts/test_endpoint_http.R` to test API HTTP server, which outputs `tests/results/endpoint_response_times.tsv` and `tests/plots/endpoint_response_time_boxplot.png` to summarize HTTP response times.
+- Added `src/get_tpm_endpoint_tbl.R` to call `get_gene_tpm_tbl` and `get_gene_tpm_boxplot_tbl` with proper parameters according to HTTP request query parameters.
+
 ## v0.3.3-beta
 
 ### Changed
