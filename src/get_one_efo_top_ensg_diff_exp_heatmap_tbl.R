@@ -100,54 +100,81 @@ get_one_efo_top_ensg_diff_exp_heatmap_tbl <- function(
   diff_exp_tbl <- dplyr::mutate(
     diff_exp_tbl,
     log2_fold_change = tidyr::replace_na(.data$log2_fold_change, 0),
-    row_id = glue::glue(
+    y_axis_label = glue::glue(
       paste0(
         "{Gene_symbol} {Gene_Ensembl_ID} {Disease} ",
         "(Dataset = {cohort}, Specimen = {Disease_specimen_descriptor}, ",
-        "N = {Disease_sample_count})")))
+        "N = {Disease_sample_count})")),
+    x_axis_label = glue::glue(
+      paste0(
+        "{GTEx_tissue_subgroup} (Dataset = GTEx, ",
+        "Specimen = GTEx Normal Adult Tissues, ",
+        "N = {GTEx_tissue_subgroup_sample_count})")))
 
   stopifnot(identical(
     sum(is.na(
       dplyr::select(
         diff_exp_tbl, cohort, EFO, Disease, Disease_specimen_descriptor,
         Disease_sample_count, Gene_Ensembl_ID, Gene_symbol, log2_fold_change,
-        GTEx_tissue_subgroup))),
+        GTEx_tissue_subgroup, y_axis_label, GTEx_tissue_subgroup_sample_count,
+        x_axis_label))),
     0L
   ))
 
   diff_exp_log2_fc_tbl <- tidyr::pivot_wider(
     diff_exp_tbl,
-    id_cols = c(cohort, EFO, Disease, Disease_specimen_descriptor,
-                Disease_sample_count, Gene_Ensembl_ID, Gene_symbol),
-    names_from = GTEx_tissue_subgroup,
+    id_cols = c(y_axis_label),
+    names_from = x_axis_label,
     values_from = log2_fold_change)
 
-  diff_exp_log2_fc_df <- dplyr::mutate(
-    diff_exp_log2_fc_tbl,
-    row_id = glue::glue(
-      paste0(
-        "{Gene_symbol} {Gene_Ensembl_ID} {Disease} ",
-        "(Dataset = {cohort}, Specimen = {Disease_specimen_descriptor}, ",
-        "N = {Disease_sample_count})")))
-
-  diff_exp_log2_fc_df <- dplyr::select(
-    diff_exp_log2_fc_df,
-    !c(cohort, EFO, Disease, Disease_specimen_descriptor,
-       Disease_sample_count, Gene_Ensembl_ID, Gene_symbol))
-
   stopifnot(identical(
-    length(diff_exp_log2_fc_df$row_id),
-    length(unique(diff_exp_log2_fc_df$row_id))
+    length(diff_exp_log2_fc_tbl$y_axis_label),
+    length(unique(diff_exp_log2_fc_tbl$y_axis_label))
   ))
 
   diff_exp_log2_fc_df <- tibble::column_to_rownames(
-    diff_exp_log2_fc_df, var = "row_id")
+    diff_exp_log2_fc_tbl, var = "y_axis_label")
+
+  if (DEBUG) {
+    stopifnot(identical(
+      nrow(diff_exp_log2_fc_df),
+      length(unique(rownames(diff_exp_log2_fc_df)))
+    ))
+
+    stopifnot(all(!is.na(rownames(diff_exp_log2_fc_df))))
+
+    stopifnot(identical(
+      ncol(diff_exp_log2_fc_df),
+      length(unique(colnames(diff_exp_log2_fc_df)))
+    ))
+
+    stopifnot(all(!is.na(colnames(diff_exp_log2_fc_df))))
+  }
+
 
   diff_exp_log2_fc_df <- diff_exp_log2_fc_df[
     order(rownames(diff_exp_log2_fc_df), decreasing = FALSE),
     order(colnames(diff_exp_log2_fc_df), decreasing = FALSE)]
 
+  # TODO: run hclust only to improve efficiency.
   diff_exp_log2_fc_pheatmap <- pheatmap::pheatmap(diff_exp_log2_fc_df)
 
-  return(diff_exp_log2_fc_pheatmap)
+  diff_exp_tbl <- dplyr::mutate(
+    diff_exp_tbl,
+    x_axis_label = factor(
+      .data$x_axis_label,
+      levels = diff_exp_log2_fc_pheatmap$tree_col$labels[
+        diff_exp_log2_fc_pheatmap$tree_col$order]
+    ),
+    y_axis_label = factor(
+      .data$y_axis_label,
+      levels = diff_exp_log2_fc_pheatmap$tree_row$labels[
+        diff_exp_log2_fc_pheatmap$tree_row$order]
+    )
+  )
+
+  stopifnot(all(!is.na(diff_exp_tbl$x_axis_label)))
+  stopifnot(all(!is.na(diff_exp_tbl$y_axis_label)))
+
+  return(diff_exp_tbl)
 }
