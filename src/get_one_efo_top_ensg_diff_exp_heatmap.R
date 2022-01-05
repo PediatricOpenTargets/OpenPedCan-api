@@ -90,8 +90,8 @@ get_one_efo_top_ensg_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
       axis.title.y = ggplot2::element_blank(),
       plot.margin = plot_margin) +
     ggplot2::scale_fill_gradient2(
-      low = rgb(0/255, 114/255, 178/255),
-      high = rgb(230/255, 159/255, 0/255),
+      low = rgb(0 / 255, 114 / 255, 178 / 255),
+      high = rgb(230 / 255, 159 / 255, 0 / 255),
       name = "log2FC") +
     ggplot2::ggtitle(diff_exp_heatmap_title)
 
