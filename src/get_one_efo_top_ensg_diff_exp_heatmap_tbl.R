@@ -42,7 +42,6 @@
 # - cohort: NULL or a single character value of cohort to be included in the
 #   heatmap. Default is NULL, which is to include All Cohorts or the only
 #   cohort.
-# - y_axis_scale: a single character value of either "linear" or "log10".
 # - spec_desc_group: NOT IMPLEMENTED. TODO: implement when data have relapse
 #   tumor comparisons. A single character value with the following choices for
 #   grouping biospecimen descriptors. Raise error if no (Disease, cohort) tuple
@@ -61,15 +60,11 @@
 # Returns a differential expression heatmap tibble of one EFO ID and top
 # differentially expressed ENSG IDs.
 get_one_efo_top_ensg_diff_exp_heatmap_tbl <- function(
-  efo_id, rank_genes_by, max_gene_rank, y_axis_scale, cohort = NULL,
+  efo_id, rank_genes_by, max_gene_rank, cohort = NULL,
   min_n_samples_per_group = 3,
   spec_desc_group = "primary_and_relapse_same_group") {
 
   all_cohorts_str_id <- "All Cohorts"
-
-  stopifnot(is.character(y_axis_scale))
-  stopifnot(identical(length(y_axis_scale), 1L))
-  stopifnot(y_axis_scale %in% c("linear", "log10"))
 
   diff_exp_tbl <- get_one_efo_top_ensg_diff_exp_tbl(
     efo_id, rank_genes_by, max_gene_rank)
@@ -172,6 +167,9 @@ get_one_efo_top_ensg_diff_exp_heatmap_tbl <- function(
         diff_exp_log2_fc_pheatmap$tree_row$order]
     )
   )
+
+  diff_exp_tbl$rank_genes_by <- rank_genes_by
+  diff_exp_tbl$max_gene_rank <- max_gene_rank
 
   stopifnot(all(!is.na(diff_exp_tbl$x_axis_label)))
   stopifnot(all(!is.na(diff_exp_tbl$y_axis_label)))

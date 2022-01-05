@@ -17,58 +17,83 @@
 # expressed ENSG IDs
 #
 # Args:
-# - efo_id: a single character value of EFO ID. Default is NULL.
-# - rank_genes_by: a single character value of the following.
-#   - "cgc_all_gene_up_reg_rank": Ranking of up-regulation among all genes in
-#     each cancer_group and cohort, comparing to GTEx tissues. cgc is a
-#     shorthand for (cancer_group, cohort) tuple.
-#   - "cgc_all_gene_down_reg_rank": Ranking of down-regulation among all genes
-#     in each cancer_group and cohort, comparing to GTEx tissues.
-#   - "cgc_all_gene_up_and_down_reg_rank": Ranking of up- and down-regulation
-#     among all genes in each cancer_group and cohort, comparing to GTEx
-#     tissues.
-#   - "cgc_pmtl_gene_up_reg_rank": Ranking of up-regulation among PMTL genes in
-#     each cancer_group and cohort, comparing to GTEx tissues. If rank genes by
-#     this option, only PMTL genes will be included in database query result.
-#   - "cgc_pmtl_gene_down_reg_rank": Ranking of down-regulation among PMTL genes
-#     in each cancer_group and cohort, comparing to GTEx tissues. If rank genes
-#     by this option, only PMTL genes will be included in database query result.
-#   - "cgc_pmtl_gene_up_and_down_reg_rank": Ranking of up- and down-regulation
-#     among PMTL genes in each cancer_group and cohort, comparing to GTEx
-#     tissues. If rank genes by this option, only PMTL genes will be included in
-#     database query result.
-# - max_gene_rank: a single non-negative integer value. Only genes with rank <=
-#   max_gene_rank are included in database query result.
-# - cohort: NULL or a single character value of cohort to be included in the
-#   heatmap. Default is NULL, which is to include All Cohorts or the only
-#   cohort.
-# - y_axis_scale: a single character value of either "linear" or "log10".
-# - spec_desc_group: NOT IMPLEMENTED. TODO: implement when data have relapse
-#   tumor comparisons. A single character value with the following choices for
-#   grouping biospecimen descriptors. Raise error if no (Disease, cohort) tuple
-#   left after filtering.
-#   - "primary_and_relapse_same_group": primary and relapse samples have the
-#     same group. Remove any (Disease, cohort) tuple that has no relapse or
-#     primary sample.
-#   - "primary_and_relapse_different_groups": primary and relapse samples have
-#     different groups. Remove any (Disease, cohort) tuple that has no relapse
-#     or primary sample.
-#   - "primary_only_group": for each (Disease, cohort) tuple, keep only primary
-#     samples.
-#   - "relapse_only_group": for each (Disease, cohort) tuple, keep only relapse
-#     samples.
+# - diff_exp_heatmap_tbl: A tibble returned by
+#   get_one_efo_top_ensg_diff_exp_heatmap_tbl.
+# - y_axis_scale: A single character value of either "linear" or "log10".
 #
-# Returns a
-get_one_efo_top_ensg_diff_exp_heatmap <- function(
-  efo_id, rank_genes_by, max_gene_rank, y_axis_scale, cohort = NULL,
-  min_n_samples_per_group = 3,
-  spec_desc_group = "primary_and_relapse_same_group") {
+# Returns a ggplot of a differential expression heatmap of one EFO ID and top
+# differentially expressed ENSG IDs
+get_one_efo_top_ensg_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
+                                                  y_axis_scale) {
 
-  all_cohorts_str_id <- "All Cohorts"
+  stopifnot(is.character(y_axis_scale))
+  stopifnot(identical(length(y_axis_scale), 1L))
+  stopifnot(y_axis_scale %in% c("linear", "log10"))
 
-  diff_exp_heatmap_tbl <- get_one_efo_top_ensg_diff_exp_heatmap_tbl(
-    efo_id, rank_genes_by, max_gene_rank, y_axis_scale, cohort,
-    min_n_samples_per_group, spec_desc_group)
+  rank_genes_by <- unique(diff_exp_heatmap_tbl$rank_genes_by)
+  stopifnot(is.character(rank_genes_by))
+  stopifnot(identical(length(rank_genes_by), 1L))
+  stopifnot(!is.na(rank_genes_by))
 
-  return(diff_exp_heatmap_tbl)
+  efo_id <- unique(diff_exp_heatmap_tbl$EFO)
+  stopifnot(is.character(efo_id))
+  stopifnot(identical(length(efo_id), 1L))
+  stopifnot(!is.na(efo_id))
+
+  diff_exp_heatmap_title_disease <- paste0(
+    unique(diff_exp_heatmap_tbl$Disease), collapse = " and ")
+
+  diff_exp_heatmap_title_rank_genes_by <- list(
+    cgc_all_gene_up_reg_rank = "Upregulated Genes",
+    cgc_all_gene_down_reg_rank = "Downregulated Genes",
+    cgc_all_gene_up_and_down_reg_rank = "Top Differentially Expressed Genes",
+    cgc_pmtl_gene_up_reg_rank = "Upregulated PMTL Genes",
+    cgc_pmtl_gene_down_reg_rank = "Downregulated PMTL Genes",
+    cgc_pmtl_gene_up_and_down_reg_rank =
+      "Top Differentially Expressed PMTL Genes"
+  )[[rank_genes_by]]
+
+  stopifnot(is.character(diff_exp_heatmap_title_rank_genes_by))
+
+  diff_exp_heatmap_title <- glue::glue(
+    "{diff_exp_heatmap_title_disease}\n(EFO_ID: {efo_id})\n",
+    "Analysis: {diff_exp_heatmap_title_rank_genes_by}"
+  )
+
+  # Set margin
+  plot_margin <- ggplot2::theme_get()$plot.margin
+
+  if (!identical(length(plot_margin), 4L)) {
+    plot_margin <- rep(grid::unit(x = 5.5, units = "points"), 4)
+  }
+
+  # The x-axis labels are long and rotated 50 degrees, so they are out of the
+  # plot in the default margin. Increase right margin to fit all text.
+  plot_margin[2] <- grid::unit(x = 18, units = "char")
+
+  diff_exp_heatmap <- ggplot2::ggplot(diff_exp_heatmap_tbl,
+                                      ggplot2::aes(
+                                        x = x_axis_label,
+                                        y = y_axis_label,
+                                        fill = log2_fold_change)) +
+    ggplot2::geom_tile(color = "grey", size = 0.5) +
+    ggplot2::scale_x_discrete(position = "top") +
+    ggplot2::scale_y_discrete(position = "left") +
+    ggplot2::theme_minimal() +
+    ggplot2::theme(
+      panel.grid = ggplot2::element_blank(),
+      axis.text.x.top = ggplot2::element_text(
+        angle = 50, hjust = 0),
+      axis.text.y.right = ggplot2::element_text(
+        hjust = 1),
+      axis.title.x = ggplot2::element_blank(),
+      axis.title.y = ggplot2::element_blank(),
+      plot.margin = plot_margin) +
+    ggplot2::scale_fill_gradient2(
+      low = rgb(0/255, 114/255, 178/255),
+      high = rgb(230/255, 159/255, 0/255),
+      name = "log2FC") +
+    ggplot2::ggtitle(diff_exp_heatmap_title)
+
+  return(diff_exp_heatmap)
 }
