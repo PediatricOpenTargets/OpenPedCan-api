@@ -217,6 +217,47 @@ function(ensemblId, yAxisScale, includeTumorDesc) {
   print(res_plot)
 }
 
+#* Get a table of one disease and top differentially expressed genes
+#*
+#* @tag "Bulk tissue gene expression"
+#* @param efoId:str one EFO ID
+#* @param rankGenesBy:str cgc_all_gene_up_reg_rank, or cgc_all_gene_down_reg_rank, or cgc_all_gene_up_and_down_reg_rank, or cgc_pmtl_gene_up_reg_rank, or cgc_pmtl_gene_down_reg_rank, or cgc_pmtl_gene_up_and_down_reg_rank
+#* @serializer json
+#* @get /tpm/top-gene-disease-gtex-diff-exp/json
+function(efoId, rankGenesBy) {
+  # Not implemented parameter:
+  # - spec_desc_group
+  res_tbl <- get_one_efo_top_ensg_diff_exp_heatmap_tbl(
+    efo_id = efoId, rank_genes_by = rankGenesBy, max_gene_rank = 50,
+    cohort = NULL, min_n_samples_per_group = 3,
+    spec_desc_group = "primary_and_relapse_same_group")
+
+  return(res_tbl)
+}
+
+#* Get a heatmap of one disease and top differentially expressed genes
+#*
+#* @tag "Bulk tissue gene expression"
+#* @param efoId:str one EFO ID
+#* @param rankGenesBy:str cgc_all_gene_up_reg_rank, or cgc_all_gene_down_reg_rank, or cgc_all_gene_up_and_down_reg_rank, or cgc_pmtl_gene_up_reg_rank, or cgc_pmtl_gene_down_reg_rank, or cgc_pmtl_gene_up_and_down_reg_rank
+#* @serializer png list(res = 300, width = 5900, height = 3900)
+#* @get /tpm/top-gene-disease-gtex-diff-exp/plot
+function(efoId, rankGenesBy) {
+  # Not implemented parameter:
+  # - y_axis_scale
+  res_tbl <- get_one_efo_top_ensg_diff_exp_heatmap_tbl(
+    efo_id = efoId, rank_genes_by = rankGenesBy, max_gene_rank = 50,
+    cohort = NULL, min_n_samples_per_group = 3,
+    spec_desc_group = "primary_and_relapse_same_group")
+
+  res_plot <- get_one_efo_top_ensg_diff_exp_heatmap(
+    res_tbl, y_axis_scale = "linear")
+
+  print(class(res_plot))
+
+  print(res_plot)
+}
+
 # Testing endpoints ------------------------------------------------------------
 # Simple testing endpoints. Source: https://github.com/rstudio/plumber/ .
 

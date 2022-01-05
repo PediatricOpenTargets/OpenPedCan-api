@@ -35,12 +35,15 @@ RUN apt-get update -qq \
     odbc \
     DBI \
     glue \
+    pheatmap \
   && rm -rf /tmp/downloaded_packages/*
 
 # Database schema and table names.
 ENV BULK_EXP_SCHEMA="bulk_expression"
 
 ENV BULK_EXP_TPM_HISTOLOGY_TBL="bulk_expression_tpm_histology"
+
+ENV BULK_EXP_DIFF_EXP_TBL="bulk_expression_diff_exp"
 
 # R DBI database connection driver name.
 ENV DB_DRIVER="PostgreSQL Unicode"
