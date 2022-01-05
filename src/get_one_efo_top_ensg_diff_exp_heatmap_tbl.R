@@ -74,7 +74,8 @@ get_one_efo_top_ensg_diff_exp_heatmap_tbl <- function(
     stopifnot(length(cohort) > 0)
     stopifnot(all(!is.na(cohort)))
 
-    diff_exp_tbl <- dplyr::filter(diff_exp_tbl, .data$cohort == .env$cohort)
+    diff_exp_tbl <- dplyr::filter(
+      diff_exp_tbl, .data$cohort == .env$cohort) # nolint: object_usage_linter
   } else {
     if (all_cohorts_str_id %in% diff_exp_tbl$cohort) {
       diff_exp_tbl <- dplyr::filter(
