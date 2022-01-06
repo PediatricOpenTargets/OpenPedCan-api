@@ -94,8 +94,9 @@ get_one_efo_top_ensg_diff_exp_heatmap_tbl <- function(
   stopifnot(nrow(diff_exp_tbl) > 0)
 
   diff_exp_tbl <- dplyr::filter(
-    diff_exp_tbl, Disease_sample_count >= min_n_samples_per_group,
-    GTEx_tissue_subgroup_sample_count >= min_n_samples_per_group)
+    diff_exp_tbl,
+    .data$Disease_sample_count >= .env$min_n_samples_per_group,
+    .data$GTEx_tissue_subgroup_sample_count >= .env$min_n_samples_per_group)
 
   stopifnot(nrow(diff_exp_tbl) > 0)
 
