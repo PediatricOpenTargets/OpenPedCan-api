@@ -160,7 +160,8 @@ get_one_efo_top_ensg_diff_exp_heatmap_tbl <- function(
     order(colnames(diff_exp_log2_fc_df), decreasing = FALSE)]
 
   # TODO: run hclust only to improve efficiency.
-  diff_exp_log2_fc_pheatmap <- pheatmap::pheatmap(diff_exp_log2_fc_df)
+  diff_exp_log2_fc_pheatmap <- pheatmap::pheatmap(
+    diff_exp_log2_fc_df, silent = TRUE)
 
   diff_exp_tbl <- dplyr::mutate(
     diff_exp_tbl,
