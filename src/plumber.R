@@ -253,8 +253,6 @@ function(efoId, rankGenesBy) {
   res_plot <- get_one_efo_top_ensg_diff_exp_heatmap(
     res_tbl, y_axis_scale = "linear")
 
-  print(class(res_plot))
-
   print(res_plot)
 }
 
