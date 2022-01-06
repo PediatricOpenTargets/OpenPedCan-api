@@ -256,6 +256,41 @@ function(efoId, rankGenesBy) {
   print(res_plot)
 }
 
+#* Get a differential gene expression table of one gene and all diseases
+#*
+#* @tag "Bulk tissue gene expression"
+#* @param ensemblId:str one gene ENSG ID.
+#* @serializer json
+#* @get /tpm/gene-all-cancer-gtex-diff-exp/json
+function(ensemblId) {
+  # Not implemented parameter:
+  # - spec_desc_group
+  res_tbl <- get_one_ensg_all_efo_diff_exp_heatmap_tbl(
+    ensg_id = ensemblId, gene_symbol = NULL, min_n_samples_per_group = 3,
+    spec_desc_group = "primary_and_relapse_same_group")
+
+  return(res_tbl)
+}
+
+#* Get a differential gene expression heatmap of one gene and all diseases
+#*
+#* @tag "Bulk tissue gene expression"
+#* @param ensemblId:str one gene ENSG ID.
+#* @serializer png list(res = 300, width = 5900, height = 3900)
+#* @get /tpm/gene-all-cancer-gtex-diff-exp/plot
+function(ensemblId) {
+  # Not implemented parameter:
+  # - y_axis_scale
+  res_tbl <- get_one_ensg_all_efo_diff_exp_heatmap_tbl(
+    ensg_id = ensemblId, gene_symbol = NULL, min_n_samples_per_group = 3,
+    spec_desc_group = "primary_and_relapse_same_group")
+
+  res_plot <- get_one_ensg_all_efo_diff_exp_heatmap(
+    res_tbl, y_axis_scale = "linear")
+
+  print(res_plot)
+}
+
 # Testing endpoints ------------------------------------------------------------
 # Simple testing endpoints. Source: https://github.com/rstudio/plumber/ .
 
