@@ -42,6 +42,8 @@
 # - cohort: NULL or a single character value of cohort to be included in the
 #   heatmap. Default is NULL, which is to include All Cohorts or the only
 #   cohort.
+# - min_n_samples_per_group: a single numeric value of the minimum number of
+#   samples per group. Default is 3.
 # - spec_desc_group: NOT IMPLEMENTED. TODO: implement when data have relapse
 #   tumor comparisons. A single character value with the following choices for
 #   grouping biospecimen descriptors. Raise error if no (Disease, cohort) tuple
@@ -61,10 +63,14 @@
 # differentially expressed ENSG IDs.
 get_one_efo_top_ensg_diff_exp_heatmap_tbl <- function(
   efo_id, rank_genes_by, max_gene_rank, cohort = NULL,
-  min_n_samples_per_group = 3,
+  min_n_samples_per_group = 3L,
   spec_desc_group = "primary_and_relapse_same_group") {
 
   all_cohorts_str_id <- "All Cohorts"
+
+  stopifnot(is.numeric(min_n_samples_per_group))
+  stopifnot(identical(length(min_n_samples_per_group), 1L))
+  stopifnot(!is.na(min_n_samples_per_group))
 
   diff_exp_tbl <- get_one_efo_top_ensg_diff_exp_tbl(
     efo_id, rank_genes_by, max_gene_rank)
