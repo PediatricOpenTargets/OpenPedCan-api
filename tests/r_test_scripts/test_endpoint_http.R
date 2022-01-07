@@ -145,8 +145,21 @@ test_endpoint <- function(endpoint_spec) {
       )
     }
   } else {
-    endpoint_test_tbl <- dplyr::mutate(
-      endpoint_test_tbl, expected_res_code = 200L)
+    # Differential expression database currently do not have these EFO IDs.
+    #
+    # TODO: change after loading new DESeq data.
+    if ("efoId" %in% colnames(endpoint_test_tbl)) {
+      endpoint_test_tbl <- dplyr::mutate(
+        endpoint_test_tbl,
+        expected_res_code = dplyr::if_else(
+          condition = .data$efoId %in% c("Orphanet_178", "MONDO_0016718",
+                                        "MONDO_0016680", "MONDO_0016685"),
+          true = 500L, false = 200L))
+    } else {
+      endpoint_test_tbl <- dplyr::mutate(
+        endpoint_test_tbl,
+        expected_res_code = 200L)
+    }
   }
 
   if (res_type == "json") {
@@ -222,7 +235,14 @@ param_val_list <- list(
 
   includeTumorDesc = c("primaryOnly", "relapseOnly",
                        "primaryAndRelapseInSameBox",
-                       "primaryAndRelapseInDifferentBoxes")
+                       "primaryAndRelapseInDifferentBoxes"),
+
+  rankGenesBy = c("cgc_all_gene_up_reg_rank",
+                  "cgc_all_gene_down_reg_rank",
+                  "cgc_all_gene_up_and_down_reg_rank",
+                  "cgc_pmtl_gene_up_reg_rank",
+                  "cgc_pmtl_gene_down_reg_rank",
+                  "cgc_pmtl_gene_up_and_down_reg_rank")
 )
 
 endpoint_spec_list <- list(
@@ -232,24 +252,41 @@ endpoint_spec_list <- list(
   list(
     path = "/tpm/gene-disease-gtex/plot",
     params = c("ensemblId", "efoId", "yAxisScale", "includeTumorDesc")),
+
   list(
     path = "/tpm/gene-all-cancer/json",
     params = c("ensemblId", "includeTumorDesc")),
   list(
     path = "/tpm/gene-all-cancer/plot",
     params = c("ensemblId", "yAxisScale", "includeTumorDesc")),
+
   list(
     path = "/tpm/gene-all-cancer-collapsed-gtex/json",
     params = c("ensemblId", "includeTumorDesc")),
   list(
     path = "/tpm/gene-all-cancer-collapsed-gtex/plot",
     params = c("ensemblId", "yAxisScale", "includeTumorDesc")),
+
   list(
     path = "/tpm/gene-all-cancer-gtex/json",
     params = c("ensemblId", "includeTumorDesc")),
   list(
     path = "/tpm/gene-all-cancer-gtex/plot",
-    params = c("ensemblId", "yAxisScale", "includeTumorDesc"))
+    params = c("ensemblId", "yAxisScale", "includeTumorDesc")),
+
+  list(
+    path = "/tpm/top-gene-disease-gtex-diff-exp/json",
+    params = c("efoId", "rankGenesBy")),
+  list(
+    path = "/tpm/top-gene-disease-gtex-diff-exp/plot",
+    params = c("efoId", "rankGenesBy")),
+
+  list(
+    path = "/tpm/gene-all-cancer-gtex-diff-exp/json",
+    params = c("ensemblId")),
+  list(
+    path = "/tpm/gene-all-cancer-gtex-diff-exp/plot",
+    params = c("ensemblId"))
 )
 
 output_spec_list <- list(
@@ -324,4 +361,4 @@ endpoint_res_time_boxplot <- ggplot2::ggplot(endpoint_res_time_df,
 ggplot2::ggsave(
   file.path("..", "plots", "endpoint_response_time_boxplot.png"),
   endpoint_res_time_boxplot,
-  width = 17, height = 11)
+  width = (2 * length(unique(endpoint_res_time_df$x_label))) + 6, height = 11)
