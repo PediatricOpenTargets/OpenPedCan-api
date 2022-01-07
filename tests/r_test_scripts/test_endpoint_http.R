@@ -275,17 +275,17 @@ endpoint_spec_list <- list(
     params = c("ensemblId", "yAxisScale", "includeTumorDesc")),
 
   list(
-    path = "/tpm/top-gene-disease-gtex-diff-exp/json",
+    path = "/dge/top-gene-disease-gtex-diff-exp/json",
     params = c("efoId", "rankGenesBy")),
   list(
-    path = "/tpm/top-gene-disease-gtex-diff-exp/plot",
+    path = "/dge/top-gene-disease-gtex-diff-exp/plot",
     params = c("efoId", "rankGenesBy")),
 
   list(
-    path = "/tpm/gene-all-cancer-gtex-diff-exp/json",
+    path = "/dge/gene-all-cancer-gtex-diff-exp/json",
     params = c("ensemblId")),
   list(
-    path = "/tpm/gene-all-cancer-gtex-diff-exp/plot",
+    path = "/dge/gene-all-cancer-gtex-diff-exp/plot",
     params = c("ensemblId"))
 )
 
