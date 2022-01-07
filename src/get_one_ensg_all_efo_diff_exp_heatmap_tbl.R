@@ -50,7 +50,8 @@ get_one_ensg_all_efo_diff_exp_heatmap_tbl <- function(
   stopifnot(identical(length(min_n_samples_per_group), 1L))
   stopifnot(!is.na(min_n_samples_per_group))
 
-  diff_exp_tbl <- get_one_ensg_all_efo_diff_exp_tbl(ensg_id)
+  diff_exp_tbl <- get_one_ensg_all_efo_diff_exp_tbl(
+    ensg_id) # nolint: object_usage_linter
 
   # TODO: extract the procedure of handling one ENSG ID mapping to more than one
   # symbols. The procedure is also used in get_gene_tpm_tbl.
