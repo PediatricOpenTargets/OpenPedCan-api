@@ -52,7 +52,13 @@ API_DB_BASE_URL="https://s3.amazonaws.com/d3b-openaccess-us-east-1-prd-pbta/open
 if [[ "${DB_LOCATION}" == "aws_s3" ]]; then \
   mkdir -p "$DB_LOAD_TOOLS_DIR_PATH"
   cd "$DB_LOAD_TOOLS_DIR_PATH"
+
+  echo "Download ${API_DB_BASE_URL}/sha256sum.txt..."
+
   curl "${API_DB_BASE_URL}/sha256sum.txt" -o "sha256sum.txt"
+
+  echo "Download ${API_DB_BASE_URL}/${db_dump_fn}..."
+
   curl "${API_DB_BASE_URL}/${db_dump_fn}" -o "${db_dump_fn}"
 fi
 
