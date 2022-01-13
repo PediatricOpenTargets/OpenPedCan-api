@@ -144,8 +144,20 @@ get_one_efo_top_ensg_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
 
   boxplot_tbl <- dplyr::filter(
     tibble::as_tibble(q_rs_df),
-    .data$Gene_symbol %in% ensg_symbol_tbl$Gene_symbol
+    .data$Gene_symbol %in% ensg_symbol_tbl$Gene_symbol,
+    !is.na(.data$GTEx_tissue_subgroup)
   )
+
+  if (y_axis_scale == "linear") {
+    boxplot_tbl <- dplyr::mutate(boxplot_tbl, y_val = .data$TPM)
+    boxplot_y_title <- "TPM"
+  } else if (y_axis_scale == "log10") {
+    boxplot_tbl <- dplyr::mutate(boxplot_tbl, y_val = log10(.data$TPM + 1))
+    boxplot_y_title <- "log10(TPM + 1)"
+  } else {
+    stop(paste("Unknown y_axis_scale", y_axis_scale))
+  }
+  print(boxplot_tbl)
 
   return(diff_exp_heatmap)
 }
