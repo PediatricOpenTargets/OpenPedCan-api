@@ -91,6 +91,10 @@ get_one_efo_top_ensg_diff_exp_heatmap_tbl <- function(
     }
   }
 
+  # No need to handle ENSG IDs that are mapped to multiple gene symbols, because
+  # (ENSG, symbol, PMTL) tuples are ranked by mean log fold change in
+  # build_db.R.
+
   stopifnot(nrow(diff_exp_tbl) > 0)
 
   diff_exp_tbl <- dplyr::filter(
