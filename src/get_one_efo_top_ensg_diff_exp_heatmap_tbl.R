@@ -77,7 +77,7 @@ get_one_efo_top_ensg_diff_exp_heatmap_tbl <- function(
 
   if (!is.null(cohort)) {
     stopifnot(is.character(cohort))
-    stopifnot(length(cohort) > 0)
+    stopifnot(identical(length(cohort), 1L))
     stopifnot(all(!is.na(cohort)))
 
     diff_exp_tbl <- dplyr::filter(
