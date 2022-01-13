@@ -95,5 +95,57 @@ get_one_efo_top_ensg_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
       name = "log2FC") +
     ggplot2::ggtitle(diff_exp_heatmap_title)
 
+  # Generate boxplots on the side
+  ensg_symbol_tbl <- dplyr::distinct(dplyr::select(
+    diff_exp_heatmap_tbl, Gene_Ensembl_ID, Gene_symbol))
+  stopifnot(is.character(ensg_symbol_tbl$Gene_Ensembl_ID))
+  stopifnot(is.character(ensg_symbol_tbl$Gene_symbol))
+  stopifnot(all(!is.na(ensg_symbol_tbl$Gene_Ensembl_ID)))
+  stopifnot(all(!is.na(ensg_symbol_tbl$Gene_symbol)))
+
+  # Query database.
+  #
+  # TODO: extract this query into a function. This query is also used in
+  # get_gene_tpm_tbl function.
+  conn <- connect_db(db_env_vars)  # nolint: object_usage_linter.
+  # Case insensitive db schema and table names. DBI/glue quotes names. Table
+  # columns are case sensitive.
+  q_schema <- tolower(
+    db_env_vars$BULK_EXP_SCHEMA)  # nolint: object_usage_linter.
+  q_table <- tolower(
+    db_env_vars$BULK_EXP_TPM_HISTOLOGY_TBL)  # nolint: object_usage_linter.
+  # Use parameterized queries to protect queries from SQL injection attacks.
+  #
+  # https://db.rstudio.com/best-practices/run-queries-safely/#parameterized-queries
+  q_rs <- DBI::dbSendQuery(
+    conn,
+    glue::glue_sql("
+      SELECT *
+      FROM {`q_schema`}.{`q_table`}
+      WHERE \"Gene_Ensembl_ID\" = ?
+    ", .con = conn)
+  )
+  # Bind ? in the query statment with values.
+  #
+  # This query sends multiple WHERE = statements, and its performance is similar
+  # to sending a single WHERE IN statement. However, WHERE IN ? statement will
+  # throw an error when binding either a character vector of ENSG IDs or a
+  # single character value of concatenated ENSG IDS, e.g.
+  # ('ENSG00000267448','ENSG00000262477').
+  DBI::dbBind(q_rs, list(unique(ensg_symbol_tbl$Gene_Ensembl_ID)))
+  # "dbFetch() always returns a data.frame with as many rows as records were
+  # fetched and as many columns as fields in the result set, even if the result
+  # is a single value or has one or zero rows."
+  #
+  # Ref: https://dbi.r-dbi.org/reference/dbfetch
+  q_rs_df <- DBI::dbFetch(q_rs)
+  DBI::dbClearResult(q_rs)
+  DBI::dbDisconnect(conn)
+
+  boxplot_tbl <- dplyr::filter(
+    tibble::as_tibble(q_rs_df),
+    .data$Gene_symbol %in% ensg_symbol_tbl$Gene_symbol
+  )
+
   return(diff_exp_heatmap)
 }
