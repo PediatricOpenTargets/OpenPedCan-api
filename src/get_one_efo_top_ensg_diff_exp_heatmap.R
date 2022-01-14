@@ -71,6 +71,9 @@ get_one_efo_top_ensg_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
   # plot in the default margin. Increase right margin to fit all text.
   plot_margin[2] <- grid::unit(x = 18, units = "char")
 
+  custom_sky_blue <- rgb(0 / 255, 114 / 255, 178 / 255)
+  custom_orange <- rgb(230 / 255, 159 / 255, 0 / 255)
+
   diff_exp_heatmap <- ggplot2::ggplot(diff_exp_heatmap_tbl,
                                       ggplot2::aes(
                                         x = x_axis_label,
@@ -90,8 +93,8 @@ get_one_efo_top_ensg_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
       axis.title.y = ggplot2::element_blank(),
       plot.margin = plot_margin) +
     ggplot2::scale_fill_gradient2(
-      low = rgb(0 / 255, 114 / 255, 178 / 255),
-      high = rgb(230 / 255, 159 / 255, 0 / 255),
+      low = custom_sky_blue,
+      high = custom_orange,
       name = "log2FC") +
     ggplot2::ggtitle(diff_exp_heatmap_title)
 
@@ -142,22 +145,88 @@ get_one_efo_top_ensg_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
   DBI::dbClearResult(q_rs)
   DBI::dbDisconnect(conn)
 
-  boxplot_tbl <- dplyr::filter(
+  tpm_tbl <- dplyr::filter(
     tibble::as_tibble(q_rs_df),
     .data$Gene_symbol %in% ensg_symbol_tbl$Gene_symbol,
     !is.na(.data$GTEx_tissue_subgroup)
   )
 
   if (y_axis_scale == "linear") {
-    boxplot_tbl <- dplyr::mutate(boxplot_tbl, y_val = .data$TPM)
+    tpm_tbl <- dplyr::mutate(tpm_tbl, y_val = .data$TPM)
     boxplot_y_title <- "TPM"
   } else if (y_axis_scale == "log10") {
-    boxplot_tbl <- dplyr::mutate(boxplot_tbl, y_val = log10(.data$TPM + 1))
+    tpm_tbl <- dplyr::mutate(tpm_tbl, y_val = log10(.data$TPM + 1))
     boxplot_y_title <- "log10(TPM + 1)"
   } else {
     stop(paste("Unknown y_axis_scale", y_axis_scale))
   }
-  print(boxplot_tbl)
+
+  deh_uniq_y_axis_lab_tbl <- dplyr::distinct(
+    dplyr::select(
+      dplyr::mutate(
+        diff_exp_heatmap_tbl,
+        chr_y_axis_label = as.character(y_axis_label)),
+      Gene_symbol, Gene_Ensembl_ID, Disease, cohort,
+      Disease_specimen_descriptor, Disease_sample_count,
+      chr_y_axis_label))
+
+  stopifnot(nrow(deh_uniq_y_axis_lab_tbl) > 0)
+  stopifnot(identical(
+    length(unique(deh_uniq_y_axis_lab_tbl$chr_y_axis_label)),
+    nrow(deh_uniq_y_axis_lab_tbl)
+  ))
+  stopifnot(identical(sum(is.na(deh_uniq_y_axis_lab_tbl)), 0L))
+
+  right_boxplot_tbl <- dplyr::group_modify(
+    dplyr::group_by(deh_uniq_y_axis_lab_tbl, chr_y_axis_label),
+    function(grp_tbl, grp_key) {
+      stopifnot(identical(nrow(grp_tbl), 1L))
+      # When tpm_tbl has 0 row after filtering, x_axis_label column will also be
+      # added.
+      res_tbl <- dplyr::mutate(
+        dplyr::filter(
+          tpm_tbl,
+          .data$Gene_Ensembl_ID == .env$grp_tbl$Gene_Ensembl_ID,
+          .data$Gene_symbol == .env$grp_tbl$Gene_symbol),
+        chr_x_axis_label = .env$grp_key$chr_y_axis_label)
+
+      return(res_tbl)
+    }
+  )
+
+  stopifnot(all(
+    right_boxplot_tbl$chr_x_axis_label %in%
+      levels(diff_exp_heatmap_tbl$y_axis_label)))
+
+  right_boxplot_tbl <- dplyr::mutate(
+    right_boxplot_tbl,
+    x_axis_label = factor(
+      .data$chr_x_axis_label,
+      levels = levels(diff_exp_heatmap_tbl$y_axis_label)))
+
+  custom_reddish_purple <- rgb(204 / 255, 121 / 255, 167 / 255)
+
+  right_boxplot <- ggplot2::ggplot(right_boxplot_tbl,
+                                   ggplot2::aes(x = x_axis_label, y = y_val)) +
+    ggplot2::geom_boxplot(
+      width = 0.6, outlier.size = 0.4, fill = "black",
+      col = custom_orange, alpha = 0.5) +
+    ggplot2::theme_bw() +
+    ggplot2::coord_flip()
+    # ggplot2::theme(
+    #   panel.grid = ggplot2::element_blank(),
+    #   axis.text.x = ggplot2::element_blank(),
+    #   axis.title.x = ggplot2::element_blank(),
+    #   axis.ticks.x = ggplot2::element_blank(),
+    #   axis.text.y = ggplot2::element_blank(),
+    #   axis.title.y = ggplot2::element_blank(),
+    #   axis.ticks.y = ggplot2::element_blank(),
+    #   legend.position = "none",
+    #   plot.margin = grid::unit(c(0, 0, 0, 0), "cm")) +
+    # ggplot2::ylim(0, max(right_boxplot_tbl$y_val, na.rm = TRUE)) +
+    # ggplot2::coord_flip()
+
+  return(right_boxplot)
 
   return(diff_exp_heatmap)
 }
