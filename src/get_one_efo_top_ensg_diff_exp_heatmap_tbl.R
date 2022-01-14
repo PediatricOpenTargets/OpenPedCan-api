@@ -104,6 +104,8 @@ get_one_efo_top_ensg_diff_exp_heatmap_tbl <- function(
 
   stopifnot(nrow(diff_exp_tbl) > 0)
 
+  # If y_axis_label changed, change get_one_efo_top_ensg_diff_exp_heatmap
+  # boxplot as well.
   diff_exp_tbl <- dplyr::mutate(
     diff_exp_tbl,
     log2_fold_change = tidyr::replace_na(.data$log2_fold_change, 0),
