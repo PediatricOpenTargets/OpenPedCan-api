@@ -77,7 +77,7 @@ get_one_ensg_all_efo_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
     ggplot2::scale_fill_gradient2(
       low = rgb(0 / 255, 114 / 255, 178 / 255),
       high = rgb(230 / 255, 159 / 255, 0 / 255),
-      name = "log2FC") +
+      name = "log2 expression\nfold change") +
     ggplot2::ggtitle(diff_exp_heatmap_title)
 
   return(diff_exp_heatmap)
