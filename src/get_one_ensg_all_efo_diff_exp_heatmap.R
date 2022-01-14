@@ -41,7 +41,7 @@ get_one_ensg_all_efo_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
 
   diff_exp_heatmap_title <- glue::glue(
     "{gene_symbol} ({ensg_id})\n",
-    "Differential gene expression comparing Pediatric primary tumors and ",
+    "Differential gene expression comparing pediatric primary tumors and ",
     "GTEx normal adult tissues"
   )
 
