@@ -60,10 +60,10 @@ get_one_efo_top_ensg_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
   stopifnot(is.character(diff_exp_heatmap_title_rank_genes_by))
 
   diff_exp_heatmap_title <- glue::glue(
-    "{diff_exp_heatmap_title_rank_genes_by} in ",
+    "{diff_exp_heatmap_title_rank_genes_by} comparing ",
     "pediatric {diff_exp_heatmap_title_disease} ",
     "{diff_exp_heatmap_title_disease_specimen}s ",
-    "comparing to GTEx normal adult tissues"
+    "vs GTEx normal adult tissues"
   )
 
   # Set margin
