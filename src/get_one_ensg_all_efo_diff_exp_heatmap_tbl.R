@@ -100,13 +100,13 @@ get_one_ensg_all_efo_diff_exp_heatmap_tbl <- function(
     log2_fold_change = tidyr::replace_na(.data$log2_fold_change, 0),
     y_axis_label = glue::glue(
       paste0(
-        "{Disease} {EFO} ",
-        "(Dataset = {cohort}, Specimen = {Disease_specimen_descriptor}, ",
+        "{Disease} ",
+        "(Dataset = {cohort}, ",
+        "Specimen = Pediatric {Disease_specimen_descriptor}, ",
         "N = {Disease_sample_count})")),
     x_axis_label = glue::glue(
       paste0(
         "{GTEx_tissue_subgroup} (Dataset = GTEx, ",
-        "Specimen = GTEx Normal Adult Tissues, ",
         "N = {GTEx_tissue_subgroup_sample_count})")))
 
   # TODO: Extract the procedure to cluster x and y axis labels. The procedure is

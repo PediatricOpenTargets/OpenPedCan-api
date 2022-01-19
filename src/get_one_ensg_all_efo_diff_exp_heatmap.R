@@ -41,7 +41,7 @@ get_one_ensg_all_efo_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
 
   diff_exp_heatmap_title <- glue::glue(
     "{gene_symbol} ({ensg_id})\n",
-    "Differential gene expression comparing Pediatric primary tumors and ",
+    "Differential gene expression comparing pediatric primary tumors vs ",
     "GTEx normal adult tissues"
   )
 
@@ -54,7 +54,7 @@ get_one_ensg_all_efo_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
 
   # The x-axis labels are long and rotated 50 degrees, so they are out of the
   # plot in the default margin. Increase right margin to fit all text.
-  plot_margin[2] <- grid::unit(x = 18, units = "char")
+  plot_margin[2] <- grid::unit(x = 12, units = "char")
 
   diff_exp_heatmap <- ggplot2::ggplot(diff_exp_heatmap_tbl,
                                       ggplot2::aes(
@@ -77,7 +77,7 @@ get_one_ensg_all_efo_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
     ggplot2::scale_fill_gradient2(
       low = rgb(0 / 255, 114 / 255, 178 / 255),
       high = rgb(230 / 255, 159 / 255, 0 / 255),
-      name = "log2FC") +
+      name = "log2 gene expression\nfold change") +
     ggplot2::ggtitle(diff_exp_heatmap_title)
 
   return(diff_exp_heatmap)
