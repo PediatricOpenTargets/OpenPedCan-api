@@ -107,7 +107,6 @@ get_one_ensg_all_efo_diff_exp_heatmap_tbl <- function(
     x_axis_label = glue::glue(
       paste0(
         "{GTEx_tissue_subgroup} (Dataset = GTEx, ",
-        "Specimen = GTEx Normal Adult Tissues, ",
         "N = {GTEx_tissue_subgroup_sample_count})")))
 
   # TODO: Extract the procedure to cluster x and y axis labels. The procedure is

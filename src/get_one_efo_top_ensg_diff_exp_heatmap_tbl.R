@@ -112,7 +112,6 @@ get_one_efo_top_ensg_diff_exp_heatmap_tbl <- function(
     x_axis_label = glue::glue(
       paste0(
         "{GTEx_tissue_subgroup} (Dataset = GTEx, ",
-        "Specimen = GTEx Normal Adult Tissues, ",
         "N = {GTEx_tissue_subgroup_sample_count})")))
 
   stopifnot(identical(
