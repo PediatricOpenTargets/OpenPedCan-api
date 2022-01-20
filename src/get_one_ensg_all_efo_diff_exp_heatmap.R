@@ -62,13 +62,13 @@ get_one_ensg_all_efo_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
                                         y = y_axis_label,
                                         fill = log2_fold_change)) +
     ggplot2::geom_tile(color = "grey", size = 0.5) +
-    ggplot2::scale_x_discrete(position = "top") +
+    ggplot2::scale_x_discrete(position = "bottom") +
     ggplot2::scale_y_discrete(position = "left") +
     ggplot2::theme_minimal() +
     ggplot2::theme(
       panel.grid = ggplot2::element_blank(),
-      axis.text.x.top = ggplot2::element_text(
-        angle = 50, hjust = 0),
+      axis.text.x.bottom = ggplot2::element_text(
+        angle = 310, hjust = 0),
       axis.text.y.right = ggplot2::element_text(
         hjust = 1),
       axis.title.x = ggplot2::element_blank(),
