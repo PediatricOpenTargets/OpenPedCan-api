@@ -214,9 +214,7 @@ get_one_efo_top_ensg_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
 
     combined_plot_title <- grid::textGrob(
       glue::glue(
-        "{diff_exp_heatmap_title}\n",
-        "Boxplot scale: {boxplot_y_title} of samples in the disease group of ",
-        "each row\n"
+        "{diff_exp_heatmap_title}"
       ),
       x = 0, just = "left"
     )
@@ -280,7 +278,8 @@ get_one_efo_top_ensg_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
     boxplot_y_val_max <- max(right_boxplot_tbl$y_val, na.rm = TRUE)
 
     right_boxplot <- ggplot2::ggplot(right_boxplot_tbl,
-                                    ggplot2::aes(x = x_axis_label, y = y_val)) +
+                                     ggplot2::aes(x = x_axis_label,
+                                                  y = y_val)) +
       ggplot2::geom_boxplot(
         width = 0.6, outlier.size = 0.4, fill = "darkgrey",
         col = "black", alpha = 0.5) +
@@ -300,7 +299,9 @@ get_one_efo_top_ensg_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
       ggplot2::coord_flip()
 
     right_boxplot_y_label <- ggplot2::ggplot(right_boxplot_tbl,
-                                            ggplot2::aes(x = y_val, y = y_val)) +
+                                             ggplot2::aes(x = y_val,
+                                                          y = y_val)) +
+      ggplot2::geom_point(alpha = 0) +
       ggplot2::theme_minimal() +
       ggplot2::theme(
         panel.grid = ggplot2::element_blank(),
@@ -311,20 +312,24 @@ get_one_efo_top_ensg_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
         axis.title.y = ggplot2::element_blank(),
         axis.ticks.y = ggplot2::element_blank(),
         axis.text.x.top = ggplot2::element_text(
-          angle = 0, vjust = 0.5, size = 8),
-        axis.title.x.top = ggplot2::element_blank(),
+          angle = -90, vjust = 0.5, hjust = 0, size = 8),
         legend.position = "none",
         plot.margin = grid::unit(c(0, 0, 0, 0), "cm")) +
       ggplot2::xlim(0, boxplot_y_val_max) +
-      ggplot2::scale_x_continuous(position = "top")
+      ggplot2::ylim(0, boxplot_y_val_max) +
+      ggplot2::scale_x_continuous(position = "top") +
+      ggplot2::annotate(
+        "text", x = boxplot_y_val_max * 0.5,
+        y = boxplot_y_val_max, size = 3, vjust = 0,
+        label = boxplot_y_title)
 
     combined_plot_layout_mat <- rbind(
-      t(matrix(rep(c(rep(NA, 11), rep(7, 12), rep(NA, 10)), 2),
-               ncol = 2)),
+      t(matrix(rep(c(rep(NA, 11), rep(7, 12), rep(NA, 10)), 1),
+               ncol = 1)),
       t(matrix(rep(c(rep(3, 11), rep(1, 16), rep(2, 3), rep(5, 3)), 22),
                ncol = 22)),
-      t(matrix(rep(c(rep(NA, 11), rep(4, 16), rep(6, 3), rep(NA, 3)), 9),
-               ncol = 9))
+      t(matrix(rep(c(rep(NA, 11), rep(4, 16), rep(6, 3), rep(NA, 3)), 8),
+               ncol = 8))
     )
 
     combined_plot <- gridExtra::grid.arrange(
