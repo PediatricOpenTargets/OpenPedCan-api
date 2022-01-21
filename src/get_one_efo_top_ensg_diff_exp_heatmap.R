@@ -269,7 +269,12 @@ get_one_efo_top_ensg_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
         .data$chr_x_axis_label,
         levels = levels(diff_exp_heatmap_tbl$y_axis_label)))
 
-    boxplot_y_val_max <- max(right_boxplot_tbl$y_val, na.rm = TRUE)
+    # Add 0.1 in the y_val vector to handle all-zero case. If
+    # boxplot_y_val_max is 0, ylim(0, 0) will generate a plot with (-0.0X,
+    # 0.0X) x and y scales. Then, boxplot label texts will be put to the center
+    # rather than close to axis tick texts.
+    boxplot_y_val_max <- max(
+      c(right_boxplot_tbl$y_val, 0.1), na.rm = TRUE)
 
     right_boxplot <- ggplot2::ggplot(right_boxplot_tbl,
                                      ggplot2::aes(x = x_axis_label,
@@ -278,7 +283,6 @@ get_one_efo_top_ensg_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
         width = 0.6, outlier.size = 0.4, fill = "darkgrey",
         col = "black", alpha = 0.5) +
       ggplot2::theme_bw() +
-      ggplot2::coord_flip() +
       ggplot2::theme(
         panel.grid = ggplot2::element_blank(),
         axis.text.x = ggplot2::element_blank(),
@@ -290,6 +294,8 @@ get_one_efo_top_ensg_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
         legend.position = "none",
         plot.margin = grid::unit(c(0, 0, 0, 0), "cm")) +
       ggplot2::ylim(0, boxplot_y_val_max) +
+      ggplot2::scale_x_discrete(
+        limits = levels(diff_exp_heatmap_tbl$y_axis_label)) +
       ggplot2::coord_flip()
 
     right_boxplot_y_label <- ggplot2::ggplot(right_boxplot_tbl,
@@ -309,9 +315,9 @@ get_one_efo_top_ensg_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
           angle = -90, vjust = 0.5, hjust = 0, size = 8),
         legend.position = "none",
         plot.margin = grid::unit(c(0, 0, 0, 0), "cm")) +
-      ggplot2::xlim(0, boxplot_y_val_max) +
       ggplot2::ylim(0, boxplot_y_val_max) +
-      ggplot2::scale_x_continuous(position = "top") +
+      ggplot2::scale_x_continuous(
+        position = "top", limits = c(0, boxplot_y_val_max)) +
       ggplot2::annotate(
         "text", x = boxplot_y_val_max * 0.5,
         y = boxplot_y_val_max, size = 3, vjust = 0,
