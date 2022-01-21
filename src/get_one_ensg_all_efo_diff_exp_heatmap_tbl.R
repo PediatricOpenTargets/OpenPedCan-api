@@ -17,6 +17,7 @@
 #
 # Args:
 # - ensg_id: a single character value of ENSG ID.
+# - gene_symbol: NULL or a single character value of gene symbol.
 # - min_n_samples_per_group: a single numeric value of the minimum number of
 #   samples per group. Default is 3.
 # - spec_desc_group: NOT IMPLEMENTED. TODO: implement when data have relapse
