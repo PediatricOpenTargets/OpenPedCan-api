@@ -79,7 +79,7 @@ get_one_ensg_all_efo_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
 
     # The x-axis labels are long and rotated 50 degrees, so they are out of the
     # plot in the default margin. Increase right margin to fit all text.
-    plot_margin[2] <- grid::unit(x = 12, units = "char")
+    plot_margin[2] <- grid::unit(x = 5, units = "char")
 
     diff_exp_heatmap <- diff_exp_heatmap +
       ggplot2::scale_x_discrete(position = "bottom") +
