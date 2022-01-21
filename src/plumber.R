@@ -279,9 +279,10 @@ function(ensemblId) {
 #* @tag "Bulk tissue differential gene expression"
 #* @param ensemblId:str one gene ENSG ID.
 #* @param yAxisScale:str linear or log10
+#* @param includeBoxplot:str true or false
 #* @serializer png list(res = 300, width = 5900, height = 3900)
 #* @get /dge/gene-all-cancer-gtex-diff-exp/plot
-function(ensemblId, yAxisScale) {
+function(ensemblId, yAxisScale, includeBoxplot) {
   # Not implemented parameter:
   # - spec_desc_group
   res_tbl <- get_one_ensg_all_efo_diff_exp_heatmap_tbl(
@@ -289,7 +290,7 @@ function(ensemblId, yAxisScale) {
     spec_desc_group = "primary_and_relapse_same_group")
 
   res_plot <- get_one_ensg_all_efo_diff_exp_heatmap(
-    res_tbl, y_axis_scale = yAxisScale)
+    res_tbl, y_axis_scale = yAxisScale, include_boxplot = includeBoxplot)
 
   print(res_plot)
 }
