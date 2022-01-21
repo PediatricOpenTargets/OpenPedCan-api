@@ -163,6 +163,13 @@ get_one_ensg_all_efo_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
       stop(paste("Unknown y_axis_scale", y_axis_scale))
     }
 
+    # Add 0.1 in the y_val vector to handle all-zero case. If
+    # boxplot_y_val_max is 0, ylim(0, 0) will generate a plot with (-0.0X,
+    # 0.0X) x and y scales. Then, boxplot label texts will be put to the center
+    # rather than close to axis tick texts.
+    boxplot_y_val_max <- max(
+      c(tpm_tbl$y_val, 0.1), na.rm = TRUE)
+
     combined_plot_title <- grid::textGrob(
       glue::glue(
         "{diff_exp_heatmap_title}"
@@ -170,12 +177,7 @@ get_one_ensg_all_efo_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
       x = 0, just = "left"
     )
 
-    # Right side boxplot
-    #
-    # Select only TPM values of samples in heatmap row sample groups.
-    #
-    # If an option to show GTEx or disease samples is required, add conditional
-    # filter here.
+    # Right-side boxplot
     deh_uniq_y_axis_lab_tbl <- dplyr::distinct(
       dplyr::select(
         dplyr::mutate(
@@ -218,8 +220,6 @@ get_one_ensg_all_efo_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
         .data$chr_x_axis_label,
         levels = levels(diff_exp_heatmap_tbl$y_axis_label)))
 
-    boxplot_y_val_max <- max(right_boxplot_tbl$y_val, na.rm = TRUE)
-
     right_boxplot <- ggplot2::ggplot(right_boxplot_tbl,
                                      ggplot2::aes(x = x_axis_label,
                                                   y = y_val)) +
@@ -227,7 +227,6 @@ get_one_ensg_all_efo_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
         width = 0.6, outlier.size = 0.4, fill = "darkgrey",
         col = "black", alpha = 0.5) +
       ggplot2::theme_bw() +
-      ggplot2::coord_flip() +
       ggplot2::theme(
         panel.grid = ggplot2::element_blank(),
         axis.text.x = ggplot2::element_blank(),
@@ -239,6 +238,8 @@ get_one_ensg_all_efo_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
         legend.position = "none",
         plot.margin = grid::unit(c(0, 0, 0, 0), "cm")) +
       ggplot2::ylim(0, boxplot_y_val_max) +
+      ggplot2::scale_x_discrete(
+        limits = levels(diff_exp_heatmap_tbl$y_axis_label)) +
       ggplot2::coord_flip()
 
     right_boxplot_y_label <- ggplot2::ggplot(right_boxplot_tbl,
@@ -258,28 +259,117 @@ get_one_ensg_all_efo_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
           angle = -90, vjust = 0.5, hjust = 0, size = 8),
         legend.position = "none",
         plot.margin = grid::unit(c(0, 0, 0, 0), "cm")) +
-      ggplot2::xlim(0, boxplot_y_val_max) +
       ggplot2::ylim(0, boxplot_y_val_max) +
-      ggplot2::scale_x_continuous(position = "top") +
+      ggplot2::scale_x_continuous(
+        position = "top", limits = c(0, boxplot_y_val_max)) +
       ggplot2::annotate(
         "text", x = boxplot_y_val_max * 0.5,
         y = boxplot_y_val_max, size = 3, vjust = 0,
         label = boxplot_y_title)
 
+
+    # Top-side boxplot
+    #
+    # The returned table of group_modify cannot contain the original grouping
+    # variables.
+    deh_uniq_x_axis_lab_tbl <- dplyr::distinct(
+      dplyr::select(
+        dplyr::mutate(
+          diff_exp_heatmap_tbl,
+          deh_chr_x_axis_label = as.character(x_axis_label)),
+        GTEx_tissue_subgroup, GTEx_tissue_subgroup_sample_count,
+        deh_chr_x_axis_label
+      )
+    )
+
+    stopifnot(nrow(deh_uniq_x_axis_lab_tbl) > 0)
+    stopifnot(identical(
+      length(unique(deh_uniq_x_axis_lab_tbl$deh_chr_x_axis_label)),
+      nrow(deh_uniq_x_axis_lab_tbl)
+    ))
+    stopifnot(identical(sum(is.na(deh_uniq_x_axis_lab_tbl)), 0L))
+
+    top_boxplot_tbl <- dplyr::group_modify(
+      dplyr::group_by(deh_uniq_x_axis_lab_tbl, deh_chr_x_axis_label),
+      function(grp_tbl, grp_key) {
+        stopifnot(identical(nrow(grp_tbl), 1L))
+        # When tpm_tbl has 0 row after filtering, x_axis_label column will also
+        # be added.
+        res_tbl <- dplyr::mutate(
+          dplyr::filter(
+            tpm_tbl,
+            .data$GTEx_tissue_subgroup == .env$grp_tbl$GTEx_tissue_subgroup),
+          chr_x_axis_label = .env$grp_key$deh_chr_x_axis_label)
+
+        return(res_tbl)
+      }
+    )
+
+    top_boxplot_tbl <- dplyr::mutate(
+      top_boxplot_tbl,
+      x_axis_label = factor(
+        .data$chr_x_axis_label,
+        levels = levels(diff_exp_heatmap_tbl$x_axis_label)))
+
+    top_boxplot <- ggplot2::ggplot(top_boxplot_tbl,
+                                   ggplot2::aes(x = x_axis_label,
+                                                y = y_val)) +
+      ggplot2::geom_boxplot(
+        width = 0.6, outlier.size = 0.4, fill = "darkgrey",
+        col = "black", alpha = 0.5) +
+      ggplot2::theme_bw() +
+      ggplot2::theme(
+        panel.grid = ggplot2::element_blank(),
+        axis.text.x = ggplot2::element_blank(),
+        axis.title.x = ggplot2::element_blank(),
+        axis.ticks.x = ggplot2::element_blank(),
+        axis.text.y = ggplot2::element_blank(),
+        axis.title.y = ggplot2::element_blank(),
+        axis.ticks.y = ggplot2::element_blank(),
+        legend.position = "none",
+        plot.margin = grid::unit(c(0, 0, 0, 0), "cm")) +
+      ggplot2::ylim(0, boxplot_y_val_max)
+
+    top_boxplot_y_label <- ggplot2::ggplot(top_boxplot_tbl,
+                                           ggplot2::aes(x = y_val,
+                                                        y = y_val)) +
+      ggplot2::geom_point(alpha = 0) +
+      ggplot2::theme_minimal() +
+      ggplot2::theme(
+        panel.grid = ggplot2::element_blank(),
+        axis.text.x = ggplot2::element_blank(),
+        axis.title.x = ggplot2::element_blank(),
+        axis.ticks.x = ggplot2::element_blank(),
+        axis.title.y = ggplot2::element_blank(),
+        axis.ticks.y = ggplot2::element_blank(),
+        axis.text.y = ggplot2::element_text(
+          angle = 0, hjust = 0, size = 8,
+          margin = ggplot2::margin(l = 3, unit = "pt")),
+        legend.position = "none",
+        plot.margin = grid::unit(c(0, 0, 0, 0), "cm")) +
+      ggplot2::xlim(0, boxplot_y_val_max) +
+      ggplot2::ylim(0, boxplot_y_val_max) +
+      ggplot2::annotate(
+        "text", x = 0, y = boxplot_y_val_max * 0.5, size = 3, vjust = 1,
+        angle = -90, label = boxplot_y_title)
+
+    # Combine plots
     combined_plot_layout_mat <- rbind(
-      t(matrix(rep(c(rep(NA, 11), rep(7, 12), rep(NA, 10)), 1),
-               ncol = 1)),
-      t(matrix(rep(c(rep(3, 11), rep(1, 16), rep(2, 3), rep(5, 3)), 22),
-               ncol = 22)),
-      t(matrix(rep(c(rep(NA, 11), rep(4, 16), rep(6, 3), rep(NA, 3)), 8),
-               ncol = 8))
+      t(matrix(rep(c(rep(NA, 11), rep(7, 12), rep(NA, 10)), 2),
+               ncol = 2)),
+      t(matrix(rep(c(rep(NA, 11), rep(10, 16), rep(11, 6)), 5),
+               ncol = 5)),
+      t(matrix(rep(c(rep(3, 11), rep(1, 16), rep(2, 3), rep(5, 3)), 21),
+               ncol = 21)),
+      t(matrix(rep(c(rep(NA, 11), rep(4, 16), rep(6, 3), rep(NA, 3)), 9),
+               ncol = 9))
     )
 
     combined_plot <- gridExtra::grid.arrange(
       diff_exp_heatmap, right_boxplot, diff_exp_heatmap_y_text,
       diff_exp_heatmap_x_text, diff_exp_heatmap_legend,
-      right_boxplot_y_label, combined_plot_title,
-      layout_matrix = combined_plot_layout_mat)
+      right_boxplot_y_label, combined_plot_title, top_boxplot,
+      top_boxplot_y_label, layout_matrix = combined_plot_layout_mat)
 
     res_plot <- combined_plot
 
