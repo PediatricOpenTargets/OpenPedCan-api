@@ -263,12 +263,6 @@ get_one_efo_top_ensg_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
       }
     )
 
-    if (DEBUG) {
-      stopifnot(all(
-        right_boxplot_tbl$chr_x_axis_label %in%
-          levels(diff_exp_heatmap_tbl$y_axis_label)))
-    }
-
     right_boxplot_tbl <- dplyr::mutate(
       right_boxplot_tbl,
       x_axis_label = factor(
