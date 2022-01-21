@@ -328,6 +328,8 @@ get_one_ensg_all_efo_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
         axis.ticks.y = ggplot2::element_blank(),
         legend.position = "none",
         plot.margin = grid::unit(c(0, 0, 0, 0), "cm")) +
+      ggplot2::scale_x_discrete(
+        limits = levels(diff_exp_heatmap_tbl$x_axis_label)) +
       ggplot2::ylim(0, boxplot_y_val_max)
 
     top_boxplot_y_label <- ggplot2::ggplot(top_boxplot_tbl,
