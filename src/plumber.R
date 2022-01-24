@@ -253,8 +253,8 @@ function(efoId, rankGenesBy, includeBoxplot, boxplotYAxisScale) {
     spec_desc_group = "primary_and_relapse_same_group")
 
   res_plot <- get_one_efo_top_ensg_diff_exp_heatmap(
-    res_tbl, boxplot_y_axis_scale = boxplotYAxisScale,
-    include_boxplot = includeBoxplot)
+    res_tbl, include_boxplot = includeBoxplot,
+    boxplot_y_axis_scale = boxplotYAxisScale)
 
   print(res_plot)
 }
@@ -291,8 +291,8 @@ function(ensemblId, includeBoxplot, boxplotYAxisScale) {
     spec_desc_group = "primary_and_relapse_same_group")
 
   res_plot <- get_one_ensg_all_efo_diff_exp_heatmap(
-    res_tbl, boxplot_y_axis_scale = boxplotYAxisScale,
-    include_boxplot = includeBoxplot)
+    res_tbl, include_boxplot = includeBoxplot,
+    boxplot_y_axis_scale = boxplotYAxisScale)
 
   print(res_plot)
 }
