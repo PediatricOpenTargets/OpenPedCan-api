@@ -240,11 +240,11 @@ function(efoId, rankGenesBy) {
 #* @tag "Bulk tissue differential gene expression"
 #* @param efoId:str one EFO ID
 #* @param rankGenesBy:str cgc_all_gene_up_reg_rank, or cgc_all_gene_down_reg_rank, or cgc_all_gene_up_and_down_reg_rank, or cgc_pmtl_gene_up_reg_rank, or cgc_pmtl_gene_down_reg_rank, or cgc_pmtl_gene_up_and_down_reg_rank
-#* @param yAxisScale:str linear or log10
 #* @param includeBoxplot:str true or false
+#* @param boxplotYAxisScale:str linear or log10
 #* @serializer png list(res = 300, width = 5900, height = 3900)
 #* @get /dge/top-gene-disease-gtex-diff-exp/plot
-function(efoId, rankGenesBy, yAxisScale, includeBoxplot) {
+function(efoId, rankGenesBy, includeBoxplot, boxplotYAxisScale) {
   # Not implemented parameter:
   # - spec_desc_group
   res_tbl <- get_one_efo_top_ensg_diff_exp_heatmap_tbl(
@@ -253,7 +253,8 @@ function(efoId, rankGenesBy, yAxisScale, includeBoxplot) {
     spec_desc_group = "primary_and_relapse_same_group")
 
   res_plot <- get_one_efo_top_ensg_diff_exp_heatmap(
-    res_tbl, y_axis_scale = yAxisScale, include_boxplot = includeBoxplot)
+    res_tbl, boxplot_y_axis_scale = boxplotYAxisScale,
+    include_boxplot = includeBoxplot)
 
   print(res_plot)
 }
@@ -278,11 +279,11 @@ function(ensemblId) {
 #*
 #* @tag "Bulk tissue differential gene expression"
 #* @param ensemblId:str one gene ENSG ID.
-#* @param yAxisScale:str linear or log10
 #* @param includeBoxplot:str true or false
+#* @param boxplotYAxisScale:str linear or log10
 #* @serializer png list(res = 300, width = 5900, height = 3900)
 #* @get /dge/gene-all-cancer-gtex-diff-exp/plot
-function(ensemblId, yAxisScale, includeBoxplot) {
+function(ensemblId, includeBoxplot, boxplotYAxisScale) {
   # Not implemented parameter:
   # - spec_desc_group
   res_tbl <- get_one_ensg_all_efo_diff_exp_heatmap_tbl(
@@ -290,7 +291,8 @@ function(ensemblId, yAxisScale, includeBoxplot) {
     spec_desc_group = "primary_and_relapse_same_group")
 
   res_plot <- get_one_ensg_all_efo_diff_exp_heatmap(
-    res_tbl, y_axis_scale = yAxisScale, include_boxplot = includeBoxplot)
+    res_tbl, boxplot_y_axis_scale = boxplotYAxisScale,
+    include_boxplot = includeBoxplot)
 
   print(res_plot)
 }
