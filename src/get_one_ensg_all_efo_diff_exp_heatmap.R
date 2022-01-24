@@ -135,9 +135,9 @@ get_one_ensg_all_efo_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
 
     # Use trim depending on need.
     diff_exp_heatmap_y_text <- gtable::gtable_filter(
-      diff_exp_heatmap_y_text, 'axis-r|ylab', trim = FALSE)
+      diff_exp_heatmap_y_text, "axis-r|ylab", trim = FALSE)
     diff_exp_heatmap_x_text <- gtable::gtable_filter(
-      diff_exp_heatmap_x_text, 'axis-t|xlab', trim = FALSE)
+      diff_exp_heatmap_x_text, "axis-t|xlab", trim = FALSE)
 
     diff_exp_heatmap_legend <- ggpubr::as_ggplot(
       ggpubr::get_legend(
