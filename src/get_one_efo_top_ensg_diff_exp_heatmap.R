@@ -144,9 +144,9 @@ get_one_efo_top_ensg_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
 
     # Use trim depending on need.
     diff_exp_heatmap_y_text <- gtable::gtable_filter(
-      diff_exp_heatmap_y_text, 'axis-r|ylab', trim = FALSE)
+      diff_exp_heatmap_y_text, "axis-r|ylab", trim = FALSE)
     diff_exp_heatmap_x_text <- gtable::gtable_filter(
-      diff_exp_heatmap_x_text, 'axis-t|xlab', trim = FALSE)
+      diff_exp_heatmap_x_text, "axis-t|xlab", trim = FALSE)
 
     diff_exp_heatmap_legend <- ggpubr::as_ggplot(
       ggpubr::get_legend(
@@ -189,7 +189,7 @@ get_one_efo_top_ensg_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
     # to sending a single WHERE IN statement. However, WHERE IN ? statement will
     # throw an error when binding either a character vector of ENSG IDs or a
     # single character value of concatenated ENSG IDS, e.g.
-    # ('ENSG00000267448','ENSG00000262477').
+    # ("ENSG00000267448","ENSG00000262477").
     DBI::dbBind(q_rs, list(unique(ensg_symbol_tbl$Gene_Ensembl_ID)))
     # "dbFetch() always returns a data.frame with as many rows as records were
     # fetched and as many columns as fields in the result set, even if the result
