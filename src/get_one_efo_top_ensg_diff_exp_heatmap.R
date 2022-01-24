@@ -19,21 +19,22 @@
 # Args:
 # - diff_exp_heatmap_tbl: A tibble returned by
 #   get_one_efo_top_ensg_diff_exp_heatmap_tbl.
-# - y_axis_scale: A single character value of either "linear" or "log10".
 # - include_boxplot: A single character value of either "true" or "false". Note:
 #   logical TRUE or FALSE is not used in this parameter by design, to simplify
 #   function calling procedure from HTTP URL. Character "true" or "false" can
 #   also be extended to specify how boxplots should be generated.
+# - boxplot_y_axis_scale: A single character value of either "linear" or
+#   "log10".
 #
 # Returns a ggplot of a differential expression heatmap of one EFO ID and top
 # differentially expressed ENSG IDs
 get_one_efo_top_ensg_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
-                                                  y_axis_scale,
-                                                  include_boxplot) {
+                                                  include_boxplot,
+                                                  boxplot_y_axis_scale) {
 
-  stopifnot(is.character(y_axis_scale))
-  stopifnot(identical(length(y_axis_scale), 1L))
-  stopifnot(y_axis_scale %in% c("linear", "log10"))
+  stopifnot(is.character(boxplot_y_axis_scale))
+  stopifnot(identical(length(boxplot_y_axis_scale), 1L))
+  stopifnot(boxplot_y_axis_scale %in% c("linear", "log10"))
 
   stopifnot(is.character(include_boxplot))
   stopifnot(identical(length(include_boxplot), 1L))
@@ -202,14 +203,14 @@ get_one_efo_top_ensg_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
     # Right-side boxplot shows the TPM of disease samples only.
     tpm_tbl <- dplyr::filter(tibble::as_tibble(q_rs_df), !is.na(EFO))
 
-    if (y_axis_scale == "linear") {
+    if (boxplot_y_axis_scale == "linear") {
       tpm_tbl <- dplyr::mutate(tpm_tbl, y_val = .data$TPM)
       boxplot_y_title <- "TPM"
-    } else if (y_axis_scale == "log10") {
+    } else if (boxplot_y_axis_scale == "log10") {
       tpm_tbl <- dplyr::mutate(tpm_tbl, y_val = log10(.data$TPM + 1))
       boxplot_y_title <- "log10(TPM + 1)"
     } else {
-      stop(paste("Unknown y_axis_scale", y_axis_scale))
+      stop(paste("Unknown boxplot_y_axis_scale", boxplot_y_axis_scale))
     }
 
     combined_plot_title <- grid::textGrob(
