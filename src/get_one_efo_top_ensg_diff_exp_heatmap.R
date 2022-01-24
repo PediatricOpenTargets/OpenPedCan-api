@@ -201,13 +201,19 @@ get_one_efo_top_ensg_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
     DBI::dbDisconnect(conn)
 
     # Right-side boxplot shows the TPM of disease samples only.
-    tpm_tbl <- dplyr::filter(tibble::as_tibble(q_rs_df), !is.na(EFO))
+    tpm_tbl <- dplyr::filter(
+      tibble::as_tibble(q_rs_df),
+      !is.na(.data$EFO))  # nolint: object_usage_linter
 
     if (boxplot_y_axis_scale == "linear") {
-      tpm_tbl <- dplyr::mutate(tpm_tbl, y_val = .data$TPM)
+      tpm_tbl <- dplyr::mutate(
+        tpm_tbl, y_val = .data$TPM)  # nolint: object_usage_linter
+
       boxplot_y_title <- "TPM"
     } else if (boxplot_y_axis_scale == "log10") {
-      tpm_tbl <- dplyr::mutate(tpm_tbl, y_val = log10(.data$TPM + 1))
+      tpm_tbl <- dplyr::mutate(
+        tpm_tbl, y_val = log10(.data$TPM + 1))  # nolint: object_usage_linter
+
       boxplot_y_title <- "log10(TPM + 1)"
     } else {
       stop(paste("Unknown boxplot_y_axis_scale", boxplot_y_axis_scale))
