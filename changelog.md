@@ -1,5 +1,13 @@
 # OpenPedCan-api
 
+## v0.5.1-beta
+
+### Changed
+
+- Changed the interfaces of the following endpoints by adding two required parameters, `includeBoxplot` and `boxplotYAxisScale`, to determine whether to add boxplots with certain Y-axis scales on the sides of the differential gene expression (DGE) heatmaps or not.
+  - `/dge/top-gene-disease-gtex-diff-exp/plot`
+  - `/dge/gene-all-cancer-gtex-diff-exp/plot`
+
 ## v0.5.0-beta
 
 ### Added
