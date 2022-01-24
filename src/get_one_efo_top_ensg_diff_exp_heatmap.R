@@ -111,6 +111,7 @@ get_one_efo_top_ensg_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
     res_plot <- diff_exp_heatmap
 
   } else if (include_boxplot == "true") {
+    # jscpd:ignore-start
     diff_exp_heatmap <- diff_exp_heatmap +
       ggplot2::theme(
         panel.grid = ggplot2::element_blank(),
@@ -346,6 +347,7 @@ get_one_efo_top_ensg_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
       layout_matrix = combined_plot_layout_mat)
 
     res_plot <- combined_plot
+    # jscpd:ignore-end
 
   } else {
     stop(paste("Unknown include_boxplot", include_boxplot))

@@ -98,6 +98,8 @@ get_one_ensg_all_efo_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
     res_plot <- diff_exp_heatmap
 
   } else if (include_boxplot == "true") {
+    # jscpd:ignore-start
+
     # TODO: Extract the same plotting procedures that are used in
     # get_one_efo_top_ensg_diff_exp_heatmap.R. The extracted helper functions
     # need to avoid name collisions, whih require function names that are
@@ -378,6 +380,7 @@ get_one_ensg_all_efo_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
       top_boxplot_y_label, layout_matrix = combined_plot_layout_mat)
 
     res_plot <- combined_plot
+    # jscpd:ignore-end
 
   } else {
     stop(paste("Unknown include_boxplot", include_boxplot))
