@@ -47,7 +47,7 @@ fi
 
 db_dump_fn="open_ped_can_db_postgres_pg_dump.sql.gz"
 
-API_DB_BASE_URL="https://s3.amazonaws.com/d3b-openaccess-us-east-1-prd-pbta/open-targets/api/v0.5.0-beta"
+API_DB_BASE_URL="https://s3.amazonaws.com/d3b-openaccess-us-east-1-prd-pbta/open-targets/api/v0.5.2-beta"
 
 if [[ "${DB_LOCATION}" == "aws_s3" ]]; then \
   mkdir -p "$DB_LOAD_TOOLS_DIR_PATH"
