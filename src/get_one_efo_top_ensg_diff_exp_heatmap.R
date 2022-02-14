@@ -162,7 +162,6 @@ get_one_efo_top_ensg_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
     stopifnot(all(!is.na(ensg_symbol_tbl$Gene_Ensembl_ID)))
     stopifnot(all(!is.na(ensg_symbol_tbl$Gene_symbol)))
 
-
     deh_tbl_efo_id <- unique(diff_exp_heatmap_tbl$EFO)
     stopifnot(is.character(deh_tbl_efo_id))
     stopifnot(identical(length(deh_tbl_efo_id), 1L))
