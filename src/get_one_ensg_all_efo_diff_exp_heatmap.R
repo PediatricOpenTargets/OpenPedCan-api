@@ -173,8 +173,7 @@ get_one_ensg_all_efo_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
     # boxplot_y_val_max is 0, ylim(0, 0) will generate a plot with (-0.0X,
     # 0.0X) x and y scales. Then, boxplot label texts will be put to the center
     # rather than close to axis tick texts.
-    boxplot_y_val_max <- max(
-      c(tpm_tbl$y_val, 0.1), na.rm = TRUE)
+    boxplot_y_val_max <- max(c(tpm_tbl$y_val, 0.001), na.rm = TRUE)
 
     combined_plot_title <- grid::textGrob(
       glue::glue(

@@ -242,7 +242,7 @@ function(efoId, rankGenesBy) {
 #* @param rankGenesBy:str cgc_all_gene_up_reg_rank, or cgc_all_gene_down_reg_rank, or cgc_all_gene_up_and_down_reg_rank, or cgc_pmtl_gene_up_reg_rank, or cgc_pmtl_gene_down_reg_rank, or cgc_pmtl_gene_up_and_down_reg_rank
 #* @param includeBoxplot:str true or false
 #* @param boxplotYAxisScale:str linear or log10
-#* @serializer png list(res = 300, width = 5900, height = 3900)
+#* @serializer png list(res = 300, width = 7500, height = 3900)
 #* @get /dge/top-gene-disease-gtex-diff-exp/plot
 function(efoId, rankGenesBy, includeBoxplot, boxplotYAxisScale) {
   # Not implemented parameter:
