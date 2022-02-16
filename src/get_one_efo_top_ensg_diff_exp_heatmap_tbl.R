@@ -104,6 +104,23 @@ get_one_efo_top_ensg_diff_exp_heatmap_tbl <- function(
 
   stopifnot(nrow(diff_exp_tbl) > 0)
 
+  # Select a subset of rows if there are two or more (Disease, cohort,
+  # Disease_specimen_descriptor) tuples.
+  uniq_dcs_tuple_tbl <- dplyr::distinct(
+    dplyr::select(diff_exp_tbl, Disease, cohort, Disease_specimen_descriptor))
+
+  stopifnot(identical(sum(is.na(uniq_dcs_tuple_tbl)), 0L))
+
+  n_uniq_dcs_tuples <- nrow(uniq_dcs_tuple_tbl)
+  stopifnot(n_uniq_dcs_tuples > 0)
+
+  if (n_uniq_dcs_tuples > 1) {
+    # Select a subset of rows
+    subset_max_gene_rank <- max(1, floor(max_gene_rank / n_uniq_dcs_tuples))
+    diff_exp_tbl <- diff_exp_tbl[
+      diff_exp_tbl[, rank_genes_by] <= subset_max_gene_rank, ]
+  }
+
   # If y_axis_label changed, change get_one_efo_top_ensg_diff_exp_heatmap
   # boxplot as well.
   diff_exp_tbl <- dplyr::mutate(
