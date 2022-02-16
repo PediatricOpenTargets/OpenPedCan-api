@@ -19,6 +19,16 @@
 
 
 
+# Define variables that may be changed in future version -----------------------
+# Distinguish all-cohorts from each-cohort
+all_cohorts_str_id <- "All Cohorts"
+
+# Arbitrarily selected genes for quick testing.
+arbt_db_ensg_ids <- c("ENSG00000213420", "ENSG00000157764", "ENSG00000273032",
+                      "ENSG00000141510", "ENSG00000171094")
+
+
+
 # Specify paths and define global variables-------------------------------------
 
 # Get %>% without loading the whole library
@@ -51,12 +61,18 @@ source(file.path(db_r_interface_dir, "connect_db.R"))
 db_build_output_dir <- get_env_var("BUILD_OUTPUT_DIR_PATH")
 stopifnot(dir.exists(db_build_output_dir))
 
-output_fn_prefix <- paste0(
-  db_env_vars$BULK_EXP_SCHEMA, "_", db_env_vars$BULK_EXP_TPM_HISTOLOGY_TBL)
-
 # Use .csv rather than .csv.gz to speed up database COPY command.
-csv_out_path <- file.path(
-  db_build_output_dir, paste0(output_fn_prefix, ".csv"))
+tpm_csv_out_path <- file.path(
+  db_build_output_dir,
+  paste0(
+    db_env_vars$BULK_EXP_SCHEMA, "_",
+    db_env_vars$BULK_EXP_TPM_HISTOLOGY_TBL, ".csv"))
+
+diff_exp_csv_out_path <- file.path(
+  db_build_output_dir,
+  paste0(
+    db_env_vars$BULK_EXP_SCHEMA, "_",
+    db_env_vars$BULK_EXP_DIFF_EXP_TBL, ".csv"))
 
 # Get DOWN_SAMPLE_DB_GENES env var:
 # - 0 or unset: do not down sample genes for database
@@ -83,10 +99,18 @@ if (is.na(DOWN_SAMPLE_DB_GENES)) {
 
 
 
-# Read data --------------------------------------------------------------------
-cat("Read data...\n")
+# Read differential expression data --------------------------------------------
+cat("Read differential expression data...\n")
 
-tpm_data_lists <- readRDS(file.path(db_build_output_dir, "tpm_data_lists.rds"))
+# TODO: open a ticket to share DESeq2 module results via aws s3.
+#
+# TODO: Download rds to build output dir in build_db_docker_cmd.sh.
+#
+# TODO: RDS may exceed memory limit.
+# - Share CSV.
+# - Use EC2 with larger memory.
+diff_exp_df <- readRDS(
+  file.path(db_build_output_dir, "DESeq_Results_V9_v2.RDS"))
 
 
 
@@ -282,6 +306,306 @@ get_ind_chunk_list <- function(n_elements, n_chunks) {
 
 
 
+# Write bulk differential expression table to csv ------------------------------
+stopifnot(is.data.frame(diff_exp_df))
+stopifnot(is.character(colnames(diff_exp_df)))
+stopifnot(all(!is.na(colnames(diff_exp_df))))
+
+stopifnot(identical(
+  sort(colnames(diff_exp_df)),
+  sort(c("datasourceId", "datatypeId", "cohort", "Gene_symbol",
+         "Gene_Ensembl_ID", "RMTL", "EFO", "MONDO",
+         "GTEx_tissue_subgroup_UBERON", "comparisonId", "cancer_group",
+         "cancer_group_Count", "GTEx_subgroup", "GTEx_Count",
+         "cancer_group_MeanTpm", "GTEx_MeanTpm", "baseMean", "log2FoldChange",
+         "lfcSE", "stat", "pvalue", "padj"))
+))
+
+stopifnot(is.character(diff_exp_df$Gene_Ensembl_ID))
+stopifnot(is.character(diff_exp_df$Gene_symbol))
+stopifnot(is.character(diff_exp_df$cancer_group))
+stopifnot(is.character(diff_exp_df$cohort))
+
+stopifnot(all(!is.na(diff_exp_df$Gene_Ensembl_ID)))
+invisible(gc())
+stopifnot(all(!is.na(diff_exp_df$Gene_symbol)))
+invisible(gc())
+stopifnot(all(!is.na(diff_exp_df$cancer_group)))
+invisible(gc())
+stopifnot(all(!is.na(diff_exp_df$cohort)))
+invisible(gc())
+
+
+if (DOWN_SAMPLE_DB_GENES) {
+  cat("Downsample ", length(arbt_db_ensg_ids),
+      " ENSG IDs for quick testing...\n", sep = "")
+
+  diff_exp_df <- diff_exp_df %>%
+    dplyr::filter(.data$Gene_Ensembl_ID %in% arbt_db_ensg_ids)
+
+  invisible(gc())
+}
+
+uniq_cg_cohort_tbl <- tibble::as_tibble(
+  dplyr::distinct(diff_exp_df[, c("cancer_group", "cohort")]))
+
+stopifnot(identical(sum(is.na(uniq_cg_cohort_tbl)), 0L))
+stopifnot(nrow(uniq_cg_cohort_tbl) > 0)
+stopifnot(all_cohorts_str_id %in% uniq_cg_cohort_tbl$cohort)
+stopifnot(is.character(uniq_cg_cohort_tbl$cancer_group))
+stopifnot(is.character(uniq_cg_cohort_tbl$cohort))
+
+# Natural cohort, e.g. PBTA. Artificial cohort, e.g. All Cohorts.
+#
+# cancer_groups with >= 2 natural cohorts.
+cg_ge2_nat_cohorts_tbl <- uniq_cg_cohort_tbl %>%
+  dplyr::filter(cohort != .env$all_cohorts_str_id) %>%
+  dplyr::group_by(.data$cancer_group) %>%
+  dplyr::summarise(
+    nat_cohorts = paste0(.data$cohort, collapse = ","),
+    n_nat_cohorts = length(.data$cohort)) %>%
+  dplyr::filter(.data$n_nat_cohorts >= 2)
+
+# Remove (cancer_group, All Cohorts) tuples with cancer_groups that only have
+# one natural cohort.
+#
+# Use more parentheses to guarantee operation precedence.
+cg_ge2_nc_uniq_cg_cohort_tbl <- uniq_cg_cohort_tbl %>%
+  dplyr::filter(
+    !(
+        (.data$cohort == .env$all_cohorts_str_id) &
+        (!(.data$cancer_group %in% .env$cg_ge2_nat_cohorts_tbl$cancer_group))
+     )
+  )
+
+stopifnot(tibble::is_tibble(cg_ge2_nc_uniq_cg_cohort_tbl))
+stopifnot(identical(sum(is.na(cg_ge2_nc_uniq_cg_cohort_tbl)), 0L))
+stopifnot(nrow(cg_ge2_nc_uniq_cg_cohort_tbl) > 0)
+
+invisible(gc())
+
+cat("Write bulk differential expression table to csv...\n", sep = "")
+
+stopifnot(!file.exists(diff_exp_csv_out_path))
+
+place_holder_res <- purrr::map_dfr(
+  seq(1L, nrow(cg_ge2_nc_uniq_cg_cohort_tbl), 1L),
+  function(cge2nc_ucc_ind) {
+    invisible(gc())
+
+    cge2nc_ucc_row <- cg_ge2_nc_uniq_cg_cohort_tbl[cge2nc_ucc_ind, ]
+    cat(
+      "  cancer_group: ", cge2nc_ucc_row$cancer_group, ", cohort: ",
+      cge2nc_ucc_row$cohort, "\n", sep = "")
+
+    # TODO: replace Disease_specimen_descriptor with real ones in
+    # OpenPedCan-analysis DESeq2 module output.
+    cge2nc_ucc_diff_exp_tbl <- diff_exp_df %>%
+      dplyr::filter(
+        .data$cancer_group == .env$cge2nc_ucc_row$cancer_group,
+        .data$cohort == .env$cge2nc_ucc_row$cohort) %>%
+      tibble::as_tibble() %>%
+      dplyr::select(!c(datasourceId, datatypeId, comparisonId)) %>%
+      dplyr::rename(
+        PMTL = RMTL, Disease = cancer_group,
+        Disease_sample_count = cancer_group_Count,
+        GTEx_tissue_subgroup = GTEx_subgroup,
+        GTEx_tissue_subgroup_sample_count = GTEx_Count,
+        Disease_mean_TPM = cancer_group_MeanTpm,
+        GTEx_tissue_subgroup_mean_TPM = GTEx_MeanTpm,
+        base_mean = baseMean, log2_fold_change = log2FoldChange) %>%
+      dplyr::mutate(
+        EFO = dplyr::na_if(.data$EFO, ""),
+        MONDO = dplyr::na_if(.data$MONDO, ""),
+        GTEx_tissue_subgroup_UBERON = dplyr::na_if(
+          .data$GTEx_tissue_subgroup_UBERON, ""),
+        Disease_specimen_descriptor = "Primary Tumor") %>%
+      dplyr::select(
+        cohort, EFO, MONDO, Disease, Disease_specimen_descriptor,
+        Disease_sample_count,
+        GTEx_tissue_subgroup_UBERON, GTEx_tissue_subgroup,
+        GTEx_tissue_subgroup_sample_count,
+        Gene_symbol, Gene_Ensembl_ID, Disease_mean_TPM,
+        GTEx_tissue_subgroup_mean_TPM, base_mean, log2_fold_change,
+        lfcSE, stat, pvalue, padj, PMTL)
+
+    invisible(gc())
+
+    ensg_symbol_pmtl_tbl <- dplyr::distinct(
+      dplyr::select(
+        cge2nc_ucc_diff_exp_tbl, Gene_symbol, Gene_Ensembl_ID, PMTL))
+
+    # All ENSG IDs and symbols have the same PMTL.
+    stopifnot(identical(
+      nrow(ensg_symbol_pmtl_tbl),
+      nrow(
+        dplyr::distinct(
+          dplyr::select(ensg_symbol_pmtl_tbl, Gene_symbol, Gene_Ensembl_ID)))
+    ))
+
+    invisible(gc())
+
+    # TODO: Whether down regulated gene ranks neeed to be NA if log fold change
+    # > 0, vice versa?
+    #
+    # cgc is a shorthand for (cancer_group, cohort) tuple.
+    cge2nc_ucc_de_gene_rank_tbl <- cge2nc_ucc_diff_exp_tbl %>%
+      dplyr::mutate(
+        log2_fold_change = tidyr::replace_na(.data$log2_fold_change, 0)) %>%
+      dplyr::group_by(.data$Gene_Ensembl_ID, .data$Gene_symbol, .data$PMTL) %>%
+      dplyr::summarise(
+        mean_gtex_log2_fc = mean(.data$log2_fold_change), .groups = "drop") %>%
+      dplyr::mutate(
+        cgc_all_gene_up_reg_rank = rank(
+          -.data$mean_gtex_log2_fc, na.last = TRUE, ties.method = "first"),
+
+        cgc_all_gene_down_reg_rank = rank(
+          .data$mean_gtex_log2_fc, na.last = TRUE, ties.method = "first"),
+
+        cgc_all_gene_up_and_down_reg_rank = rank(
+          -abs(.data$mean_gtex_log2_fc), na.last = TRUE, ties.method = "first")
+      ) %>%
+      dplyr::mutate(
+        cgc_pmtl_gene_up_reg_rank = dplyr::if_else(
+          is.na(.data$PMTL),
+          true = NA_integer_,
+          false = rank(
+            dplyr::if_else(
+              is.na(.data$PMTL), true = NA_integer_,
+              false = .data$cgc_all_gene_up_reg_rank),
+            na.last = TRUE, ties.method = "first")
+        ),
+
+        cgc_pmtl_gene_down_reg_rank = dplyr::if_else(
+          is.na(.data$PMTL),
+          true = NA_integer_,
+          false = rank(
+            dplyr::if_else(
+              is.na(.data$PMTL), true = NA_integer_,
+              false = .data$cgc_all_gene_down_reg_rank),
+            na.last = TRUE, ties.method = "first")
+        ),
+
+        cgc_pmtl_gene_up_and_down_reg_rank = dplyr::if_else(
+          is.na(.data$PMTL),
+          true = NA_integer_,
+          false = rank(
+            dplyr::if_else(
+              is.na(.data$PMTL), true = NA_integer_,
+              false = .data$cgc_all_gene_up_and_down_reg_rank),
+            na.last = TRUE, ties.method = "first")
+        )
+      )
+
+    invisible(gc())
+
+    cge2nc_ucc_diff_exp_rank_tbl <- dplyr::left_join(
+      cge2nc_ucc_diff_exp_tbl,
+      dplyr::select(cge2nc_ucc_de_gene_rank_tbl, !c(mean_gtex_log2_fc)),
+      by = c("Gene_Ensembl_ID", "Gene_symbol", "PMTL"))
+
+    invisible(gc())
+    stopifnot(identical(
+      cge2nc_ucc_diff_exp_rank_tbl[, c("Gene_Ensembl_ID", "Gene_symbol",
+                                       "PMTL")],
+      cge2nc_ucc_diff_exp_tbl[, c("Gene_Ensembl_ID", "Gene_symbol", "PMTL")]
+    ))
+
+    pmtl_is_na_vec <- is.na(cge2nc_ucc_diff_exp_rank_tbl$PMTL)
+
+    purrr::imap_lgl(cge2nc_ucc_diff_exp_rank_tbl, function(xcol, xname) {
+      stopifnot(!is.factor(xcol))
+      char_cols <- c("cohort", "EFO", "MONDO", "Disease",
+                     "GTEx_tissue_subgroup_UBERON", "GTEx_tissue_subgroup",
+                     "Gene_symbol", "Gene_Ensembl_ID", "PMTL",
+                     "Disease_specimen_descriptor")
+
+      num_cols <- c("Disease_sample_count", "GTEx_tissue_subgroup_sample_count",
+                    "Disease_mean_TPM", "GTEx_tissue_subgroup_mean_TPM",
+                    "base_mean", "log2_fold_change", "lfcSE", "stat", "pvalue",
+                    "padj", "cgc_all_gene_up_reg_rank",
+                    "cgc_all_gene_down_reg_rank",
+                    "cgc_all_gene_up_and_down_reg_rank",
+                    "cgc_pmtl_gene_up_reg_rank",
+                    "cgc_pmtl_gene_down_reg_rank",
+                    "cgc_pmtl_gene_up_and_down_reg_rank")
+
+      if (xname %in% char_cols) {
+        stopifnot(is.character(xcol))
+        stopifnot(!("" %in% xcol))
+
+        if (xname %in% c("cohort", "Disease", "GTEx_tissue_subgroup",
+                         "Gene_symbol", "Gene_Ensembl_ID",
+                         "Disease_specimen_descriptor")) {
+
+          stopifnot(all(!is.na(xcol)))
+        }
+      } else if (xname %in% num_cols) {
+        stopifnot(is.numeric(xcol))
+
+        if (xname %in% c("Disease_sample_count",
+                         "GTEx_tissue_subgroup_sample_count",
+                         "cgc_all_gene_up_reg_rank",
+                         "cgc_all_gene_down_reg_rank",
+                         "cgc_all_gene_up_and_down_reg_rank")) {
+
+          stopifnot(all(!is.na(xcol)))
+        }
+
+        if (xname %in% c("cgc_pmtl_gene_up_reg_rank",
+                         "cgc_pmtl_gene_down_reg_rank",
+                         "cgc_pmtl_gene_up_and_down_reg_rank")) {
+
+          stopifnot(identical(pmtl_is_na_vec, is.na(xcol)))
+        }
+      } else {
+        stop(paste0("Unknown diff exp table column ", xname))
+      }
+
+      return(TRUE)
+    })
+
+    if (file.exists(diff_exp_csv_out_path)) {
+      # Append.
+      pgc_write_csv(
+        cge2nc_ucc_diff_exp_rank_tbl, diff_exp_csv_out_path, append = TRUE,
+        col_names = FALSE)
+    } else {
+      # Write colnames and empty db table only, if output file does not exist.
+      pgc_write_csv(
+        cge2nc_ucc_diff_exp_rank_tbl, diff_exp_csv_out_path, append = FALSE,
+        col_names = TRUE)
+
+      # Create table. Table should not exist.
+      cat("  Create empty differential expression database table.\n")
+
+      conn <- connect_db(db_env_vars)
+      # DBI table ID is case sensitive.
+      db_write_table(
+        dplyr::slice(cge2nc_ucc_diff_exp_rank_tbl, 0), conn,
+        tolower(db_env_vars$BULK_EXP_SCHEMA),
+        tolower(db_env_vars$BULK_EXP_DIFF_EXP_TBL))
+      DBI::dbDisconnect(conn)
+    }
+
+    return(cge2nc_ucc_row)
+  }
+)
+
+stopifnot(identical(place_holder_res, cg_ge2_nc_uniq_cg_cohort_tbl))
+
+rm(diff_exp_df, uniq_cg_cohort_tbl, cg_ge2_nat_cohorts_tbl,
+   cg_ge2_nc_uniq_cg_cohort_tbl, place_holder_res)
+
+invisible(gc())
+
+
+
+# Read TPM data ----------------------------------------------------------------
+cat("Read TPM data...\n")
+tpm_data_lists <- readRDS(file.path(db_build_output_dir, "tpm_data_lists.rds"))
+
+
 # Generate long format TPM tables and write to csv -----------------------------
 cat("Generate long format TPM tables and write to csv...\n")
 
@@ -300,9 +624,6 @@ cat("Generate long format TPM tables and write to csv...\n")
 #
 # db queries of a single ENSG ID may have multipe gene symbols. Handle them
 # there.
-
-# Distinguish all-cohorts from each-cohort
-all_cohorts_str_id <- "All Cohorts"
 
 # The annotation columns of tpm_df, all other columns must be samples TPM
 # values.
@@ -450,10 +771,6 @@ tpm_data_lists$prm_rlp_all_cohorts <- list(
 )
 
 if (DOWN_SAMPLE_DB_GENES) {
-  # Arbitrarily selected genes for quick testing.
-  arbt_db_ensg_ids <- c("ENSG00000213420", "ENSG00000157764", "ENSG00000273032",
-                        "ENSG00000141510", "ENSG00000171094")
-
   cat("Downsample ", length(arbt_db_ensg_ids),
       " ENSG IDs for quick testing...\n", sep = "")
 
@@ -470,7 +787,7 @@ if (DOWN_SAMPLE_DB_GENES) {
 
 invisible(gc(reset = TRUE))
 
-stopifnot(!file.exists(csv_out_path))
+stopifnot(!file.exists(tpm_csv_out_path))
 
 # chunk-wise write to database.
 place_holder_res <- purrr::imap_lgl(tpm_data_lists, function(xl, xname) {
@@ -617,17 +934,17 @@ place_holder_res <- purrr::imap_lgl(tpm_data_lists, function(xl, xname) {
         )
       }
 
-      if (file.exists(csv_out_path)) {
+      if (file.exists(tpm_csv_out_path)) {
         # Append.
         pgc_write_csv(
-          x_long_tpm_tbl, csv_out_path, append = TRUE, col_names = FALSE)
+          x_long_tpm_tbl, tpm_csv_out_path, append = TRUE, col_names = FALSE)
       } else {
         # Write colnames and empty db table only, if output file does not exist.
         pgc_write_csv(
-          x_long_tpm_tbl, csv_out_path, append = FALSE, col_names = TRUE)
+          x_long_tpm_tbl, tpm_csv_out_path, append = FALSE, col_names = TRUE)
 
         # Create table. Table should not exist.
-        cat("  Create empty database table.\n")
+        cat("  Create empty TPM database table.\n")
 
         conn <- connect_db(db_env_vars)
         # DBI table ID is case sensitive.

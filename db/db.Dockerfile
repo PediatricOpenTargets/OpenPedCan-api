@@ -26,6 +26,11 @@ RUN mkdir -p "$BUILD_OUTPUT_DIR_PATH" \
 VOLUME "$BUILD_OUTPUT_DIR_PATH"
 
 # Initialize database by loading pre-build database dump.
+#
+# "These initialization files will be executed in sorted name order as defined
+# by the current locale, which defaults to en_US.utf8."
+#
+# Ref: Initialization scripts section of https://hub.docker.com/_/postgres
 COPY ./db/load_db.sh /docker-entrypoint-initdb.d/
 
 COPY ./db/init_db_pwfile.sh "$DB_LOAD_TOOLS_DIR_PATH"/init_db_pwfile.sh
