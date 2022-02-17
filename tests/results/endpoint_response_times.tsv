@@ -1,454 +1,454 @@
-endpoint	response_code	response_time_in_seconds
-/tpm/gene-disease-gtex/json	200	1.174351
-/tpm/gene-disease-gtex/json	200	1.198391
-/tpm/gene-disease-gtex/json	200	1.453955
-/tpm/gene-disease-gtex/json	200	1.15331
-/tpm/gene-disease-gtex/json	200	1.176883
-/tpm/gene-disease-gtex/json	200	1.441226
-/tpm/gene-disease-gtex/json	200	1.148442
-/tpm/gene-disease-gtex/json	200	1.141205
-/tpm/gene-disease-gtex/json	200	1.312244
-/tpm/gene-disease-gtex/json	200	1.196493
-/tpm/gene-disease-gtex/json	200	1.337894
-/tpm/gene-disease-gtex/json	200	1.305605
-/tpm/gene-disease-gtex/json	200	1.098841
-/tpm/gene-disease-gtex/json	200	1.228503
-/tpm/gene-disease-gtex/json	200	1.232389
-/tpm/gene-disease-gtex/json	200	1.107047
-/tpm/gene-disease-gtex/json	200	1.092787
-/tpm/gene-disease-gtex/json	200	1.243654
-/tpm/gene-disease-gtex/json	200	1.10582
-/tpm/gene-disease-gtex/json	200	1.112261
-/tpm/gene-disease-gtex/json	200	1.393707
-/tpm/gene-disease-gtex/json	200	1.110439
-/tpm/gene-disease-gtex/json	200	1.103894
-/tpm/gene-disease-gtex/json	200	1.228501
-/tpm/gene-disease-gtex/json	200	1.084138
-/tpm/gene-disease-gtex/json	200	1.112447
-/tpm/gene-disease-gtex/json	200	1.226898
-/tpm/gene-disease-gtex/json	200	1.111633
-/tpm/gene-disease-gtex/json	200	1.105786
-/tpm/gene-disease-gtex/json	200	1.384672
-/tpm/gene-disease-gtex/json	200	1.101012
-/tpm/gene-disease-gtex/json	200	1.115685
-/tpm/gene-disease-gtex/json	200	1.249684
-/tpm/gene-disease-gtex/json	200	1.101347
-/tpm/gene-disease-gtex/json	200	1.11246
-/tpm/gene-disease-gtex/json	200	1.252845
-/tpm/gene-disease-gtex/json	500	1.08166
-/tpm/gene-disease-gtex/json	500	1.177539
-/tpm/gene-disease-gtex/json	500	1.15874
-/tpm/gene-disease-gtex/json	500	1.073665
-/tpm/gene-disease-gtex/json	500	1.038083
-/tpm/gene-disease-gtex/json	500	1.163235
-/tpm/gene-disease-gtex/json	200	1.122998
-/tpm/gene-disease-gtex/json	200	1.103273
-/tpm/gene-disease-gtex/json	200	1.387148
-/tpm/gene-disease-gtex/json	500	1.070544
-/tpm/gene-disease-gtex/json	500	1.029796
-/tpm/gene-disease-gtex/json	500	1.294186
-/tpm/gene-disease-gtex/json	500	1.078062
-/tpm/gene-disease-gtex/json	500	1.04218
-/tpm/gene-disease-gtex/json	500	1.158962
-/tpm/gene-disease-gtex/json	200	1.087946
-/tpm/gene-disease-gtex/json	200	1.118695
-/tpm/gene-disease-gtex/json	200	1.237552
-/tpm/gene-disease-gtex/json	200	1.252625
-/tpm/gene-disease-gtex/json	200	1.09714
-/tpm/gene-disease-gtex/json	200	1.235637
-/tpm/gene-disease-gtex/json	500	1.078554
-/tpm/gene-disease-gtex/json	500	1.03491
-/tpm/gene-disease-gtex/json	500	1.179873
-/tpm/gene-disease-gtex/plot	200	2.872674
-/tpm/gene-disease-gtex/plot	200	2.766096
-/tpm/gene-disease-gtex/plot	200	3.019746
-/tpm/gene-disease-gtex/plot	200	2.77185
-/tpm/gene-disease-gtex/plot	200	2.786398
-/tpm/gene-disease-gtex/plot	200	2.945338
-/tpm/gene-disease-gtex/plot	200	2.905083
-/tpm/gene-disease-gtex/plot	200	2.720127
-/tpm/gene-disease-gtex/plot	200	2.953973
-/tpm/gene-disease-gtex/plot	200	2.716753
-/tpm/gene-disease-gtex/plot	200	2.75389
-/tpm/gene-disease-gtex/plot	200	2.946058
-/tpm/gene-disease-gtex/plot	200	3.010833
-/tpm/gene-disease-gtex/plot	200	2.742737
-/tpm/gene-disease-gtex/plot	200	2.882975
-/tpm/gene-disease-gtex/plot	200	2.767626
-/tpm/gene-disease-gtex/plot	200	2.806099
-/tpm/gene-disease-gtex/plot	200	3.132741
-/tpm/gene-disease-gtex/plot	200	2.739391
-/tpm/gene-disease-gtex/plot	200	2.784009
-/tpm/gene-disease-gtex/plot	200	3.001217
-/tpm/gene-disease-gtex/plot	200	2.802295
-/tpm/gene-disease-gtex/plot	200	2.762573
-/tpm/gene-disease-gtex/plot	200	3.05987
-/tpm/gene-disease-gtex/plot	200	2.627778
-/tpm/gene-disease-gtex/plot	200	2.632022
-/tpm/gene-disease-gtex/plot	200	2.822185
-/tpm/gene-disease-gtex/plot	200	2.713193
-/tpm/gene-disease-gtex/plot	200	2.790625
-/tpm/gene-disease-gtex/plot	200	2.784859
-/tpm/gene-disease-gtex/plot	200	2.649206
-/tpm/gene-disease-gtex/plot	200	2.667396
-/tpm/gene-disease-gtex/plot	200	2.808677
-/tpm/gene-disease-gtex/plot	200	2.782484
-/tpm/gene-disease-gtex/plot	200	2.616829
-/tpm/gene-disease-gtex/plot	200	2.80618
-/tpm/gene-disease-gtex/plot	200	2.657494
-/tpm/gene-disease-gtex/plot	200	2.729318
-/tpm/gene-disease-gtex/plot	200	2.92464
-/tpm/gene-disease-gtex/plot	200	2.7962920000000002
-/tpm/gene-disease-gtex/plot	200	2.637393
-/tpm/gene-disease-gtex/plot	200	2.830228
-/tpm/gene-disease-gtex/plot	200	2.666095
-/tpm/gene-disease-gtex/plot	200	2.69722
-/tpm/gene-disease-gtex/plot	200	2.82595
-/tpm/gene-disease-gtex/plot	200	2.761086
-/tpm/gene-disease-gtex/plot	200	2.638572
-/tpm/gene-disease-gtex/plot	200	2.806179
-/tpm/gene-disease-gtex/plot	200	2.670626
-/tpm/gene-disease-gtex/plot	200	2.673566
-/tpm/gene-disease-gtex/plot	200	3.047981
-/tpm/gene-disease-gtex/plot	200	2.650136
-/tpm/gene-disease-gtex/plot	200	2.674507
-/tpm/gene-disease-gtex/plot	200	2.840155
-/tpm/gene-disease-gtex/plot	200	2.68419
-/tpm/gene-disease-gtex/plot	200	2.8130829999999998
-/tpm/gene-disease-gtex/plot	200	2.756854
-/tpm/gene-disease-gtex/plot	200	2.794949
-/tpm/gene-disease-gtex/plot	200	2.616216
-/tpm/gene-disease-gtex/plot	200	2.802994
-/tpm/gene-disease-gtex/plot	200	2.666954
-/tpm/gene-disease-gtex/plot	200	2.68388
-/tpm/gene-disease-gtex/plot	200	2.924179
-/tpm/gene-disease-gtex/plot	200	2.614992
-/tpm/gene-disease-gtex/plot	200	2.649283
-/tpm/gene-disease-gtex/plot	200	2.804391
-/tpm/gene-disease-gtex/plot	200	2.700796
-/tpm/gene-disease-gtex/plot	200	2.673549
-/tpm/gene-disease-gtex/plot	200	2.909039
-/tpm/gene-disease-gtex/plot	200	2.643973
-/tpm/gene-disease-gtex/plot	200	2.785421
-/tpm/gene-disease-gtex/plot	200	2.807189
-/tpm/gene-disease-gtex/plot	500	1.094166
-/tpm/gene-disease-gtex/plot	500	1.065098
-/tpm/gene-disease-gtex/plot	500	1.202029
-/tpm/gene-disease-gtex/plot	500	1.111063
-/tpm/gene-disease-gtex/plot	500	1.214407
-/tpm/gene-disease-gtex/plot	500	1.289793
-/tpm/gene-disease-gtex/plot	500	1.077919
-/tpm/gene-disease-gtex/plot	500	1.023418
-/tpm/gene-disease-gtex/plot	500	1.171575
-/tpm/gene-disease-gtex/plot	500	1.074883
-/tpm/gene-disease-gtex/plot	500	1.042402
-/tpm/gene-disease-gtex/plot	500	1.327308
-/tpm/gene-disease-gtex/plot	200	2.624235
-/tpm/gene-disease-gtex/plot	200	2.654627
-/tpm/gene-disease-gtex/plot	200	2.911156
-/tpm/gene-disease-gtex/plot	200	2.650042
-/tpm/gene-disease-gtex/plot	200	2.649996
-/tpm/gene-disease-gtex/plot	200	2.825851
-/tpm/gene-disease-gtex/plot	500	1.110311
-/tpm/gene-disease-gtex/plot	500	1.060423
-/tpm/gene-disease-gtex/plot	500	1.316378
-/tpm/gene-disease-gtex/plot	500	1.076787
-/tpm/gene-disease-gtex/plot	500	1.06126
-/tpm/gene-disease-gtex/plot	500	1.177095
-/tpm/gene-disease-gtex/plot	500	1.211857
-/tpm/gene-disease-gtex/plot	500	1.021574
-/tpm/gene-disease-gtex/plot	500	1.154186
-/tpm/gene-disease-gtex/plot	500	1.098455
-/tpm/gene-disease-gtex/plot	500	1.170004
-/tpm/gene-disease-gtex/plot	500	1.157458
-/tpm/gene-disease-gtex/plot	200	2.642105
-/tpm/gene-disease-gtex/plot	200	2.651943
-/tpm/gene-disease-gtex/plot	200	2.81348
-/tpm/gene-disease-gtex/plot	200	2.679843
-/tpm/gene-disease-gtex/plot	200	2.748842
-/tpm/gene-disease-gtex/plot	200	2.774675
-/tpm/gene-disease-gtex/plot	200	2.642718
-/tpm/gene-disease-gtex/plot	200	2.672718
-/tpm/gene-disease-gtex/plot	200	2.94422
-/tpm/gene-disease-gtex/plot	200	2.625196
-/tpm/gene-disease-gtex/plot	200	2.643846
-/tpm/gene-disease-gtex/plot	200	2.799003
-/tpm/gene-disease-gtex/plot	500	1.082384
-/tpm/gene-disease-gtex/plot	500	1.065612
-/tpm/gene-disease-gtex/plot	500	1.187683
-/tpm/gene-disease-gtex/plot	500	1.088851
-/tpm/gene-disease-gtex/plot	500	1.16304
-/tpm/gene-disease-gtex/plot	500	1.14368
-/tpm/gene-all-cancer/json	200	0.978327
-/tpm/gene-all-cancer/json	200	0.997096
-/tpm/gene-all-cancer/json	200	1.124055
-/tpm/gene-all-cancer/json	200	1.06209
-/tpm/gene-all-cancer/json	200	1.059204
-/tpm/gene-all-cancer/json	200	1.174534
-/tpm/gene-all-cancer/json	200	1.067731
-/tpm/gene-all-cancer/json	200	1.062413
-/tpm/gene-all-cancer/json	200	1.190523
-/tpm/gene-all-cancer/json	200	1.121438
-/tpm/gene-all-cancer/json	200	1.125746
-/tpm/gene-all-cancer/json	200	1.248409
-/tpm/gene-all-cancer/plot	200	2.049352
-/tpm/gene-all-cancer/plot	200	2.060033
-/tpm/gene-all-cancer/plot	200	2.217151
-/tpm/gene-all-cancer/plot	200	2.082683
-/tpm/gene-all-cancer/plot	200	2.087208
-/tpm/gene-all-cancer/plot	200	2.25163
-/tpm/gene-all-cancer/plot	200	2.091511
-/tpm/gene-all-cancer/plot	200	2.088386
-/tpm/gene-all-cancer/plot	200	2.305597
-/tpm/gene-all-cancer/plot	200	2.00913
-/tpm/gene-all-cancer/plot	200	2.008493
-/tpm/gene-all-cancer/plot	200	2.174202
-/tpm/gene-all-cancer/plot	200	2.117748
-/tpm/gene-all-cancer/plot	200	2.140581
-/tpm/gene-all-cancer/plot	200	2.289787
-/tpm/gene-all-cancer/plot	200	2.138337
-/tpm/gene-all-cancer/plot	200	2.137437
-/tpm/gene-all-cancer/plot	200	2.298346
-/tpm/gene-all-cancer/plot	200	2.015211
-/tpm/gene-all-cancer/plot	200	2.022831
-/tpm/gene-all-cancer/plot	200	2.169182
-/tpm/gene-all-cancer/plot	200	2.023211
-/tpm/gene-all-cancer/plot	200	2.032211
-/tpm/gene-all-cancer/plot	200	2.229389
-/tpm/gene-all-cancer-collapsed-gtex/json	200	1.199655
-/tpm/gene-all-cancer-collapsed-gtex/json	200	1.03565
-/tpm/gene-all-cancer-collapsed-gtex/json	200	1.1848
-/tpm/gene-all-cancer-collapsed-gtex/json	200	1.116347
-/tpm/gene-all-cancer-collapsed-gtex/json	200	1.125981
-/tpm/gene-all-cancer-collapsed-gtex/json	200	1.399255
-/tpm/gene-all-cancer-collapsed-gtex/json	200	1.116052
-/tpm/gene-all-cancer-collapsed-gtex/json	200	1.135293
-/tpm/gene-all-cancer-collapsed-gtex/json	200	1.250409
-/tpm/gene-all-cancer-collapsed-gtex/json	200	1.321353
-/tpm/gene-all-cancer-collapsed-gtex/json	200	1.175982
-/tpm/gene-all-cancer-collapsed-gtex/json	200	1.309679
-/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.263227
-/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.262239
-/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.593107
-/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.272701
-/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.263583
-/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.583375
-/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.369579
-/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.196119
-/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.555653
-/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.243616
-/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.253868
-/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.445852
-/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.485059
-/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.281929
-/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.510222
-/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.339746
-/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.480156
-/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.463589
-/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.19517
-/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.289509
-/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.337795
-/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.210042
-/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.29519
-/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.312658
-/tpm/gene-all-cancer-gtex/json	200	1.861766
-/tpm/gene-all-cancer-gtex/json	200	1.976598
-/tpm/gene-all-cancer-gtex/json	200	1.946674
-/tpm/gene-all-cancer-gtex/json	200	1.924061
-/tpm/gene-all-cancer-gtex/json	200	1.906054
-/tpm/gene-all-cancer-gtex/json	200	2.058083
-/tpm/gene-all-cancer-gtex/json	200	1.904528
-/tpm/gene-all-cancer-gtex/json	200	2.050353
-/tpm/gene-all-cancer-gtex/json	200	2.048672
-/tpm/gene-all-cancer-gtex/json	200	1.946502
-/tpm/gene-all-cancer-gtex/json	200	1.987917
-/tpm/gene-all-cancer-gtex/json	200	2.233658
-/tpm/gene-all-cancer-gtex/plot	200	4.09492
-/tpm/gene-all-cancer-gtex/plot	200	3.956631
-/tpm/gene-all-cancer-gtex/plot	200	4.166439
-/tpm/gene-all-cancer-gtex/plot	200	4.078889
-/tpm/gene-all-cancer-gtex/plot	200	4.135686
-/tpm/gene-all-cancer-gtex/plot	200	4.254128
-/tpm/gene-all-cancer-gtex/plot	200	4.089291
-/tpm/gene-all-cancer-gtex/plot	200	3.969938
-/tpm/gene-all-cancer-gtex/plot	200	4.130817
-/tpm/gene-all-cancer-gtex/plot	200	4.123288
-/tpm/gene-all-cancer-gtex/plot	200	3.981735
-/tpm/gene-all-cancer-gtex/plot	200	4.252906
-/tpm/gene-all-cancer-gtex/plot	200	4.065185
-/tpm/gene-all-cancer-gtex/plot	200	4.095754
-/tpm/gene-all-cancer-gtex/plot	200	4.339132
-/tpm/gene-all-cancer-gtex/plot	200	4.075946
-/tpm/gene-all-cancer-gtex/plot	200	4.205666
-/tpm/gene-all-cancer-gtex/plot	200	4.232141
-/tpm/gene-all-cancer-gtex/plot	200	4.065397
-/tpm/gene-all-cancer-gtex/plot	200	4.047527
-/tpm/gene-all-cancer-gtex/plot	200	4.084062
-/tpm/gene-all-cancer-gtex/plot	200	3.966883
-/tpm/gene-all-cancer-gtex/plot	200	4.050421
-/tpm/gene-all-cancer-gtex/plot	200	4.075758
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.800738
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.287272
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.287533
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.448861
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.292108
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.790479
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.294945
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.285439
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.299704
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.305843
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.788205
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.293884
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.426787
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.281838
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.280814
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.782439
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.276858
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.293429
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.322736
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.4518
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.807985
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.280065
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.291627
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.292982
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.305016
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.933155
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.275447
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.282099
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.296732
-/dge/top-gene-disease-gtex-diff-exp/json	200	0.290511
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.614035
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.519414
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.557655
-/dge/top-gene-disease-gtex-diff-exp/plot	200	21.51685
-/dge/top-gene-disease-gtex-diff-exp/plot	200	3.739425
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.625672
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.678675
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.540339
-/dge/top-gene-disease-gtex-diff-exp/plot	200	21.204461
-/dge/top-gene-disease-gtex-diff-exp/plot	200	3.845089
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.505657
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.493538
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.585006
-/dge/top-gene-disease-gtex-diff-exp/plot	200	21.313571
-/dge/top-gene-disease-gtex-diff-exp/plot	200	3.777433
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.877067
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.549304
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.56548
-/dge/top-gene-disease-gtex-diff-exp/plot	200	21.31153
-/dge/top-gene-disease-gtex-diff-exp/plot	200	3.786978
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.818728
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.681371
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.571703
-/dge/top-gene-disease-gtex-diff-exp/plot	200	21.141607
-/dge/top-gene-disease-gtex-diff-exp/plot	200	3.765963
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.751733
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.619752
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.658114
-/dge/top-gene-disease-gtex-diff-exp/plot	200	21.379768
-/dge/top-gene-disease-gtex-diff-exp/plot	200	3.873346
-/dge/top-gene-disease-gtex-diff-exp/plot	200	2.460708
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.909583
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.778341
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.805481
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.799207
-/dge/top-gene-disease-gtex-diff-exp/plot	200	2.296315
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.900818
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.766437
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.798767
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.797283
-/dge/top-gene-disease-gtex-diff-exp/plot	200	2.246751
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.750704
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.767367
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.794148
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.781346
-/dge/top-gene-disease-gtex-diff-exp/plot	200	2.316612
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.777619
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.779902
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.791283
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.815211
-/dge/top-gene-disease-gtex-diff-exp/plot	200	2.302557
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.767854
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.90683
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.795041
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.784816
-/dge/top-gene-disease-gtex-diff-exp/plot	200	2.25227
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.752809
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.76525
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.775501
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.787282
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.507982
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.65992
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.566461
-/dge/top-gene-disease-gtex-diff-exp/plot	200	21.38493
-/dge/top-gene-disease-gtex-diff-exp/plot	200	3.778486
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.593678
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.568351
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.63168
-/dge/top-gene-disease-gtex-diff-exp/plot	200	21.489713
-/dge/top-gene-disease-gtex-diff-exp/plot	200	3.875784
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.500531
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.592864
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.639832
-/dge/top-gene-disease-gtex-diff-exp/plot	200	21.505846
-/dge/top-gene-disease-gtex-diff-exp/plot	200	3.796974
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.90895
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.592506
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.639952
-/dge/top-gene-disease-gtex-diff-exp/plot	200	21.376349
-/dge/top-gene-disease-gtex-diff-exp/plot	200	3.907768
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.761728
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.608906
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.653457
-/dge/top-gene-disease-gtex-diff-exp/plot	200	21.43082
-/dge/top-gene-disease-gtex-diff-exp/plot	200	3.821721
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.983906
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.560664
-/dge/top-gene-disease-gtex-diff-exp/plot	200	4.6026300000000004
-/dge/top-gene-disease-gtex-diff-exp/plot	200	21.395575
-/dge/top-gene-disease-gtex-diff-exp/plot	200	3.79023
-/dge/top-gene-disease-gtex-diff-exp/plot	200	2.589882
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.766152
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.775353
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.801388
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.801426
-/dge/top-gene-disease-gtex-diff-exp/plot	200	2.286167
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.764893
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.779319
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.808195
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.789557
-/dge/top-gene-disease-gtex-diff-exp/plot	200	2.279762
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.756945
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.766082
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.811386
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.929732
-/dge/top-gene-disease-gtex-diff-exp/plot	200	2.308383
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.765626
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.786027
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.793482
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.803201
-/dge/top-gene-disease-gtex-diff-exp/plot	200	2.377455
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.828361
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.855728
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.871847
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.861439
-/dge/top-gene-disease-gtex-diff-exp/plot	200	2.343697
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.828156
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.787879
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.795534
-/dge/top-gene-disease-gtex-diff-exp/plot	200	1.921556
-/dge/gene-all-cancer-gtex-diff-exp/json	200	0.141991
-/dge/gene-all-cancer-gtex-diff-exp/json	200	0.144204
-/dge/gene-all-cancer-gtex-diff-exp/json	200	0.179635
-/dge/gene-all-cancer-gtex-diff-exp/plot	200	3.488619
-/dge/gene-all-cancer-gtex-diff-exp/plot	200	3.532009
-/dge/gene-all-cancer-gtex-diff-exp/plot	200	3.820372
-/dge/gene-all-cancer-gtex-diff-exp/plot	200	1.334994
-/dge/gene-all-cancer-gtex-diff-exp/plot	200	1.33255
-/dge/gene-all-cancer-gtex-diff-exp/plot	200	1.357581
-/dge/gene-all-cancer-gtex-diff-exp/plot	200	3.498097
-/dge/gene-all-cancer-gtex-diff-exp/plot	200	3.608318
-/dge/gene-all-cancer-gtex-diff-exp/plot	200	3.64517
-/dge/gene-all-cancer-gtex-diff-exp/plot	200	1.324528
-/dge/gene-all-cancer-gtex-diff-exp/plot	200	1.334135
-/dge/gene-all-cancer-gtex-diff-exp/plot	200	1.36882
+endpoint	response_code	response_time_in_seconds	url
+/tpm/gene-disease-gtex/json	200	2.267903	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000213420&efoId=EFO_0000621&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/json	200	1.354032	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000157764&efoId=EFO_0000621&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/json	200	1.384133	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000273032&efoId=EFO_0000621&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/json	200	1.10594	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000213420&efoId=EFO_0000621&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/json	200	1.101451	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000157764&efoId=EFO_0000621&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/json	200	1.239978	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000273032&efoId=EFO_0000621&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/json	200	1.073335	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000213420&efoId=EFO_0000621&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/json	200	1.078687	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000157764&efoId=EFO_0000621&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/json	200	1.217504	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000273032&efoId=EFO_0000621&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/json	200	1.116754	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000213420&efoId=EFO_0000621&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/json	200	1.173337	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000157764&efoId=EFO_0000621&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/json	200	1.209675	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000273032&efoId=EFO_0000621&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/json	200	1.024278	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000213420&efoId=MONDO_0016680&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/json	200	1.023493	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000157764&efoId=MONDO_0016680&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/json	200	1.139586	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000273032&efoId=MONDO_0016680&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/json	200	1.034214	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000213420&efoId=MONDO_0016680&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/json	200	1.116848	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000157764&efoId=MONDO_0016680&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/json	200	1.142806	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000273032&efoId=MONDO_0016680&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/json	200	1.119901	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000213420&efoId=MONDO_0016680&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/json	200	1.027274	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000157764&efoId=MONDO_0016680&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/json	200	1.156445	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000273032&efoId=MONDO_0016680&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/json	200	1.017252	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000213420&efoId=MONDO_0016680&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/json	200	1.032158	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000157764&efoId=MONDO_0016680&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/json	200	1.139338	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000273032&efoId=MONDO_0016680&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/json	200	1.018697	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000213420&efoId=MONDO_0016685&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/json	200	1.02111	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000157764&efoId=MONDO_0016685&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/json	200	1.15641	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000273032&efoId=MONDO_0016685&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/json	200	1.01511	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000213420&efoId=MONDO_0016685&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/json	200	1.100044	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000157764&efoId=MONDO_0016685&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/json	200	1.135485	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000273032&efoId=MONDO_0016685&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/json	200	1.023401	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000213420&efoId=MONDO_0016685&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/json	200	1.032808	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000157764&efoId=MONDO_0016685&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/json	200	1.151027	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000273032&efoId=MONDO_0016685&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/json	200	1.023109	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000213420&efoId=MONDO_0016685&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/json	200	1.032242	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000157764&efoId=MONDO_0016685&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/json	200	1.320393	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000273032&efoId=MONDO_0016685&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/json	500	1.002652	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000213420&efoId=MONDO_0016718&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/json	500	0.951997	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000157764&efoId=MONDO_0016718&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/json	500	1.08	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000273032&efoId=MONDO_0016718&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/json	500	1.006294	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000213420&efoId=MONDO_0016718&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/json	500	0.960076	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000157764&efoId=MONDO_0016718&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/json	500	1.092743	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000273032&efoId=MONDO_0016718&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/json	200	1.018328	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000213420&efoId=MONDO_0016718&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/json	200	1.104719	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000157764&efoId=MONDO_0016718&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/json	200	1.217206	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000273032&efoId=MONDO_0016718&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/json	500	1.00164	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000213420&efoId=MONDO_0016718&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/json	500	0.962664	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000157764&efoId=MONDO_0016718&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/json	500	1.095167	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000273032&efoId=MONDO_0016718&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/json	500	1.012558	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000213420&efoId=Orphanet_178&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/json	500	0.966541	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000157764&efoId=Orphanet_178&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/json	500	1.088	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000273032&efoId=Orphanet_178&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/json	200	1.025536	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000213420&efoId=Orphanet_178&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/json	200	1.019922	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000157764&efoId=Orphanet_178&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/json	200	1.254157	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000273032&efoId=Orphanet_178&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/json	200	1.023967	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000213420&efoId=Orphanet_178&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/json	200	1.031107	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000157764&efoId=Orphanet_178&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/json	200	1.173852	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000273032&efoId=Orphanet_178&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/json	500	1.028497	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000213420&efoId=Orphanet_178&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/json	500	0.977809	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000157764&efoId=Orphanet_178&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/json	500	1.185611	http://localhost:8082/tpm/gene-disease-gtex/json?ensemblId=ENSG00000273032&efoId=Orphanet_178&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	200	3.078088	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=EFO_0000621&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	200	2.705666	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=EFO_0000621&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	200	2.840765	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=EFO_0000621&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	200	2.82263	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=EFO_0000621&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	200	2.641182	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=EFO_0000621&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	200	2.818838	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=EFO_0000621&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	200	2.658816	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=EFO_0000621&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	200	2.792393	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=EFO_0000621&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	200	2.843978	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=EFO_0000621&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	200	2.632692	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=EFO_0000621&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	200	2.630132	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=EFO_0000621&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	200	2.859943	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=EFO_0000621&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	200	2.611445	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=EFO_0000621&yAxisScale=linear&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	200	2.625805	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=EFO_0000621&yAxisScale=linear&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	200	2.789278	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=EFO_0000621&yAxisScale=linear&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	200	2.751886	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=EFO_0000621&yAxisScale=log10&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	200	2.610186	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=EFO_0000621&yAxisScale=log10&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	200	2.789583	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=EFO_0000621&yAxisScale=log10&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	200	2.69012	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=EFO_0000621&yAxisScale=linear&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	200	2.704056	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=EFO_0000621&yAxisScale=linear&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	200	2.891993	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=EFO_0000621&yAxisScale=linear&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	200	2.795102	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=EFO_0000621&yAxisScale=log10&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	200	2.650038	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=EFO_0000621&yAxisScale=log10&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	200	2.83429	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=EFO_0000621&yAxisScale=log10&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	200	2.6083	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=MONDO_0016680&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	200	2.629195	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=MONDO_0016680&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	200	2.809971	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=MONDO_0016680&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	200	2.569281	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=MONDO_0016680&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	200	2.564895	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=MONDO_0016680&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	200	2.744235	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=MONDO_0016680&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	200	2.596549	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=MONDO_0016680&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	200	2.680547	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=MONDO_0016680&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	200	2.664543	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=MONDO_0016680&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	200	2.563372	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=MONDO_0016680&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	200	2.562774	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=MONDO_0016680&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	200	2.803759	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=MONDO_0016680&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	200	2.514994	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=MONDO_0016680&yAxisScale=linear&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	200	2.632304	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=MONDO_0016680&yAxisScale=linear&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	200	2.671675	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=MONDO_0016680&yAxisScale=linear&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	200	2.558561	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=MONDO_0016680&yAxisScale=log10&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	200	2.580787	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=MONDO_0016680&yAxisScale=log10&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	200	2.796853	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=MONDO_0016680&yAxisScale=log10&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	200	2.541863	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=MONDO_0016680&yAxisScale=linear&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	200	2.633202	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=MONDO_0016680&yAxisScale=linear&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	200	2.65518	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=MONDO_0016680&yAxisScale=linear&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	200	2.573809	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=MONDO_0016680&yAxisScale=log10&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	200	2.576494	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=MONDO_0016680&yAxisScale=log10&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	200	2.735078	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=MONDO_0016680&yAxisScale=log10&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	200	2.688384	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=MONDO_0016685&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	200	2.670541	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=MONDO_0016685&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	200	2.651116	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=MONDO_0016685&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	200	2.57103	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=MONDO_0016685&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	200	2.57407	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=MONDO_0016685&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	200	2.753368	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=MONDO_0016685&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	200	2.612939	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=MONDO_0016685&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	200	2.637008	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=MONDO_0016685&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	200	2.659078	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=MONDO_0016685&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	200	2.560495	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=MONDO_0016685&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	200	2.557001	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=MONDO_0016685&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	200	2.800399	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=MONDO_0016685&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	200	2.645261	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=MONDO_0016685&yAxisScale=linear&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	200	2.538589	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=MONDO_0016685&yAxisScale=linear&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	200	2.682797	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=MONDO_0016685&yAxisScale=linear&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	200	2.579976	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=MONDO_0016685&yAxisScale=log10&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	200	2.599371	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=MONDO_0016685&yAxisScale=log10&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	200	2.758771	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=MONDO_0016685&yAxisScale=log10&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	200	2.684429	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=MONDO_0016685&yAxisScale=linear&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	200	2.554985	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=MONDO_0016685&yAxisScale=linear&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	200	2.695533	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=MONDO_0016685&yAxisScale=linear&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	200	2.589717	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=MONDO_0016685&yAxisScale=log10&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	200	2.58011	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=MONDO_0016685&yAxisScale=log10&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	200	2.894828	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=MONDO_0016685&yAxisScale=log10&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	500	1.00886	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=MONDO_0016718&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	500	0.972874	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=MONDO_0016718&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	500	1.101317	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=MONDO_0016718&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	500	1.00387	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=MONDO_0016718&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	500	0.979418	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=MONDO_0016718&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	500	1.120943	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=MONDO_0016718&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	500	1.029574	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=MONDO_0016718&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	500	0.98408	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=MONDO_0016718&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	500	1.110286	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=MONDO_0016718&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	500	1.127732	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=MONDO_0016718&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	500	0.979196	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=MONDO_0016718&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	500	1.104609	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=MONDO_0016718&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	200	2.63612	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=MONDO_0016718&yAxisScale=linear&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	200	2.540659	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=MONDO_0016718&yAxisScale=linear&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	200	2.690952	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=MONDO_0016718&yAxisScale=linear&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	200	2.682515	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=MONDO_0016718&yAxisScale=log10&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	200	2.529833	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=MONDO_0016718&yAxisScale=log10&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	200	2.728921	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=MONDO_0016718&yAxisScale=log10&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	500	1.0447	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=MONDO_0016718&yAxisScale=linear&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	500	1.023883	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=MONDO_0016718&yAxisScale=linear&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	500	1.140402	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=MONDO_0016718&yAxisScale=linear&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	500	1.129382	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=MONDO_0016718&yAxisScale=log10&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	500	0.97273	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=MONDO_0016718&yAxisScale=log10&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	500	1.090017	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=MONDO_0016718&yAxisScale=log10&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	500	1.007701	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=Orphanet_178&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	500	0.977211	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=Orphanet_178&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	500	1.094568	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=Orphanet_178&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	500	1.006824	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=Orphanet_178&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	500	0.968656	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=Orphanet_178&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	500	1.108379	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=Orphanet_178&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-disease-gtex/plot	200	2.628283	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=Orphanet_178&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	200	2.542478	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=Orphanet_178&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	200	2.663046	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=Orphanet_178&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	200	2.584064	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=Orphanet_178&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	200	2.585793	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=Orphanet_178&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	200	2.813285	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=Orphanet_178&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-disease-gtex/plot	200	2.549157	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=Orphanet_178&yAxisScale=linear&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	200	2.543285	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=Orphanet_178&yAxisScale=linear&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	200	2.681811	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=Orphanet_178&yAxisScale=linear&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	200	2.584875	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=Orphanet_178&yAxisScale=log10&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	200	2.744227	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=Orphanet_178&yAxisScale=log10&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	200	2.642025	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=Orphanet_178&yAxisScale=log10&includeTumorDesc=primaryOnly
+/tpm/gene-disease-gtex/plot	500	0.994298	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=Orphanet_178&yAxisScale=linear&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	500	0.987294	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=Orphanet_178&yAxisScale=linear&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	500	1.098698	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=Orphanet_178&yAxisScale=linear&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	500	1.024546	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000213420&efoId=Orphanet_178&yAxisScale=log10&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	500	0.982555	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000157764&efoId=Orphanet_178&yAxisScale=log10&includeTumorDesc=relapseOnly
+/tpm/gene-disease-gtex/plot	500	1.106637	http://localhost:8082/tpm/gene-disease-gtex/plot?ensemblId=ENSG00000273032&efoId=Orphanet_178&yAxisScale=log10&includeTumorDesc=relapseOnly
+/tpm/gene-all-cancer/json	200	0.939309	http://localhost:8082/tpm/gene-all-cancer/json?ensemblId=ENSG00000213420&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-all-cancer/json	200	0.948864	http://localhost:8082/tpm/gene-all-cancer/json?ensemblId=ENSG00000157764&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-all-cancer/json	200	1.170376	http://localhost:8082/tpm/gene-all-cancer/json?ensemblId=ENSG00000273032&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-all-cancer/json	200	0.995669	http://localhost:8082/tpm/gene-all-cancer/json?ensemblId=ENSG00000213420&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-all-cancer/json	200	1.005919	http://localhost:8082/tpm/gene-all-cancer/json?ensemblId=ENSG00000157764&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-all-cancer/json	200	1.140622	http://localhost:8082/tpm/gene-all-cancer/json?ensemblId=ENSG00000273032&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-all-cancer/json	200	1.00122	http://localhost:8082/tpm/gene-all-cancer/json?ensemblId=ENSG00000213420&includeTumorDesc=primaryOnly
+/tpm/gene-all-cancer/json	200	1.01173	http://localhost:8082/tpm/gene-all-cancer/json?ensemblId=ENSG00000157764&includeTumorDesc=primaryOnly
+/tpm/gene-all-cancer/json	200	1.128441	http://localhost:8082/tpm/gene-all-cancer/json?ensemblId=ENSG00000273032&includeTumorDesc=primaryOnly
+/tpm/gene-all-cancer/json	200	1.04214	http://localhost:8082/tpm/gene-all-cancer/json?ensemblId=ENSG00000213420&includeTumorDesc=relapseOnly
+/tpm/gene-all-cancer/json	200	1.048608	http://localhost:8082/tpm/gene-all-cancer/json?ensemblId=ENSG00000157764&includeTumorDesc=relapseOnly
+/tpm/gene-all-cancer/json	200	1.175455	http://localhost:8082/tpm/gene-all-cancer/json?ensemblId=ENSG00000273032&includeTumorDesc=relapseOnly
+/tpm/gene-all-cancer/plot	200	1.994027	http://localhost:8082/tpm/gene-all-cancer/plot?ensemblId=ENSG00000213420&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-all-cancer/plot	200	2.069583	http://localhost:8082/tpm/gene-all-cancer/plot?ensemblId=ENSG00000157764&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-all-cancer/plot	200	2.197278	http://localhost:8082/tpm/gene-all-cancer/plot?ensemblId=ENSG00000273032&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-all-cancer/plot	200	2.016869	http://localhost:8082/tpm/gene-all-cancer/plot?ensemblId=ENSG00000213420&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-all-cancer/plot	200	2.024357	http://localhost:8082/tpm/gene-all-cancer/plot?ensemblId=ENSG00000157764&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-all-cancer/plot	200	2.207501	http://localhost:8082/tpm/gene-all-cancer/plot?ensemblId=ENSG00000273032&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-all-cancer/plot	200	1.938023	http://localhost:8082/tpm/gene-all-cancer/plot?ensemblId=ENSG00000213420&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-all-cancer/plot	200	1.968744	http://localhost:8082/tpm/gene-all-cancer/plot?ensemblId=ENSG00000157764&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-all-cancer/plot	200	2.1173	http://localhost:8082/tpm/gene-all-cancer/plot?ensemblId=ENSG00000273032&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-all-cancer/plot	200	1.983612	http://localhost:8082/tpm/gene-all-cancer/plot?ensemblId=ENSG00000213420&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-all-cancer/plot	200	1.97507	http://localhost:8082/tpm/gene-all-cancer/plot?ensemblId=ENSG00000157764&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-all-cancer/plot	200	2.108603	http://localhost:8082/tpm/gene-all-cancer/plot?ensemblId=ENSG00000273032&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-all-cancer/plot	200	2.075123	http://localhost:8082/tpm/gene-all-cancer/plot?ensemblId=ENSG00000213420&yAxisScale=linear&includeTumorDesc=primaryOnly
+/tpm/gene-all-cancer/plot	200	2.119282	http://localhost:8082/tpm/gene-all-cancer/plot?ensemblId=ENSG00000157764&yAxisScale=linear&includeTumorDesc=primaryOnly
+/tpm/gene-all-cancer/plot	200	2.266755	http://localhost:8082/tpm/gene-all-cancer/plot?ensemblId=ENSG00000273032&yAxisScale=linear&includeTumorDesc=primaryOnly
+/tpm/gene-all-cancer/plot	200	2.101086	http://localhost:8082/tpm/gene-all-cancer/plot?ensemblId=ENSG00000213420&yAxisScale=log10&includeTumorDesc=primaryOnly
+/tpm/gene-all-cancer/plot	200	2.175713	http://localhost:8082/tpm/gene-all-cancer/plot?ensemblId=ENSG00000157764&yAxisScale=log10&includeTumorDesc=primaryOnly
+/tpm/gene-all-cancer/plot	200	2.159831	http://localhost:8082/tpm/gene-all-cancer/plot?ensemblId=ENSG00000273032&yAxisScale=log10&includeTumorDesc=primaryOnly
+/tpm/gene-all-cancer/plot	200	1.917743	http://localhost:8082/tpm/gene-all-cancer/plot?ensemblId=ENSG00000213420&yAxisScale=linear&includeTumorDesc=relapseOnly
+/tpm/gene-all-cancer/plot	200	1.916509	http://localhost:8082/tpm/gene-all-cancer/plot?ensemblId=ENSG00000157764&yAxisScale=linear&includeTumorDesc=relapseOnly
+/tpm/gene-all-cancer/plot	200	2.048866	http://localhost:8082/tpm/gene-all-cancer/plot?ensemblId=ENSG00000273032&yAxisScale=linear&includeTumorDesc=relapseOnly
+/tpm/gene-all-cancer/plot	200	1.923876	http://localhost:8082/tpm/gene-all-cancer/plot?ensemblId=ENSG00000213420&yAxisScale=log10&includeTumorDesc=relapseOnly
+/tpm/gene-all-cancer/plot	200	1.926016	http://localhost:8082/tpm/gene-all-cancer/plot?ensemblId=ENSG00000157764&yAxisScale=log10&includeTumorDesc=relapseOnly
+/tpm/gene-all-cancer/plot	200	2.097267	http://localhost:8082/tpm/gene-all-cancer/plot?ensemblId=ENSG00000273032&yAxisScale=log10&includeTumorDesc=relapseOnly
+/tpm/gene-all-cancer-collapsed-gtex/json	200	1.015177	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/json?ensemblId=ENSG00000213420&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-all-cancer-collapsed-gtex/json	200	1.031312	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/json?ensemblId=ENSG00000157764&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-all-cancer-collapsed-gtex/json	200	1.18306	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/json?ensemblId=ENSG00000273032&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-all-cancer-collapsed-gtex/json	200	1.186025	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/json?ensemblId=ENSG00000213420&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-all-cancer-collapsed-gtex/json	200	1.052758	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/json?ensemblId=ENSG00000157764&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-all-cancer-collapsed-gtex/json	200	1.174475	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/json?ensemblId=ENSG00000273032&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-all-cancer-collapsed-gtex/json	200	1.057311	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/json?ensemblId=ENSG00000213420&includeTumorDesc=primaryOnly
+/tpm/gene-all-cancer-collapsed-gtex/json	200	1.06928	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/json?ensemblId=ENSG00000157764&includeTumorDesc=primaryOnly
+/tpm/gene-all-cancer-collapsed-gtex/json	200	1.220424	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/json?ensemblId=ENSG00000273032&includeTumorDesc=primaryOnly
+/tpm/gene-all-cancer-collapsed-gtex/json	200	1.225663	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/json?ensemblId=ENSG00000213420&includeTumorDesc=relapseOnly
+/tpm/gene-all-cancer-collapsed-gtex/json	200	1.115619	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/json?ensemblId=ENSG00000157764&includeTumorDesc=relapseOnly
+/tpm/gene-all-cancer-collapsed-gtex/json	200	1.236575	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/json?ensemblId=ENSG00000273032&includeTumorDesc=relapseOnly
+/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.311345	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/plot?ensemblId=ENSG00000213420&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.155617	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/plot?ensemblId=ENSG00000157764&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.476086	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/plot?ensemblId=ENSG00000273032&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.182479	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/plot?ensemblId=ENSG00000213420&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.261347	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/plot?ensemblId=ENSG00000157764&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.306722	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/plot?ensemblId=ENSG00000273032&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.191321	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/plot?ensemblId=ENSG00000213420&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.166819	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/plot?ensemblId=ENSG00000157764&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.450268	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/plot?ensemblId=ENSG00000273032&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.256335	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/plot?ensemblId=ENSG00000213420&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.173488	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/plot?ensemblId=ENSG00000157764&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.323833	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/plot?ensemblId=ENSG00000273032&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.277538	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/plot?ensemblId=ENSG00000213420&yAxisScale=linear&includeTumorDesc=primaryOnly
+/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.246029	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/plot?ensemblId=ENSG00000157764&yAxisScale=linear&includeTumorDesc=primaryOnly
+/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.446985	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/plot?ensemblId=ENSG00000273032&yAxisScale=linear&includeTumorDesc=primaryOnly
+/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.352372	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/plot?ensemblId=ENSG00000213420&yAxisScale=log10&includeTumorDesc=primaryOnly
+/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.223423	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/plot?ensemblId=ENSG00000157764&yAxisScale=log10&includeTumorDesc=primaryOnly
+/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.431937	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/plot?ensemblId=ENSG00000273032&yAxisScale=log10&includeTumorDesc=primaryOnly
+/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.151964	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/plot?ensemblId=ENSG00000213420&yAxisScale=linear&includeTumorDesc=relapseOnly
+/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.184798	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/plot?ensemblId=ENSG00000157764&yAxisScale=linear&includeTumorDesc=relapseOnly
+/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.26987	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/plot?ensemblId=ENSG00000273032&yAxisScale=linear&includeTumorDesc=relapseOnly
+/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.107406	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/plot?ensemblId=ENSG00000213420&yAxisScale=log10&includeTumorDesc=relapseOnly
+/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.088689	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/plot?ensemblId=ENSG00000157764&yAxisScale=log10&includeTumorDesc=relapseOnly
+/tpm/gene-all-cancer-collapsed-gtex/plot	200	2.287091	http://localhost:8082/tpm/gene-all-cancer-collapsed-gtex/plot?ensemblId=ENSG00000273032&yAxisScale=log10&includeTumorDesc=relapseOnly
+/tpm/gene-all-cancer-gtex/json	200	1.777286	http://localhost:8082/tpm/gene-all-cancer-gtex/json?ensemblId=ENSG00000213420&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-all-cancer-gtex/json	200	1.787153	http://localhost:8082/tpm/gene-all-cancer-gtex/json?ensemblId=ENSG00000157764&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-all-cancer-gtex/json	200	1.986581	http://localhost:8082/tpm/gene-all-cancer-gtex/json?ensemblId=ENSG00000273032&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-all-cancer-gtex/json	200	1.817592	http://localhost:8082/tpm/gene-all-cancer-gtex/json?ensemblId=ENSG00000213420&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-all-cancer-gtex/json	200	1.811775	http://localhost:8082/tpm/gene-all-cancer-gtex/json?ensemblId=ENSG00000157764&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-all-cancer-gtex/json	200	2.141971	http://localhost:8082/tpm/gene-all-cancer-gtex/json?ensemblId=ENSG00000273032&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-all-cancer-gtex/json	200	1.777056	http://localhost:8082/tpm/gene-all-cancer-gtex/json?ensemblId=ENSG00000213420&includeTumorDesc=primaryOnly
+/tpm/gene-all-cancer-gtex/json	200	1.803376	http://localhost:8082/tpm/gene-all-cancer-gtex/json?ensemblId=ENSG00000157764&includeTumorDesc=primaryOnly
+/tpm/gene-all-cancer-gtex/json	200	1.946808	http://localhost:8082/tpm/gene-all-cancer-gtex/json?ensemblId=ENSG00000273032&includeTumorDesc=primaryOnly
+/tpm/gene-all-cancer-gtex/json	200	1.85415	http://localhost:8082/tpm/gene-all-cancer-gtex/json?ensemblId=ENSG00000213420&includeTumorDesc=relapseOnly
+/tpm/gene-all-cancer-gtex/json	200	1.951799	http://localhost:8082/tpm/gene-all-cancer-gtex/json?ensemblId=ENSG00000157764&includeTumorDesc=relapseOnly
+/tpm/gene-all-cancer-gtex/json	200	1.968832	http://localhost:8082/tpm/gene-all-cancer-gtex/json?ensemblId=ENSG00000273032&includeTumorDesc=relapseOnly
+/tpm/gene-all-cancer-gtex/plot	200	3.947439	http://localhost:8082/tpm/gene-all-cancer-gtex/plot?ensemblId=ENSG00000213420&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-all-cancer-gtex/plot	200	3.897687	http://localhost:8082/tpm/gene-all-cancer-gtex/plot?ensemblId=ENSG00000157764&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-all-cancer-gtex/plot	200	4.097836	http://localhost:8082/tpm/gene-all-cancer-gtex/plot?ensemblId=ENSG00000273032&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-all-cancer-gtex/plot	200	3.965095	http://localhost:8082/tpm/gene-all-cancer-gtex/plot?ensemblId=ENSG00000213420&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-all-cancer-gtex/plot	200	3.924981	http://localhost:8082/tpm/gene-all-cancer-gtex/plot?ensemblId=ENSG00000157764&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-all-cancer-gtex/plot	200	4.077949	http://localhost:8082/tpm/gene-all-cancer-gtex/plot?ensemblId=ENSG00000273032&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInDifferentBoxes
+/tpm/gene-all-cancer-gtex/plot	200	3.937397	http://localhost:8082/tpm/gene-all-cancer-gtex/plot?ensemblId=ENSG00000213420&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-all-cancer-gtex/plot	200	3.96913	http://localhost:8082/tpm/gene-all-cancer-gtex/plot?ensemblId=ENSG00000157764&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-all-cancer-gtex/plot	200	4.008873	http://localhost:8082/tpm/gene-all-cancer-gtex/plot?ensemblId=ENSG00000273032&yAxisScale=linear&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-all-cancer-gtex/plot	200	3.914045	http://localhost:8082/tpm/gene-all-cancer-gtex/plot?ensemblId=ENSG00000213420&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-all-cancer-gtex/plot	200	3.96152	http://localhost:8082/tpm/gene-all-cancer-gtex/plot?ensemblId=ENSG00000157764&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-all-cancer-gtex/plot	200	4.10521	http://localhost:8082/tpm/gene-all-cancer-gtex/plot?ensemblId=ENSG00000273032&yAxisScale=log10&includeTumorDesc=primaryAndRelapseInSameBox
+/tpm/gene-all-cancer-gtex/plot	200	3.970001	http://localhost:8082/tpm/gene-all-cancer-gtex/plot?ensemblId=ENSG00000213420&yAxisScale=linear&includeTumorDesc=primaryOnly
+/tpm/gene-all-cancer-gtex/plot	200	4.081331	http://localhost:8082/tpm/gene-all-cancer-gtex/plot?ensemblId=ENSG00000157764&yAxisScale=linear&includeTumorDesc=primaryOnly
+/tpm/gene-all-cancer-gtex/plot	200	4.142344	http://localhost:8082/tpm/gene-all-cancer-gtex/plot?ensemblId=ENSG00000273032&yAxisScale=linear&includeTumorDesc=primaryOnly
+/tpm/gene-all-cancer-gtex/plot	200	3.97488	http://localhost:8082/tpm/gene-all-cancer-gtex/plot?ensemblId=ENSG00000213420&yAxisScale=log10&includeTumorDesc=primaryOnly
+/tpm/gene-all-cancer-gtex/plot	200	4.012832	http://localhost:8082/tpm/gene-all-cancer-gtex/plot?ensemblId=ENSG00000157764&yAxisScale=log10&includeTumorDesc=primaryOnly
+/tpm/gene-all-cancer-gtex/plot	200	4.251766	http://localhost:8082/tpm/gene-all-cancer-gtex/plot?ensemblId=ENSG00000273032&yAxisScale=log10&includeTumorDesc=primaryOnly
+/tpm/gene-all-cancer-gtex/plot	200	3.816803	http://localhost:8082/tpm/gene-all-cancer-gtex/plot?ensemblId=ENSG00000213420&yAxisScale=linear&includeTumorDesc=relapseOnly
+/tpm/gene-all-cancer-gtex/plot	200	3.858568	http://localhost:8082/tpm/gene-all-cancer-gtex/plot?ensemblId=ENSG00000157764&yAxisScale=linear&includeTumorDesc=relapseOnly
+/tpm/gene-all-cancer-gtex/plot	200	4.005936	http://localhost:8082/tpm/gene-all-cancer-gtex/plot?ensemblId=ENSG00000273032&yAxisScale=linear&includeTumorDesc=relapseOnly
+/tpm/gene-all-cancer-gtex/plot	200	3.919562	http://localhost:8082/tpm/gene-all-cancer-gtex/plot?ensemblId=ENSG00000213420&yAxisScale=log10&includeTumorDesc=relapseOnly
+/tpm/gene-all-cancer-gtex/plot	200	3.817877	http://localhost:8082/tpm/gene-all-cancer-gtex/plot?ensemblId=ENSG00000157764&yAxisScale=log10&includeTumorDesc=relapseOnly
+/tpm/gene-all-cancer-gtex/plot	200	4.088233	http://localhost:8082/tpm/gene-all-cancer-gtex/plot?ensemblId=ENSG00000273032&yAxisScale=log10&includeTumorDesc=relapseOnly
+/dge/top-gene-disease-gtex-diff-exp/json	200	1.570975	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=EFO_0000621&rankGenesBy=cgc_all_gene_up_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/json	200	0.432915	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=Orphanet_178&rankGenesBy=cgc_all_gene_up_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/json	200	0.4561	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=MONDO_0016718&rankGenesBy=cgc_all_gene_up_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/json	200	0.45471	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=MONDO_0016680&rankGenesBy=cgc_all_gene_up_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/json	200	0.462895	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=MONDO_0016685&rankGenesBy=cgc_all_gene_up_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/json	200	0.834423	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=EFO_0000621&rankGenesBy=cgc_all_gene_down_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/json	200	0.408013	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=Orphanet_178&rankGenesBy=cgc_all_gene_down_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/json	200	0.277043	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=MONDO_0016718&rankGenesBy=cgc_all_gene_down_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/json	200	0.282974	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=MONDO_0016680&rankGenesBy=cgc_all_gene_down_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/json	200	0.290448	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=MONDO_0016685&rankGenesBy=cgc_all_gene_down_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/json	200	0.72991	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=EFO_0000621&rankGenesBy=cgc_all_gene_up_and_down_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/json	200	0.272611	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=Orphanet_178&rankGenesBy=cgc_all_gene_up_and_down_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/json	200	0.270139	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=MONDO_0016718&rankGenesBy=cgc_all_gene_up_and_down_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/json	200	0.289448	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=MONDO_0016680&rankGenesBy=cgc_all_gene_up_and_down_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/json	200	0.395029	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=MONDO_0016685&rankGenesBy=cgc_all_gene_up_and_down_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/json	200	0.811171	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=EFO_0000621&rankGenesBy=cgc_pmtl_gene_up_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/json	200	0.282566	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=Orphanet_178&rankGenesBy=cgc_pmtl_gene_up_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/json	200	0.293672	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=MONDO_0016718&rankGenesBy=cgc_pmtl_gene_up_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/json	200	0.291401	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=MONDO_0016680&rankGenesBy=cgc_pmtl_gene_up_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/json	200	0.306483	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=MONDO_0016685&rankGenesBy=cgc_pmtl_gene_up_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/json	200	0.831752	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=EFO_0000621&rankGenesBy=cgc_pmtl_gene_down_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/json	200	0.288893	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=Orphanet_178&rankGenesBy=cgc_pmtl_gene_down_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/json	200	0.414618	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=MONDO_0016718&rankGenesBy=cgc_pmtl_gene_down_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/json	200	0.280249	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=MONDO_0016680&rankGenesBy=cgc_pmtl_gene_down_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/json	200	0.284561	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=MONDO_0016685&rankGenesBy=cgc_pmtl_gene_down_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/json	200	0.749525	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=EFO_0000621&rankGenesBy=cgc_pmtl_gene_up_and_down_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/json	200	0.267506	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=Orphanet_178&rankGenesBy=cgc_pmtl_gene_up_and_down_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/json	200	0.278482	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=MONDO_0016718&rankGenesBy=cgc_pmtl_gene_up_and_down_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/json	200	0.303781	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=MONDO_0016680&rankGenesBy=cgc_pmtl_gene_up_and_down_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/json	200	0.406991	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/json?efoId=MONDO_0016685&rankGenesBy=cgc_pmtl_gene_up_and_down_reg_rank
+/dge/top-gene-disease-gtex-diff-exp/plot	200	6.035954	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=EFO_0000621&rankGenesBy=cgc_all_gene_up_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	4.133016	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=Orphanet_178&rankGenesBy=cgc_all_gene_up_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.777864	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016718&rankGenesBy=cgc_all_gene_up_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.847477	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016680&rankGenesBy=cgc_all_gene_up_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.697715	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016685&rankGenesBy=cgc_all_gene_up_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	5.298391	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=EFO_0000621&rankGenesBy=cgc_all_gene_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	4.264029	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=Orphanet_178&rankGenesBy=cgc_all_gene_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.770601	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016718&rankGenesBy=cgc_all_gene_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.980859	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016680&rankGenesBy=cgc_all_gene_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.93014	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016685&rankGenesBy=cgc_all_gene_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	4.869019	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=EFO_0000621&rankGenesBy=cgc_all_gene_up_and_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.499979	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=Orphanet_178&rankGenesBy=cgc_all_gene_up_and_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.755135	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016718&rankGenesBy=cgc_all_gene_up_and_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.632951	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016680&rankGenesBy=cgc_all_gene_up_and_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.758026	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016685&rankGenesBy=cgc_all_gene_up_and_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	5.373315	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=EFO_0000621&rankGenesBy=cgc_pmtl_gene_up_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	4.1264709999999996	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=Orphanet_178&rankGenesBy=cgc_pmtl_gene_up_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.481218	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016718&rankGenesBy=cgc_pmtl_gene_up_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.738693	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016680&rankGenesBy=cgc_pmtl_gene_up_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.813402	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016685&rankGenesBy=cgc_pmtl_gene_up_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	5.168846	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=EFO_0000621&rankGenesBy=cgc_pmtl_gene_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	4.309281	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=Orphanet_178&rankGenesBy=cgc_pmtl_gene_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.777059	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016718&rankGenesBy=cgc_pmtl_gene_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.944923	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016680&rankGenesBy=cgc_pmtl_gene_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.809686	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016685&rankGenesBy=cgc_pmtl_gene_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	4.854902	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=EFO_0000621&rankGenesBy=cgc_pmtl_gene_up_and_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.430926	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=Orphanet_178&rankGenesBy=cgc_pmtl_gene_up_and_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.427122	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016718&rankGenesBy=cgc_pmtl_gene_up_and_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.555606	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016680&rankGenesBy=cgc_pmtl_gene_up_and_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.665318	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016685&rankGenesBy=cgc_pmtl_gene_up_and_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	2.420104	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=EFO_0000621&rankGenesBy=cgc_all_gene_up_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.788102	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=Orphanet_178&rankGenesBy=cgc_all_gene_up_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.804609	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016718&rankGenesBy=cgc_all_gene_up_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.809421	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016680&rankGenesBy=cgc_all_gene_up_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.793242	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016685&rankGenesBy=cgc_all_gene_up_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	2.27542	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=EFO_0000621&rankGenesBy=cgc_all_gene_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.872383	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=Orphanet_178&rankGenesBy=cgc_all_gene_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.758934	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016718&rankGenesBy=cgc_all_gene_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.775626	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016680&rankGenesBy=cgc_all_gene_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.776764	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016685&rankGenesBy=cgc_all_gene_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	2.223808	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=EFO_0000621&rankGenesBy=cgc_all_gene_up_and_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.732628	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=Orphanet_178&rankGenesBy=cgc_all_gene_up_and_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.756328	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016718&rankGenesBy=cgc_all_gene_up_and_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.776253	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016680&rankGenesBy=cgc_all_gene_up_and_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.771696	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016685&rankGenesBy=cgc_all_gene_up_and_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	2.277474	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=EFO_0000621&rankGenesBy=cgc_pmtl_gene_up_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.752282	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=Orphanet_178&rankGenesBy=cgc_pmtl_gene_up_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.784149	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016718&rankGenesBy=cgc_pmtl_gene_up_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.789215	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016680&rankGenesBy=cgc_pmtl_gene_up_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.781581	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016685&rankGenesBy=cgc_pmtl_gene_up_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	2.286245	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=EFO_0000621&rankGenesBy=cgc_pmtl_gene_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.86065	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=Orphanet_178&rankGenesBy=cgc_pmtl_gene_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.88592	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016718&rankGenesBy=cgc_pmtl_gene_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.772495	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016680&rankGenesBy=cgc_pmtl_gene_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.772853	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016685&rankGenesBy=cgc_pmtl_gene_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	2.222653	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=EFO_0000621&rankGenesBy=cgc_pmtl_gene_up_and_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.737161	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=Orphanet_178&rankGenesBy=cgc_pmtl_gene_up_and_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.752227	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016718&rankGenesBy=cgc_pmtl_gene_up_and_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.772478	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016680&rankGenesBy=cgc_pmtl_gene_up_and_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.773877	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016685&rankGenesBy=cgc_pmtl_gene_up_and_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/top-gene-disease-gtex-diff-exp/plot	200	4.412226	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=EFO_0000621&rankGenesBy=cgc_all_gene_up_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.592563	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=Orphanet_178&rankGenesBy=cgc_all_gene_up_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.523235	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016718&rankGenesBy=cgc_all_gene_up_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.489404	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016680&rankGenesBy=cgc_all_gene_up_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.566894	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016685&rankGenesBy=cgc_all_gene_up_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	4.430101	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=EFO_0000621&rankGenesBy=cgc_all_gene_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.535642	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=Orphanet_178&rankGenesBy=cgc_all_gene_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.462708	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016718&rankGenesBy=cgc_all_gene_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.688749	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016680&rankGenesBy=cgc_all_gene_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.675448	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016685&rankGenesBy=cgc_all_gene_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	4.518397	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=EFO_0000621&rankGenesBy=cgc_all_gene_up_and_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.482356	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=Orphanet_178&rankGenesBy=cgc_all_gene_up_and_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.466448	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016718&rankGenesBy=cgc_all_gene_up_and_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.590384	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016680&rankGenesBy=cgc_all_gene_up_and_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.754655	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016685&rankGenesBy=cgc_all_gene_up_and_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	4.59965	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=EFO_0000621&rankGenesBy=cgc_pmtl_gene_up_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.469742	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=Orphanet_178&rankGenesBy=cgc_pmtl_gene_up_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.425658	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016718&rankGenesBy=cgc_pmtl_gene_up_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.582616	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016680&rankGenesBy=cgc_pmtl_gene_up_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.676534	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016685&rankGenesBy=cgc_pmtl_gene_up_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	4.699884	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=EFO_0000621&rankGenesBy=cgc_pmtl_gene_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.60293	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=Orphanet_178&rankGenesBy=cgc_pmtl_gene_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.423621	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016718&rankGenesBy=cgc_pmtl_gene_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.554189	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016680&rankGenesBy=cgc_pmtl_gene_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.662846	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016685&rankGenesBy=cgc_pmtl_gene_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	4.594643	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=EFO_0000621&rankGenesBy=cgc_pmtl_gene_up_and_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.467188	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=Orphanet_178&rankGenesBy=cgc_pmtl_gene_up_and_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.464189	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016718&rankGenesBy=cgc_pmtl_gene_up_and_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.659937	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016680&rankGenesBy=cgc_pmtl_gene_up_and_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	3.58471	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016685&rankGenesBy=cgc_pmtl_gene_up_and_down_reg_rank&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	2.42668	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=EFO_0000621&rankGenesBy=cgc_all_gene_up_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.782494	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=Orphanet_178&rankGenesBy=cgc_all_gene_up_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.801888	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016718&rankGenesBy=cgc_all_gene_up_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.778138	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016680&rankGenesBy=cgc_all_gene_up_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.781335	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016685&rankGenesBy=cgc_all_gene_up_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	2.282452	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=EFO_0000621&rankGenesBy=cgc_all_gene_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.74363	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=Orphanet_178&rankGenesBy=cgc_all_gene_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.763361	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016718&rankGenesBy=cgc_all_gene_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.787876	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016680&rankGenesBy=cgc_all_gene_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.782903	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016685&rankGenesBy=cgc_all_gene_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	2.228479	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=EFO_0000621&rankGenesBy=cgc_all_gene_up_and_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.744494	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=Orphanet_178&rankGenesBy=cgc_all_gene_up_and_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.87033	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016718&rankGenesBy=cgc_all_gene_up_and_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.77571	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016680&rankGenesBy=cgc_all_gene_up_and_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.761265	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016685&rankGenesBy=cgc_all_gene_up_and_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	2.276922	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=EFO_0000621&rankGenesBy=cgc_pmtl_gene_up_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.748048	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=Orphanet_178&rankGenesBy=cgc_pmtl_gene_up_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.765245	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016718&rankGenesBy=cgc_pmtl_gene_up_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.781664	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016680&rankGenesBy=cgc_pmtl_gene_up_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.780081	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016685&rankGenesBy=cgc_pmtl_gene_up_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	2.283556	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=EFO_0000621&rankGenesBy=cgc_pmtl_gene_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.754685	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=Orphanet_178&rankGenesBy=cgc_pmtl_gene_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.761747	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016718&rankGenesBy=cgc_pmtl_gene_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.782013	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016680&rankGenesBy=cgc_pmtl_gene_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.780037	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016685&rankGenesBy=cgc_pmtl_gene_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	2.368252	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=EFO_0000621&rankGenesBy=cgc_pmtl_gene_up_and_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.734772	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=Orphanet_178&rankGenesBy=cgc_pmtl_gene_up_and_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.752666	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016718&rankGenesBy=cgc_pmtl_gene_up_and_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.774181	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016680&rankGenesBy=cgc_pmtl_gene_up_and_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/top-gene-disease-gtex-diff-exp/plot	200	1.773059	http://localhost:8082/dge/top-gene-disease-gtex-diff-exp/plot?efoId=MONDO_0016685&rankGenesBy=cgc_pmtl_gene_up_and_down_reg_rank&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/gene-all-cancer-gtex-diff-exp/json	200	0.192997	http://localhost:8082/dge/gene-all-cancer-gtex-diff-exp/json?ensemblId=ENSG00000213420
+/dge/gene-all-cancer-gtex-diff-exp/json	200	0.142043	http://localhost:8082/dge/gene-all-cancer-gtex-diff-exp/json?ensemblId=ENSG00000157764
+/dge/gene-all-cancer-gtex-diff-exp/json	200	0.18557	http://localhost:8082/dge/gene-all-cancer-gtex-diff-exp/json?ensemblId=ENSG00000273032
+/dge/gene-all-cancer-gtex-diff-exp/plot	200	3.672974	http://localhost:8082/dge/gene-all-cancer-gtex-diff-exp/plot?ensemblId=ENSG00000213420&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/gene-all-cancer-gtex-diff-exp/plot	200	3.374415	http://localhost:8082/dge/gene-all-cancer-gtex-diff-exp/plot?ensemblId=ENSG00000157764&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/gene-all-cancer-gtex-diff-exp/plot	200	3.587011	http://localhost:8082/dge/gene-all-cancer-gtex-diff-exp/plot?ensemblId=ENSG00000273032&includeBoxplot=true&boxplotYAxisScale=linear
+/dge/gene-all-cancer-gtex-diff-exp/plot	200	1.321894	http://localhost:8082/dge/gene-all-cancer-gtex-diff-exp/plot?ensemblId=ENSG00000213420&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/gene-all-cancer-gtex-diff-exp/plot	200	1.319757	http://localhost:8082/dge/gene-all-cancer-gtex-diff-exp/plot?ensemblId=ENSG00000157764&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/gene-all-cancer-gtex-diff-exp/plot	200	1.356165	http://localhost:8082/dge/gene-all-cancer-gtex-diff-exp/plot?ensemblId=ENSG00000273032&includeBoxplot=false&boxplotYAxisScale=linear
+/dge/gene-all-cancer-gtex-diff-exp/plot	200	3.54007	http://localhost:8082/dge/gene-all-cancer-gtex-diff-exp/plot?ensemblId=ENSG00000213420&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/gene-all-cancer-gtex-diff-exp/plot	200	3.352701	http://localhost:8082/dge/gene-all-cancer-gtex-diff-exp/plot?ensemblId=ENSG00000157764&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/gene-all-cancer-gtex-diff-exp/plot	200	3.552681	http://localhost:8082/dge/gene-all-cancer-gtex-diff-exp/plot?ensemblId=ENSG00000273032&includeBoxplot=true&boxplotYAxisScale=log10
+/dge/gene-all-cancer-gtex-diff-exp/plot	200	1.308161	http://localhost:8082/dge/gene-all-cancer-gtex-diff-exp/plot?ensemblId=ENSG00000213420&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/gene-all-cancer-gtex-diff-exp/plot	200	1.336967	http://localhost:8082/dge/gene-all-cancer-gtex-diff-exp/plot?ensemblId=ENSG00000157764&includeBoxplot=false&boxplotYAxisScale=log10
+/dge/gene-all-cancer-gtex-diff-exp/plot	200	1.344246	http://localhost:8082/dge/gene-all-cancer-gtex-diff-exp/plot?ensemblId=ENSG00000273032&includeBoxplot=false&boxplotYAxisScale=log10
