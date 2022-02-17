@@ -145,21 +145,8 @@ test_endpoint <- function(endpoint_spec) {
       )
     }
   } else {
-    # Differential expression database currently do not have these EFO IDs.
-    #
-    # TODO: change after loading new DESeq data.
-    if ("efoId" %in% colnames(endpoint_test_tbl)) {
-      endpoint_test_tbl <- dplyr::mutate(
-        endpoint_test_tbl,
-        expected_res_code = dplyr::if_else(
-          condition = .data$efoId %in% c("Orphanet_178", "MONDO_0016718",
-                                         "MONDO_0016680", "MONDO_0016685"),
-          true = 500L, false = 200L))
-    } else {
-      endpoint_test_tbl <- dplyr::mutate(
-        endpoint_test_tbl,
-        expected_res_code = 200L)
-    }
+    endpoint_test_tbl <- dplyr::mutate(
+      endpoint_test_tbl, expected_res_code = 200L)
   }
 
   if (res_type == "json") {
