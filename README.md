@@ -86,7 +86,7 @@ Test run `OpenPedCan-api` server with the following steps:
 - `git clone` `OpenPedCan-api` repository. Checkout a branch/commit that needs to be tested.
 - Prepare Docker environment files.
 - Run static code analysis.
-- (Optional) Build `OpenPedCan-api` database locally. This step takes about 31GB memory and 500GB disk space. This step is optional, because pre-built `OpenPedCan-api` database dump file is publicly available via HTTP.
+- (Optional) Build `OpenPedCan-api` database locally. This step takes about 40GB memory and 500GB disk space. This step is optional, because pre-built `OpenPedCan-api` database dump file is publicly available via HTTP.
 - Build and run `OpenPedCan-api` HTTP server and database server docker images. The database docker container can initialize database either using local or remote pre-built database dump file. This step takes less than 10GB memory and about 250GB disk space.
 - Test `OpenPedCan-api` server.
 
@@ -219,7 +219,7 @@ If there is any syntax error, comment in the GitHub pull request with the full e
 
 ### 3.4. (Optional) Build `OpenPedCan-api` database locally
 
-Use the following bash command to build `OpenPedCan-api` database locally. This step takes about 25GB memory and 250GB disk space.
+Use the following bash command to build `OpenPedCan-api` database locally. This step takes about 40GB memory and 500GB disk space.
 
 ```bash
 ./db/build_db.sh
@@ -227,7 +227,7 @@ Use the following bash command to build `OpenPedCan-api` database locally. This 
 
 `./db/build_db.sh` runs the following steps:
 
-- Download `OpenPedCan-analysis` data.
+- Download `OpenPedCan-analysis` and other required data.
 - Build a docker image `open-ped-can-api-build-db` using `./db/build_tools/build_db.Dockerfile`.
 - Run `open-ped-can-api-build-db` docker image with `./OpenPedCan-analysis/` and `./db/build_outputs/` directories bind mounted by default, to build `OpenPedCan-api` database with the following steps:
   - Initialize database management system (DBMS).
