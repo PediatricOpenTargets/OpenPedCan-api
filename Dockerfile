@@ -24,6 +24,7 @@ RUN apt-get update -qq \
     libsm6 \
     libice6 \
     xdg-utils \
+    libxml2 \
   && rm -rf /var/lib/apt/lists/* \
   # Install R packages
   && install2.r --error \
