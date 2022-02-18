@@ -51,7 +51,6 @@ cd OpenPedCan-analysis
 
 git checkout -q "${OPEN_PED_CAN_ANALYSIS_COMMIT}"
 ./download-data.sh
-git switch -q -
 
 # Add read access to OpenPedCan-analysis data.
 #
@@ -60,13 +59,21 @@ chmod -R "a+r" ./data/
 # ./data/v* are directories that have files.
 chmod "a+x" ./data/v*/
 
+# Download differential expression DESeq results.
+cd ../db/build_outputs
+
+curl "https://s3.amazonaws.com/d3b-openaccess-us-east-1-prd-pbta/open-targets/api/test/differential_gene_expression_v10/deseq_v10_all.rds" \
+  -o deseq_v10_all.rds
+
+sha256sum -c diff_gene_exp_res_sha256sum.txt
+
 # Build data model
 #
 # NOTE: if more files in OpenPedCan-analysis are used, exclude them in the
 # .dockerignore file.
 #
 # Change workdir to git root dir.
-cd ..
+cd ../..
 
 printf "\n\nBuild data model using docker...\n"
 

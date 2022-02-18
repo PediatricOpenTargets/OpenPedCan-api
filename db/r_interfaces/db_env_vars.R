@@ -35,7 +35,8 @@ db_env_vars <- lapply(
     Database = "DB_NAME",
 
     BULK_EXP_SCHEMA = "BULK_EXP_SCHEMA",
-    BULK_EXP_TPM_HISTOLOGY_TBL = "BULK_EXP_TPM_HISTOLOGY_TBL"
+    BULK_EXP_TPM_HISTOLOGY_TBL = "BULK_EXP_TPM_HISTOLOGY_TBL",
+    BULK_EXP_DIFF_EXP_TBL = "BULK_EXP_DIFF_EXP_TBL"
   ),
   # Get environmnt variable values.
   function(env_var_name) {
@@ -55,6 +56,9 @@ db_env_vars <- lapply(
 
       } else if (identical(env_var_name, "BULK_EXP_TPM_HISTOLOGY_TBL")) {
         env_var_val <- "bulk_expression_tpm_histology"
+
+      } else if (identical(env_var_name, "BULK_EXP_DIFF_EXP_TBL")) {
+        env_var_val <- "bulk_expression_diff_exp"
 
       } else {
         stop(paste(

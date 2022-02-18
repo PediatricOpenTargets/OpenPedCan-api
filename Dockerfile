@@ -24,6 +24,7 @@ RUN apt-get update -qq \
     libsm6 \
     libice6 \
     xdg-utils \
+    libxml2 \
   && rm -rf /var/lib/apt/lists/* \
   # Install R packages
   && install2.r --error \
@@ -35,12 +36,16 @@ RUN apt-get update -qq \
     odbc \
     DBI \
     glue \
+    pheatmap \
+    ggpubr \
   && rm -rf /tmp/downloaded_packages/*
 
 # Database schema and table names.
 ENV BULK_EXP_SCHEMA="bulk_expression"
 
 ENV BULK_EXP_TPM_HISTOLOGY_TBL="bulk_expression_tpm_histology"
+
+ENV BULK_EXP_DIFF_EXP_TBL="bulk_expression_diff_exp"
 
 # R DBI database connection driver name.
 ENV DB_DRIVER="PostgreSQL Unicode"
