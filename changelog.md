@@ -1,5 +1,13 @@
 # OpenPedCan-api
 
+## v0.5.2-beta
+
+### Changed
+
+- Updated database using v10 differential gene expression (DGE) data.
+- Installed `libxml2` in `Dockerfile`.
+- Updated tests for DGE heatmap endpoints, according to v10 DGE data.
+
 ## v0.5.1-beta
 
 ### Changed
