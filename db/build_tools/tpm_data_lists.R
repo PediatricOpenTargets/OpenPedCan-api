@@ -33,15 +33,24 @@ combine_prm_rlp_indep_sdf <- function(prm_indep_sdf, rlp_indep_sdf) {
   stopifnot(tibble::is_tibble(prm_indep_sdf))
   stopifnot(tibble::is_tibble(rlp_indep_sdf))
 
-  stopifnot(identical(
-    colnames(prm_indep_sdf),
-    c("Kids_First_Participant_ID", "Kids_First_Biospecimen_ID")
+  # TODO: check whether additional columns in prm_indep_sdf and rlp_indep_sdf
+  # are the same as histology data frame.
+
+  stopifnot(all(
+    c("Kids_First_Participant_ID", "Kids_First_Biospecimen_ID") %in%
+      colnames(prm_indep_sdf)
   ))
 
-  stopifnot(identical(
-    colnames(rlp_indep_sdf),
-    c("Kids_First_Participant_ID", "Kids_First_Biospecimen_ID")
+  stopifnot(all(
+    c("Kids_First_Participant_ID", "Kids_First_Biospecimen_ID") %in%
+      colnames(rlp_indep_sdf)
   ))
+
+  prm_indep_sdf <- dplyr::select(
+    prm_indep_sdf, Kids_First_Participant_ID, Kids_First_Biospecimen_ID)
+
+  rlp_indep_sdf <- dplyr::select(
+    rlp_indep_sdf, Kids_First_Participant_ID, Kids_First_Biospecimen_ID)
 
   # Assert no overlapping between primary and relapse specimen IDs.
   stopifnot(identical(
@@ -147,16 +156,18 @@ input_df_list <- list(
     file.path(data_dir, "histologies.tsv"),
     col_types = readr::cols(), guess_max = 1e6),
   primary_all_cohorts_indep_samples = readr::read_tsv(
-    file.path(data_dir, "independent-specimens.rnaseq.primary.tsv"),
+    file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv"),
     col_types = readr::cols()),
   primary_each_cohort_indep_samples = readr::read_tsv(
-    file.path(data_dir, "independent-specimens.rnaseq.primary.eachcohort.tsv"),
+    file.path(
+      data_dir, "independent-specimens.rnaseqpanel.primary.eachcohort.tsv"),
     col_types = readr::cols()),
   relapse_all_cohorts_indep_samples = readr::read_tsv(
-    file.path(data_dir, "independent-specimens.rnaseq.relapse.tsv"),
+    file.path(data_dir, "independent-specimens.rnaseqpanel.relapse.tsv"),
     col_types = readr::cols()),
   relapse_each_cohort_indep_samples = readr::read_tsv(
-    file.path(data_dir, "independent-specimens.rnaseq.relapse.eachcohort.tsv"),
+    file.path(
+      data_dir, "independent-specimens.rnaseqpanel.relapse.eachcohort.tsv"),
     col_types = readr::cols()),
   tpm_df = readRDS(
     file.path(data_dir, "gene-expression-rsem-tpm-collapsed.rds")),
