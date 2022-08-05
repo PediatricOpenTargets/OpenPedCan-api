@@ -1,4 +1,4 @@
-FROM rocker/r-ver:4.1.0
+FROM rocker/tidyverse:4.1.0
 
 # Install operating system and R packages
 #
@@ -24,18 +24,21 @@ RUN apt-get update -qq \
     libsm6 \
     libice6 \
     xdg-utils \
-  && rm -rf /var/lib/apt/lists/* \
-  # Install R packages
-  && install2.r --error \
-    tidyverse \
-    plumber \
-    rprojroot \
-    jsonlite \
-    ggthemes \
-    odbc \
-    DBI \
-    glue \
-  && rm -rf /tmp/downloaded_packages/*
+  && rm -rf /var/lib/apt/lists/*
+
+# Install R packages
+RUN install2.r --error \
+  plumber \
+  rprojroot \
+  jsonlite \
+  ggthemes \
+  odbc \
+  DBI \
+  lintr
+# Unlike the other packages, lintr is not used operationally.
+# Instead, it supports development and build tooling.
+
+RUN rm -rf /tmp/downloaded_packages/*
 
 # Database schema and table names.
 ENV BULK_EXP_SCHEMA="bulk_expression"
