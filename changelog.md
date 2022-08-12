@@ -1,5 +1,12 @@
 # OpenPedCan-api
 
+## v0.5.3-beta
+
+### Changed
+
+- Updated database using `OpenPedCan-analysis` v11 TPM data and independent sample lists.
+- Updated `tests/r_test_scripts/test_endpoint_http.R` according to `OpenPedCan-analysis` v11 TPM data.
+
 ## v0.5.2-beta
 
 ### Changed
