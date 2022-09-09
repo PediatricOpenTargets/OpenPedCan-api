@@ -173,7 +173,9 @@ input_df_list <- list(
     file.path(data_dir, "gene-expression-rsem-tpm-collapsed.rds")),
   ensg_symbol_pmtl_df = readr::read_tsv(
     file.path(data_dir, "ensg-hugo-pmtl-mapping.tsv"),
-    col_types = readr::cols())
+    col_types = readr::cols()),
+  tcga_tpm_df = readRDS(
+    file.path(data_dir, "tcga-gene-expression-rsem-tpm-collapsed.rds"))
 )
 
 purrr::walk(
@@ -190,17 +192,19 @@ purrr::walk(
   }
 )
 
-stopifnot(identical(
-  ncol(input_df_list$tpm_df),
-  length(unique(colnames(input_df_list$tpm_df)))))
+purrr::walk(
+  input_df_list[c("tpm_df", "tcga_tpm_df")],
+  function(x) {
+    stopifnot(!is.null(colnames(x)))
+    stopifnot(!is.null(rownames(x)))
+    stopifnot(identical(sum(is.na(colnames(x))), 0L))
+    stopifnot(identical(sum(is.na(rownames(x))), 0L))
+    stopifnot(identical(ncol(x), length(unique(colnames(x)))))
+  }
+)
 
 stopifnot(identical(
   sum(is.na(input_df_list$histology_df$cohort)), 0L))
-
-stopifnot(!is.null(colnames(input_df_list$tpm_df)))
-stopifnot(!is.null(rownames(input_df_list$tpm_df)))
-stopifnot(identical(sum(is.na(colnames(input_df_list$tpm_df))), 0L))
-stopifnot(identical(sum(is.na(rownames(input_df_list$tpm_df))), 0L))
 
 stopifnot(identical(
   is.na(input_df_list$ensg_symbol_pmtl_df$pmtl),
@@ -345,6 +349,18 @@ tpm_data_lists <- list(
     sample_subset_df = sample_subset_df_list$gtex,
     histology_df = dplyr::filter(
       input_df_list$histology_df, !is.na(GTEx_tissue_subgroup))
+  ),
+  tcga_prm_rlp_all_cohorts = list(
+    tpm_df = input_df_list$tcga_tpm_df,
+    sample_subset_df = sample_subset_df_list$prm_rlp_all_cohorts_indep,
+    histology_df = dplyr::filter(
+      input_df_list$histology_df, !is.na(Disease), !is.na(EFO))
+  ),
+  tcga_prm_rlp_each_cohort = list(
+    tpm_df = input_df_list$tcga_tpm_df,
+    sample_subset_df = sample_subset_df_list$prm_rlp_each_cohort_indep,
+    histology_df = dplyr::filter(
+      input_df_list$histology_df, !is.na(Disease), !is.na(EFO))
   )
 )
 
@@ -407,6 +423,15 @@ tpm_data_lists <- lapply(tpm_data_lists, function(xl) {
   overlap_tpm_tbl <- tibble::as_tibble(overlap_tpm_df, rownames = "Gene_symbol")
   stopifnot(identical(overlap_tpm_tbl$Gene_symbol, rownames(xl$tpm_df)))
 
+  # Some gene symbols in TPM table could be missing in ENSG-symbol-PMTL table,
+  # which could be caused by different GENCODE versions in the upstream data
+  # processing pipeline. These gene symbols need to be removed, because they
+  # will not have matched ENSG/PMTL values. ENSG IDs and PMTL are required in
+  # MTP.
+  overlap_tpm_tbl <- dplyr::filter(
+    overlap_tpm_tbl,
+    Gene_symbol %in% input_df_list$ensg_symbol_pmtl_df$Gene_symbol)
+
   # Add ENSG IDs and PMTL.
   #
   # This left_join will add duplicated tpm rows, because one gene symbol may be
@@ -448,6 +473,7 @@ stopifnot(identical(
   sort(tpm_data_lists$prm_rlp_each_cohort$tpm_df$Gene_Ensembl_ID)
 ))
 
+
 cat("---------------------------------\n",
     as.character(Sys.time()), "\n",
     "All-cohorts independent n tumor samples:\n",
@@ -457,6 +483,14 @@ cat("---------------------------------\n",
     "Each-cohort independent n tumor samples:\n",
     format_spec_desc_counts(
       tpm_data_lists$prm_rlp_each_cohort$histology_df$specimen_descriptor),
+    "\n",
+    "TCGA All-cohorts independent n tumor samples:\n",
+    format_spec_desc_counts(
+      tpm_data_lists$tcga_prm_rlp_all_cohorts$histology_df$specimen_descriptor),
+    "\n",
+    "TCGA Each-cohort independent n tumor samples:\n",
+    format_spec_desc_counts(
+      tpm_data_lists$tcga_prm_rlp_each_cohort$histology_df$specimen_descriptor),
     "\n",
     "GTEx all n samples: ", nrow(tpm_data_lists$gtex$histology_df), "\n",
     "Number of genes: ", nrow(tpm_data_lists$prm_rlp_all_cohorts$tpm_df),
