@@ -648,7 +648,8 @@ tpm_df_ann_cols <- c("Gene_symbol", "PMTL", "Gene_Ensembl_ID")
 # assertion fails, check all code.
 stopifnot(identical(
   sort(names(tpm_data_lists), na.last = TRUE),
-  sort(c("gtex", "prm_rlp_all_cohorts", "prm_rlp_each_cohort"))
+  sort(c("gtex", "prm_rlp_all_cohorts", "prm_rlp_each_cohort",
+         "tcga_prm_rlp_all_cohorts", "tcga_prm_rlp_each_cohort"))
 ))
 
 # Assert tpm_data_lists contents are valid for the following procedures.
@@ -786,6 +787,29 @@ tpm_data_lists$prm_rlp_all_cohorts <- list(
   tpm_df = padg1_tpm_df,
   histology_df = padg1_histology_df
 )
+
+
+# Handle TCGA all-cohorts/combined-cohorts/all_cohorts.
+#
+# TCGA dataset only has one cohort, so there is no cancer_group with >= 2
+# cohorts.
+#
+# TCGA adult cancer_group samples also should not be combined with pediatric
+# samples with the same cancer_group.
+#
+# Therefore, remove tcga_prm_rlp_all_cohorts element. Handle TCGA cohort
+# separately in get_gene_tpm_tbl, to reduce the complexity of database tables
+# and queries. GTEX samples are also handled separately in get_gene_tpm_tbl.
+
+tpm_data_lists <- tpm_data_lists[
+  c("prm_rlp_all_cohorts", "prm_rlp_each_cohort", "gtex",
+    "tcga_prm_rlp_each_cohort")]
+
+stopifnot(identical(
+  unique(tpm_data_lists$tcga_prm_rlp_each_cohort$histology_df$cohort),
+  "TCGA"
+))
+
 
 if (DOWN_SAMPLE_DB_GENES) {
   cat("Downsample ", length(arbt_db_ensg_ids),
