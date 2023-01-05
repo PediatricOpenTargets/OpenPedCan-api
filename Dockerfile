@@ -47,6 +47,10 @@ ENV BULK_EXP_TPM_HISTOLOGY_TBL="bulk_expression_tpm_histology"
 
 ENV BULK_EXP_DIFF_EXP_TBL="bulk_expression_diff_exp"
 
+ENV CNV_SCHEMA="cnv"
+
+ENV CNV_EVIDENCE_SUMMARY_TBL="cnv_evidence_summary"
+
 # R DBI database connection driver name.
 ENV DB_DRIVER="PostgreSQL Unicode"
 

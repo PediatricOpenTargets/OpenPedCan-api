@@ -86,7 +86,7 @@ printf "\n\nDump database schema(s) and table(s)...\n"
 #
 # Ref: https://www.postgresql.org/docs/11/app-pgdump.html
 pg_dump --clean --if-exists --no-owner --no-privileges \
-  --schema="$BULK_EXP_SCHEMA" --dbname="$DB_NAME" \
+  --schema="$BULK_EXP_SCHEMA" --schema='$CNV_SCHEMA' --dbname="$DB_NAME" \
   --host="$DB_HOST" --port="$DB_PORT" --username="$DB_USERNAME" \
   | gzip --no-name -c > "$db_dump_out_path"
 

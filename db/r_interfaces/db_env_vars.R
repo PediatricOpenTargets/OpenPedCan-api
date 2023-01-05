@@ -36,7 +36,10 @@ db_env_vars <- lapply(
 
     BULK_EXP_SCHEMA = "BULK_EXP_SCHEMA",
     BULK_EXP_TPM_HISTOLOGY_TBL = "BULK_EXP_TPM_HISTOLOGY_TBL",
-    BULK_EXP_DIFF_EXP_TBL = "BULK_EXP_DIFF_EXP_TBL"
+    BULK_EXP_DIFF_EXP_TBL = "BULK_EXP_DIFF_EXP_TBL",
+    
+    CNV_SCHEMA = "CNV_SCHEMA",
+    CNV_EVIDENCE_SUMMARY_TBL = "CNV_EVIDENCE_SUMMARY_TBL"
   ),
   # Get environmnt variable values.
   function(env_var_name) {
