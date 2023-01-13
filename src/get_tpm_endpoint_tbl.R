@@ -61,7 +61,8 @@ get_tpm_endpoint_tbl <- function(ensg_id, efo_id, include_tumor_desc,
 
   gene_tpm_tbl <- get_gene_tpm_tbl(
     ensg_id = ensg_id, gtex_sample_group = gtex_sample_group,
-    relapse_sample_group = relapse_sample_group, efo_id = efo_id)
+    relapse_sample_group = relapse_sample_group,
+    tcga_sample_group = "exclude", efo_id = efo_id)
 
   gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(
     gene_tpm_tbl, spec_desc_group = spec_desc_group,
