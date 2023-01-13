@@ -463,6 +463,13 @@ tpm_data_lists <- lapply(tpm_data_lists, function(xl) {
   return(overlap_data_list)
 })
 
+
+# Gene_Ensembl_ID set can be different in each data list of tpm_data_lists.
+# When a Gene_Ensembl_ID is queried, and the Gene_Ensembl_ID is absent in
+# required samples, an error should be raised.
+
+# Assert Gene_Ensembl_ID set is the same in prm_rlp_all_cohorts,
+# prm_rlp_each_cohort, and gtex data lists.
 stopifnot(identical(
   sort(tpm_data_lists$gtex$tpm_df$Gene_Ensembl_ID),
   sort(tpm_data_lists$prm_rlp_all_cohorts$tpm_df$Gene_Ensembl_ID)
@@ -514,12 +521,20 @@ purrr::iwalk(tpm_data_lists, function(xl, xname) {
 
     stopifnot(identical(sum(!is.na(xl$histology_df$EFO)), 0L))
     stopifnot(identical(sum(!is.na(xl$histology_df$Disease)), 0L))
+
+    stopifnot(identical(unique(xl$histology_df$cohort), "GTEx"))
   } else {
     stopifnot(identical(sum(is.na(xl$histology_df$EFO)), 0L))
     stopifnot(identical(sum(is.na(xl$histology_df$Disease)), 0L))
 
     stopifnot(identical(
       sum(!is.na(xl$histology_df$GTEx_tissue_subgroup)), 0L))
+
+    if (xname %in% c("tcga_prm_rlp_all_cohorts", "tcga_prm_rlp_each_cohort")) {
+      stopifnot(identical(unique(xl$histology_df$cohort), "TCGA"))
+    } else {
+      stopifnot(!("TCGA" %in% xl$histology_df$cohort))
+    }
   }
 })
 

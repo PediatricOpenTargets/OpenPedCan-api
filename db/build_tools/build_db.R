@@ -684,6 +684,8 @@ place_holder_res <- purrr::imap_lgl(tpm_data_lists, function(xl, xname) {
 
     stopifnot(identical(
       unique(xl$histology_df$specimen_descriptor), "GTEx Normal"))
+
+    stopifnot(identical(unique(xl$histology_df$cohort), "GTEx"))
   } else {
     stopifnot(identical(sum(is.na(xl$histology_df$EFO)), 0L))
     stopifnot(identical(sum(is.na(xl$histology_df$Disease)), 0L))
@@ -695,6 +697,13 @@ place_holder_res <- purrr::imap_lgl(tpm_data_lists, function(xl, xname) {
       all(unique(xl$histology_df$specimen_descriptor) %in% c("Primary Tumor",
                                                              "Relapse Tumor"))
     )
+
+    if (xname %in% c("tcga_prm_rlp_all_cohorts", "tcga_prm_rlp_each_cohort")) {
+      stopifnot(identical(unique(xl$histology_df$cohort), "TCGA"))
+    } else {
+      stopifnot(!("TCGA" %in% xl$histology_df$cohort))
+    }
+
   }
 
   tpm_df_colnames <- colnames(xl$tpm_df)
