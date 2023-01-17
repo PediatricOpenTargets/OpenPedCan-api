@@ -153,7 +153,7 @@ test_endpoint <- function(endpoint_spec) {
         endpoint_test_tbl,
         expected_res_code = dplyr::if_else(
           condition = .data$efoId %in% c("Orphanet_178", "MONDO_0016718",
-                                        "MONDO_0016680", "MONDO_0016685"),
+                                         "MONDO_0016680", "MONDO_0016685"),
           true = 500L, false = 200L))
     } else {
       endpoint_test_tbl <- dplyr::mutate(
@@ -242,7 +242,11 @@ param_val_list <- list(
                   "cgc_all_gene_up_and_down_reg_rank",
                   "cgc_pmtl_gene_up_reg_rank",
                   "cgc_pmtl_gene_down_reg_rank",
-                  "cgc_pmtl_gene_up_and_down_reg_rank")
+                  "cgc_pmtl_gene_up_and_down_reg_rank"),
+
+  includeBoxplot = c("true", "false"),
+
+  boxplotYAxisScale = c("linear", "log10")
 )
 
 endpoint_spec_list <- list(
@@ -279,14 +283,14 @@ endpoint_spec_list <- list(
     params = c("efoId", "rankGenesBy")),
   list(
     path = "/dge/top-gene-disease-gtex-diff-exp/plot",
-    params = c("efoId", "rankGenesBy")),
+    params = c("efoId", "rankGenesBy", "includeBoxplot", "boxplotYAxisScale")),
 
   list(
     path = "/dge/gene-all-cancer-gtex-diff-exp/json",
     params = c("ensemblId")),
   list(
     path = "/dge/gene-all-cancer-gtex-diff-exp/plot",
-    params = c("ensemblId"))
+    params = c("ensemblId", "includeBoxplot", "boxplotYAxisScale"))
 )
 
 output_spec_list <- list(

@@ -77,7 +77,7 @@ get_one_efo_top_ensg_diff_exp_heatmap_tbl <- function(
 
   if (!is.null(cohort)) {
     stopifnot(is.character(cohort))
-    stopifnot(length(cohort) > 0)
+    stopifnot(identical(length(cohort), 1L))
     stopifnot(all(!is.na(cohort)))
 
     diff_exp_tbl <- dplyr::filter(
@@ -91,6 +91,10 @@ get_one_efo_top_ensg_diff_exp_heatmap_tbl <- function(
     }
   }
 
+  # No need to handle ENSG IDs that are mapped to multiple gene symbols, because
+  # (ENSG, symbol, PMTL) tuples are ranked by mean log fold change in
+  # build_db.R.
+
   stopifnot(nrow(diff_exp_tbl) > 0)
 
   diff_exp_tbl <- dplyr::filter(
@@ -100,6 +104,25 @@ get_one_efo_top_ensg_diff_exp_heatmap_tbl <- function(
 
   stopifnot(nrow(diff_exp_tbl) > 0)
 
+  # Select a subset of rows if there are two or more (Disease, cohort,
+  # Disease_specimen_descriptor) tuples.
+  uniq_dcs_tuple_tbl <- dplyr::distinct(
+    dplyr::select(diff_exp_tbl, Disease, cohort, Disease_specimen_descriptor))
+
+  stopifnot(identical(sum(is.na(uniq_dcs_tuple_tbl)), 0L))
+
+  n_uniq_dcs_tuples <- nrow(uniq_dcs_tuple_tbl)
+  stopifnot(n_uniq_dcs_tuples > 0)
+
+  if (n_uniq_dcs_tuples > 1) {
+    # Select a subset of rows
+    subset_max_gene_rank <- max(1, floor(max_gene_rank / n_uniq_dcs_tuples))
+    diff_exp_tbl <- diff_exp_tbl[
+      diff_exp_tbl[, rank_genes_by] <= subset_max_gene_rank, ]
+  }
+
+  # If y_axis_label changed, change get_one_efo_top_ensg_diff_exp_heatmap
+  # boxplot as well.
   diff_exp_tbl <- dplyr::mutate(
     diff_exp_tbl,
     log2_fold_change = tidyr::replace_na(.data$log2_fold_change, 0),

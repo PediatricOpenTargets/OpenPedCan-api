@@ -36,6 +36,7 @@ RUN apt-get update -qq \
     DBI \
     glue \
     pheatmap \
+    ggpubr \
   && rm -rf /tmp/downloaded_packages/*
 
 # Database schema and table names.

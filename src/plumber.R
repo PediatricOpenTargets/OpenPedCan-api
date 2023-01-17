@@ -23,7 +23,7 @@
 #*   <a href="https://github.com/PediatricOpenTargets">Pediatric Open Targets project</a>.
 
 
-#* @apiVersion v0.5.0-beta
+#* @apiVersion v0.5.1-beta
 
 #* @apiContact list(name = "API Support", url =
 #*   "https://github.com/PediatricOpenTargets/OpenPedCan-api/issues")
@@ -240,18 +240,21 @@ function(efoId, rankGenesBy) {
 #* @tag "Bulk tissue differential gene expression"
 #* @param efoId:str one EFO ID
 #* @param rankGenesBy:str cgc_all_gene_up_reg_rank, or cgc_all_gene_down_reg_rank, or cgc_all_gene_up_and_down_reg_rank, or cgc_pmtl_gene_up_reg_rank, or cgc_pmtl_gene_down_reg_rank, or cgc_pmtl_gene_up_and_down_reg_rank
-#* @serializer png list(res = 300, width = 5900, height = 3900)
+#* @param includeBoxplot:str true or false
+#* @param boxplotYAxisScale:str linear or log10
+#* @serializer png list(res = 300, width = 7500, height = 3900)
 #* @get /dge/top-gene-disease-gtex-diff-exp/plot
-function(efoId, rankGenesBy) {
+function(efoId, rankGenesBy, includeBoxplot, boxplotYAxisScale) {
   # Not implemented parameter:
-  # - y_axis_scale
+  # - spec_desc_group
   res_tbl <- get_one_efo_top_ensg_diff_exp_heatmap_tbl(
     efo_id = efoId, rank_genes_by = rankGenesBy, max_gene_rank = 50,
     cohort = NULL, min_n_samples_per_group = 3,
     spec_desc_group = "primary_and_relapse_same_group")
 
   res_plot <- get_one_efo_top_ensg_diff_exp_heatmap(
-    res_tbl, y_axis_scale = "linear")
+    res_tbl, include_boxplot = includeBoxplot,
+    boxplot_y_axis_scale = boxplotYAxisScale)
 
   print(res_plot)
 }
@@ -276,17 +279,20 @@ function(ensemblId) {
 #*
 #* @tag "Bulk tissue differential gene expression"
 #* @param ensemblId:str one gene ENSG ID.
+#* @param includeBoxplot:str true or false
+#* @param boxplotYAxisScale:str linear or log10
 #* @serializer png list(res = 300, width = 5900, height = 3900)
 #* @get /dge/gene-all-cancer-gtex-diff-exp/plot
-function(ensemblId) {
+function(ensemblId, includeBoxplot, boxplotYAxisScale) {
   # Not implemented parameter:
-  # - y_axis_scale
+  # - spec_desc_group
   res_tbl <- get_one_ensg_all_efo_diff_exp_heatmap_tbl(
     ensg_id = ensemblId, gene_symbol = NULL, min_n_samples_per_group = 3,
     spec_desc_group = "primary_and_relapse_same_group")
 
   res_plot <- get_one_ensg_all_efo_diff_exp_heatmap(
-    res_tbl, y_axis_scale = "linear")
+    res_tbl, include_boxplot = includeBoxplot,
+    boxplot_y_axis_scale = boxplotYAxisScale)
 
   print(res_plot)
 }
