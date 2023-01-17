@@ -218,7 +218,7 @@ param_val_list <- list(
   ensemblId = c("ENSG00000213420", "ENSG00000157764", "ENSG00000273032"),
 
   efoId = c("EFO_0000621", "Orphanet_178", "MONDO_0016718",
-            "MONDO_0016680", "MONDO_0016685"),
+            "MONDO_0016680", "EFO_1000026"),
 
   yAxisScale = c("linear", "log10"),
 

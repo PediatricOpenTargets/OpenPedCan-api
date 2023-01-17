@@ -103,7 +103,7 @@ curl 7.79
 git 2.25
 ImageMagick 6.9
 shellcheck 0.7
-sha256sum 8.30 # shasum for Mac OS, but not tested for any version.
+sha256sum 8.30
 md5sum 8.30
 R 4.1
 R package readr 2.0.2
@@ -114,6 +114,8 @@ R package testthat 3.0.4
 R package glue 1.4.2
 R package stringr 1.4.0
 ```
+
+@brianghig found that `OpenPedCan-api` server cannot be run on MacOS 12.5. For more details, see <https://github.com/PediatricOpenTargets/OpenPedCan-api/pull/77>.
 
 ### 3.1. `git clone` `OpenPedCan-api` repository
 

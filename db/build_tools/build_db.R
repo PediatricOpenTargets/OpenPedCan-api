@@ -448,6 +448,11 @@ place_holder_res <- purrr::map_dfr(
     # > 0, vice versa?
     #
     # cgc is a shorthand for (cancer_group, cohort) tuple.
+    #
+    # cge2nc_ucc_diff_exp_tbl only has one (cancer_group, cohort) tuple, which
+    # is compared to each GTEx tissue subgroup. Take the average log2 fold
+    # change across all GTEx tissue subgroups to rank top up and down reglulated
+    # genes.
     cge2nc_ucc_de_gene_rank_tbl <- cge2nc_ucc_diff_exp_tbl %>%
       dplyr::mutate(
         log2_fold_change = tidyr::replace_na(.data$log2_fold_change, 0)) %>%
@@ -498,6 +503,11 @@ place_holder_res <- purrr::map_dfr(
 
     invisible(gc())
 
+    # left_join na_matches param:
+    #
+    # "The default, "na", treats two NA or NaN values as
+    # equal, like %in%, match(), merge()." Note: NA and NaN are not equal
+    # when na_matches = "na".
     cge2nc_ucc_diff_exp_rank_tbl <- dplyr::left_join(
       cge2nc_ucc_diff_exp_tbl,
       dplyr::select(cge2nc_ucc_de_gene_rank_tbl, !c(mean_gtex_log2_fc)),
@@ -548,6 +558,12 @@ place_holder_res <- purrr::map_dfr(
                          "cgc_all_gene_down_reg_rank",
                          "cgc_all_gene_up_and_down_reg_rank")) {
 
+          # is.na returns TRUE on NaN in numeric vectors.
+          #
+          # "The default method for is.na applied to an atomic vector returns
+          # a logical vector of the same length as its argument x,
+          # containing TRUE for those elements marked NA or, for numeric
+          # or complex vectors, NaN, and FALSE otherwise."
           stopifnot(all(!is.na(xcol)))
         }
 
@@ -728,6 +744,8 @@ padg1_histology_df <- dplyr::filter(
   tpm_data_lists$prm_rlp_all_cohorts$histology_df,
   .data$Disease %in% .env$padg1_tbl$Disease)
 
+# TODO: unit testing with empty padg1_histology_df.
+#
 # If padg1_histology_df is empty, the following expression does not add any row
 # or raise any error.
 #

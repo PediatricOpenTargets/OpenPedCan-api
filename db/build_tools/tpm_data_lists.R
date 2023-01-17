@@ -33,15 +33,24 @@ combine_prm_rlp_indep_sdf <- function(prm_indep_sdf, rlp_indep_sdf) {
   stopifnot(tibble::is_tibble(prm_indep_sdf))
   stopifnot(tibble::is_tibble(rlp_indep_sdf))
 
-  stopifnot(identical(
-    colnames(prm_indep_sdf),
-    c("Kids_First_Participant_ID", "Kids_First_Biospecimen_ID")
+  # TODO: check whether additional columns in prm_indep_sdf and rlp_indep_sdf
+  # are the same as histology data frame.
+
+  stopifnot(all(
+    c("Kids_First_Participant_ID", "Kids_First_Biospecimen_ID") %in%
+      colnames(prm_indep_sdf)
   ))
 
-  stopifnot(identical(
-    colnames(rlp_indep_sdf),
-    c("Kids_First_Participant_ID", "Kids_First_Biospecimen_ID")
+  stopifnot(all(
+    c("Kids_First_Participant_ID", "Kids_First_Biospecimen_ID") %in%
+      colnames(rlp_indep_sdf)
   ))
+
+  prm_indep_sdf <- dplyr::select(
+    prm_indep_sdf, Kids_First_Participant_ID, Kids_First_Biospecimen_ID)
+
+  rlp_indep_sdf <- dplyr::select(
+    rlp_indep_sdf, Kids_First_Participant_ID, Kids_First_Biospecimen_ID)
 
   # Assert no overlapping between primary and relapse specimen IDs.
   stopifnot(identical(
@@ -147,16 +156,18 @@ input_df_list <- list(
     file.path(data_dir, "histologies.tsv"),
     col_types = readr::cols(), guess_max = 1e6),
   primary_all_cohorts_indep_samples = readr::read_tsv(
-    file.path(data_dir, "independent-specimens.rnaseq.primary.tsv"),
+    file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv"),
     col_types = readr::cols()),
   primary_each_cohort_indep_samples = readr::read_tsv(
-    file.path(data_dir, "independent-specimens.rnaseq.primary.eachcohort.tsv"),
+    file.path(
+      data_dir, "independent-specimens.rnaseqpanel.primary.eachcohort.tsv"),
     col_types = readr::cols()),
   relapse_all_cohorts_indep_samples = readr::read_tsv(
-    file.path(data_dir, "independent-specimens.rnaseq.relapse.tsv"),
+    file.path(data_dir, "independent-specimens.rnaseqpanel.relapse.tsv"),
     col_types = readr::cols()),
   relapse_each_cohort_indep_samples = readr::read_tsv(
-    file.path(data_dir, "independent-specimens.rnaseq.relapse.eachcohort.tsv"),
+    file.path(
+      data_dir, "independent-specimens.rnaseqpanel.relapse.eachcohort.tsv"),
     col_types = readr::cols()),
   tpm_df = readRDS(
     file.path(data_dir, "gene-expression-rsem-tpm-collapsed.rds")),
@@ -214,6 +225,12 @@ stopifnot(!is.null(input_df_list$ensg_symbol_pmtl_df$Gene_symbol))
 stopifnot(identical(
   sum(is.na(input_df_list$ensg_symbol_pmtl_df$Gene_symbol)),
   0L))
+
+# Assert all (Gene_Ensembl_ID, Gene_symbol) tuples are unique.
+stopifnot(identical(
+  colnames(input_df_list$ensg_symbol_pmtl_df),
+  c("Gene_Ensembl_ID", "Gene_symbol", "PMTL")
+))
 stopifnot(identical(
   nrow(input_df_list$ensg_symbol_pmtl_df),
   nrow(dplyr::distinct(
@@ -343,11 +360,20 @@ tpm_data_lists <- lapply(tpm_data_lists, function(xl) {
   stopifnot(is.character(overlap_sids))
   stopifnot(identical(sum(is.na(overlap_sids)), 0L))
   stopifnot(!identical(length(overlap_sids), 0L))
+  stopifnot(identical(length(overlap_sids), length(unique(overlap_sids))))
 
   overlap_tpm_df <- xl$tpm_df[, overlap_sids]
 
   overlap_sample_subset_df <- xl$sample_subset_df %>%
     dplyr::filter(Kids_First_Biospecimen_ID %in% overlap_sids)
+
+  # Assert all biospecimen_ids of overlap_sample_subset_df are unique. This
+  # ensures that left_join(histology, independent_samples) will not add
+  # duplicated rows.
+  stopifnot(identical(
+    nrow(overlap_sample_subset_df),
+    length(unique(overlap_sample_subset_df$Kids_First_Biospecimen_ID))
+  ))
 
   overlap_histology_df <- xl$histology_df %>%
     dplyr::filter(Kids_First_Biospecimen_ID %in% overlap_sids) %>%
@@ -380,7 +406,16 @@ tpm_data_lists <- lapply(tpm_data_lists, function(xl) {
   # Gene_symbol
   overlap_tpm_tbl <- tibble::as_tibble(overlap_tpm_df, rownames = "Gene_symbol")
   stopifnot(identical(overlap_tpm_tbl$Gene_symbol, rownames(xl$tpm_df)))
-  # Add ENSG IDs and PMTL
+
+  # Add ENSG IDs and PMTL.
+  #
+  # This left_join will add duplicated tpm rows, because one gene symbol may be
+  # mapped to multiple ENSG IDs. This is expected behavior, because ENSG IDs
+  # will be used to query TPM data.
+  #
+  # It is also expected that there will be one ENSG IDs mapping to multiple gene
+  # symbols. Therefore, querying one ENSG ID needs to subset only one gene
+  # symbol, which is handled in src/get_gene_tpm_tbl.R.
   overlap_tpm_tbl <- dplyr::left_join(
     overlap_tpm_tbl,
     input_df_list$ensg_symbol_pmtl_df,
