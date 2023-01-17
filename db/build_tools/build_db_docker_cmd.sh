@@ -98,6 +98,7 @@ pg_dump --clean --if-exists --no-owner --no-privileges \
 echo "CREATE INDEX tpm_ensg_id_idx ON ${BULK_EXP_SCHEMA}.${BULK_EXP_TPM_HISTOLOGY_TBL} (\"Gene_Ensembl_ID\");" \
   | gzip --no-name -c >> "$db_dump_out_path"
 
+
 echo "CREATE INDEX diff_exp_ensg_id_idx ON ${BULK_EXP_SCHEMA}.${BULK_EXP_DIFF_EXP_TBL} (\"Gene_Ensembl_ID\");" \
   | gzip --no-name -c >> "$db_dump_out_path"
 

@@ -110,7 +110,7 @@ cat("Read differential expression data...\n")
 # - Share CSV.
 # - Use EC2 with larger memory.
 diff_exp_df <- readRDS(
-  file.path(db_build_output_dir, "DESeq_Results_V9_v2.RDS"))
+  file.path(db_build_output_dir, "deseq_v10_all.rds"))
 
 
 
@@ -313,12 +313,11 @@ stopifnot(all(!is.na(colnames(diff_exp_df))))
 
 stopifnot(identical(
   sort(colnames(diff_exp_df)),
-  sort(c("datasourceId", "datatypeId", "cohort", "Gene_symbol",
-         "Gene_Ensembl_ID", "RMTL", "EFO", "MONDO",
-         "GTEx_tissue_subgroup_UBERON", "comparisonId", "cancer_group",
-         "cancer_group_Count", "GTEx_subgroup", "GTEx_Count",
-         "cancer_group_MeanTpm", "GTEx_MeanTpm", "baseMean", "log2FoldChange",
-         "lfcSE", "stat", "pvalue", "padj"))
+  c("baseMean", "cancer_group", "cancer_group_Count", "cancer_group_MeanTpm",
+    "cohort", "comparisonId", "datasourceId", "datatypeId", "EFO",
+    "Gene_Ensembl_ID", "Gene_symbol", "GTEx_Count", "GTEx_MeanTpm",
+    "GTEx_subgroup", "GTEx_tissue_subgroup_UBERON", "lfcSE", "log2FoldChange",
+    "MONDO", "padj", "PMTL", "pvalue", "stat")
 ))
 
 stopifnot(is.character(diff_exp_df$Gene_Ensembl_ID))
@@ -407,7 +406,7 @@ place_holder_res <- purrr::map_dfr(
       tibble::as_tibble() %>%
       dplyr::select(!c(datasourceId, datatypeId, comparisonId)) %>%
       dplyr::rename(
-        PMTL = RMTL, Disease = cancer_group,
+        Disease = cancer_group,
         Disease_sample_count = cancer_group_Count,
         GTEx_tissue_subgroup = GTEx_subgroup,
         GTEx_tissue_subgroup_sample_count = GTEx_Count,
