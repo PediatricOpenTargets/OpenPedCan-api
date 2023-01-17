@@ -1,5 +1,24 @@
 # OpenPedCan-api
 
+## v0.5.0-beta
+
+### Added
+
+- Added the following differential gene expression (DGE) endpoints to transfer DGE heatmap PNG plots and JSON tables via HTTP `GET` method.
+  - `/dge/top-gene-disease-gtex-diff-exp/json`: Transfer a JSON table of one disease and top differentially expressed genes.
+  - `/dge/top-gene-disease-gtex-diff-exp/plot`: Transfer a PNG heatmap of one disease and top differentially expressed genes.
+  - `/dge/gene-all-cancer-gtex-diff-exp/json`: Transfer a DGE JSON table of one gene and all diseases.
+  - `/dge/gene-all-cancer-gtex-diff-exp/plot`: Transfer a DGE PNG heatmap of one gene and all diseases.
+- Added DGE database table `BULK_EXP_SCHEMA.BULK_EXP_DIFF_EXP_TBL`, which is declared in `../OpenPedCan-api-secrets/common_db.env` and `db/r_interfaces/db_env_vars.R` and constructed in `db/build_tools/build_db.R` and `db/build_tools/build_db_docker_cmd.sh`.
+- Added the following R scripts to implement the added DGE endpoints.
+  - `src/get_one_efo_top_ensg_diff_exp_heatmap.R`
+  - `src/get_one_efo_top_ensg_diff_exp_heatmap_tbl.R`
+  - `src/get_one_efo_top_ensg_diff_exp_tbl.R`
+  - `src/get_one_ensg_all_efo_diff_exp_heatmap.R`
+  - `src/get_one_ensg_all_efo_diff_exp_heatmap_tbl.R`
+  - `src/get_one_ensg_all_efo_diff_exp_tbl.R`
+- Added tests in `tests/r_test_scripts/test_endpoint_http.R` to test the added DGE endpoints.
+
 ## v0.4.0-beta
 
 ### Changed

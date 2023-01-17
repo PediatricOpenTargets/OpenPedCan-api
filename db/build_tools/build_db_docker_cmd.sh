@@ -65,6 +65,10 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$DB_NAME" <<EOSQL
 COPY ${BULK_EXP_SCHEMA}.${BULK_EXP_TPM_HISTOLOGY_TBL}
 FROM '${BUILD_OUTPUT_DIR_PATH}/${BULK_EXP_SCHEMA}_${BULK_EXP_TPM_HISTOLOGY_TBL}.csv'
 WITH (FORMAT csv, HEADER);
+
+COPY ${BULK_EXP_SCHEMA}.${BULK_EXP_DIFF_EXP_TBL}
+FROM '${BUILD_OUTPUT_DIR_PATH}/${BULK_EXP_SCHEMA}_${BULK_EXP_DIFF_EXP_TBL}.csv'
+WITH (FORMAT csv, HEADER);
 EOSQL
 
 cd "$BUILD_OUTPUT_DIR_PATH"
@@ -89,7 +93,34 @@ pg_dump --clean --if-exists --no-owner --no-privileges \
 # Append SQL line(s) to create index(es).
 #
 # "Multiple  compressed  files can be concatenated." -- gzip manual page
-echo "CREATE INDEX ensg_id_idx ON ${BULK_EXP_SCHEMA}.${BULK_EXP_TPM_HISTOLOGY_TBL} (\"Gene_Ensembl_ID\");" \
+#
+# shellcheck disable=SC2129
+echo "CREATE INDEX tpm_ensg_id_idx ON ${BULK_EXP_SCHEMA}.${BULK_EXP_TPM_HISTOLOGY_TBL} (\"Gene_Ensembl_ID\");" \
+  | gzip --no-name -c >> "$db_dump_out_path"
+
+echo "CREATE INDEX diff_exp_ensg_id_idx ON ${BULK_EXP_SCHEMA}.${BULK_EXP_DIFF_EXP_TBL} (\"Gene_Ensembl_ID\");" \
+  | gzip --no-name -c >> "$db_dump_out_path"
+
+echo "CREATE INDEX diff_exp_efo_id_idx ON ${BULK_EXP_SCHEMA}.${BULK_EXP_DIFF_EXP_TBL} (\"EFO\");" \
+  | gzip --no-name -c >> "$db_dump_out_path"
+
+# cgc is a shorthand for (cancer_group, cohort) tuple.
+echo "CREATE INDEX diff_exp_cgc_all_gene_up_reg_rank_idx ON ${BULK_EXP_SCHEMA}.${BULK_EXP_DIFF_EXP_TBL} (\"cgc_all_gene_up_reg_rank\");" \
+  | gzip --no-name -c >> "$db_dump_out_path"
+
+echo "CREATE INDEX diff_exp_cgc_all_gene_down_reg_rank_idx ON ${BULK_EXP_SCHEMA}.${BULK_EXP_DIFF_EXP_TBL} (\"cgc_all_gene_down_reg_rank\");" \
+  | gzip --no-name -c >> "$db_dump_out_path"
+
+echo "CREATE INDEX diff_exp_cgc_all_gene_up_and_down_reg_rank_idx ON ${BULK_EXP_SCHEMA}.${BULK_EXP_DIFF_EXP_TBL} (\"cgc_all_gene_up_and_down_reg_rank\");" \
+  | gzip --no-name -c >> "$db_dump_out_path"
+
+echo "CREATE INDEX diff_exp_cgc_pmtl_gene_up_reg_rank_idx ON ${BULK_EXP_SCHEMA}.${BULK_EXP_DIFF_EXP_TBL} (\"cgc_pmtl_gene_up_reg_rank\");" \
+  | gzip --no-name -c >> "$db_dump_out_path"
+
+echo "CREATE INDEX diff_exp_cgc_pmtl_gene_down_reg_rank_idx ON ${BULK_EXP_SCHEMA}.${BULK_EXP_DIFF_EXP_TBL} (\"cgc_pmtl_gene_down_reg_rank\");" \
+  | gzip --no-name -c >> "$db_dump_out_path"
+
+echo "CREATE INDEX diff_exp_cgc_pmtl_gene_up_and_down_reg_rank_idx ON ${BULK_EXP_SCHEMA}.${BULK_EXP_DIFF_EXP_TBL} (\"cgc_pmtl_gene_up_and_down_reg_rank\");" \
   | gzip --no-name -c >> "$db_dump_out_path"
 
 # To restore from dump, run:

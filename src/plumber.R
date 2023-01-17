@@ -23,7 +23,7 @@
 #*   <a href="https://github.com/PediatricOpenTargets">Pediatric Open Targets project</a>.
 
 
-#* @apiVersion v0.4.0-beta
+#* @apiVersion v0.5.0-beta
 
 #* @apiContact list(name = "API Support", url =
 #*   "https://github.com/PediatricOpenTargets/OpenPedCan-api/issues")
@@ -213,6 +213,80 @@ function(ensemblId, yAxisScale, includeTumorDesc) {
 
   res_plot <- get_gene_tpm_boxplot(
     gene_tpm_boxplot_tbl, y_axis_scale = yAxisScale)
+
+  print(res_plot)
+}
+
+#* Get a table of one disease and top differentially expressed genes
+#*
+#* @tag "Bulk tissue differential gene expression"
+#* @param efoId:str one EFO ID
+#* @param rankGenesBy:str cgc_all_gene_up_reg_rank, or cgc_all_gene_down_reg_rank, or cgc_all_gene_up_and_down_reg_rank, or cgc_pmtl_gene_up_reg_rank, or cgc_pmtl_gene_down_reg_rank, or cgc_pmtl_gene_up_and_down_reg_rank
+#* @serializer json
+#* @get /dge/top-gene-disease-gtex-diff-exp/json
+function(efoId, rankGenesBy) {
+  # Not implemented parameter:
+  # - spec_desc_group
+  res_tbl <- get_one_efo_top_ensg_diff_exp_heatmap_tbl(
+    efo_id = efoId, rank_genes_by = rankGenesBy, max_gene_rank = 50,
+    cohort = NULL, min_n_samples_per_group = 3,
+    spec_desc_group = "primary_and_relapse_same_group")
+
+  return(res_tbl)
+}
+
+#* Get a heatmap of one disease and top differentially expressed genes
+#*
+#* @tag "Bulk tissue differential gene expression"
+#* @param efoId:str one EFO ID
+#* @param rankGenesBy:str cgc_all_gene_up_reg_rank, or cgc_all_gene_down_reg_rank, or cgc_all_gene_up_and_down_reg_rank, or cgc_pmtl_gene_up_reg_rank, or cgc_pmtl_gene_down_reg_rank, or cgc_pmtl_gene_up_and_down_reg_rank
+#* @serializer png list(res = 300, width = 5900, height = 3900)
+#* @get /dge/top-gene-disease-gtex-diff-exp/plot
+function(efoId, rankGenesBy) {
+  # Not implemented parameter:
+  # - y_axis_scale
+  res_tbl <- get_one_efo_top_ensg_diff_exp_heatmap_tbl(
+    efo_id = efoId, rank_genes_by = rankGenesBy, max_gene_rank = 50,
+    cohort = NULL, min_n_samples_per_group = 3,
+    spec_desc_group = "primary_and_relapse_same_group")
+
+  res_plot <- get_one_efo_top_ensg_diff_exp_heatmap(
+    res_tbl, y_axis_scale = "linear")
+
+  print(res_plot)
+}
+
+#* Get a differential gene expression table of one gene and all diseases
+#*
+#* @tag "Bulk tissue differential gene expression"
+#* @param ensemblId:str one gene ENSG ID.
+#* @serializer json
+#* @get /dge/gene-all-cancer-gtex-diff-exp/json
+function(ensemblId) {
+  # Not implemented parameter:
+  # - spec_desc_group
+  res_tbl <- get_one_ensg_all_efo_diff_exp_heatmap_tbl(
+    ensg_id = ensemblId, gene_symbol = NULL, min_n_samples_per_group = 3,
+    spec_desc_group = "primary_and_relapse_same_group")
+
+  return(res_tbl)
+}
+
+#* Get a differential gene expression heatmap of one gene and all diseases
+#*
+#* @tag "Bulk tissue differential gene expression"
+#* @param ensemblId:str one gene ENSG ID.
+#* @serializer png list(res = 300, width = 5900, height = 3900)
+#* @get /dge/gene-all-cancer-gtex-diff-exp/plot
+function(ensemblId) {
+  # Not implemented parameter:
+  # - y_axis_scale
+  res_tbl <- get_one_ensg_all_efo_diff_exp_heatmap_tbl(
+    ensg_id = ensemblId, gene_symbol = NULL, min_n_samples_per_group = 3,
+    spec_desc_group = "primary_and_relapse_same_group")
+
+  res_plot <- get_one_ensg_all_efo_diff_exp_heatmap(
+    res_tbl, y_axis_scale = "linear")
 
   print(res_plot)
 }

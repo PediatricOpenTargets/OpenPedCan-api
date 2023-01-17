@@ -6,6 +6,7 @@
 
 - [1. API endpoint specifications](#1-api-endpoint-specifications)
   - [1.1. `includeTumorDesc` parameter in `/tpm/*` endpoints](#11-includetumordesc-parameter-in-tpm-endpoints)
+  - [1.2. `rankGenesBy` parameter in `/dge/top-gene-disease-gtex-diff-exp/*` endpoints](#12-rankgenesby-parameter-in-dgetop-gene-disease-gtex-diff-exp-endpoints)
 - [2. `OpenPedCan-api` server deployment](#2-openpedcan-api-server-deployment)
 - [3. Test run `OpenPedCan-api` server locally](#3-test-run-openpedcan-api-server-locally)
   - [3.1. `git clone` `OpenPedCan-api` repository](#31-git-clone-openpedcan-api-repository)
@@ -41,6 +42,17 @@
 - `primaryAndRelapseInSameBox`: Only include independent primary and relapse tumor samples of the `(Disease, Dataset)` tuples that have `>= 3` independent tumor samples that include both primary and relapse tumor samples. In boxplot, show independent primary and relapse tumor samples of the same `(Disease, Dataset)` tuple in the same box. In summary table, list independent primary and relapse tumor samples of a `(Disease, Dataset)` tuple in the same row.
 - `primaryAndRelapseInDifferentBoxes`: Only include independent primary and relapse tumor samples of `(Disease, Dataset)` tuples that have three or more primary tumor samples and three or more relapse tumor samples. In boxplot, show independent primary and relapse tumor samples of the same `(Disease, Dataset)` tuple in different boxes of the same x-label. In summary table, list independent primary and relapse tumor samples of a `(Disease, Dataset)` tuple in different rows.
 
+### 1.2. `rankGenesBy` parameter in `/dge/top-gene-disease-gtex-diff-exp/*` endpoints
+
+`rankGenesBy` parameter determines how differentially expressed genes are ranked for each disease.
+
+- `cgc_all_gene_up_reg_rank`: Ranking of up-regulation among all genes in each `cancer_group` and `cohort`, comparing to GTEx tissues. `cgc` is a shorthand for `(cancer_group, cohort)` tuple.
+- `cgc_all_gene_down_reg_rank`: Ranking of down-regulation among all genes in each `cancer_group` and `cohort`, comparing to GTEx tissues.
+- `cgc_all_gene_up_and_down_reg_rank`: Ranking of up- and down-regulation among all genes in each `cancer_group` and `cohort`, comparing to GTEx tissues.
+- `cgc_pmtl_gene_up_reg_rank`: Ranking of up-regulation among PMTL genes in each `cancer_group` and `cohort`, comparing to GTEx tissues. If rank genes by this option, only PMTL genes will be included in database query result.
+- `cgc_pmtl_gene_down_reg_rank`: Ranking of down-regulation among PMTL genes in each `cancer_group` and `cohort`, comparing to GTEx tissues. If rank genes by this option, only PMTL genes will be included in database query result.
+- `cgc_pmtl_gene_up_and_down_reg_rank`: Ranking of up- and down-regulation among PMTL genes in each `cancer_group` and `cohort`, comparing to GTEx tissues. If rank genes by this option, only PMTL genes will be included in database query result.
+
 ## 2. `OpenPedCan-api` server deployment
 
 `OpenPedCan-api` server is deployed using Amazon Web Services (AWS). `OpenPedCan-api` HTTP server is deployed using Amazon Elastic Container Registry (ECR), Elastic Container Service (ECS), and Fargate. The HTTP server queries `OpenPedCan-api` database server, and the database server is deployed using Amazon Relational Database Service (RDS).
@@ -74,8 +86,8 @@ Test run `OpenPedCan-api` server with the following steps:
 - `git clone` `OpenPedCan-api` repository. Checkout a branch/commit that needs to be tested.
 - Prepare Docker environment files.
 - Run static code analysis.
-- (Optional) Build `OpenPedCan-api` database locally. This step takes about 25GB memory and 250GB disk space. This step is optional, because pre-built `OpenPedCan-api` database dump file is publicly available via HTTP.
-- Build and run `OpenPedCan-api` HTTP server and database server docker images. The database docker container can initialize database either using local or remote pre-built database dump file. This step takes less than 10GB memory and about 150GB disk space.
+- (Optional) Build `OpenPedCan-api` database locally. This step takes about 31GB memory and 500GB disk space. This step is optional, because pre-built `OpenPedCan-api` database dump file is publicly available via HTTP.
+- Build and run `OpenPedCan-api` HTTP server and database server docker images. The database docker container can initialize database either using local or remote pre-built database dump file. This step takes less than 10GB memory and about 250GB disk space.
 - Test `OpenPedCan-api` server.
 
 Note that this test run procedure has only been tested on linux operating system, with the following environment.
@@ -160,6 +172,7 @@ The following `../OpenPedCan-api-secrets` paths are relative to the root directo
   DB_NAME=open_ped_can_db
   BULK_EXP_SCHEMA=bulk_expression
   BULK_EXP_TPM_HISTOLOGY_TBL=bulk_expression_tpm_histology
+  BULK_EXP_DIFF_EXP_TBL=bulk_expression_diff_exp
   ```
 
 - `../OpenPedCan-api-secrets/load_db.env`
@@ -284,7 +297,7 @@ Test the running server with the following command.
 ./tests/run_tests.sh
 ```
 
-`tests/curl_test_endpoints.sh` sends multiple HTTP requests to `localhost:8082` by default, with the following steps.
+`./tests/run_tests.sh` sends multiple HTTP requests to `localhost:8082` by default, with the following steps.
 
 - Send an HTTP request using R package `httr`.
 - Output the HTTP response body to `tests/http_response_output_files/png` or `tests/http_response_output_files/json`.
@@ -352,4 +365,3 @@ The `tests` directory contains all tools and code for testing the API server. `t
 
 - Optimize HTTP server deployment task scaling rules and memory/CPU resource allocations to balance performance and cost.
 - Optimize database server deployment memory/CPU resource allocations and DBMS runtime configurations, e.g. `shared_buffers` and `work_mem`, to balance performance and cost.
-- Add bulk tissue differential expression table and plot endpoints.
