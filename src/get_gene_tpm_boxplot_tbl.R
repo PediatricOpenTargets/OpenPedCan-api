@@ -60,8 +60,10 @@ get_gene_tpm_boxplot_tbl <- function(
   stopifnot(identical(length(min_n_per_box), 1L))
   stopifnot(!is.na(min_n_per_box))
 
-  # Raise error if there is no disease sample, i.e., no data available.
-  stopifnot(!all(is.na(gene_tpm_tbl$Disease)))
+  # Raise error if there is no non-TCGA disease sample, i.e., no data available.
+  stopifnot(!all(is.na(
+    dplyr::filter(gene_tpm_tbl, .data$cohort != "TCGA")$Disease
+  )))
 
   # Handle GTEx tissue. Separate or collapse. Create gtex_histology_group
   # column.
@@ -145,9 +147,15 @@ get_gene_tpm_boxplot_tbl <- function(
       #
       # primary, relapse, and primary-and-relapse group strings used for
       # plotting, which can be changed at a later point.
-      prm_and_rlp_plot_str <- "Pediatric Primary and Relapse Tumors"  # nolint: object_usage_linter.
-      prm_plot_str <- "Pediatric Primary Tumors"  # nolint: object_usage_linter.
-      rlp_plot_str <- "Pediatric Relapse Tumors"  # nolint: object_usage_linter.
+      if (grp_key_tbl$cohort == "TCGA") {
+        prm_and_rlp_plot_str <- "TCGA Primary and Relapse Tumors"  # nolint: object_usage_linter.
+        prm_plot_str <- "TCGA Primary Tumors"  # nolint: object_usage_linter.
+        rlp_plot_str <- "TCGA Relapse Tumors"  # nolint: object_usage_linter.
+      } else {
+        prm_and_rlp_plot_str <- "Pediatric Primary and Relapse Tumors"  # nolint: object_usage_linter.
+        prm_plot_str <- "Pediatric Primary Tumors"  # nolint: object_usage_linter.
+        rlp_plot_str <- "Pediatric Relapse Tumors"  # nolint: object_usage_linter.
+      }
 
       stopifnot(
         all(uniq_spec_desc_vec %in% c("Primary Tumor", "Relapse Tumor")))
@@ -268,8 +276,10 @@ get_gene_tpm_boxplot_tbl <- function(
       0L))
   }
 
-  # Raise error if there is no disease sample, i.e., no data available.
-  stopifnot(!all(is.na(gene_tpm_boxplot_tbl$Disease)))
+  # Raise error if there is no non-TCGA disease sample, i.e., no data available.
+  stopifnot(!all(is.na(
+    dplyr::filter(gene_tpm_boxplot_tbl, .data$cohort != "TCGA")$Disease
+  )))
 
   # If is.na(Disease), sample_type is normal. If !is.na(Disease), sample_type is
   # disease.
@@ -285,9 +295,18 @@ get_gene_tpm_boxplot_tbl <- function(
   xlabel_levels <- dplyr::arrange(
     dplyr::distinct(
       dplyr::select(
-        gene_tpm_boxplot_tbl, sample_type, histology_group, cohort, x_label),
-      x_label, .keep_all = TRUE),
-    sample_type, histology_group, cohort)$x_label
+        dplyr::mutate(
+          gene_tpm_boxplot_tbl,
+          data_type_order = dplyr::case_when(
+            .data$cohort == "TCGA" ~ 2,
+            .data$cohort == "GTEx" ~ 3,
+            TRUE ~ 1
+          )
+        ),
+        data_type_order, histology_group, cohort, x_label),
+      x_label, .keep_all = TRUE
+    ),
+    data_type_order, histology_group, cohort)$x_label
 
   if (DEBUG) {
     stopifnot(identical(
