@@ -147,7 +147,6 @@ function(ensemblId, efoId, yAxisScale, includeTumorDesc) {
   print(res_plot)
 }
 
-
 #* Get a single-gene single-disease all-GTEx all-TCGA TPM summary table
 #*
 #* @tag "Bulk tissue gene expression"
@@ -188,7 +187,6 @@ function(ensemblId, efoId, yAxisScale, includeTumorDesc) {
 
   print(res_plot)
 }
-
 
 #* Get a single-gene all-diseases TPM summary table
 #*
@@ -305,6 +303,24 @@ function(ensemblId, yAxisScale, includeTumorDesc) {
   print(res_plot)
 }
 
+#* Get a single-gene all-diseases all-TCGA TPM summary table
+#*
+#* @tag "Bulk tissue gene expression"
+#* @param ensemblId:str one gene ENSG ID.
+#* @param includeTumorDesc:str primaryOnly, or relapseOnly, or primaryAndRelapseInSameBox, or primaryAndRelapseInDifferentBoxes.
+#* @serializer json
+#* @get /tpm/gene-all-cancer-tcga/json
+function(ensemblId, includeTumorDesc) {
+  gene_tpm_boxplot_tbl <- get_tpm_endpoint_tbl(
+    ensg_id = ensemblId, efo_id = NULL, include_tumor_desc = includeTumorDesc,
+    gtex_sample_group = "exclude", min_n_per_box = 3L,
+    tcga_sample_group = "require")
+
+  gene_tpm_boxplot_summary_tbl <- get_gene_tpm_boxplot_summary_tbl(
+    gene_tpm_boxplot_tbl)
+
+  return(gene_tpm_boxplot_summary_tbl)
+}
 
 
 # Differential gene expression heatmap endpoints -------------------------------
