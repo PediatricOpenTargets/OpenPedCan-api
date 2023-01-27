@@ -147,6 +147,27 @@ function(ensemblId, efoId, yAxisScale, includeTumorDesc) {
   print(res_plot)
 }
 
+
+#* Get a single-gene single-disease all-GTEx all-TCGA TPM summary table
+#*
+#* @tag "Bulk tissue gene expression"
+#* @param ensemblId:str one gene ENSG ID.
+#* @param efoId:str one EFO ID.
+#* @param includeTumorDesc:str primaryOnly, or relapseOnly, or primaryAndRelapseInSameBox, or primaryAndRelapseInDifferentBoxes.
+#* @serializer json
+#* @get /tpm/gene-disease-gtex-tcga/json
+function(ensemblId, efoId, includeTumorDesc) {
+  gene_tpm_boxplot_tbl <- get_tpm_endpoint_tbl(
+    ensg_id = ensemblId, efo_id = efoId, include_tumor_desc = includeTumorDesc,
+    gtex_sample_group = "require", min_n_per_box = 3L,
+    tcga_sample_group = "require")
+
+  gene_tpm_boxplot_summary_tbl <- get_gene_tpm_boxplot_summary_tbl(
+    gene_tpm_boxplot_tbl)
+
+  return(gene_tpm_boxplot_summary_tbl)
+}
+
 #* Get a single-gene all-diseases TPM summary table
 #*
 #* @tag "Bulk tissue gene expression"
