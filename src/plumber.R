@@ -61,6 +61,10 @@ function(res) {
   plumber::forward()
 }
 
+
+
+# TPM boxplots -----------------------------------------------------------------
+
 # The param of plumber endpoint cannot be broken into multiple lines.
 
 #* Get a single-gene single-disease all-GTEx-tissues TPM summary table
@@ -100,6 +104,26 @@ function(ensemblId, efoId, yAxisScale, includeTumorDesc) {
     gene_tpm_boxplot_tbl, y_axis_scale = yAxisScale)
 
   print(res_plot)
+}
+
+#* Get a single-gene single-disease all-TCGA TPM summary table
+#*
+#* @tag "Bulk tissue gene expression"
+#* @param ensemblId:str one gene ENSG ID.
+#* @param efoId:str one EFO ID.
+#* @param includeTumorDesc:str primaryOnly, or relapseOnly, or primaryAndRelapseInSameBox, or primaryAndRelapseInDifferentBoxes.
+#* @serializer json
+#* @get /tpm/gene-disease-tcga/json
+function(ensemblId, efoId, includeTumorDesc) {
+  gene_tpm_boxplot_tbl <- get_tpm_endpoint_tbl(
+    ensg_id = ensemblId, efo_id = efoId, include_tumor_desc = includeTumorDesc,
+    gtex_sample_group = "exclude", min_n_per_box = 3L,
+    tcga_sample_group = "require")
+
+  gene_tpm_boxplot_summary_tbl <- get_gene_tpm_boxplot_summary_tbl(
+    gene_tpm_boxplot_tbl)
+
+  return(gene_tpm_boxplot_summary_tbl)
 }
 
 #* Get a single-gene all-diseases TPM summary table
@@ -217,6 +241,10 @@ function(ensemblId, yAxisScale, includeTumorDesc) {
   print(res_plot)
 }
 
+
+
+# Differential gene expression heatmap endpoints -------------------------------
+
 #* Get a table of one disease and top differentially expressed genes
 #*
 #* @tag "Bulk tissue differential gene expression"
@@ -296,6 +324,8 @@ function(ensemblId, includeBoxplot, boxplotYAxisScale) {
 
   print(res_plot)
 }
+
+
 
 # Testing endpoints ------------------------------------------------------------
 # Simple testing endpoints. Source: https://github.com/rstudio/plumber/ .
