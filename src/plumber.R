@@ -126,6 +126,27 @@ function(ensemblId, efoId, includeTumorDesc) {
   return(gene_tpm_boxplot_summary_tbl)
 }
 
+#* Get a single-gene single-disease all-TCGA TPM boxplot
+#*
+#* @tag "Bulk tissue gene expression"
+#* @param ensemblId:str one gene ENSG ID.
+#* @param efoId:str one EFO ID.
+#* @param yAxisScale:str linear or log10
+#* @param includeTumorDesc:str primaryOnly, or relapseOnly, or primaryAndRelapseInSameBox, or primaryAndRelapseInDifferentBoxes.
+#* @serializer png list(res = 300, width = 5000, height = 3300)
+#* @get /tpm/gene-disease-tcga/plot
+function(ensemblId, efoId, yAxisScale, includeTumorDesc) {
+  gene_tpm_boxplot_tbl <- get_tpm_endpoint_tbl(
+    ensg_id = ensemblId, efo_id = efoId, include_tumor_desc = includeTumorDesc,
+    gtex_sample_group = "exclude", min_n_per_box = 3L,
+    tcga_sample_group = "require")
+
+  res_plot <- get_gene_tpm_boxplot(
+    gene_tpm_boxplot_tbl, y_axis_scale = yAxisScale)
+
+  print(res_plot)
+}
+
 #* Get a single-gene all-diseases TPM summary table
 #*
 #* @tag "Bulk tissue gene expression"
