@@ -38,6 +38,7 @@ RUN apt-get update -qq \
     rprojroot \
     odbc \
     DBI \
+    data.table \
   && rm -rf /tmp/downloaded_packages/*
 
 # DB_HOME_DIR_PATH env var is passed from build_db.sh for efficient refactoring

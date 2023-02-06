@@ -13,8 +13,6 @@
 
 # Get %>% without loading the whole library
 `%>%` <- magrittr::`%>%`
-# load dplyr so can use . to represent stdin
-# library(dplyr)
 
 
 # Define input and output directory --------------------------------------------
@@ -35,6 +33,16 @@ get_env_var <- function(env_var_name) {
   
   return(env_var_val)
 }
+
+db_r_interface_dir <- file.path(
+  get_env_var("DB_HOME_DIR_PATH"), "db/r_interfaces")
+stopifnot(dir.exists(db_r_interface_dir))
+
+source(file.path(db_r_interface_dir, "db_env_vars.R"))
+source(file.path(db_r_interface_dir, "connect_db.R"))
+
+db_build_output_dir <- get_env_var("BUILD_OUTPUT_DIR_PATH")
+stopifnot(dir.exists(db_build_output_dir))
 
 # Input dirs
 # opc_analysis_dir <- file.path(
