@@ -1,5 +1,29 @@
 # OpenPedCan-api
 
+## v0.6.0-beta
+
+### Changed
+
+- Changed the interface of `get_gene_tpm_tbl` function:
+  - Added a required parameter `tcga_sample_group`.
+- Changed the interface of `get_tpm_endpoint_tbl` function:
+  - Added a required parameter `tcga_sample_group`.
+- Updated `db/db.Dockerfile` PostgreSQL docker image to version 12.13.
+
+### Added
+
+- Added `OpenPedCan-analysis` TCGA TPM data to the database.
+- Added the following TCGA expanded TPM boxplot and summary table endpoints:
+  - `/tpm/gene-disease-tcga/plot`
+  - `/tpm/gene-disease-tcga/json`
+  - `/tpm/gene-disease-tcga-gtex/plot`
+  - `/tpm/gene-disease-tcga-gtex/json`
+  - `/tpm/gene-all-cancer-tcga/plot`
+  - `/tpm/gene-all-cancer-tcga/json`
+  - `/tpm/gene-all-cancer-tcga-gtex/plot`
+  - `/tpm/gene-all-cancer-tcga-gtex/json`
+- Added tests in `tests/r_test_scripts/test_endpoint_http.R` to test the added TCGA expanded TPM boxplot and summary table endpoints.
+
 ## v0.5.3-beta
 
 ### Changed
