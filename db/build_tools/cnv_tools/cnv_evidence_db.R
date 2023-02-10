@@ -77,6 +77,14 @@ db_write_table <- function(df, conn, schema_name, table_name, overwrite = FALSE,
       as.character(seq(1L, nrow(df_to_write), by = 1L))
     ))
   }
+  
+  tbl_id <- DBI::dbQuoteIdentifier(
+    conn, DBI::Id(schema = schema_name, table = table_name))
+  
+  DBI::dbWriteTable(
+    conn, tbl_id, df_to_write, row.names = FALSE, overwrite = overwrite,
+    append = append, field.types = field.types, temporary = temporary)
+}
 
 print("Starting CNV evidence database build...")
 
