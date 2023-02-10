@@ -192,7 +192,7 @@ stopifnot(cnv_evidence_db %>%
 
 
 # Output -----------------------------------------------------------------------
-readr::write_tsv(cnv_evidence_db, paste0(output_dir, "cnv_evidence_db.tsv"))
+readr::write_tsv(cnv_evidence_db, paste0(output_dir, "/cnv_evidence_db.tsv"))
 
 print('CNV evidence database build complete.')
 
