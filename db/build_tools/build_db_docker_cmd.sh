@@ -34,9 +34,10 @@ pg_ctlcluster 11 "$DB_CLUSTER_NAME" start
 
 ### Execute scripts to reformat and write OpenPedCan-analysis tables into 
 ### database compatible csv file(s)
-printf "\n\nWrite R objects into database compatible csv file(s)...\n"
+# printf "\n\nWrite R objects into database compatible csv file(s)...\n"
+printf "Skipping TPM files for CNV test"
 
-Rscript --vanilla tpm_data_lists.R
+# Rscript --vanilla tpm_data_lists.R
 
 # Overwrite env vars in env file
 #
@@ -62,7 +63,7 @@ export DB_HOST="localhost"
 #
 # This script hangs when readr::write_csv tries to print progress, if run with
 # --vanilla, so disable progress printing.
-Rscript --vanilla build_db.R
+# Rscript --vanilla build_db.R
 
 # copy number variant (CNV) tables
 Rscript --vanilla cnv_tools/cnv_evidence_db.R
@@ -74,14 +75,14 @@ printf "\n\nLoad the csv file(s) into database...\n"
 
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$DB_NAME" <<EOSQL
 # gene expression tables
-COPY ${BULK_EXP_SCHEMA}.${BULK_EXP_TPM_HISTOLOGY_TBL}
-FROM '${BUILD_OUTPUT_DIR_PATH}/${BULK_EXP_SCHEMA}_${BULK_EXP_TPM_HISTOLOGY_TBL}.csv'
-WITH (FORMAT csv, HEADER);
+#COPY ${BULK_EXP_SCHEMA}.${BULK_EXP_TPM_HISTOLOGY_TBL}
+#FROM '${BUILD_OUTPUT_DIR_PATH}/${BULK_EXP_SCHEMA}_${BULK_EXP_TPM_HISTOLOGY_TBL}.csv'
+#WITH (FORMAT csv, HEADER);
 
-COPY ${BULK_EXP_SCHEMA}.${BULK_EXP_DIFF_EXP_TBL}
-FROM '${BUILD_OUTPUT_DIR_PATH}/${BULK_EXP_SCHEMA}_${BULK_EXP_DIFF_EXP_TBL}.csv'
-WITH (FORMAT csv, HEADER);
-EOSQL
+#COPY ${BULK_EXP_SCHEMA}.${BULK_EXP_DIFF_EXP_TBL}
+#FROM '${BUILD_OUTPUT_DIR_PATH}/${BULK_EXP_SCHEMA}_${BULK_EXP_DIFF_EXP_TBL}.csv'
+#WITH (FORMAT csv, HEADER);
+#EOSQL
 
 # CNV tables
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$DB_NAME" <<EOSQL
