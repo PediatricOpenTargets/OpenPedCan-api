@@ -37,7 +37,7 @@ pg_ctlcluster 11 "$DB_CLUSTER_NAME" start
 # printf "\n\nWrite R objects into database compatible csv file(s)...\n"
 printf "Skipping TPM files for CNV test"
 
-# Rscript --vanilla tpm_data_lists.R
+Rscript --vanilla tpm_data_lists.R
 
 # Overwrite env vars in env file
 #
@@ -63,7 +63,7 @@ export DB_HOST="localhost"
 #
 # This script hangs when readr::write_csv tries to print progress, if run with
 # --vanilla, so disable progress printing.
-# Rscript --vanilla build_db.R
+Rscript --vanilla build_db.R
 
 # copy number variant (CNV) tables
 Rscript --vanilla cnv_tools/cnv_evidence_db.R
