@@ -68,10 +68,10 @@ stopifnot(dir.exists(output_dir))
 # unique samples that all OpenPedCan analyses use. Lists are either for primary
 # tumors or tumors that have relapsed after treatment and are either for all
 # OpenPedCan samples or on a per-cohort basis
-independent_specs <- tibble::tibble(file_path = c(paste0(data_dir, 'independent-specimens.wgswxspanel.primary.eachcohort.tsv'),
-                                                  paste0(data_dir, 'independent-specimens.wgswxspanel.primary.tsv'),
-                                                  paste0(data_dir, 'independent-specimens.wgswxspanel.relapse.tsv'),
-                                                  paste0(data_dir, 'independent-specimens.wgswxspanel.relapse.eachcohort.tsv'))) %>%
+independent_specs <- tibble::tibble(file_path = c(paste0(data_dir, 'independent-specimens.wgswxspanel.primary.eachcohort.prefer.wgs.tsv'),
+                                                  paste0(data_dir, 'independent-specimens.wgswxspanel.primary.prefer.wgs.tsv'),
+                                                  paste0(data_dir, 'independent-specimens.wgswxspanel.relapse.prefer.wgs.tsv'),
+                                                  paste0(data_dir, 'independent-specimens.wgswxspanel.relapse.eachcohort.prefer.wgs.tsv'))) %>%
   dplyr::mutate(specimen_descriptor = paste0(stringr::str_to_title(stringr::str_extract(file_path, 'primary|relapse')),
                                              ' Tumor'),
                 cohort_level = ifelse(stringr::str_detect(file_path, 'eachcohort'), 
