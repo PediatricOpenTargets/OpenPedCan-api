@@ -34,6 +34,50 @@ get_env_var <- function(env_var_name) {
   return(env_var_val)
 }
 
+# Write tibble::tibble or dataframe to database.
+#
+# Args:
+# - df: a tibble::tibble or dataframe with natural row names from 1 to nrow(df).
+# - conn: a DBIConnection to a database.
+# - schema_name: a single non-blank non-NA character value of the schema name of
+#   the table to be written.
+# - table_name: a single non-blank non-NA character value of the name of the
+#   table to be written.
+#
+# Returns TRUE invisibly if success.
+db_write_table <- function(df, conn, schema_name, table_name, overwrite = FALSE,
+                           append = FALSE, field.types = NULL,
+                           temporary = FALSE) {
+  stopifnot(is.data.frame(df) || tibble::is_tibble(df))
+  
+  assert_is_valid_name <- function(x) {
+    stopifnot(is.character(x))
+    stopifnot(identical(length(x), 1L))
+    stopifnot(!is.na(x))
+    stopifnot(!identical(nchar(x), 0L))
+  }
+  
+  assert_is_valid_name(schema_name)
+  assert_is_valid_name(table_name)
+  
+  df_to_write <- as.data.frame(df)
+  
+  # Assert df and df_to_write are equal
+  stopifnot(identical(colnames(df), colnames(df_to_write)))
+  stopifnot(identical(rownames(df), rownames(df_to_write)))
+  stopifnot(identical(lapply(df, class), lapply(df_to_write, class)))
+  stopifnot(all.equal(df, df_to_write, check.attributes = FALSE))
+  
+  # Assert rownames are natural from 1 to nrow(df_to_write)
+  if (identical(nrow(df_to_write), 0L)) {
+    stopifnot(identical(rownames(df_to_write), character(0)))
+  } else {
+    stopifnot(identical(
+      rownames(df_to_write),
+      as.character(seq(1L, nrow(df_to_write), by = 1L))
+    ))
+  }
+
 print("Starting CNV evidence database build...")
 
 db_r_interface_dir <- file.path(
@@ -192,7 +236,22 @@ stopifnot(cnv_evidence_db %>%
 
 
 # Output -----------------------------------------------------------------------
+# CSV file
+print("Writing CNV database to CSV.")
 readr::write_tsv(cnv_evidence_db, paste0(output_dir, "/cnv_evidence_db.tsv"))
+
+# Database file
+cat("  Create empty CNV database table.\n")
+
+conn <- connect_db(db_env_vars)
+# DBI table ID is case sensitive.
+db_write_table(
+  cnv_evidence_db, 
+  conn,
+  tolower(db_env_vars$CNV_SCHEMA),
+  tolower(db_env_vars$CNV_EVIDENCE_SUMMARY_TBL))
+
+DBI::dbDisconnect(conn)
 
 print('CNV evidence database build complete.')
 
