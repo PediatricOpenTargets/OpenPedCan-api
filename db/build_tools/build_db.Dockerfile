@@ -38,6 +38,7 @@ RUN apt-get update -qq \
     rprojroot \
     odbc \
     DBI \
+    R.utils \
     data.table \
   && rm -rf /tmp/downloaded_packages/*
 
