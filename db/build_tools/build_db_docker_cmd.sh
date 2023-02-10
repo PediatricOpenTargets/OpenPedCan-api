@@ -34,8 +34,7 @@ pg_ctlcluster 11 "$DB_CLUSTER_NAME" start
 
 ### Execute scripts to reformat and write OpenPedCan-analysis tables into 
 ### database compatible csv file(s)
-# printf "\n\nWrite R objects into database compatible csv file(s)...\n"
-printf "Skipping TPM files for CNV test"
+printf "\n\nWrite R objects into database compatible csv file(s)...\n"
 
 Rscript --vanilla tpm_data_lists.R
 
