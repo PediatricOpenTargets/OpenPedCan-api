@@ -99,9 +99,9 @@ db_build_output_dir <- get_env_var("BUILD_OUTPUT_DIR_PATH")
 stopifnot(dir.exists(db_build_output_dir))
 
 # Input dirs
-opc_analysis_dir <- file.path(
-  get_env_var("DB_HOME_DIR_PATH"), "OpenPedCan-analysis")
-# opc_analysis_dir <- '../../../OpenPedCan-analysis/'
+# opc_analysis_dir <- file.path(
+#   get_env_var("DB_HOME_DIR_PATH"), "OpenPedCan-analysis")
+opc_analysis_dir <- '/home/keithk/opentargets/OpenPedCan-api/OpenPedCan-analysis'
 stopifnot(dir.exists(opc_analysis_dir))
 
 data_dir <- file.path(opc_analysis_dir, "data/")
@@ -109,8 +109,8 @@ stopifnot(dir.exists(data_dir))
 
 # Output dir
 # NOTE: Should the CNV databases go in a subfolder in build_outputs??
-output_dir <- get_env_var("BUILD_OUTPUT_DIR_PATH")
-# output_dir <- '../../build_outputs/'
+# output_dir <- get_env_var("BUILD_OUTPUT_DIR_PATH")
+output_dir <- '/home/keithk/opentargets/OpenPedCan-api/db/build_outputs/'
 stopifnot(dir.exists(output_dir))
 
 
@@ -126,7 +126,7 @@ independent_specs <- tibble::tibble(file_path = c(paste0(data_dir, 'independent-
                                                   paste0(data_dir, 'independent-specimens.wgswxspanel.relapse.eachcohort.prefer.wgs.tsv'))) %>%
   dplyr::mutate(specimen_descriptor = paste0(stringr::str_to_title(stringr::str_extract(file_path, 'primary|relapse')),
                                              ' Tumor'),
-                cohort_level = ifelse(stringr::str_detect(file_path, 'eachcohort'), 
+                cohort_level = ifelse(stringr::str_detect(file_path, 'eachcohort'),
                                       'each_cohort', 'all_cohorts'),
                 data = purrr::map(file_path, ~ readr::read_tsv(.))) %>%
   tidyr::unnest(c(data)) %>%
@@ -228,20 +228,6 @@ stopifnot(cnv_evidence_db %>%
                                         .fns = dplyr::any_vars(is.na(.)))) %>% 
             nrow(.) == 0)
 
-# cat("---------------------------------\n",
-#     as.character(Sys.time()), "\n",
-#     "All-cohorts independent n tumor samples:\n",
-#     format_spec_desc_counts(
-#       tpm_data_lists$prm_rlp_all_cohorts$histology_df$specimen_descriptor),
-#     "\n",
-#     "Each-cohort independent n tumor samples:\n",
-#     format_spec_desc_counts(
-#       tpm_data_lists$prm_rlp_each_cohort$histology_df$specimen_descriptor),
-#     "\n",
-#     "GTEx all n samples: ", nrow(tpm_data_lists$gtex$histology_df), "\n",
-#     "Number of genes: ", nrow(tpm_data_lists$prm_rlp_all_cohorts$tpm_df),
-#     "\n---------------------------------\n", sep = "")
-
 
 # Output -----------------------------------------------------------------------
 # CSV file
@@ -249,15 +235,26 @@ print("Writing CNV database to CSV.")
 readr::write_tsv(cnv_evidence_db, paste0(output_dir, "/cnv_evidence_db.tsv"))
 
 # Database file
-cat("  Create empty CNV database table.\n")
+cat("Create empty CNV database table.\n")
+
+# Break up table into smaller chunks to improve DB write speed
+base::split(cnv_evidence_db, 
+            cnv_evidence_db$cancer_group) -> cnv_evidence_db_chunked
 
 conn <- connect_db(db_env_vars)
+
+for (i in 1:length(cnv_evidence_db_chunked)) {
+  cnv_evidence_db_chunked[[i]] %>%
+    dplyr::distinct(cancer_group) %>%
+    tibble::deframe() -> current_group
+  print(paste0('Writing ', current_group, ' to CNV evidence database.'))
 # DBI table ID is case sensitive.
-db_write_table(
-  cnv_evidence_db, 
-  conn,
-  tolower(db_env_vars$CNV_SCHEMA),
-  tolower(db_env_vars$CNV_EVIDENCE_SUMMARY_TBL))
+  db_write_table(
+    cnv_evidence_db_chunked[[i]],
+    conn,
+    tolower(db_env_vars$CNV_SCHEMA),
+    tolower(db_env_vars$CNV_EVIDENCE_SUMMARY_TBL))
+}
 
 DBI::dbDisconnect(conn)
 
