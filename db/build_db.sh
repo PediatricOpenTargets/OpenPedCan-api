@@ -61,8 +61,8 @@ chmod "a+x" ./data/v*/
 # Download differential expression DESeq results.
 cd ../db/build_outputs
 
-curl "https://s3.amazonaws.com/d3b-openaccess-us-east-1-prd-pbta/open-targets/api/test/differential_gene_expression_v10/deseq_v10_all.rds" \
-  -o deseq_v10_all.rds
+curl -o deseq_v10_all.rds "https://s3.amazonaws.com/d3b-openaccess-us-east-1-prd-pbta/open-targets/api/test/differential_gene_expression_v10/deseq_v10_all.rds"
+  
 
 sha256sum -c diff_gene_exp_res_sha256sum.txt
 
