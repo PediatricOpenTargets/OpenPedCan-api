@@ -252,6 +252,7 @@ for (i in 1:length(cnv_evidence_db_chunked)) {
   db_write_table(
     cnv_evidence_db_chunked[[i]],
     conn,
+    append = T,
     tolower(db_env_vars$CNV_SCHEMA),
     tolower(db_env_vars$CNV_EVIDENCE_SUMMARY_TBL))
 }
