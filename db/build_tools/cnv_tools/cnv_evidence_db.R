@@ -99,9 +99,9 @@ db_build_output_dir <- get_env_var("BUILD_OUTPUT_DIR_PATH")
 stopifnot(dir.exists(db_build_output_dir))
 
 # Input dirs
-# opc_analysis_dir <- file.path(
-#   get_env_var("DB_HOME_DIR_PATH"), "OpenPedCan-analysis")
-opc_analysis_dir <- '/home/keithk/opentargets/OpenPedCan-api/OpenPedCan-analysis'
+opc_analysis_dir <- file.path(
+  get_env_var("DB_HOME_DIR_PATH"), "OpenPedCan-analysis")
+# opc_analysis_dir <- '/home/keithk/opentargets/OpenPedCan-api/OpenPedCan-analysis'
 stopifnot(dir.exists(opc_analysis_dir))
 
 data_dir <- file.path(opc_analysis_dir, "data/")
@@ -109,8 +109,8 @@ stopifnot(dir.exists(data_dir))
 
 # Output dir
 # NOTE: Should the CNV databases go in a subfolder in build_outputs??
-# output_dir <- get_env_var("BUILD_OUTPUT_DIR_PATH")
-output_dir <- '/home/keithk/opentargets/OpenPedCan-api/db/build_outputs/'
+output_dir <- get_env_var("BUILD_OUTPUT_DIR_PATH")
+# output_dir <- '/home/keithk/opentargets/OpenPedCan-api/db/build_outputs/'
 stopifnot(dir.exists(output_dir))
 
 
