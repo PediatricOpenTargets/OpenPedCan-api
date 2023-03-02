@@ -27,12 +27,19 @@
 # - gtex_histology_group: a single character value passed to
 #   get_gene_tpm_boxplot_tbl.
 # - min_n_per_box: a single numeric value passed to get_gene_tpm_boxplot_tbl.
+# - tcga_sample_group: a single character value with the following choices.
+#   Required.
+#   - "exclude": Exclude TCGA samples. Does NOT raise error if there is no TCGA
+#     sample.
+#   - "require": Require all TCGA samples. Raise error if there is no TCGA
+#     sample.
 #
 # Returns a tibble for generating an endpoint response.
 get_tpm_endpoint_tbl <- function(ensg_id, efo_id, include_tumor_desc,
                                  gtex_sample_group,
                                  gtex_histology_group = "tissue_subgroup",
-                                 min_n_per_box = 1L) {
+                                 min_n_per_box = 1L,
+                                 tcga_sample_group = "exclude") {
   stopifnot(is.character(include_tumor_desc))
   stopifnot(identical(length(include_tumor_desc), 1L))
 
@@ -61,7 +68,8 @@ get_tpm_endpoint_tbl <- function(ensg_id, efo_id, include_tumor_desc,
 
   gene_tpm_tbl <- get_gene_tpm_tbl(
     ensg_id = ensg_id, gtex_sample_group = gtex_sample_group,
-    relapse_sample_group = relapse_sample_group, efo_id = efo_id)
+    relapse_sample_group = relapse_sample_group,
+    tcga_sample_group = tcga_sample_group, efo_id = efo_id)
 
   gene_tpm_boxplot_tbl <- get_gene_tpm_boxplot_tbl(
     gene_tpm_tbl, spec_desc_group = spec_desc_group,

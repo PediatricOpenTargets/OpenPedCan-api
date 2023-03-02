@@ -38,10 +38,16 @@
 #     relapse tumor.
 #   - "require": Require all relapse tumors. Raise error if there is no relapse
 #     tumor.
+# - tcga_sample_group: a single character value with the following choices.
+#   Required.
+#   - "exclude": Exclude TCGA samples. Does NOT raise error if there is no TCGA
+#     sample.
+#   - "require": Require all TCGA samples. Raise error if there is no TCGA
+#     sample.
 # - efo_id: NULL or a single character value of EFO ID. Default is NULL, which
 #   is to include all diseases and zero GTEx tissue, aka gene-all-cancer. If
-#   efo_id is not NULL, include all samples that have the EFO ID and all GTEx
-#   tissues, aka gene-disease-gtex.
+#   efo_id is not NULL, include all pediatric samples that have the EFO ID,
+#   all TCGA samples, and all GTEx tissues, aka gene-disease.
 # - gene_symbol: NULL or a single character value of gene symbol. Default is
 #   NULL, which is to select the first sorted gene symbol when one ENSG ID maps
 #   to multiple gene symbols. If gene_symbol is not NULL, the (efo_id,
@@ -78,7 +84,8 @@
 # - Identify the gene symbol that match PedOT.
 # - Completely drop gene_symbol, as it is also shown on PedOT.
 get_gene_tpm_tbl <- function(ensg_id, gtex_sample_group, relapse_sample_group,
-                             efo_id = NULL, gene_symbol = NULL) {
+                             tcga_sample_group, efo_id = NULL,
+                             gene_symbol = NULL) {
   stopifnot(is.character(ensg_id))
   stopifnot(identical(length(ensg_id), 1L))
   stopifnot(!is.na(ensg_id))
@@ -90,6 +97,10 @@ get_gene_tpm_tbl <- function(ensg_id, gtex_sample_group, relapse_sample_group,
   stopifnot(is.character(relapse_sample_group))
   stopifnot(identical(length(relapse_sample_group), 1L))
   stopifnot(relapse_sample_group %in% c("require", "exclude"))
+
+  stopifnot(is.character(tcga_sample_group))
+  stopifnot(identical(length(tcga_sample_group), 1L))
+  stopifnot(tcga_sample_group %in% c("require", "exclude"))
 
   if (!is.null(efo_id)) {
     stopifnot(is.character(efo_id))
@@ -273,13 +284,34 @@ get_gene_tpm_tbl <- function(ensg_id, gtex_sample_group, relapse_sample_group,
   # Raise error if no Disease, i.e. data not available.
   stopifnot(nrow(disease_long_tpm_tbl) > 0)
 
-  if (!is.null(efo_id)) {
-    # Keep only Disease (aka cancer group) that is mapped to input efo_id.
-    disease_long_tpm_tbl <- dplyr::filter(
-      disease_long_tpm_tbl, .data$EFO == .env$efo_id)
+  # Separate pediatric and TCGA samples for different handling procedures.
+  ped_disease_long_tpm_tbl <- dplyr::filter(
+    disease_long_tpm_tbl, .data$cohort != "TCGA")
 
-    # Raise error if no Disease passes the filter, i.e., data not available.
-    stopifnot(nrow(disease_long_tpm_tbl) > 0)
+  tcga_disease_long_tpm_tbl <- dplyr::filter(
+    disease_long_tpm_tbl, .data$cohort == "TCGA")
+
+  if (!is.null(efo_id)) {
+    # Keep only pediatric Disease (aka cancer group) that is mapped to input
+    # efo_id.
+    ped_disease_long_tpm_tbl <- dplyr::filter(
+      ped_disease_long_tpm_tbl, .data$EFO == .env$efo_id)
+  }
+
+  # Raise error if no pediatric samples, i.e. data not available.
+  stopifnot(nrow(ped_disease_long_tpm_tbl) > 0)
+
+  if (tcga_sample_group == "require") {
+    # Raise error if no TCGA samples, i.e. data not available.
+    stopifnot(nrow(tcga_disease_long_tpm_tbl) > 0)
+
+    disease_long_tpm_tbl <- dplyr::bind_rows(
+      ped_disease_long_tpm_tbl, tcga_disease_long_tpm_tbl)
+  } else if (tcga_sample_group == "exclude") {
+    disease_long_tpm_tbl <- ped_disease_long_tpm_tbl
+  } else {
+    stop(paste0(
+      "Not implemented tcga_sample_group value ", tcga_sample_group))
   }
 
   if (gtex_sample_group == "require") {
@@ -348,7 +380,14 @@ get_gene_tpm_tbl <- function(ensg_id, gtex_sample_group, relapse_sample_group,
       if (!is.null(efo_id)) {
         stopifnot(identical(
           efo_id,
-          purrr::discard(unique(long_tpm_tbl$EFO), is.na)
+          purrr::discard(
+            unique(
+              dplyr::pull(
+                dplyr::filter(long_tpm_tbl, .data$cohort != "TCGA"),
+                EFO
+              )
+            ),
+            is.na)
         ))
       }
       # gene-all-cancer-gtex

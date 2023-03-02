@@ -53,6 +53,11 @@ get_gene_tpm_boxplot <- function(gene_tpm_boxplot_tbl, y_axis_scale) {
     "Pediatric Primary and Relapse Tumors" = "#A997DF",
     "Pediatric Primary Tumors" = "#56B4E9",
     "Pediatric Relapse Tumors" = "#E69F00",
+
+    "TCGA Primary and Relapse Tumors" = "#CC79A7",
+    "TCGA Primary Tumors" = "#FFFFFF",
+    "TCGA Relapse Tumors" = "#F0E442",
+
     "GTEx Normal Adult Tissues" = "grey80")
 
   uniq_spec_desc_fill_vec <- unique(
@@ -71,13 +76,13 @@ get_gene_tpm_boxplot <- function(gene_tpm_boxplot_tbl, y_axis_scale) {
             uniq_spec_desc_fill_vec) ||
         ("Pediatric Primary and Relapse Tumors" %in% uniq_spec_desc_fill_vec)) {
 
-    tumor_title_desc <- "Pediatric primary and relapse tumor"
+    tumor_title_desc_vec <- "Pediatric primary and relapse tumor"
 
   } else if ("Pediatric Primary Tumors" %in% uniq_spec_desc_fill_vec) {
-    tumor_title_desc <- "Pediatric primary only tumor"
+    tumor_title_desc_vec <- "Pediatric primary only tumor"
 
   } else if ("Pediatric Relapse Tumors" %in% uniq_spec_desc_fill_vec) {
-    tumor_title_desc <- "Pediatric relapse only tumor"
+    tumor_title_desc_vec <- "Pediatric relapse only tumor"
 
   } else {
     stop(paste0(
@@ -85,16 +90,63 @@ get_gene_tpm_boxplot <- function(gene_tpm_boxplot_tbl, y_axis_scale) {
       paste(uniq_spec_desc_fill_vec, collapse = ", ")))
   }
 
-  # Set title
-  if (length(gtex_subgroup_vec) > 0) {
-    title <- paste0(
-      gene_symbol, " (", ensg_id, ")\n",
-      tumor_title_desc, " and GTEx normal adult tissue gene expression")
-  } else {
-    title <- paste0(
-      gene_symbol, " (", ensg_id, ")\n",
-      tumor_title_desc, " gene expression")
+
+  # When there is "TCGA Primary and Relapse Tumors", there is no "TCGA
+  # Primary Tumors" or "TCGA Relapse Tumors"
+  if (all(c("TCGA Primary Tumors", "TCGA Relapse Tumors") %in%
+            uniq_spec_desc_fill_vec) ||
+        ("TCGA Primary and Relapse Tumors" %in% uniq_spec_desc_fill_vec)) {
+
+    tumor_title_desc_vec <- c(
+      tumor_title_desc_vec, "TCGA primary and relapse tumor")
+
+  } else if ("TCGA Primary Tumors" %in% uniq_spec_desc_fill_vec) {
+    tumor_title_desc_vec <- c(tumor_title_desc_vec, "TCGA primary only tumor")
+
+  } else if ("TCGA Relapse Tumors" %in% uniq_spec_desc_fill_vec) {
+    tumor_title_desc_vec <- c(tumor_title_desc_vec, "TCGA relapse only tumor")
+
   }
+
+
+  if (length(gtex_subgroup_vec) > 0) {
+    tumor_title_desc_vec <- c(tumor_title_desc_vec, "GTEx normal adult tissue")
+
+  }
+
+
+  if (length(tumor_title_desc_vec) == 1) {
+    tumor_title_desc_str <- tumor_title_desc_vec
+
+  } else if (length(tumor_title_desc_vec) == 2) {
+    tumor_title_desc_str <- paste0(
+      tumor_title_desc_vec[1],
+      " and ",
+      tumor_title_desc_vec[2]
+    )
+
+  } else if (length(tumor_title_desc_vec) == 3) {
+    tumor_title_desc_str <- paste0(
+      tumor_title_desc_vec[1],
+      ", ",
+      tumor_title_desc_vec[2],
+      ", and ",
+      tumor_title_desc_vec[3]
+    )
+
+  } else {
+    stop(paste0(
+      "Internal error: not supported tumor_title_desc_vec ",
+      paste(tumor_title_desc_vec, collapse = ", ")))
+  }
+
+  stopifnot(identical(length(tumor_title_desc_str), 1L))
+
+  # Set title
+  title <- paste0(
+    gene_symbol, " (", ensg_id, ")\n",
+    tumor_title_desc_str, " gene expression")
+
 
   # Set y-axis label
   if (y_axis_scale == "linear") {

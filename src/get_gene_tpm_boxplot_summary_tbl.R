@@ -59,6 +59,22 @@ get_gene_tpm_boxplot_summary_tbl <- function(gene_tpm_boxplot_tbl) {
     }
   }
 
+  if (DEBUG) {
+    place_holder_res <- dplyr::group_map(
+      dplyr::group_by(gene_tpm_boxplot_tbl, x_label, specimen_descriptor_fill),
+      function(grp_tbl, grp_key_tbl) {
+        stopifnot(identical(length(unique(grp_tbl$box_sample_count)), 1L))
+        stopifnot(identical(length(unique(grp_tbl$Gene_Ensembl_ID)), 1L))
+        stopifnot(identical(length(unique(grp_tbl$Gene_symbol)), 1L))
+        stopifnot(identical(length(unique(grp_tbl$PMTL)), 1L))
+        stopifnot(identical(length(unique(grp_tbl$cohort)), 1L))
+        stopifnot(identical(length(unique(grp_tbl$Disease)), 1L))
+        stopifnot(identical(length(unique(grp_tbl$EFO)), 1L))
+        stopifnot(identical(length(unique(grp_tbl$MONDO)), 1L))
+      }
+    )
+  }
+
   gene_tpm_boxplot_summary_tbl <- dplyr::summarise(
     dplyr::group_by(gene_tpm_boxplot_tbl, x_label, specimen_descriptor_fill),
     box_sample_count = unique(box_sample_count),

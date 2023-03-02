@@ -247,6 +247,20 @@ endpoint_spec_list <- list(
     params = c("ensemblId", "efoId", "yAxisScale", "includeTumorDesc")),
 
   list(
+    path = "/tpm/gene-disease-tcga/json",
+    params = c("ensemblId", "efoId", "includeTumorDesc")),
+  list(
+    path = "/tpm/gene-disease-tcga/plot",
+    params = c("ensemblId", "efoId", "yAxisScale", "includeTumorDesc")),
+
+  list(
+    path = "/tpm/gene-disease-tcga-gtex/json",
+    params = c("ensemblId", "efoId", "includeTumorDesc")),
+  list(
+    path = "/tpm/gene-disease-tcga-gtex/plot",
+    params = c("ensemblId", "efoId", "yAxisScale", "includeTumorDesc")),
+
+  list(
     path = "/tpm/gene-all-cancer/json",
     params = c("ensemblId", "includeTumorDesc")),
   list(
@@ -265,6 +279,20 @@ endpoint_spec_list <- list(
     params = c("ensemblId", "includeTumorDesc")),
   list(
     path = "/tpm/gene-all-cancer-gtex/plot",
+    params = c("ensemblId", "yAxisScale", "includeTumorDesc")),
+
+  list(
+    path = "/tpm/gene-all-cancer-tcga/json",
+    params = c("ensemblId", "includeTumorDesc")),
+  list(
+    path = "/tpm/gene-all-cancer-tcga/plot",
+    params = c("ensemblId", "yAxisScale", "includeTumorDesc")),
+
+  list(
+    path = "/tpm/gene-all-cancer-tcga-gtex/json",
+    params = c("ensemblId", "includeTumorDesc")),
+  list(
+    path = "/tpm/gene-all-cancer-tcga-gtex/plot",
     params = c("ensemblId", "yAxisScale", "includeTumorDesc")),
 
   list(

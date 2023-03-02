@@ -149,8 +149,8 @@ get_one_ensg_all_efo_diff_exp_heatmap <- function(diff_exp_heatmap_tbl,
     # Generate boxplots on the top and right sides.
     tpm_tbl <- get_gene_tpm_tbl(
       deh_ensg_id, gtex_sample_group = "require",
-      relapse_sample_group = "require", efo_id = NULL,
-      gene_symbol = deh_gene_symbol)
+      relapse_sample_group = "require", tcga_sample_group = "exclude",
+      efo_id = NULL, gene_symbol = deh_gene_symbol)
 
     stopifnot(identical(unique(tpm_tbl$Gene_Ensembl_ID), deh_ensg_id))
     stopifnot(identical(unique(tpm_tbl$Gene_symbol), deh_gene_symbol))
