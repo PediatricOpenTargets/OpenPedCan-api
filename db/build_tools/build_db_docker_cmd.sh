@@ -50,7 +50,8 @@ export DB_HOST="localhost"
 # - filename has the format of ${schema_name}_${table_name}.csv
 # - output directory is ../build_outputs
 #
-# Use .csv rather than .csv.gz to speed up database COPY command.
+# Use .csv.gz to save disk space, although .csv can speed up database COPY
+# command. The .csv files can take > 300 GB disk space.
 #
 # build_db.R does not take explicit options of output paths, by design, because
 # build_db.R does not need to be run anywhere else.
@@ -61,13 +62,29 @@ Rscript --vanilla build_db.R
 
 printf "\n\nLoad the csv file(s) into database...\n"
 
+gzip --no-name "${BUILD_OUTPUT_DIR_PATH}/${BULK_EXP_SCHEMA}_${BULK_EXP_TPM_HISTOLOGY_TBL}.csv"
+
+gzip --no-name "${BUILD_OUTPUT_DIR_PATH}/${BULK_EXP_SCHEMA}_${BULK_EXP_DIFF_EXP_TBL}.csv"
+
+# postgresql documentation:
+#
+# PROGRAM
+#   A command to execute. In COPY FROM, the input is read from standard output
+#   of the command.
+#
+# Example:
+#   To copy into a compressed file, you can pipe the output through an external
+#   compression program:
+#
+#   COPY country TO PROGRAM 'gzip > /usr1/proj/bray/sql/country_data.gz';
+
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$DB_NAME" <<EOSQL
 COPY ${BULK_EXP_SCHEMA}.${BULK_EXP_TPM_HISTOLOGY_TBL}
-FROM '${BUILD_OUTPUT_DIR_PATH}/${BULK_EXP_SCHEMA}_${BULK_EXP_TPM_HISTOLOGY_TBL}.csv'
+FROM PROGRAM 'gzip -dc ${BUILD_OUTPUT_DIR_PATH}/${BULK_EXP_SCHEMA}_${BULK_EXP_TPM_HISTOLOGY_TBL}.csv.gz'
 WITH (FORMAT csv, HEADER);
 
 COPY ${BULK_EXP_SCHEMA}.${BULK_EXP_DIFF_EXP_TBL}
-FROM '${BUILD_OUTPUT_DIR_PATH}/${BULK_EXP_SCHEMA}_${BULK_EXP_DIFF_EXP_TBL}.csv'
+FROM PROGRAM 'gzip -dc ${BUILD_OUTPUT_DIR_PATH}/${BULK_EXP_SCHEMA}_${BULK_EXP_DIFF_EXP_TBL}.csv.gz'
 WITH (FORMAT csv, HEADER);
 EOSQL
 
