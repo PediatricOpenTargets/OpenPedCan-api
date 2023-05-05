@@ -32,8 +32,8 @@ cd ..
 echo "Download OpenPedCan-analysis data release..."
 # The commit ID to checkout to build data model.
 #
-# 1eedaf5825fc999415ff5fd712f98a6f17718b92 points to v11 release.
-OPEN_PED_CAN_ANALYSIS_COMMIT="1eedaf5825fc999415ff5fd712f98a6f17718b92"
+# 8862448c8be13d78dab9691657a54d773d2c426f points to v12 final release.
+OPEN_PED_CAN_ANALYSIS_COMMIT="8862448c8be13d78dab9691657a54d773d2c426f"
 
 # If submodule repo url changes, e.g. rename, this will update the URL according
 # to the one in .gitmodules.
