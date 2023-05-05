@@ -319,19 +319,31 @@ stopifnot(all(!is.na(colnames(diff_exp_df))))
 
 stopifnot(identical(
   sort(colnames(diff_exp_df)),
-  c("baseMean", "cancer_group_Count", "cancer_group_MeanTpm",
-    "cohort", "comparisonId", "datasourceId", "datatypeId",
-    "Disease", "diseaseFromSourceMappedId", "Gene_symbol",
+  c("baseMean", "comparisonId", "Dataset", "datasourceId", "datatypeId",
+    "Disease", "Disease_Count", "Disease_MeanTpm",
+    "diseaseFromSourceMappedId", "Gene_symbol",
     "GTEx_Count", "GTEx_MeanTpm", "GTEx_subgroup",
     "GTEx_tissue_subgroup_UBERON", "lfcSE", "log2FoldChange", "MONDO",
     "padj", "PMTL", "pvalue", "stat", "targetFromSourceId")
 ))
 
 diff_exp_df <- dplyr::rename(
-  diff_exp_df, Gene_Ensembl_ID = targetFromSourceId,
+  diff_exp_df,
+  Gene_Ensembl_ID = targetFromSourceId,
   EFO = diseaseFromSourceMappedId,
-  cancer_group = Disease)
+  cancer_group = Disease,
+  cohort = Dataset,
+  cancer_group_Count = Disease_Count,
+  cancer_group_MeanTpm = Disease_MeanTpm)
 
+stopifnot(identical(
+  sort(colnames(diff_exp_df)),
+  c("baseMean", "cancer_group", "cancer_group_Count", "cancer_group_MeanTpm",
+    "cohort", "comparisonId", "datasourceId", "datatypeId", "EFO",
+    "Gene_Ensembl_ID", "Gene_symbol", "GTEx_Count", "GTEx_MeanTpm",
+    "GTEx_subgroup", "GTEx_tissue_subgroup_UBERON", "lfcSE", "log2FoldChange",
+    "MONDO", "padj", "PMTL", "pvalue", "stat")
+))
 
 stopifnot(is.character(diff_exp_df$Gene_Ensembl_ID))
 stopifnot(is.character(diff_exp_df$Gene_symbol))
