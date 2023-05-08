@@ -1,5 +1,17 @@
 # OpenPedCan-api
 
+## v0.6.1-beta
+
+### Changed
+
+- Updated database using `OpenPedCan-analysis` v12 final release data.
+- Changed `db/build_db.sh` to download OpenPedCan-analysis `api-data` using `db/build_tools/download_api_data.sh`.
+- Changed `db/build_tools/build_db_docker_cmd.sh` to compress intermediate CSV files.
+
+### Added
+
+- Added `db/build_tools/download_api_data.sh` to download OpenPedCan-analysis `api-data`.
+
 ## v0.6.0-beta
 
 ### Changed
