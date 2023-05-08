@@ -1,3 +1,6 @@
+#!/bin/bash
+# shellcheck disable=SC2207,SC2006,SC2086
+
 # Adapted from OpenPedCan-analysis/download-data.sh.
 
 # This script needs to be run in OpenPedCan-analysis directory.
