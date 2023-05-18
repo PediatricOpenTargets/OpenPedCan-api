@@ -15,4 +15,12 @@ cd ../../
 # Run shellcheck on .sh files
 #
 # https://github.com/koalaman/shellcheck
-shellcheck ./db/*/*.sh ./db/*.sh ./tests/*.sh
+shellcheck ./db/build_db.sh \
+  ./db/build_tools/build_db_docker_cmd.sh \
+  ./db/build_tools/build_db_docker_entrypoint.sh \
+  ./db/init_db.sh \
+  ./db/init_db_pwfile.sh \
+  ./db/load_db.sh \
+  ./tests/git_diff_image.sh \
+  ./tests/run_linters.sh \
+  ./tests/run_tests.sh

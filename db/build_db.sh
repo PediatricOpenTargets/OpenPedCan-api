@@ -32,8 +32,8 @@ cd ..
 echo "Download OpenPedCan-analysis data release..."
 # The commit ID to checkout to build data model.
 #
-# 1eedaf5825fc999415ff5fd712f98a6f17718b92 points to v11 release.
-OPEN_PED_CAN_ANALYSIS_COMMIT="1eedaf5825fc999415ff5fd712f98a6f17718b92"
+# 8862448c8be13d78dab9691657a54d773d2c426f points to v12 final release.
+OPEN_PED_CAN_ANALYSIS_COMMIT="8862448c8be13d78dab9691657a54d773d2c426f"
 
 # If submodule repo url changes, e.g. rename, this will update the URL according
 # to the one in .gitmodules.
@@ -49,22 +49,19 @@ git submodule update --init --recursive
 cd OpenPedCan-analysis
 
 git checkout -q "${OPEN_PED_CAN_ANALYSIS_COMMIT}"
+
 ./download-data.sh
+
+# Download OpenPedCan-analysis release api-data directory.
+../db/build_tools/download_api_data.sh
 
 # Add read access to OpenPedCan-analysis data.
 #
 # Files under ./data/ are not tracked.
 chmod -R "a+r" ./data/
-# ./data/v* are directories that have files.
+# ./data/v* and ./data/v*/api-data/ are directories that have files.
 chmod "a+x" ./data/v*/
-
-# Download differential expression DESeq results.
-cd ../db/build_outputs
-
-curl "https://s3.amazonaws.com/d3b-openaccess-us-east-1-prd-pbta/open-targets/api/test/differential_gene_expression_v10/deseq_v10_all.rds" \
-  -o deseq_v10_all.rds
-
-sha256sum -c diff_gene_exp_res_sha256sum.txt
+chmod "a+x" ./data/v*/api-data/
 
 # Build data model
 #
@@ -72,7 +69,7 @@ sha256sum -c diff_gene_exp_res_sha256sum.txt
 # .dockerignore file.
 #
 # Change workdir to git root dir.
-cd ../..
+cd ..
 
 printf "\n\nBuild data model using docker...\n"
 

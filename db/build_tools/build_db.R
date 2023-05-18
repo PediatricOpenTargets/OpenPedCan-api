@@ -24,7 +24,7 @@
 all_cohorts_str_id <- "All Cohorts"
 
 # Arbitrarily selected genes for quick testing.
-arbt_db_ensg_ids <- c("ENSG00000213420", "ENSG00000157764", "ENSG00000273032",
+arbt_db_ensg_ids <- c("ENSG00000213420", "ENSG00000157764", "ENSG00000139618",
                       "ENSG00000141510", "ENSG00000171094")
 
 
@@ -52,11 +52,15 @@ get_env_var <- function(env_var_name) {
 }
 
 db_r_interface_dir <- file.path(
-  get_env_var("DB_HOME_DIR_PATH"), "db/r_interfaces")
+  get_env_var("DB_HOME_DIR_PATH"), "db", "r_interfaces")
 stopifnot(dir.exists(db_r_interface_dir))
 
 source(file.path(db_r_interface_dir, "db_env_vars.R"))
 source(file.path(db_r_interface_dir, "connect_db.R"))
+
+opc_data_dir <- file.path(
+  get_env_var("DB_HOME_DIR_PATH"), "OpenPedCan-analysis", "data")
+stopifnot(dir.exists(opc_data_dir))
 
 db_build_output_dir <- get_env_var("BUILD_OUTPUT_DIR_PATH")
 stopifnot(dir.exists(db_build_output_dir))
@@ -110,7 +114,9 @@ cat("Read differential expression data...\n")
 # - Share CSV.
 # - Use EC2 with larger memory.
 diff_exp_df <- readRDS(
-  file.path(db_build_output_dir, "deseq_v10_all.rds"))
+  file.path(
+    opc_data_dir,
+    "gene-counts-rsem-expected_count-collapsed-deseq.rds"))
 
 
 
@@ -310,6 +316,25 @@ get_ind_chunk_list <- function(n_elements, n_chunks) {
 stopifnot(is.data.frame(diff_exp_df))
 stopifnot(is.character(colnames(diff_exp_df)))
 stopifnot(all(!is.na(colnames(diff_exp_df))))
+
+stopifnot(identical(
+  sort(colnames(diff_exp_df)),
+  c("baseMean", "comparisonId", "Dataset", "datasourceId", "datatypeId",
+    "Disease", "Disease_Count", "Disease_MeanTpm",
+    "diseaseFromSourceMappedId", "Gene_symbol",
+    "GTEx_Count", "GTEx_MeanTpm", "GTEx_subgroup",
+    "GTEx_tissue_subgroup_UBERON", "lfcSE", "log2FoldChange", "MONDO",
+    "padj", "PMTL", "pvalue", "stat", "targetFromSourceId")
+))
+
+diff_exp_df <- dplyr::rename(
+  diff_exp_df,
+  Gene_Ensembl_ID = targetFromSourceId,
+  EFO = diseaseFromSourceMappedId,
+  cancer_group = Disease,
+  cohort = Dataset,
+  cancer_group_Count = Disease_Count,
+  cancer_group_MeanTpm = Disease_MeanTpm)
 
 stopifnot(identical(
   sort(colnames(diff_exp_df)),

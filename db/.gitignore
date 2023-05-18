@@ -1,6 +1,7 @@
 *.rds
 *.RDS
 *.csv
+*.csv.gz
 *.dump
 *.sql.gz
 *.sql
